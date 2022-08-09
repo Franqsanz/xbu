@@ -19,11 +19,17 @@ export function Nav() {
 
   return (
     <Flex
+      as='header'
       w="100%"
       align="center"
       justify="space-between"
       p='2'
-      bg={useColorModeValue('gray.50', 'gray.700')}
+      bg={useColorModeValue('#ffffff56', '#12121244')}
+      position='sticky'
+      top='0'
+      boxShadow='sm'
+      backdropFilter='auto'
+      backdropBlur='5px'
     >
       <Box
         as='span'
@@ -38,7 +44,7 @@ export function Nav() {
       <Box as='nav' mr='5'>
         <List display='flex' alignItems='center'>
           {navLink.map(({ name, href }) => (
-            <ListItem>
+            <ListItem key={name}>
               <Link
                 as={NavLink}
                 to={href}

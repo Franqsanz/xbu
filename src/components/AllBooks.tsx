@@ -10,7 +10,10 @@ import {
   Link,
   Tag,
   TagLeftIcon,
-  TagLabel
+  TagLabel,
+  Alert,
+  AlertIcon,
+  AlertTitle,
 } from '@chakra-ui/react';
 import { BsTag } from 'react-icons/bs';
 import { useQuery } from '@tanstack/react-query'
@@ -34,7 +37,22 @@ export function AllBooks() {
     return res.json()
   })
 
-  if (error) return <Box>ERROR</Box>
+  if (error) {
+    return (
+      <Alert
+        status='error'
+        variant='subtle'
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='center'
+        textAlign='center'
+        height='200px'
+      >
+        <AlertIcon boxSize='50px' />
+        <AlertTitle mt='5' fontSize='xl'>No se pudieron obtener los datos </AlertTitle>
+      </Alert>
+    )
+  }
 
   return (
     <>
@@ -58,7 +76,7 @@ export function AllBooks() {
                 border='1px'
                 borderColor={useColorModeValue('gray.200', '#8bd07a')}
                 overflow='hidden'
-                boxShadow='xl'
+                boxShadow='lg'
                 my='5'
                 bg={useColorModeValue('white', 'black')}
               // color='black'

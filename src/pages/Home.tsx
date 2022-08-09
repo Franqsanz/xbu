@@ -21,6 +21,9 @@ export function Home() {
           >
             XBooks
           </Box>
+          <Box as='span' color='green'>
+            ¡Explora!
+          </Box>
           <Text
             textAlign='center'
             fontSize={{ base: 'md', md: 'lg' }}
