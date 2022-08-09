@@ -1,4 +1,4 @@
-export async function postBook(books) {
+export async function postBook(books: any) {
   // const res = await fetch('http://localhost:9090/api/', {
   const res = await fetch('https://xb-api.vercel.app/api', {
     method: 'POST',
@@ -13,7 +13,7 @@ export async function postBook(books) {
   throw new Error('Error al publicar el libro');
 }
 
-export async function getBook(id) {
+export async function getBook(id: any) {
   // const res = await fetch('http://localhost:9090/api/', {
   const res = await fetch(`https://xb-api.vercel.app/api/${id}`);
 
@@ -21,14 +21,14 @@ export async function getBook(id) {
   // throw new Error('Error al actualizar el libro');
 }
 
-export async function deleteBook(id) {
+export async function deleteBook(id: any) {
   // const res = await fetch('http://localhost:9090/api/', {
   const res = await fetch(`https://xb-api.vercel.app/api/${id}`, {
     method: 'DELETE'
   });
 
   if (!res.ok) {
-    throw new Error(res.json().message);
+    throw new Error('error');
   }
 
   return true;
