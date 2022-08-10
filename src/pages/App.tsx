@@ -17,6 +17,7 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  useColorModeValue
 } from '@chakra-ui/react';
 import { Helmet } from 'react-helmet';
 import { useQuery, useMutation } from '@tanstack/react-query';
@@ -89,12 +90,12 @@ function App() {
         <Box
           w='full'
           boxShadow='2xl'
-          p='10'
+          p={{ base: 5, md: 10 }}
           rounded='xl'
           maxWidth='700px'
           border='1px'
+          bg={useColorModeValue('white', 'grey.400')}
           borderColor='#2de000'
-        // direction={{ base: 'column', md: 'row' }}
         >
           <Heading as='h1' mb='5'>
             Publica tu libro favorito
@@ -112,17 +113,11 @@ function App() {
           ) : (
             <Alert display='none' />
           )}
-
-          {/* {error && <Alert status='error' mb='10' rounded='xl'>
-            <AlertIcon />
-            <AlertTitle>Error al publicar</AlertTitle>
-          </Alert>} */}
           <Flex
             as='form'
             onSubmit={handleSubmit}
             justify='center'
             align='stretch'
-            // bg='orange'
             flexDirection={{ base: 'column', md: 'row' }}
           >
             <Box w='full' mr='5'>

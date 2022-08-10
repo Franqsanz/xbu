@@ -26,7 +26,7 @@ export function Home() {
           <Box
             textAlign='center'
             as='h1'
-            fontSize={{ base: '6xl', md: '9xl' }}
+            fontSize={{ base: '7xl', md: '9xl' }}
             bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
             bgClip='text'
             fontWeight='extrabold'
@@ -35,7 +35,7 @@ export function Home() {
           </Box>
           <Box
             color='green'
-            fontSize={{ base: '2xl', md: '5xl' }}
+            fontSize={{ base: '3xl', md: '5xl' }}
             fontWeight='bold'
             textAlign={{ base: 'center', md: 'left' }}
           >

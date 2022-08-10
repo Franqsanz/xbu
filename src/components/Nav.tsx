@@ -10,6 +10,7 @@ import {
   Button,
   useColorMode,
   useColorModeValue,
+  useDisclosure
 } from '@chakra-ui/react';
 
 import { navLink } from './links';
@@ -21,7 +22,7 @@ export function Nav() {
   return (
     <>
       <Flex
-        // display='none'
+        display={{ base: 'none', md: 'block' }}
         as='header'
         w='100%'
         align='center'
@@ -35,51 +36,57 @@ export function Nav() {
         backdropBlur='5px'
         zIndex='1'
       >
-        <Box
-          as='span'
-          bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
-          bgClip='text'
-          fontSize='3xl'
-          fontWeight='bold'
-          ml='5'
+        <Flex
+          w='100%'
+          justify='space-between'
+          align='center'
         >
-          <Link as={NavLink} to='/'>
-            XB
-          </Link>
-        </Box>
-        <Box as='nav' mr='5'>
-          <List display='flex' alignItems='center'>
-            {navLink.map(({ name, href }) => (
-              <ListItem key={name}>
-                <Link
-                  as={NavLink}
-                  to={href}
-                  mx='5'
-                  py='1'
-                  fontWeight='medium'
-                  _activeLink={{ borderBottom: '2px', borderColor: '#2de000' }}
-                  _hover={{ color: '#2de000' }}
-                >
-                  {name}
-                </Link>
-              </ListItem>
-            ))}
-            <Button
-              onClick={toggleColorMode}
-              bg='none'
-              _active={{ bg: 'none' }}
-              _hover={{ color: '#2de000' }}
-            >
-              {colorMode === 'dark' ? (
-                <BsSun size='20' />
-              ) : (
-                <BsMoon size='20' />
-              )}
-            </Button>
-          </List>
-        </Box>
+          <Box
+            as='span'
+            bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
+            bgClip='text'
+            fontSize='3xl'
+            fontWeight='bold'
+            ml='5'
+          >
+            <Link as={NavLink} to='/'>
+              XB
+            </Link>
+          </Box>
+          <Box as='nav' mr='5'>
+            <List display='flex' alignItems='center'>
+              {navLink.map(({ name, href }) => (
+                <ListItem key={name}>
+                  <Link
+                    as={NavLink}
+                    to={href}
+                    mx='5'
+                    py='1'
+                    fontWeight='medium'
+                    _activeLink={{ borderBottom: '2px', borderColor: '#2de000' }}
+                    _hover={{ color: '#2de000' }}
+                  >
+                    {name}
+                  </Link>
+                </ListItem>
+              ))}
+              <Button
+                onClick={toggleColorMode}
+                bg='none'
+                _active={{ bg: 'none' }}
+                _hover={{ color: '#2de000' }}
+              >
+                {colorMode === 'dark' ? (
+                  <BsSun size='20' />
+                ) : (
+                  <BsMoon size='20' />
+                )}
+              </Button>
+            </List>
+          </Box>
+        </Flex>
       </Flex>
-      {/* <MobileNav /> */}
+      <MobileNav />
     </>
   );
 }
