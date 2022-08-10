@@ -1,0 +1,61 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    // "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "standard"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "plugins": ["react", "@typescript-eslint", "import", "prettier"],
+  "rules": {
+    "no-console": 1,
+    "semi": 0,
+    "no-unused-vars": 1,
+    "quotes": 0,
+    "space-before-function-paren": 0,
+    "comma-dangle": 0,
+    "multiline-ternary": 0,
+    "indent": [2, 2],
+    "import/no-absolute-path": 0,
+    "no-array-constructor": 0,
+    "no-unused-expressions": 0,
+    "prefer-const": 0,
+    "prettier/prettier": [
+      2,
+      {
+        "trailingComma": "all",
+        "tabWidth": 2,
+        "singleQuote": true,
+        "printWidth": 80,
+        "jsxSingleQuote": true,
+        "bracketSameLine": false,
+        "endOfLine": "auto"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": 1,
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/adjacent-overload-signatures": 0,
+    "react/no-unescaped-entities": 0,
+    "react-hooks/exhaustive-deps": 0
+  }
+}

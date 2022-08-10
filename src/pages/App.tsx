@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 import {
   FormControl,
   Button,
@@ -18,22 +18,12 @@ import {
   AlertIcon,
   AlertTitle,
 } from '@chakra-ui/react';
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { Helmet } from 'react-helmet';
+import { useQuery, useMutation } from '@tanstack/react-query';
 // import ImageUploading, { ImageListType } from "react-images-uploading";
 
 import { Nav } from '../components/Nav';
 import { postBook } from '../services/api';
-
-interface Items {
-  id: string
-  title: string,
-  description: string,
-  author: string,
-  category: string,
-  publicationDate: number,
-  numberPages: number,
-  // imgUrl: string
-}
 
 function App() {
   // const [imageSrc, setImageSrc] = useState();
@@ -61,13 +51,17 @@ function App() {
   // };
 
   const { data } = useQuery(['Books'], async () => {
-    const res = await fetch('https://xb-api.vercel.app/api')
-    return res.json()
-  })
+    const res = await fetch('https://xb-api.vercel.app/api');
+    return res.json();
+  });
 
   const { mutate, isSuccess, error } = useMutation(['Books'], postBook);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
+  function handleChange(
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+  ) {
     setBooks({
       ...books,
       [e.target.name]: e.target.value,
@@ -77,12 +71,14 @@ function App() {
   function handleSubmit(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     // console.log(books);
-    mutate(books)
+    mutate(books);
   }
-
 
   return (
     <>
+      <Helmet>
+        <title>Nueva Publicacion</title>
+      </Helmet>
       <Nav />
       <Flex
         align='center'
@@ -100,20 +96,21 @@ function App() {
           borderColor='#2de000'
         // direction={{ base: 'column', md: 'row' }}
         >
-          <Heading as='h1' mb='5'>Publica tu libro favorito</Heading>
+          <Heading as='h1' mb='5'>
+            Publica tu libro favorito
+          </Heading>
           {isSuccess ? (
             <Alert status='success' m='30px 0 30px 0' rounded='xl'>
               <AlertIcon />
               <AlertTitle>Publicado Correctamente</AlertTitle>
             </Alert>
-          ) : (error ? (
+          ) : error ? (
             <Alert status='error' mb='10' rounded='xl'>
               <AlertIcon />
               <AlertTitle>Error al publicar</AlertTitle>
             </Alert>
           ) : (
             <Alert display='none' />
-          )
           )}
 
           {/* {error && <Alert status='error' mb='10' rounded='xl'>
@@ -178,7 +175,7 @@ function App() {
                   onChange={handleChange}
                 />
               </FormControl>
-              {/*<FormControl isRequired>
+              {/* <FormControl isRequired>
                 <FormLabel htmlFor='imgUrl'>Subir imagen del Libro</FormLabel>
                  <ImageUploading
                   acceptType={['jpg', 'png']}
@@ -216,10 +213,12 @@ function App() {
                       ))}
                     </Box>
                   )}
-                </ImageUploading> 
-              </FormControl>*/}
+                </ImageUploading>
+              </FormControl> */}
               <FormControl isRequired>
-                <FormLabel htmlFor='fecha'>Año de publicación del libro</FormLabel>
+                <FormLabel htmlFor='fecha'>
+                  Año de publicación del libro
+                </FormLabel>
                 <Input
                   id='fecha'
                   type='number'
@@ -231,7 +230,9 @@ function App() {
                 />
               </FormControl>
               <FormControl isRequired mt={{ base: 0, md: 10 }}>
-                <FormLabel htmlFor='categoria'>Selecciona una categoria</FormLabel>
+                <FormLabel htmlFor='categoria'>
+                  Selecciona una categoria
+                </FormLabel>
                 <Select
                   id='categoria'
                   name='category'
@@ -310,7 +311,7 @@ function App() {
 }
       </Flex > */}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
