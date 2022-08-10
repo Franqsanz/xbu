@@ -21,17 +21,17 @@ export function Home() {
         <title>Home</title>
       </Helmet>
       <Nav />
-      <Container maxW='lg'>
+      <Container maxW='3xl'>
         <Box my={{ base: '20', md: '32', xl: '40' }}>
           <Box
             textAlign='center'
             as='h1'
-            fontSize={{ base: '7xl', md: '9xl' }}
+            fontSize={{ base: '5xl', md: '9xl' }}
             bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
             bgClip='text'
             fontWeight='extrabold'
           >
-            XBooks
+            XBuniverse
           </Box>
           <Box
             color='green'
