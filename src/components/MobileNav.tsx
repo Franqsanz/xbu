@@ -20,7 +20,7 @@ import { navLink } from './links';
 
 export function MobileNav() {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onToggle } = useDisclosure()
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
     <>
@@ -40,11 +40,7 @@ export function MobileNav() {
         zIndex='1'
         animation=''
       >
-        <Flex
-          w='100%'
-          justify='space-between'
-          align='center'
-        >
+        <Flex w='100%' justify='space-between' align='center'>
           <IconButton
             onClick={onToggle}
             icon={<FiMenu />}
@@ -76,16 +72,11 @@ export function MobileNav() {
             {colorMode === 'dark' ? <BsSun size='18' /> : <BsMoon size='18' />}
           </Button>
         </Flex>
-        <Collapse
-          in={isOpen}
-        >
+        <Collapse in={isOpen}>
           <Box w='full'>
             <List>
               {navLink.map(({ name, href }) => (
-                <ListItem
-                  key={name}
-                  my='2'
-                >
+                <ListItem key={name} my='2'>
                   <Link
                     display='block'
                     as={NavLink}
@@ -94,7 +85,11 @@ export function MobileNav() {
                     p='3'
                     rounded='xl'
                     fontWeight='medium'
-                    _hover={{ bg: 'gray.700', border: 'none', color: '#2de000' }}
+                    _hover={{
+                      bg: 'gray.700',
+                      border: 'none',
+                      color: '#2de000',
+                    }}
                   >
                     {name}
                   </Link>
