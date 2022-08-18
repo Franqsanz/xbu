@@ -8,7 +8,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import App from './pages/App';
 import { Home } from './pages/Home';
 import { Explorer } from './pages/Explorer';
-import { Categories } from './pages/Categories';
+// import { Categories } from './pages/Categories';
 import { Footer } from './components/Footer';
 
 import theme from '../theme';
@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             {/* <Route path=":id" element={<Home />} /> */}
             <Route path='new-book' element={<App />} />
             <Route path='explorer/' element={<Explorer />}>
-              <Route path='categories/' element={<Categories />} />
+              {/* <Route path='categories/' element={<Categories />} /> */}
             </Route>
             <Route path='*' element={404} />
           </Routes>
