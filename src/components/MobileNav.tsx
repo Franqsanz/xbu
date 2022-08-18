@@ -80,7 +80,7 @@ export function MobileNav() {
                   <Link
                     display='block'
                     as={NavLink}
-                    to={href}
+                    to={href as string}
                     mx='5'
                     p='3'
                     rounded='xl'

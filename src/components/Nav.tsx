@@ -55,7 +55,7 @@ export function Nav() {
                 <ListItem key={name}>
                   <Link
                     as={NavLink}
-                    to={href}
+                    to={href as string}
                     mx='5'
                     py='1'
                     fontWeight='medium'

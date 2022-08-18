@@ -1,4 +1,6 @@
-export interface LinkProps {
+interface LinkProps {
   name: string;
   href?: string;
 }
+
+export type { LinkProps };
