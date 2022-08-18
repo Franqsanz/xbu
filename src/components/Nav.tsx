@@ -10,7 +10,7 @@ import {
   Button,
   useColorMode,
   useColorModeValue,
-  useDisclosure
+  useDisclosure,
 } from '@chakra-ui/react';
 
 import { navLink } from './links';
@@ -36,16 +36,12 @@ export function Nav() {
         backdropBlur='5px'
         zIndex='1'
       >
-        <Flex
-          w='100%'
-          justify='space-between'
-          align='center'
-        >
+        <Flex w='100%' justify='space-between' align='center'>
           <Box
             as='span'
             bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
             bgClip='text'
-            fontSize='3xl'
+            fontSize='2xl'
             fontWeight='bold'
             ml='5'
           >
@@ -63,7 +59,10 @@ export function Nav() {
                     mx='5'
                     py='1'
                     fontWeight='medium'
-                    _activeLink={{ borderBottom: '2px', borderColor: '#2de000' }}
+                    _activeLink={{
+                      borderBottom: '2px',
+                      borderColor: '#2de000',
+                    }}
                     _hover={{ color: '#2de000' }}
                   >
                     {name}

@@ -17,16 +17,19 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
-  useColorModeValue
+  useColorModeValue,
+  useToast,
 } from '@chakra-ui/react';
 import { Helmet } from 'react-helmet';
 import { useQuery, useMutation } from '@tanstack/react-query';
 // import ImageUploading, { ImageListType } from "react-images-uploading";
 
 import { Nav } from '../components/Nav';
+import { categoryLinks } from '../components/links';
 import { postBook } from '../services/api';
 
 function App() {
+  const toast = useToast();
   // const [imageSrc, setImageSrc] = useState();
   // const [uploadData, setUploadData] = useState();
   // const [images, setImages] = useState([]);
@@ -42,6 +45,14 @@ function App() {
     // imgUrl: new ArrayBuffer(0)
   });
 
+  const disabled =
+    !books.title ||
+    !books.description ||
+    !books.publicationDate ||
+    !books.author ||
+    !books.category ||
+    !books.numberPages;
+
   // const maxNumber = 69;
 
   // const onChange = (
@@ -56,7 +67,10 @@ function App() {
     return res.json();
   });
 
-  const { mutate, isSuccess, error } = useMutation(['Books'], postBook);
+  const { mutate, isLoading, isSuccess, error } = useMutation(
+    ['Books'],
+    postBook,
+  );
 
   function handleChange(
     e: React.ChangeEvent<
@@ -97,9 +111,9 @@ function App() {
           bg={useColorModeValue('white', 'grey.400')}
           borderColor='#2de000'
         >
-          <Heading as='h1' mb='5'>
+          <Box mb='5' fontSize='3xl'>
             Publica tu libro favorito
-          </Heading>
+          </Box>
           {isSuccess ? (
             <Alert status='success' m='30px 0 30px 0' rounded='xl'>
               <AlertIcon />
@@ -159,12 +173,12 @@ function App() {
             </Box>
             <Box w='full' ml={{ base: 0, md: 5 }}>
               <FormControl isRequired>
-                <FormLabel htmlFor='numeroPaginas'>Número de paginas</FormLabel>
+                <FormLabel htmlFor='numeroPaginas'>Número de páginas</FormLabel>
                 <Input
                   id='numeroPaginas'
                   type='number'
                   mb='5'
-                  placeholder='Número de paginas'
+                  placeholder='Número de páginas'
                   name='numberPages'
                   value={books.numberPages}
                   onChange={handleChange}
@@ -211,12 +225,10 @@ function App() {
                 </ImageUploading>
               </FormControl> */}
               <FormControl isRequired>
-                <FormLabel htmlFor='fecha'>
-                  Año de publicación del libro
-                </FormLabel>
+                <FormLabel htmlFor='fecha'>Fecha de lanzamiento</FormLabel>
                 <Input
                   id='fecha'
-                  type='number'
+                  type='text'
                   mb='5'
                   name='publicationDate'
                   placeholder='Ingresar fecha'
@@ -235,10 +247,9 @@ function App() {
                   onChange={handleChange}
                   placeholder='Selecciona una categoria'
                 >
-                  <option value='ciencia ficcion'>ciencia ficcion</option>
-                  <option value='terror'>terror</option>
-                  <option value='suspenso'>suspenso</option>
-                  <option value='economia'>economia</option>
+                  {categoryLinks.map(({ name }) => (
+                    <option key={name}>{name}</option>
+                  ))}
                 </Select>
               </FormControl>
               <Box mt='10'>
@@ -246,15 +257,13 @@ function App() {
                   type='submit'
                   w='full'
                   size='lg'
-                  cursor='pointer'
-                  bg='#2de000'
-                  _hover={{
-                    background: '#1f9b00',
-                    // color: 'black',
-                  }}
-                // isDisabled={!users.user || !users.pass}
-                // loadingText='Ingresando...'
-                // isLoading={loading}
+                  bg='#26be00'
+                  color='black'
+                  _hover={{ bg: '#1f9b00' }}
+                  _active={{ bg: '#1f9b00' }}
+                  isDisabled={disabled}
+                  loadingText='Publicando...'
+                  isLoading={isLoading}
                 >
                   Publicar
                 </Button>

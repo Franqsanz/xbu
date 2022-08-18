@@ -48,7 +48,7 @@ export function MobileNav() {
             aria-label='Menu'
             bg='none'
             ml='4'
-            _hover={{ bg: 'none', border: '1px', borderColor: '#2de000' }}
+            _hover={{ bg: 'none', color: '#2de000' }}
             _active={{ bg: 'none' }}
           />
           <Box

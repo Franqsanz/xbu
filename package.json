@@ -10,6 +10,7 @@
     "format": "prettier --write .",
     "lint": "eslint --fix .",
     "test": "vitest",
+    "test:ui": "vitest --ui --api 9527",
     "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
@@ -36,6 +37,7 @@
     "@typescript-eslint/eslint-plugin": "5.33.0",
     "@typescript-eslint/parser": "5.33.0",
     "@vitejs/plugin-react": "2.0.1",
+    "@vitest/ui": "0.22.0",
     "eslint": "8.21.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-config-standard": "17.0.0",

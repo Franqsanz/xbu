@@ -13,5 +13,8 @@ export default extendTheme({
   //     }
   //   }
   // },
+  fonts: {
+    body: 'Poppins, sans-serif',
+  },
   config,
 });
