@@ -4,6 +4,6 @@
 
 [[redirects]]
   from = "/*"
-  to = "/"
+  to = "https://fanciful-flan-e7a446.netlify.app/"
   status = 200
   force = true
