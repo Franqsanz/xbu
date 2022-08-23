@@ -24,7 +24,6 @@ import { Helmet } from 'react-helmet';
 import { useQuery, useMutation } from '@tanstack/react-query';
 // import ImageUploading, { ImageListType } from "react-images-uploading";
 
-import { Nav } from '../components/Nav';
 import { categoryLinks } from '../components/links';
 import { postBook } from '../services/api';
 
@@ -94,7 +93,6 @@ function App() {
       <Helmet>
         <title>Nueva Publicacion</title>
       </Helmet>
-      <Nav />
       <Flex
         align='center'
         justify='center'

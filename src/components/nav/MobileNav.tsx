@@ -16,7 +16,7 @@ import {
   Collapse,
 } from '@chakra-ui/react';
 
-import { navLink } from './links';
+import { navLink } from '../links';
 
 export function MobileNav() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -32,7 +32,7 @@ export function MobileNav() {
         bg={useColorModeValue('#ffffff56', '#12121244')}
         boxShadow='sm'
         backdropFilter='auto'
-        backdropBlur='5px'
+        backdropBlur='4px'
         direction='column'
         position='sticky'
         top='0'

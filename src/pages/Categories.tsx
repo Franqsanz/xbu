@@ -1,8 +1,11 @@
 import React from 'react';
+import { Outlet, useParams, NavLink } from 'react-router-dom';
 import {
   Flex,
+  Box,
   Text,
   Spinner,
+  Container,
   useColorModeValue,
   Link,
   Alert,
@@ -11,36 +14,35 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 
-import { CardProps } from './types';
+import { CardProps } from '../components/types';
+import { Card } from '../components/card/Card';
 import { getAllBooks } from '../services/api';
-import { Card } from './card/Card';
 
-export function AllBooks() {
+export function Categories() {
+  const { param } = useParams();
   const colorCard = useColorModeValue('gray.900', 'gray.100');
 
   const { data, isLoading, error } = useQuery(['Books'], getAllBooks);
 
-  if (error) {
-    return (
-      <Alert
-        status='error'
-        variant='subtle'
-        flexDirection='column'
-        alignItems='center'
-        justifyContent='center'
-        textAlign='center'
-        height='200px'
-      >
-        <AlertIcon boxSize='50px' />
-        <AlertTitle mt='5' fontSize='xl'>
-          No se pudieron obtener los datos
-        </AlertTitle>
-      </Alert>
-    );
+  if (isLoading) {
+    <Spinner size='xl' thickness='4px' speed='0.55s' />;
   }
 
   return (
     <>
+      <Container maxW='full' p='0'>
+        <Box py='40' bg={useColorModeValue('#ecfccb', 'green.900')}>
+          <Box
+            textAlign='center'
+            as='h1'
+            fontSize={{ base: '4xl', md: '7xl' }}
+            color={useColorModeValue('#4d7c0f', 'green.300')}
+            fontWeight='normal'
+          >
+            {param?.toUpperCase().split('-').join(' ')}
+          </Box>
+        </Box>
+      </Container>
       <Flex
         w='full'
         justify='center'
@@ -49,10 +51,19 @@ export function AllBooks() {
         flexWrap='wrap'
         color={colorCard}
       >
-        {isLoading ? (
-          <Spinner size='xl' thickness='4px' speed='0.55s' />
-        ) : (
-          data.map(
+        {data
+          .filter(({ category }: CardProps) => {
+            const cat = category
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .split(' ')
+              .join('-');
+
+            const regex = new RegExp(cat, 'gi');
+            const compare = regex.test(param as string);
+            return compare;
+          })
+          .map(
             ({
               id,
               title,
@@ -73,9 +84,9 @@ export function AllBooks() {
                 />
               </React.Fragment>
             ),
-          )
-        )}
+          )}
       </Flex>
+      <Outlet />
     </>
   );
 }

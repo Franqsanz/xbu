@@ -11,7 +11,6 @@ import {
 import { Helmet } from 'react-helmet';
 // import { useQuery } from '@tanstack/react-query'
 
-import { Nav } from '../components/Nav';
 import { AllBooks } from '../components/AllBooks';
 
 export function Home() {
@@ -20,7 +19,6 @@ export function Home() {
       <Helmet>
         <title>Home</title>
       </Helmet>
-      <Nav />
       <Container maxW='3xl'>
         <Box my={{ base: '20', md: '32', xl: '40' }}>
           <Box

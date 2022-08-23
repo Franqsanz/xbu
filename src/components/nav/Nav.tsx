@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-import { navLink } from './links';
+import { navLink } from '../links';
 import { MobileNav } from './MobileNav';
 
 export function Nav() {
@@ -33,7 +33,7 @@ export function Nav() {
         top='0'
         boxShadow='sm'
         backdropFilter='auto'
-        backdropBlur='5px'
+        backdropBlur='4px'
         zIndex='1'
       >
         <Flex w='100%' justify='space-between' align='center'>

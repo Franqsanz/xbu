@@ -13,7 +13,6 @@ import { BsTag } from 'react-icons/bs';
 import { Helmet } from 'react-helmet';
 import { useQuery } from '@tanstack/react-query';
 
-import { Nav } from '../components/Nav';
 import { AllBooks } from '../components/AllBooks';
 
 export function Explorer() {
@@ -27,7 +26,6 @@ export function Explorer() {
       <Helmet>
         <title>Explorar</title>
       </Helmet>
-      <Nav />
       <Container maxW='full' p='0'>
         <Box py='40' bg={useColorModeValue('#ecfccb', 'green.900')}>
           <Box
@@ -52,7 +50,7 @@ export function Explorer() {
         </Box>
       </Flex>
       <AllBooks />
-      <Outlet />
+      {/* <Outlet /> */}
     </>
   );
 }

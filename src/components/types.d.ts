@@ -3,4 +3,15 @@ interface LinkProps {
   href?: string;
 }
 
-export type { LinkProps };
+interface CardProps {
+  id?: string;
+  title: string;
+  description: string;
+  author: string;
+  category: string;
+  publicationDate: number;
+  numberPages: number;
+  // imgUrl: string
+}
+
+export type { LinkProps, CardProps };
