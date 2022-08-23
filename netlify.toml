@@ -2,8 +2,8 @@
   command = "npm run build"
   publish = "dist"
 
-[[redirects]]
-  from = "/*"
-  to = "https://fanciful-flan-e7a446.netlify.app/"
-  status = 200
-  force = true
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
+#   force = true
