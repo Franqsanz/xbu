@@ -76,6 +76,10 @@ const categoryLinks: Array<LinkProps> = [
     name: 'Ingenierías',
     // href: 'fantasia',
   },
+  {
+    name: 'Cómics',
+    // href: 'fantasia',
+  },
 ];
 
 export { navLink, categoryLinks };

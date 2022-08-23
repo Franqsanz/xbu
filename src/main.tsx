@@ -5,10 +5,11 @@ import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import App from './pages/App';
+import { FormNewBook } from './pages/NewBook';
 import { Home } from './pages/Home';
 import { Explorer } from './pages/Explorer';
 import { Categories } from './pages/Categories';
+import { ErrorPage } from './pages/404';
 
 import { Nav } from './components/nav/Nav';
 import { Footer } from './components/Footer';
@@ -26,11 +27,10 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Nav />
           <Routes>
             <Route index element={<Home />} />
-            {/* <Route path=":id" element={<Home />} /> */}
-            <Route path='new-book' element={<App />} />
+            <Route path='new-book' element={<FormNewBook />} />
             <Route path='explorer/' element={<Explorer />} />
             <Route path='categories/:param' element={<Categories />} />
-            <Route path='*' element={404} />
+            <Route path='*' element={<ErrorPage />} />
           </Routes>
           <Footer />
         </BrowserRouter>
