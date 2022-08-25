@@ -6,13 +6,20 @@ const config: ThemeConfig = {
 };
 
 export default extendTheme({
-  // styles: {
-  //   global: {
-  //     body: {
-  //       background: 'gray.50'
-  //     }
-  //   }
-  // },
+  styles: {
+    global: {
+      body: {
+        '&::-webkit-scrollbar': {
+          width: '8px',
+          height: '7px',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: '#CBD5E0',
+          borderRadius: '30px',
+        },
+      },
+    },
+  },
   fonts: {
     body: 'Poppins, sans-serif',
   },

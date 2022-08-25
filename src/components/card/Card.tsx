@@ -12,6 +12,7 @@ import {
   TagLabel,
 } from '@chakra-ui/react';
 import { BsTag } from 'react-icons/bs';
+import { FiExternalLink } from 'react-icons/fi';
 
 import { CardProps } from '../types';
 
@@ -21,6 +22,7 @@ export function Card({
   author,
   category,
   publicationDate,
+  sourceLink,
   numberPages,
 }: CardProps) {
   const borderCard = useColorModeValue('gray.200', '#8bd07a');
@@ -87,6 +89,19 @@ export function Card({
             </Text>
             <Box mt='5'>Fecha de lanzamiento: {publicationDate}</Box>
             <Box>N° de páginas: {numberPages}</Box>
+            <Box w='100px' mt='3'>
+              <Link
+                href={sourceLink}
+                isExternal
+                color='blue.600'
+                fontWeight='bold'
+              >
+                <Flex align='center'>
+                  Ver aquí
+                  <FiExternalLink style={{ marginLeft: '6px' }} />
+                </Flex>
+              </Link>
+            </Box>
           </Box>
         </Flex>
       </Box>

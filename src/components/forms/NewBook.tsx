@@ -40,6 +40,7 @@ export function NewBook() {
     author: '',
     category: '',
     numberPages: '',
+    sourceLink: '',
     // imgUrl: new ArrayBuffer(0)
   });
 
@@ -49,7 +50,8 @@ export function NewBook() {
     !books.publicationDate ||
     !books.author ||
     !books.category ||
-    !books.numberPages;
+    !books.numberPages ||
+    !books.sourceLink;
 
   // const maxNumber = 69;
 
@@ -164,6 +166,20 @@ export function NewBook() {
                   onChange={handleChange}
                 />
               </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor='link'>
+                  Link en donde se puede adquirir el libro
+                </FormLabel>
+                <Input
+                  id='link'
+                  type='text'
+                  mb='5'
+                  name='sourceLink'
+                  placeholder='Ingresar link'
+                  value={books.sourceLink}
+                  onChange={handleChange}
+                />
+              </FormControl>
             </Box>
             <Box w='full' ml={{ base: 0, md: 5 }}>
               <FormControl isRequired>
@@ -230,7 +246,7 @@ export function NewBook() {
                   onChange={handleChange}
                 />
               </FormControl>
-              <FormControl isRequired mt={{ base: 0, md: 10 }}>
+              <FormControl isRequired mt={{ base: 0, md: 8 }}>
                 <FormLabel htmlFor='categoria'>
                   Selecciona una categoria
                 </FormLabel>
@@ -246,7 +262,7 @@ export function NewBook() {
                   ))}
                 </Select>
               </FormControl>
-              <Box mt='10'>
+              <Box mt='20'>
                 <Button
                   type='submit'
                   w='full'

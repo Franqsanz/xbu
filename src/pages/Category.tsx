@@ -16,7 +16,6 @@ import {
 import { useQuery, QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import { Card } from '../components/card/Card';
-// import { AllBooks } from '../components/AllBooks';
 import { CardProps } from '../components/types';
 import { getAllBooks } from '../services/api';
 import { ContainerTitle } from '../components/ContainerTitle';
@@ -24,8 +23,6 @@ import { ContainerTitle } from '../components/ContainerTitle';
 export function Category() {
   const { param } = useParams();
   const colorCard = useColorModeValue('gray.900', 'gray.100');
-  // const bgContainer = useColorModeValue('#ecfccb', 'green.900');
-  // const colorTitle = useColorModeValue('#4d7c0f', 'green.300');
 
   const { data } = useQuery(['Books'], getAllBooks, {
     suspense: true,
@@ -71,6 +68,7 @@ export function Category() {
               author,
               category,
               publicationDate,
+              sourceLink,
               numberPages,
             }: CardProps) => (
               <React.Fragment key={id}>
@@ -80,6 +78,7 @@ export function Category() {
                   author={author}
                   description={description}
                   numberPages={numberPages}
+                  sourceLink={sourceLink}
                   publicationDate={publicationDate}
                 />
               </React.Fragment>

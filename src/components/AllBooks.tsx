@@ -60,6 +60,7 @@ export function AllBooks() {
               author,
               category,
               publicationDate,
+              sourceLink,
               numberPages,
             }: CardProps) => (
               <React.Fragment key={id}>
@@ -69,6 +70,7 @@ export function AllBooks() {
                   author={author}
                   description={description}
                   numberPages={numberPages}
+                  sourceLink={sourceLink}
                   publicationDate={publicationDate}
                 />
               </React.Fragment>
