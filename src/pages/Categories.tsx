@@ -100,6 +100,7 @@ export function Categories() {
                     author,
                     category,
                     publicationDate,
+                    sourceLink,
                     numberPages,
                   }: CardProps) => (
                     <React.Fragment key={id}>
@@ -109,6 +110,7 @@ export function Categories() {
                         author={author}
                         description={description}
                         numberPages={numberPages}
+                        sourceLink={sourceLink}
                         publicationDate={publicationDate}
                       />
                     </React.Fragment>
