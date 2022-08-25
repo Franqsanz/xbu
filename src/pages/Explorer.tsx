@@ -1,56 +1,62 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+// import { ErrorBoundary } from 'react-error-boundary';
 import {
-  Container,
   Box,
   Flex,
   Tag,
   TagLeftIcon,
   TagLabel,
   useColorModeValue,
+  Spinner,
+  Link,
 } from '@chakra-ui/react';
 import { BsTag } from 'react-icons/bs';
 import { Helmet } from 'react-helmet';
-import { useQuery } from '@tanstack/react-query';
+// import { useQuery } from '@tanstack/react-query';
 
 import { AllBooks } from '../components/AllBooks';
+// import { Categories } from './Categories';
+import { categoryLinks } from '../components/links';
+import { ContainerTitle } from '../components/ContainerTitle';
 
 export function Explorer() {
-  // const { data, isLoading, error } = useQuery(['Books'], async () => {
-  //   const res = await fetch('https://xb-api.vercel.app/api');
-  //   return res.json();
-  // });
-
   return (
     <>
       <Helmet>
         <title>Explorar</title>
       </Helmet>
-      <Container maxW='full' p='0'>
-        <Box py='40' bg={useColorModeValue('#ecfccb', 'green.900')}>
-          <Box
-            textAlign='center'
-            as='h1'
-            fontSize={{ base: '5xl', md: '7xl' }}
-            color={useColorModeValue('#4d7c0f', 'green.300')}
-            fontWeight='normal'
+      {/* <ErrorBoundary FallbackComponent={AllBooks}> */}
+      <ContainerTitle title='Explorar' />
+      <Box
+        display='flex'
+        h='60px'
+        overflow='auto'
+        flexDirection='row'
+        mt='10'
+        mx={{ base: 5, md: 16 }}
+      >
+        {categoryLinks.map(({ name }) => (
+          <Link
+            key={name}
+            as={NavLink}
+            to={`/categories/${name
+              .toLowerCase()
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .split(' ')
+              .join('-')}`}
+            _hover={{ outline: 'none' }}
           >
-            Explorar
-          </Box>
-        </Box>
-      </Container>
-      <Flex justify='center'>
-        <Box mt='10' mx='16'>
-          {/* {data.map(({ id, category }) => (
-            <Tag colorScheme='green' size='lg' variant='subtle' m='1' key={id}>
+            <Tag colorScheme='green' size='lg' variant='subtle' m='1'>
               <TagLeftIcon boxSize='16px' as={BsTag} />
-              <TagLabel>{category}</TagLabel>
+              <TagLabel>{name}</TagLabel>
             </Tag>
-          ))} */}
-        </Box>
-      </Flex>
+          </Link>
+        ))}
+      </Box>
       <AllBooks />
-      {/* <Outlet /> */}
+      {/* </ErrorBoundary> */}
     </>
   );
 }

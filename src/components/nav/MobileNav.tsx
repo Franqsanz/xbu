@@ -1,11 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
+import { IoClose } from 'react-icons/io5';
 import { BsSun, BsMoon } from 'react-icons/bs';
 import {
   Box,
   Flex,
   IconButton,
+  Icon,
   Button,
   Link,
   useColorModeValue,
@@ -41,16 +43,18 @@ export function MobileNav() {
         animation=''
       >
         <Flex w='100%' justify='space-between' align='center'>
-          <IconButton
+          <Button
             onClick={onToggle}
-            icon={<FiMenu />}
-            size='lg'
-            aria-label='Menu'
+            // icon={<FiMenu />}
+            // size='lg'
+            aria-label='Open Menu'
             bg='none'
             ml='4'
             _hover={{ bg: 'none', color: '#2de000' }}
             _active={{ bg: 'none' }}
-          />
+          >
+            {isOpen ? <IoClose fontSize='18' /> : <FiMenu fontSize='18' />}
+          </Button>
           <Box
             as='span'
             bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
@@ -79,6 +83,7 @@ export function MobileNav() {
                 <ListItem key={name} my='2'>
                   <Link
                     display='block'
+                    onClick={onToggle}
                     as={NavLink}
                     to={href as string}
                     mx='5'

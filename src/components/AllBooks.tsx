@@ -44,7 +44,7 @@ export function AllBooks() {
       <Flex
         w='full'
         justify='center'
-        py='10'
+        py='5'
         m='auto'
         flexWrap='wrap'
         color={colorCard}

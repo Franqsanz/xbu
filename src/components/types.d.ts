@@ -14,4 +14,8 @@ interface CardProps {
   // imgUrl: string
 }
 
-export type { LinkProps, CardProps };
+interface TitleProps {
+  title: string | undefined;
+}
+
+export type { LinkProps, CardProps, TitleProps };

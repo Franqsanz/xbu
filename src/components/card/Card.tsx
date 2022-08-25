@@ -23,7 +23,6 @@ export function Card({
   publicationDate,
   numberPages,
 }: CardProps) {
-  // const colorCard = useColorModeValue('gray.900', 'gray.100');
   const borderCard = useColorModeValue('gray.200', '#8bd07a');
   const bgCard = useColorModeValue('white', 'black');
 
@@ -53,7 +52,7 @@ export function Card({
           <Box p='7'>
             <Link
               as={NavLink}
-              to={`categories/${category
+              to={`/categories/${category
                 .toLowerCase()
                 .normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '')
