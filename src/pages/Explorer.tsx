@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-// import { ErrorBoundary } from 'react-error-boundary';
 import {
   Box,
   Flex,
@@ -8,15 +7,12 @@ import {
   TagLeftIcon,
   TagLabel,
   useColorModeValue,
-  Spinner,
   Link,
 } from '@chakra-ui/react';
 import { BsTag } from 'react-icons/bs';
 import { Helmet } from 'react-helmet';
-// import { useQuery } from '@tanstack/react-query';
 
 import { AllBooks } from '../components/AllBooks';
-// import { Categories } from './Categories';
 import { categoryLinks } from '../components/links';
 import { ContainerTitle } from '../components/ContainerTitle';
 
@@ -26,7 +22,6 @@ export function Explorer() {
       <Helmet>
         <title>Explorar</title>
       </Helmet>
-      {/* <ErrorBoundary FallbackComponent={AllBooks}> */}
       <ContainerTitle title='Explorar' />
       <Flex justify='center'>
         <Box
@@ -56,12 +51,13 @@ export function Explorer() {
             <Link
               key={name}
               as={NavLink}
-              to={`/categories/${name
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .split(' ')
-                .join('-')}`}
+              // to={`/categories/${name
+              //   .toLowerCase()
+              //   .normalize('NFD')
+              //   .replace(/[\u0300-\u036f]/g, '')
+              //   .split(' ')
+              //   .join('-')}`}
+              to={`/categories/${name}`}
               _hover={{ outline: 'none' }}
             >
               <Tag colorScheme='green' size='lg' variant='subtle' m='1'>
@@ -73,7 +69,6 @@ export function Explorer() {
         </Box>
       </Flex>
       <AllBooks />
-      {/* </ErrorBoundary> */}
     </>
   );
 }

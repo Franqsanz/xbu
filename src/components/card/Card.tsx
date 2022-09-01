@@ -54,12 +54,13 @@ export function Card({
           <Box p='7'>
             <Link
               as={NavLink}
-              to={`/categories/${category
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .split(' ')
-                .join('-')}`}
+              // to={`/categories/${category
+              //   .toLowerCase()
+              //   .normalize('NFD')
+              //   .replace(/[\u0300-\u036f]/g, '')
+              //   .split(' ')
+              //   .join('-')}`}
+              to={`/categories/${category}`}
               _hover={{ outline: 'none' }}
             >
               <Tag colorScheme='green' size='lg' variant='subtle'>

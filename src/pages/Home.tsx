@@ -9,7 +9,6 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { Helmet } from 'react-helmet';
-// import { useQuery } from '@tanstack/react-query'
 
 import { AllBooks } from '../components/AllBooks';
 

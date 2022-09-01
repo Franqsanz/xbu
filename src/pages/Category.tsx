@@ -1,45 +1,25 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import {
-  Flex,
-  Box,
-  Text,
-  Spinner,
-  useColorModeValue,
-  Link,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  Button,
-} from '@chakra-ui/react';
-import { useQuery, QueryErrorResetBoundary } from '@tanstack/react-query';
+import { Flex, useColorModeValue } from '@chakra-ui/react';
 
 import { Card } from '../components/card/Card';
 import { CardProps } from '../components/types';
-import { getAllBooks } from '../services/api';
+import { useCategory } from '../hooks/querys';
 import { ContainerTitle } from '../components/ContainerTitle';
 
 export function Category() {
   const { param } = useParams();
   const colorCard = useColorModeValue('gray.900', 'gray.100');
 
-  const { data } = useQuery(['Books'], getAllBooks, {
-    suspense: true,
-  });
+  const { data } = useCategory(param);
 
   return (
     <>
       <Helmet>
-        <title>
-          {
-            ((param?.charAt(0).toUpperCase() as string) +
-              param?.slice(1).split('-').join(' ')) as string
-          }{' '}
-          | Categorias
-        </title>
+        <title>{param} | Categorias</title>
       </Helmet>
-      <ContainerTitle title={param?.toUpperCase().split('-').join(' ')} />
+      <ContainerTitle title={param} />
       <Flex
         w='full'
         justify='center'
@@ -48,42 +28,30 @@ export function Category() {
         flexWrap='wrap'
         color={colorCard}
       >
-        {data
-          .filter(({ category }: CardProps) => {
-            const cat = category
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .split(' ')
-              .join('-');
-
-            const regex = new RegExp(cat, 'gi');
-            const compare = regex.test(param as string);
-            return compare;
-          })
-          .map(
-            ({
-              id,
-              title,
-              description,
-              author,
-              category,
-              publicationDate,
-              sourceLink,
-              numberPages,
-            }: CardProps) => (
-              <React.Fragment key={id}>
-                <Card
-                  category={category}
-                  title={title}
-                  author={author}
-                  description={description}
-                  numberPages={numberPages}
-                  sourceLink={sourceLink}
-                  publicationDate={publicationDate}
-                />
-              </React.Fragment>
-            ),
-          )}
+        {data.map(
+          ({
+            id,
+            title,
+            description,
+            author,
+            category,
+            publicationDate,
+            sourceLink,
+            numberPages,
+          }: CardProps) => (
+            <React.Fragment key={id}>
+              <Card
+                category={category}
+                title={title}
+                author={author}
+                description={description}
+                numberPages={numberPages}
+                sourceLink={sourceLink}
+                publicationDate={publicationDate}
+              />
+            </React.Fragment>
+          ),
+        )}
       </Flex>
     </>
   );
