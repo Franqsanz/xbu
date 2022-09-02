@@ -1,12 +1,14 @@
+import { url } from '../utils/config';
+
 async function getAllBooks() {
   // const res = await fetch('http://localhost:9090/api/');
-  const res = await fetch('https://xb-api.vercel.app/api');
+  const res = await fetch(url);
   return res.json();
 }
 
 async function postBook(books: any) {
   // const res = await fetch('http://localhost:9090/api/', {
-  const res = await fetch('https://xb-api.vercel.app/api', {
+  const res = await fetch(url, {
     method: 'POST',
     headers: {
       accept: 'application/json',
@@ -21,7 +23,7 @@ async function postBook(books: any) {
 
 async function getBookCategory(category: any) {
   const res = await fetch(
-    `https://xb-api.vercel.app/api/?category=${category}`,
+    `${url}?category=${category}`,
     // `http://localhost:9090/api/?category=${category}`,
   );
 
@@ -31,7 +33,7 @@ async function getBookCategory(category: any) {
 
 async function deleteBook(id: any) {
   // const res = await fetch('http://localhost:9090/api/', {
-  const res = await fetch(`https://xb-api.vercel.app/api/${id}`, {
+  const res = await fetch(`${url}/${id}`, {
     method: 'DELETE',
   });
 

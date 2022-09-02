@@ -27,9 +27,9 @@ export function Explorer() {
         <Box
           display='flex'
           w='8xl'
-          h='60px'
           overflow='auto'
           flexDirection='row'
+          flexWrap={{ base: 'nowrap', md: 'wrap' }}
           mt='10'
           mx={{ base: 5, md: 16 }}
           scrollSnapType='x mandatory'
@@ -51,12 +51,6 @@ export function Explorer() {
             <Link
               key={name}
               as={NavLink}
-              // to={`/categories/${name
-              //   .toLowerCase()
-              //   .normalize('NFD')
-              //   .replace(/[\u0300-\u036f]/g, '')
-              //   .split(' ')
-              //   .join('-')}`}
               to={`/categories/${name}`}
               _hover={{ outline: 'none' }}
             >

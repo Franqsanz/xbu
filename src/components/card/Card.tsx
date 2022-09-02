@@ -28,12 +28,6 @@ export function Card({
   const borderCard = useColorModeValue('gray.200', '#8bd07a');
   const bgCard = useColorModeValue('white', 'black');
 
-  // const { data, isLoading, error } = useQuery(['Books'], async () => {
-  //   // const res = await fetch('http://localhost:9090/api/');
-  //   const res = await fetch('https://xb-api.vercel.app/api');
-  //   return res.json();
-  // });
-
   return (
     <>
       <Box
@@ -54,12 +48,6 @@ export function Card({
           <Box p='7'>
             <Link
               as={NavLink}
-              // to={`/categories/${category
-              //   .toLowerCase()
-              //   .normalize('NFD')
-              //   .replace(/[\u0300-\u036f]/g, '')
-              //   .split(' ')
-              //   .join('-')}`}
               to={`/categories/${category}`}
               _hover={{ outline: 'none' }}
             >
