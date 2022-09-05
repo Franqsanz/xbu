@@ -5,9 +5,7 @@ import { Box, Button, Flex, VStack, Link, Spinner } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import { GrPowerReset } from 'react-icons/gr';
 
-import { Category } from './pages/Category';
-
-export function CatchError() {
+export function CatchError({ children }: { children: React.ReactNode }) {
   return (
     <QueryErrorResetBoundary>
       {({ reset }) => (
@@ -69,7 +67,7 @@ export function CatchError() {
               </Flex>
             }
           >
-            <Category />
+            {children}
           </Suspense>
         </ErrorBoundary>
       )}

@@ -9,6 +9,7 @@ import { FormNewBook } from './pages/NewBook';
 import { Home } from './pages/Home';
 import { Explorer } from './pages/Explorer';
 import { Categories } from './pages/Categories';
+import { Category } from './pages/Category';
 import { ErrorPage } from './pages/404';
 import { Nav } from './components/nav/Nav';
 import { Footer } from './components/Footer';
@@ -30,7 +31,14 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path='new-book' element={<FormNewBook />} />
           <Route path='explorer' element={<Explorer />} />
           <Route path='categories' element={<Categories />} />
-          <Route path='categories/:param' element={<CatchError />} />
+          <Route
+            path='categories/:param'
+            element={
+              <CatchError>
+                <Category />
+              </CatchError>
+            }
+          />
           <Route path='*' element={<ErrorPage />} />
         </Routes>
         <Footer />

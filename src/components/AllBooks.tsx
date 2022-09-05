@@ -12,13 +12,13 @@ import {
 import { useQuery } from '@tanstack/react-query';
 
 import { CardProps } from './types';
-import { getAllBooks } from '../services/api';
+// import { getAllBooks } from '../services/api';
+import { useAllBooks } from '../hooks/querys';
 import { Card } from './card/Card';
 
 export function AllBooks() {
   const colorCard = useColorModeValue('gray.900', 'gray.100');
-
-  const { data, isLoading, error } = useQuery(['Books'], getAllBooks);
+  const { data, isLoading, error } = useAllBooks();
 
   if (error) {
     return (
