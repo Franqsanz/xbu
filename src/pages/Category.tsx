@@ -1,12 +1,12 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { Flex, useColorModeValue } from '@chakra-ui/react';
 
 import { Card } from '../components/card/Card';
 import { CardProps } from '../components/types';
 import { useCategory } from '../hooks/querys';
 import { ContainerTitle } from '../components/ContainerTitle';
+import { Title } from '../components/Title';
 
 export function Category() {
   const { param } = useParams();
@@ -16,9 +16,7 @@ export function Category() {
 
   return (
     <>
-      <Helmet>
-        <title>{param} | Categorias</title>
-      </Helmet>
+      <Title title={`${param} | Categorias`} />
       <ContainerTitle title={param} />
       <Flex
         w='full'

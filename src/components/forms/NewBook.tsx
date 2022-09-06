@@ -26,7 +26,7 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { categoryLinks } from '../links';
 import { postBook } from '../../services/api';
 
-export function NewBook() {
+export function FormNewBook() {
   const toast = useToast();
   // const [imageSrc, setImageSrc] = useState();
   // const [uploadData, setUploadData] = useState();

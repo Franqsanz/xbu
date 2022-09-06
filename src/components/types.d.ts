@@ -19,4 +19,8 @@ interface TitleProps {
   title: string | undefined;
 }
 
-export type { LinkProps, CardProps, TitleProps };
+interface PageTitleProps {
+  title: string;
+}
+
+export type { LinkProps, CardProps, TitleProps, PageTitleProps };

@@ -20,17 +20,15 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react';
-import { Helmet } from 'react-helmet';
 
-import { NewBook } from '../components/forms/NewBook';
+import { FormNewBook } from '../components/forms/NewBook';
+import { Title } from '../components/Title';
 
-export function FormNewBook() {
+export function NewBook() {
   return (
     <>
-      <Helmet>
-        <title>Nueva Publicacion</title>
-      </Helmet>
-      <NewBook />
+      <Title title='Nueva Publicación' />
+      <FormNewBook />
     </>
   );
 }

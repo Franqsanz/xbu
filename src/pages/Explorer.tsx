@@ -10,18 +10,16 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { BsTag } from 'react-icons/bs';
-import { Helmet } from 'react-helmet';
 
 import { AllBooks } from '../components/AllBooks';
 import { categoryLinks } from '../components/links';
 import { ContainerTitle } from '../components/ContainerTitle';
+import { Title } from '../components/Title';
 
 export function Explorer() {
   return (
     <>
-      <Helmet>
-        <title>Explorar</title>
-      </Helmet>
+      <Title title='Explorar' />
       <ContainerTitle title='Explorar' />
       <Flex justify='center'>
         <Box

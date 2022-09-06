@@ -1,4 +1,4 @@
-import { url } from '../utils/config';
+import { url } from '../config';
 
 async function getAllBooks() {
   // const res = await fetch('http://localhost:9090/api/');

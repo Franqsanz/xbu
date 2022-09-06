@@ -5,7 +5,7 @@ import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { FormNewBook } from './pages/NewBook';
+import { NewBook } from './pages/NewBook';
 import { Home } from './pages/Home';
 import { Explorer } from './pages/Explorer';
 import { Categories } from './pages/Categories';
@@ -28,7 +28,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <Nav />
         <Routes>
           <Route index element={<Home />} />
-          <Route path='new-book' element={<FormNewBook />} />
+          <Route path='new-book' element={<NewBook />} />
           <Route path='explorer' element={<Explorer />} />
           <Route path='categories' element={<Categories />} />
           <Route

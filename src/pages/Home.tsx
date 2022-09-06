@@ -8,16 +8,14 @@ import {
   Heading,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { Helmet } from 'react-helmet';
 
+import { Title } from '../components/Title';
 import { AllBooks } from '../components/AllBooks';
 
 export function Home() {
   return (
     <>
-      <Helmet>
-        <title>Home</title>
-      </Helmet>
+      <Title title='XBuniverse' />
       <Container maxW='3xl'>
         <Box my={{ base: '20', md: '32', xl: '40' }}>
           <Box
