@@ -34,7 +34,7 @@ export function MobileNav() {
         bg={useColorModeValue('#ffffff56', '#12121244')}
         boxShadow='sm'
         backdropFilter='auto'
-        backdropBlur='4px'
+        backdropBlur='12px'
         direction='column'
         position='sticky'
         top='0'

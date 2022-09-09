@@ -20,11 +20,11 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 // import ImageUploading, { ImageListType } from "react-images-uploading";
 
 import { categoryLinks } from '../links';
-import { postBook } from '../../services/api';
+import { useMutatePost } from '../../hooks/querys';
 
 export function FormNewBook() {
   const toast = useToast();
@@ -53,6 +53,16 @@ export function FormNewBook() {
     !books.numberPages ||
     !books.sourceLink;
 
+  // console.log(JSON.stringify(books) === '{}');
+  // if (Object.values(books).length === 0) {
+  //   console.log('vacio');
+  // } else {
+  //   console.log('no vacio');
+  // }
+  // Object.entries({ ...books }).some((d) => {
+  //   console.log(d[1] === '');
+  // });
+
   // const maxNumber = 69;
 
   // const onChange = (
@@ -67,10 +77,7 @@ export function FormNewBook() {
     return res.json();
   });
 
-  const { mutate, isLoading, isSuccess, error } = useMutation(
-    ['Books'],
-    postBook,
-  );
+  const { mutate, isLoading, isSuccess, error } = useMutatePost();
 
   function handleChange(
     e: React.ChangeEvent<
@@ -85,7 +92,6 @@ export function FormNewBook() {
 
   function handleSubmit(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    // console.log(books);
     mutate(books);
   }
 
@@ -272,6 +278,7 @@ export function FormNewBook() {
                   _hover={{ bg: '#1f9b00' }}
                   _active={{ bg: '#1f9b00' }}
                   isDisabled={disabled}
+                  // isDisabled={Object.getOwnPropertyNames(books) === 0}
                   loadingText='Publicando...'
                   isLoading={isLoading}
                 >

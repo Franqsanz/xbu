@@ -33,7 +33,7 @@ export function Nav() {
         top='0'
         boxShadow='sm'
         backdropFilter='auto'
-        backdropBlur='4px'
+        backdropBlur='10px'
         zIndex='1'
       >
         <Flex w='100%' justify='space-between' align='center'>

@@ -1,14 +1,27 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { getAllBooks, getBookCategory } from '../services/api';
+import { getAllBooks, getBookCategory, postBook } from '../services/api';
 
 const key = 'Books';
 
-export function useAllBooks() {
+function useMutatePost() {
+  return useMutation([key], postBook);
+
+  // const queryClient = useQueryClient();
+  // onSuccess: (post) => {
+  //   queryClient.setQueryData([key], (prevPosts) => prevPosts.concat(post));
+  //   queryClient.invalidateQueries([key]);
+  // },
+  // });
+}
+
+function useAllBooks() {
   return useQuery([key], () => getAllBooks());
 }
 
-export function useCategory(category: any) {
+function useCategory(category: any) {
   return useQuery([key, category], () => getBookCategory(category), {
     suspense: true,
   });
 }
+
+export { useMutatePost, useAllBooks, useCategory };
