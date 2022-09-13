@@ -9,7 +9,7 @@ import {
   AlertIcon,
   AlertTitle,
 } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
+// import { useQuery } from '@tanstack/react-query';
 
 import { CardProps } from './types';
 // import { getAllBooks } from '../services/api';
@@ -38,7 +38,6 @@ export function AllBooks() {
       </Alert>
     );
   }
-
   return (
     <>
       <Flex

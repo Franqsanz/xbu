@@ -7,78 +7,62 @@ const navLink: Array<LinkProps> = [
   },
   {
     name: 'Explorar',
-    href: '/explorer',
+    href: 'explorer',
   },
   {
     name: 'Publicar un Libro',
-    href: '/new-book',
+    href: 'new-book',
   },
 ];
 
 const categoryLinks: Array<LinkProps> = [
   {
     name: 'Ciencia Ficción',
-    // href: 'ciencia-ficcion',
   },
   {
     name: 'Terror',
-    // href: 'terror',
   },
   {
     name: 'Suspenso',
-    // href: 'suspenso',
   },
   {
     name: 'Economía',
-    // href: 'economia',
   },
   {
     name: 'Románticos',
-    // href: 'romanticos',
   },
   {
-    name: 'Fantasia',
-    // href: 'fantasia',
+    name: 'Fantasía',
   },
   {
     name: 'Poesía',
-    // href: 'fantasia',
   },
   {
     name: 'Politica',
-    // href: 'fantasia',
   },
   {
     name: 'Medicina',
-    // href: 'fantasia',
   },
   {
     name: 'Policiales',
-    // href: 'fantasia',
   },
   {
     name: 'Ciencias',
-    // href: 'fantasia',
   },
   {
     name: 'Programación',
-    // href: 'fantasia',
   },
   {
     name: 'Tecnología',
-    // href: 'fantasia',
   },
   {
     name: 'Física',
-    // href: 'fantasia',
   },
   {
     name: 'Ingenierías',
-    // href: 'fantasia',
   },
   {
     name: 'Cómics',
-    // href: 'fantasia',
   },
 ];
 

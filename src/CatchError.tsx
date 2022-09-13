@@ -1,11 +1,23 @@
 import React, { Suspense } from 'react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Box, Button, Flex, VStack, Link, Spinner } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  VStack,
+  Link,
+  Spinner,
+  useColorModeValue,
+  Icon,
+} from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import { GrPowerReset } from 'react-icons/gr';
+import { FiArrowLeft } from 'react-icons/fi';
 
 export function CatchError({ children }: { children: React.ReactNode }) {
+  const bgColorBtn = useColorModeValue('#2de000', '#24b300');
+
   return (
     <QueryErrorResetBoundary>
       {({ reset }) => (
@@ -39,18 +51,21 @@ export function CatchError({ children }: { children: React.ReactNode }) {
                       borderColor: 'black',
                     }}
                   >
-                    ← Volver a explorar
+                    <Flex align='center' justify='center'>
+                      <Icon as={FiArrowLeft} mr='2' />
+                      Volver a explorar
+                    </Flex>
                   </Link>
                   <Button
                     leftIcon={<GrPowerReset />}
                     size='lg'
-                    bg='#26be00'
+                    bg={bgColorBtn}
                     color='black'
                     ml={{ base: 0, md: 5 }}
                     mt={{ base: 5, md: 0 }}
                     height='55px'
-                    _hover={{ bg: '#1f9b00' }}
-                    _active={{ bg: '#1f9b00' }}
+                    _hover={{ bg: '#28c900' }}
+                    _active={{ bg: '#28c900' }}
                     onClick={() => resetErrorBoundary()}
                   >
                     Volver a Intentar
