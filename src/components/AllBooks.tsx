@@ -20,6 +20,14 @@ export function AllBooks() {
   const colorCard = useColorModeValue('gray.900', 'gray.100');
   const { data, isLoading, error } = useAllBooks();
 
+  if (isLoading) {
+    return (
+      <Flex justify='center' py='20vh'>
+        <Spinner size='xl' thickness='4px' speed='0.55s' />
+      </Flex>
+    );
+  }
+
   if (error) {
     return (
       <Alert
@@ -38,6 +46,7 @@ export function AllBooks() {
       </Alert>
     );
   }
+
   return (
     <>
       <Flex
@@ -48,33 +57,29 @@ export function AllBooks() {
         flexWrap='wrap'
         color={colorCard}
       >
-        {isLoading ? (
-          <Spinner size='xl' thickness='4px' speed='0.55s' />
-        ) : (
-          data.map(
-            ({
-              id,
-              title,
-              description,
-              author,
-              category,
-              publicationDate,
-              sourceLink,
-              numberPages,
-            }: CardProps) => (
-              <React.Fragment key={id}>
-                <Card
-                  category={category}
-                  title={title}
-                  author={author}
-                  description={description}
-                  numberPages={numberPages}
-                  sourceLink={sourceLink}
-                  publicationDate={publicationDate}
-                />
-              </React.Fragment>
-            ),
-          )
+        {data.map(
+          ({
+            id,
+            title,
+            description,
+            author,
+            category,
+            publicationDate,
+            sourceLink,
+            numberPages,
+          }: CardProps) => (
+            <React.Fragment key={id}>
+              <Card
+                category={category}
+                title={title}
+                author={author}
+                description={description}
+                numberPages={numberPages}
+                sourceLink={sourceLink}
+                publicationDate={publicationDate}
+              />
+            </React.Fragment>
+          ),
         )}
       </Flex>
     </>

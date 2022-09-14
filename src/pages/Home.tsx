@@ -5,12 +5,10 @@ import {
   Flex,
   Box,
   Text,
-  Spinner,
   Container,
   Image,
   Heading,
   useColorModeValue,
-  Button,
   Link,
   Icon,
 } from '@chakra-ui/react';
@@ -23,8 +21,8 @@ export function Home() {
   return (
     <>
       <Title title='XBuniverse' />
-      <Container maxW='3xl'>
-        <Box my={{ base: 10, xl: 28 }} mt={{ base: 24, xl: 28 }}>
+      <Container maxW='9xl' bg={useColorModeValue('gray.100', 'none')}>
+        <Box py={{ base: 10, xl: 28 }} pt={{ base: 24, xl: 28 }}>
           <Box
             textAlign='center'
             as='h1'
@@ -35,69 +33,71 @@ export function Home() {
           >
             XBuniverse
           </Box>
-          <Box
-            color='green'
-            fontSize={{ base: '3xl', md: '5xl' }}
-            fontWeight='bold'
-            my='3'
-            textAlign={{ base: 'center', md: 'left' }}
-          >
-            ¡Explora!
+          <Box maxW='2xl' m='auto'>
+            <Box
+              color='green'
+              fontSize={{ base: '3xl', md: '5xl' }}
+              fontWeight='bold'
+              my='3'
+              textAlign={{ base: 'center', md: 'left' }}
+            >
+              ¡Explora!
+            </Box>
+            <Text
+              px={{ base: 5, md: 0 }}
+              fontSize='lg'
+              textAlign={{ base: 'center', md: 'left' }}
+            >
+              Comparte tus libros favoritos con la comunidad.
+            </Text>
+            <Flex
+              mt='14'
+              textAlign='center'
+              direction={{ base: 'column', md: 'row' }}
+              align='center'
+            >
+              <Link
+                w={{ base: '250px', md: '200px' }}
+                to='/login'
+                as={NavLink}
+                border='1px'
+                bg={useColorModeValue('#2de000', '#24b300')}
+                color='black'
+                borderRadius='lg'
+                p='3'
+                fontSize='xl'
+                _hover={{
+                  outline: 'none',
+                  bg: '#28c900',
+                }}
+              >
+                Registrarse
+              </Link>
+              <Link
+                w={{ base: '250px', md: '200px' }}
+                to='/explorer'
+                as={NavLink}
+                border='1px'
+                borderColor='black'
+                bg={useColorModeValue('#2de000', '#24b300')}
+                color='black'
+                borderRadius='lg'
+                mt={{ base: 5, md: 0 }}
+                p='3'
+                ml={{ base: 0, md: 5 }}
+                fontSize='xl'
+                _hover={{
+                  outline: 'none',
+                  bg: '#28c900',
+                }}
+              >
+                <Flex align='center' justify='center'>
+                  Explorar
+                  <Icon as={FiArrowRight} ml='2' />
+                </Flex>
+              </Link>
+            </Flex>
           </Box>
-          <Text
-            px={{ base: 5, md: 0 }}
-            fontSize='lg'
-            textAlign={{ base: 'center', md: 'left' }}
-          >
-            Comparte tus libros favoritos con la comunidad.
-          </Text>
-          <Flex
-            mt='14'
-            textAlign='center'
-            direction={{ base: 'column', md: 'row' }}
-            align='center'
-          >
-            <Link
-              w={{ base: '250px', md: '200px' }}
-              to='/'
-              as={NavLink}
-              border='1px'
-              bg={useColorModeValue('#2de000', '#24b300')}
-              color='black'
-              borderRadius='lg'
-              p='3'
-              fontSize='xl'
-              _hover={{
-                outline: 'none',
-                bg: '#28c900',
-              }}
-            >
-              Registrarse
-            </Link>
-            <Link
-              w={{ base: '250px', md: '200px' }}
-              to='/explorer'
-              as={NavLink}
-              border='1px'
-              borderColor='black'
-              bg={useColorModeValue('#2de000', '#24b300')}
-              color='black'
-              borderRadius='lg'
-              mt={{ base: 5, md: 0 }}
-              p='3'
-              ml={{ base: 0, md: 5 }}
-              fontSize='xl'
-              _hover={{
-                outline: 'none',
-                bg: '#28c900',
-              }}
-            >
-              <Flex align='center' justify='center'>
-                Explorar
-                <Icon as={FiArrowRight} ml='2' />
-              </Flex>
-            </Link>
-          </Flex>
         </Box>
       </Container>
       <Flex
