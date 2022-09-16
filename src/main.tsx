@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { NewBook } from './pages/NewBook';
 import { Home } from './pages/Home';
+import { Register } from './pages/Register';
 import { Login } from './pages/Login';
 import { Explorer } from './pages/Explorer';
 import { Categories } from './pages/Categories';
@@ -29,9 +30,10 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <Nav />
         <Routes>
           <Route index element={<Home />} />
+          <Route path='register' element={<Register />} />
           <Route path='login' element={<Login />} />
           <Route path='new-book' element={<NewBook />} />
-          <Route path='explorer' element={<Explorer />} />
+          <Route path='explore' element={<Explorer />} />
           <Route path='categories' element={<Categories />} />
           <Route
             path='categories/:param'

@@ -6,11 +6,11 @@ import { BsFacebook } from 'react-icons/bs';
 import { ContainerTitle } from '../components/ContainerTitle';
 import { Title } from '../components/Title';
 
-export function Login() {
+export function Register() {
   return (
     <>
-      <Title title='Iniciar Sesión' />
-      <ContainerTitle title='Iniciar Sesión' />
+      <Title title='Crear cuenta' />
+      <ContainerTitle title='Crear cuenta' />
       <Flex justify='center' py={{ base: '10vh', md: '15vh' }}>
         <Stack direction='column' spacing='5'>
           <Button

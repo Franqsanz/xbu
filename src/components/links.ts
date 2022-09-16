@@ -7,11 +7,22 @@ const navLink: Array<LinkProps> = [
   },
   {
     name: 'Explorar',
-    href: 'explorer',
+    href: 'explore',
+  },
+  // {
+  //   name: 'Publicar un Libro',
+  //   href: 'new-book',
+  // },
+];
+
+const accountLinks: Array<LinkProps> = [
+  {
+    name: 'Registrarse',
+    href: 'register',
   },
   {
-    name: 'Publicar un Libro',
-    href: 'new-book',
+    name: 'Ingresar',
+    href: 'login',
   },
 ];
 
@@ -66,4 +77,4 @@ const categoryLinks: Array<LinkProps> = [
   },
 ];
 
-export { navLink, categoryLinks };
+export { navLink, accountLinks, categoryLinks };

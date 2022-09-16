@@ -9,20 +9,31 @@ import {
   Image,
   Heading,
   useColorModeValue,
+  useColorMode,
   Link,
   Icon,
 } from '@chakra-ui/react';
 
 import { Title } from '../components/Title';
 import { AllBooks } from '../components/AllBooks';
-import i from '../assets/imgBook.svg';
+import iconBook from '../assets/imgBook.svg';
+import iconsBooksGray from '../assets/iconsBooksGray.svg';
+import iconsBooksDark from '../assets/iconsBooksDark.svg';
 
 export function Home() {
+  const { colorMode } = useColorMode();
+
   return (
     <>
       <Title title='XBuniverse' />
-      <Container maxW='9xl' bg={useColorModeValue('gray.100', 'none')}>
-        <Box py={{ base: 10, xl: 28 }} pt={{ base: 24, xl: 28 }}>
+      <Container
+        maxW='9xl'
+        p='0'
+        bg={useColorModeValue('gray.50', 'none')}
+        backgroundImage={colorMode === 'dark' ? iconsBooksDark : iconsBooksGray}
+        backgroundAttachment='fixed'
+      >
+        <Box py={{ base: 10, xl: 14 }} pt={{ base: 24, xl: 28 }}>
           <Box
             textAlign='center'
             as='h1'
@@ -58,7 +69,7 @@ export function Home() {
             >
               <Link
                 w={{ base: '250px', md: '200px' }}
-                to='/login'
+                to='/register'
                 as={NavLink}
                 border='1px'
                 bg={useColorModeValue('#2de000', '#24b300')}
@@ -75,7 +86,7 @@ export function Home() {
               </Link>
               <Link
                 w={{ base: '250px', md: '200px' }}
-                to='/explorer'
+                to='/explore'
                 as={NavLink}
                 border='1px'
                 borderColor='black'
@@ -110,7 +121,7 @@ export function Home() {
         px='7'
         direction={{ base: 'column', md: 'row' }}
       >
-        <Image src={i} w='500px' alt='' />
+        <Image src={iconBook} w='500px' alt='' />
         <Flex direction='column' ml={{ base: 0, md: 3 }}>
           <Heading
             mb='10'

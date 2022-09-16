@@ -2,7 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
-import { BsSun, BsMoon } from 'react-icons/bs';
+import { BsSun } from 'react-icons/bs';
+import { RiMoonLine } from 'react-icons/ri';
 import {
   Box,
   Flex,
@@ -18,7 +19,7 @@ import {
   Collapse,
 } from '@chakra-ui/react';
 
-import { navLink } from '../links';
+import { navLink, accountLinks } from '../links';
 
 export function MobileNav() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -73,13 +74,38 @@ export function MobileNav() {
             _active={{ bg: 'none' }}
             _hover={{ color: '#2de000' }}
           >
-            {colorMode === 'dark' ? <BsSun size='18' /> : <BsMoon size='18' />}
+            {colorMode === 'dark' ? (
+              <BsSun size='18' />
+            ) : (
+              <RiMoonLine size='18' />
+            )}
           </Button>
         </Flex>
         <Collapse in={isOpen}>
           <Box w='full'>
             <List>
               {navLink.map(({ name, href }) => (
+                <ListItem key={name} my='2'>
+                  <Link
+                    display='block'
+                    onClick={onToggle}
+                    as={NavLink}
+                    to={href as string}
+                    mx='5'
+                    p='3'
+                    rounded='xl'
+                    fontWeight='medium'
+                    _hover={{
+                      bg: 'gray.700',
+                      border: 'none',
+                      color: '#2de000',
+                    }}
+                  >
+                    {name}
+                  </Link>
+                </ListItem>
+              ))}
+              {accountLinks.map(({ name, href }) => (
                 <ListItem key={name} my='2'>
                   <Link
                     display='block'

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { BsSun, BsMoon } from 'react-icons/bs';
+import { BsSun } from 'react-icons/bs';
+import { RiMoonLine } from 'react-icons/ri';
 import {
   Flex,
   Box,
@@ -13,7 +14,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-import { navLink } from '../links';
+import { navLink, accountLinks } from '../links';
 import { MobileNav } from './MobileNav';
 
 export function Nav() {
@@ -36,7 +37,7 @@ export function Nav() {
         backdropBlur='12px'
         zIndex='1'
       >
-        <Flex w='100%' justify='space-between' align='center'>
+        <Flex w='100%' justify='space-around' align='center'>
           <Box
             as='span'
             bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
@@ -69,16 +70,31 @@ export function Nav() {
                   </Link>
                 </ListItem>
               ))}
+              {accountLinks.map(({ name, href }) => (
+                <Link
+                  key={name}
+                  as={NavLink}
+                  to={href as string}
+                  border='1px'
+                  borderColor='#2de000'
+                  p='2'
+                  rounded='lg'
+                  mx='3'
+                  _hover={{ bg: '#28c900', outline: 'none' }}
+                >
+                  {name}
+                </Link>
+              ))}
               <Button
                 onClick={toggleColorMode}
                 bg='none'
-                _active={{ bg: 'none' }}
+                _active={{ bg: 'none', outline: '2px solid #4299E1' }}
                 _hover={{ color: '#2de000' }}
               >
                 {colorMode === 'dark' ? (
                   <BsSun size='20' />
                 ) : (
-                  <BsMoon size='20' />
+                  <RiMoonLine size='20' />
                 )}
               </Button>
             </List>
