@@ -33,7 +33,7 @@ export function Home() {
         backgroundImage={colorMode === 'dark' ? iconsBooksDark : iconsBooksGray}
         backgroundAttachment='fixed'
       >
-        <Box py={{ base: 10, xl: 14 }} pt={{ base: 24, xl: 28 }}>
+        <Box py={{ base: 10, md: '20vh' }} pt={{ base: 24, lg: 28 }}>
           <Box
             textAlign='center'
             as='h1'

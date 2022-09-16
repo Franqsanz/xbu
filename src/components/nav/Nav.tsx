@@ -11,7 +11,6 @@ import {
   Button,
   useColorMode,
   useColorModeValue,
-  useDisclosure,
 } from '@chakra-ui/react';
 
 import { navLink, accountLinks } from '../links';
@@ -38,38 +37,42 @@ export function Nav() {
         zIndex='1'
       >
         <Flex w='100%' justify='space-around' align='center'>
-          <Box
-            as='span'
-            bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
-            bgClip='text'
-            fontSize='2xl'
-            fontWeight='bold'
-            ml='5'
-          >
-            <Link as={NavLink} to='/'>
-              XB
-            </Link>
-          </Box>
-          <Box as='nav' mr='5'>
+          <Flex align='center'>
+            <Box
+              as='span'
+              bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
+              bgClip='text'
+              fontSize='2xl'
+              fontWeight='bold'
+            >
+              <Link as={NavLink} to='/'>
+                XB
+              </Link>
+            </Box>
+            <Box>
+              <List display='flex' alignItems='center'>
+                {navLink.map(({ name, href }) => (
+                  <ListItem key={name}>
+                    <Link
+                      as={NavLink}
+                      to={href as string}
+                      ml='7'
+                      fontWeight='medium'
+                      _activeLink={{
+                        borderBottom: '2px',
+                        borderColor: '#2de000',
+                      }}
+                      _hover={{ color: '#2de000' }}
+                    >
+                      {name}
+                    </Link>
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          </Flex>
+          <Box as='nav'>
             <List display='flex' alignItems='center'>
-              {navLink.map(({ name, href }) => (
-                <ListItem key={name}>
-                  <Link
-                    as={NavLink}
-                    to={href as string}
-                    mx='5'
-                    py='1'
-                    fontWeight='medium'
-                    _activeLink={{
-                      borderBottom: '2px',
-                      borderColor: '#2de000',
-                    }}
-                    _hover={{ color: '#2de000' }}
-                  >
-                    {name}
-                  </Link>
-                </ListItem>
-              ))}
               {accountLinks.map(({ name, href }) => (
                 <Link
                   key={name}

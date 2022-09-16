@@ -1,28 +1,28 @@
 import { LinkProps } from './types';
 
 const navLink: Array<LinkProps> = [
-  {
-    name: 'Inicio',
-    href: '/',
-  },
+  // {
+  //   name: 'Inicio',
+  //   href: '/',
+  // },
   {
     name: 'Explorar',
     href: 'explore',
   },
-  // {
-  //   name: 'Publicar un Libro',
-  //   href: 'new-book',
-  // },
+  {
+    name: 'Publicar un Libro',
+    href: 'new-book',
+  },
 ];
 
 const accountLinks: Array<LinkProps> = [
   {
-    name: 'Registrarse',
-    href: 'register',
-  },
-  {
     name: 'Ingresar',
     href: 'login',
+  },
+  {
+    name: 'Registrarse',
+    href: 'register',
   },
 ];
 
