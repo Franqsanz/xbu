@@ -6,6 +6,12 @@ async function getAllBooks() {
   return res.json();
 }
 
+async function getBook(id: string) {
+  // const res = await fetch('http://localhost:9090/api/');
+  const res = await fetch(`${url}/${id}`);
+  return res.json();
+}
+
 async function postBook(books: any) {
   // const res = await fetch('http://localhost:9090/api/', {
   const res = await fetch(url, {
@@ -44,4 +50,4 @@ async function deleteBook(id: any) {
   return true;
 }
 
-export { getAllBooks, getBookCategory, postBook, deleteBook };
+export { getAllBooks, getBook, getBookCategory, postBook, deleteBook };
