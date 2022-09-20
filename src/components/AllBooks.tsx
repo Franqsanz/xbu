@@ -1,18 +1,14 @@
 import React from 'react';
 import {
   Flex,
-  Text,
   Spinner,
   useColorModeValue,
-  Link,
   Alert,
   AlertIcon,
   AlertTitle,
 } from '@chakra-ui/react';
-// import { useQuery } from '@tanstack/react-query';
 
 import { CardProps } from './types';
-// import { getAllBooks } from '../services/api';
 import { useAllBooks } from '../hooks/querys';
 import { Card } from './card/Card';
 
@@ -70,6 +66,7 @@ export function AllBooks() {
           }: CardProps) => (
             <React.Fragment key={id}>
               <Card
+                id={id}
                 category={category}
                 title={title}
                 author={author}

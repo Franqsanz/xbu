@@ -12,6 +12,7 @@ import { Login } from './pages/Login';
 import { Explorer } from './pages/Explorer';
 import { Categories } from './pages/Categories';
 import { Category } from './pages/Category';
+import { Book } from './pages/Book';
 import { ErrorPage } from './pages/404';
 import { Nav } from './components/nav/Nav';
 import { Footer } from './components/Footer';
@@ -40,6 +41,14 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             element={
               <CatchError>
                 <Category />
+              </CatchError>
+            }
+          />
+          <Route
+            path='book/:id'
+            element={
+              <CatchError>
+                <Book />
               </CatchError>
             }
           />

@@ -82,7 +82,7 @@ export function Nav() {
                   borderColor='#2de000'
                   p='2'
                   rounded='lg'
-                  mx='3'
+                  mx='2'
                   _hover={{ bg: '#28c900', outline: 'none' }}
                 >
                   {name}

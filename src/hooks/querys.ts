@@ -1,5 +1,10 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { getAllBooks, getBookCategory, postBook } from '../services/api';
+import {
+  getAllBooks,
+  getBook,
+  getBookCategory,
+  postBook,
+} from '../services/api';
 
 const key = 'Books';
 
@@ -24,4 +29,10 @@ function useCategory(category: any) {
   });
 }
 
-export { useMutatePost, useAllBooks, useCategory };
+function useBook(id: string) {
+  return useQuery([key, id], () => getBook(id), {
+    suspense: true,
+  });
+}
+
+export { useMutatePost, useAllBooks, useBook, useCategory };
