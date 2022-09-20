@@ -29,7 +29,7 @@ function useCategory(category: any) {
   });
 }
 
-function useBook(id: string) {
+function useBook(id: string | undefined) {
   return useQuery([key, id], () => getBook(id), {
     suspense: true,
   });

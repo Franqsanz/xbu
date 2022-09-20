@@ -6,7 +6,7 @@ async function getAllBooks() {
   return res.json();
 }
 
-async function getBook(id: string) {
+async function getBook(id: string | undefined) {
   // const res = await fetch('http://localhost:9090/api/');
   const res = await fetch(`${url}/${id}`);
   return res.json();
