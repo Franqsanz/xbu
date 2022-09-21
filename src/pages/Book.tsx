@@ -27,12 +27,12 @@ export function Book() {
       <Title title={`${data.title} | XBuniverse`} />
       <Flex
         w='full'
-        h={{ base: 'auto', md: '80vh' }}
+        maxW='800px'
+        // h={{ base: 'auto', md: '80vh' }}
         direction='column'
         justify='center'
-        p={{ base: 5, md: 20 }}
-        m='auto'
-        color={colorCard}
+        p={{ base: 5, md: 14 }}
+        m='.2rem auto'
       >
         <Box>
           <Tag colorScheme='green' size='lg' variant='subtle'>
@@ -47,7 +47,7 @@ export function Book() {
         <Text my='5'>{data.description}</Text>
         <Box>{data.publicationDate}</Box>
         <Box>{data.numberPages}</Box>
-        <Box w='100px' mt='3'>
+        <Box w='100px' mt='10' mb='150px'>
           <Link
             href={data.sourceLink}
             isExternal
