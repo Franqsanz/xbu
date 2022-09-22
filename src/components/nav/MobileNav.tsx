@@ -46,8 +46,6 @@ export function MobileNav() {
         <Flex w='100%' justify='space-between' align='center'>
           <Button
             onClick={onToggle}
-            // icon={<FiMenu />}
-            // size='lg'
             aria-label='Open Menu'
             bg='none'
             ml='4'
