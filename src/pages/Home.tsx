@@ -156,7 +156,7 @@ export function Home() {
           direction='column'
           ml={{ base: 0, md: 3 }}
           mr={{ base: 0, md: 7 }}
-          mb='10'
+          mb='3'
         >
           <Heading
             mb='10'
