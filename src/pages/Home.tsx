@@ -147,8 +147,8 @@ export function Home() {
         justify='center'
         align='flex-start'
         maxWidth='5xl'
-        px={{ base: 7, md: 20 }}
-        py={{ base: 14, md: 28 }}
+        px={{ base: 10, md: 20 }}
+        py={{ base: 10, md: 28 }}
         m='auto'
         direction={{ base: 'column', md: 'row' }}
       >
