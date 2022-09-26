@@ -36,22 +36,24 @@ export function FormNewBook() {
   const [books, setBooks] = useState({
     title: '',
     description: '',
-    publicationDate: '',
+    year: '',
     author: '',
     category: '',
     numberPages: '',
     sourceLink: '',
+    language: '',
     // imgUrl: new ArrayBuffer(0)
   });
 
   const disabled =
     !books.title ||
     !books.description ||
-    !books.publicationDate ||
+    !books.year ||
     !books.author ||
     !books.category ||
     !books.numberPages ||
-    !books.sourceLink;
+    !books.sourceLink ||
+    !books.language;
 
   // console.log(JSON.stringify(books) === '{}');
   // if (Object.values(books).length === 0) {
@@ -102,16 +104,18 @@ export function FormNewBook() {
         justify='center'
         direction='column'
         p={{ base: 5, md: 20 }}
+        bg={useColorModeValue('whitesmoke', 'gray.800')}
       >
         <Box
           w='full'
           boxShadow='2xl'
           p={{ base: 5, md: 10 }}
-          rounded='xl'
+          rounded='lg'
           maxWidth='700px'
           border='1px'
-          bg={useColorModeValue('white', 'grey.400')}
+          bg={useColorModeValue('white', 'gray.900')}
           borderColor='#2de000'
+          fontFamily='Arial'
         >
           <Box mb='5' fontSize='3xl'>
             Publica tu libro favorito
@@ -143,61 +147,92 @@ export function FormNewBook() {
                   id='titulo'
                   type='text'
                   mb='5'
+                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  size='lg'
                   placeholder='Titulo'
                   name='title'
                   value={books.title}
                   onChange={handleChange}
+                  _focus={{ bg: 'transparent' }}
                 />
               </FormControl>
               <FormControl isRequired>
                 <FormLabel htmlFor='descripcion'>Descripcion</FormLabel>
                 <Textarea
                   id='descripcion'
+                  rows={10}
                   mb='5'
+                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  size='lg'
                   name='description'
                   placeholder='Descripcion'
                   value={books.description}
                   onChange={handleChange}
+                  _focus={{ bg: 'transparent' }}
                 />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel htmlFor='autor'>Autor</FormLabel>
+                <FormLabel htmlFor='autor' mt='15px'>
+                  Autor
+                </FormLabel>
                 <Input
                   id='autor'
                   type='text'
                   mb='5'
+                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  size='lg'
                   placeholder='Autor'
                   name='author'
                   value={books.author}
                   onChange={handleChange}
-                />
-              </FormControl>
-              <FormControl isRequired>
-                <FormLabel htmlFor='link'>
-                  Link en donde se puede adquirir el libro
-                </FormLabel>
-                <Input
-                  id='link'
-                  type='text'
-                  mb='5'
-                  name='sourceLink'
-                  placeholder='Ingresar link'
-                  value={books.sourceLink}
-                  onChange={handleChange}
+                  _focus={{ bg: 'transparent' }}
                 />
               </FormControl>
             </Box>
             <Box w='full' ml={{ base: 0, md: 5 }}>
+              <FormControl isRequired>
+                <FormLabel htmlFor='link'>Link adquirir el libro</FormLabel>
+                <Input
+                  id='link'
+                  type='text'
+                  mb='5'
+                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  size='lg'
+                  name='sourceLink'
+                  placeholder='https://ejemplo.com/'
+                  value={books.sourceLink}
+                  onChange={handleChange}
+                  _focus={{ bg: 'transparent' }}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor='language'>Idioma</FormLabel>
+                <Input
+                  id='language'
+                  type='text'
+                  mb='5'
+                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  size='lg'
+                  placeholder='Idioma'
+                  name='language'
+                  value={books.language}
+                  onChange={handleChange}
+                  _focus={{ bg: 'transparent' }}
+                />
+              </FormControl>
               <FormControl isRequired>
                 <FormLabel htmlFor='numeroPaginas'>Número de páginas</FormLabel>
                 <Input
                   id='numeroPaginas'
                   type='number'
                   mb='5'
+                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  size='lg'
                   placeholder='Número de páginas'
                   name='numberPages'
                   value={books.numberPages}
                   onChange={handleChange}
+                  _focus={{ bg: 'transparent' }}
                 />
               </FormControl>
               {/* <FormControl isRequired>
@@ -241,52 +276,56 @@ export function FormNewBook() {
                 </ImageUploading>
               </FormControl> */}
               <FormControl isRequired>
-                <FormLabel htmlFor='fecha'>Fecha de lanzamiento</FormLabel>
+                <FormLabel htmlFor='año'>Año</FormLabel>
                 <Input
-                  id='fecha'
+                  id='año'
                   type='text'
                   mb='5'
-                  name='publicationDate'
-                  placeholder='Ingresar fecha'
-                  value={books.publicationDate}
+                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  size='lg'
+                  name='year'
+                  placeholder='Ingresar año'
+                  value={books.year}
                   onChange={handleChange}
+                  _focus={{ bg: 'transparent' }}
                 />
               </FormControl>
               <FormControl isRequired mt={{ base: 0, md: 8 }}>
-                <FormLabel htmlFor='categoria'>
-                  Selecciona una categoria
-                </FormLabel>
+                <FormLabel htmlFor='categoria'>Categoria del libro</FormLabel>
                 <Select
                   id='categoria'
                   name='category'
+                  size='lg'
+                  bg={useColorModeValue('gray.200', 'gray.800')}
                   value={books.category}
                   onChange={handleChange}
-                  placeholder='Selecciona una categoria'
+                  placeholder='Seleccione una categoria'
+                  _focus={{ bg: 'transparent' }}
                 >
                   {categoryLinks.map(({ name }) => (
                     <option key={name}>{name}</option>
                   ))}
                 </Select>
               </FormControl>
-              <Box mt='20'>
-                <Button
-                  type='submit'
-                  w='full'
-                  size='lg'
-                  bg='#26be00'
-                  color='black'
-                  _hover={{ bg: '#1f9b00' }}
-                  _active={{ bg: '#1f9b00' }}
-                  isDisabled={disabled}
-                  // isDisabled={Object.getOwnPropertyNames(books) === 0}
-                  loadingText='Publicando...'
-                  isLoading={isLoading}
-                >
-                  Publicar
-                </Button>
-              </Box>
             </Box>
           </Flex>
+          <Box mt='10'>
+            <Button
+              type='submit'
+              w='full'
+              size='lg'
+              bg='#26be00'
+              color='black'
+              _hover={{ bg: '#1f9b00' }}
+              _active={{ bg: '#1f9b00' }}
+              isDisabled={disabled}
+              // isDisabled={Object.getOwnPropertyNames(books) === 0}
+              loadingText='Publicando...'
+              isLoading={isLoading}
+            >
+              Publicar
+            </Button>
+          </Box>
         </Box>
       </Flex>
     </>
