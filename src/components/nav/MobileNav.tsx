@@ -41,7 +41,6 @@ export function MobileNav() {
         top='0'
         p='2'
         zIndex='1'
-        animation=''
       >
         <Flex w='100%' justify='space-between' align='center'>
           <Button

@@ -16,9 +16,7 @@ import {
 } from '@chakra-ui/react';
 
 import { Title } from '../components/Title';
-import { AllBooks } from '../components/AllBooks';
 import iconBook from '../assets/imgBook.svg';
-import iconBibliophile from '../assets/iconBibliophile.svg';
 import iconBookReading from '../assets/iconBookReading.svg';
 import iconsBooksGray from '../assets/iconsBooksGray.svg';
 import iconsBooksDark from '../assets/iconsBooksDark.svg';
@@ -84,7 +82,7 @@ export function Home() {
                   bg: '#28c900',
                 }}
               >
-                Registrarse
+                Regístrate
               </Link>
               <Link
                 w={{ base: '250px', md: '200px' }}
@@ -114,9 +112,9 @@ export function Home() {
         </Box>
       </Container>
       <Flex
+        w='full'
         justify='center'
         align='flex-start'
-        w='full'
         maxWidth='5xl'
         m='auto'
         pt='28'
@@ -147,9 +145,9 @@ export function Home() {
         justify='center'
         align='flex-start'
         maxWidth='5xl'
-        px={{ base: 10, md: 20 }}
-        py={{ base: 10, md: 28 }}
         m='auto'
+        py={{ base: 10, md: 28 }}
+        px='10'
         direction={{ base: 'column', md: 'row' }}
       >
         <Stack
@@ -170,9 +168,8 @@ export function Home() {
             Descubre que leer en tu proximo viaje o tiempo libre.
           </Text>
         </Stack>
-        <Image src={iconBookReading} w='400px' alt='' />
+        <Image src={iconBookReading} w='500px' alt='' />
       </Flex>
-      {/* <AllBooks /> */}
     </>
   );
 }

@@ -25,9 +25,10 @@ import { useQuery } from '@tanstack/react-query';
 
 import { categoryLinks } from '../links';
 import { useMutatePost } from '../../hooks/querys';
+import { AllBooks } from '../AllBooks';
 
 export function FormNewBook() {
-  const toast = useToast();
+  // const toast = useToast();
   // const [imageSrc, setImageSrc] = useState();
   // const [uploadData, setUploadData] = useState();
   // const [images, setImages] = useState([]);
@@ -111,28 +112,14 @@ export function FormNewBook() {
           boxShadow='2xl'
           p={{ base: 5, md: 10 }}
           rounded='lg'
-          maxWidth='700px'
+          maxWidth='800px'
           border='1px'
           bg={useColorModeValue('white', 'gray.900')}
           borderColor='#2de000'
-          fontFamily='Arial'
         >
           <Box mb='5' fontSize='3xl'>
             Publica tu libro favorito
           </Box>
-          {isSuccess ? (
-            <Alert status='success' m='30px 0 30px 0' rounded='xl'>
-              <AlertIcon />
-              <AlertTitle>Publicado Correctamente</AlertTitle>
-            </Alert>
-          ) : error ? (
-            <Alert status='error' mb='10' rounded='xl'>
-              <AlertIcon />
-              <AlertTitle>Error al publicar</AlertTitle>
-            </Alert>
-          ) : (
-            <Alert display='none' />
-          )}
           <Flex
             as='form'
             onSubmit={handleSubmit}
@@ -279,7 +266,7 @@ export function FormNewBook() {
                 <FormLabel htmlFor='año'>Año</FormLabel>
                 <Input
                   id='año'
-                  type='text'
+                  type='number'
                   mb='5'
                   bg={useColorModeValue('gray.200', 'gray.800')}
                   size='lg'
@@ -307,27 +294,44 @@ export function FormNewBook() {
                   ))}
                 </Select>
               </FormControl>
+              <Box mt='10'>
+                <Button
+                  type='submit'
+                  w='full'
+                  size='lg'
+                  bg='#26be00'
+                  color='black'
+                  _hover={{ bg: '#1f9b00' }}
+                  _active={{ bg: '#1f9b00' }}
+                  isDisabled={disabled}
+                  loadingText='Publicando...'
+                  isLoading={isLoading}
+                >
+                  Publicar
+                </Button>
+              </Box>
             </Box>
           </Flex>
           <Box mt='10'>
-            <Button
-              type='submit'
-              w='full'
-              size='lg'
-              bg='#26be00'
-              color='black'
-              _hover={{ bg: '#1f9b00' }}
-              _active={{ bg: '#1f9b00' }}
-              isDisabled={disabled}
-              // isDisabled={Object.getOwnPropertyNames(books) === 0}
-              loadingText='Publicando...'
-              isLoading={isLoading}
-            >
-              Publicar
-            </Button>
+            {isSuccess ? (
+              <Alert status='success' rounded='xl'>
+                <AlertIcon />
+                <AlertTitle fontWeight='normal'>
+                  Publicado Correctamente
+                </AlertTitle>
+              </Alert>
+            ) : error ? (
+              <Alert status='error' rounded='xl'>
+                <AlertIcon />
+                <AlertTitle fontWeight='normal'>Error al publicar</AlertTitle>
+              </Alert>
+            ) : (
+              <Alert display='none' />
+            )}
           </Box>
         </Box>
       </Flex>
+      <AllBooks />
     </>
   );
 }

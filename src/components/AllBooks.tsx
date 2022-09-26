@@ -60,7 +60,8 @@ export function AllBooks() {
             description,
             author,
             category,
-            publicationDate,
+            year,
+            language,
             sourceLink,
             numberPages,
           }: CardProps) => (
@@ -73,7 +74,8 @@ export function AllBooks() {
                 description={description}
                 numberPages={numberPages}
                 sourceLink={sourceLink}
-                publicationDate={publicationDate}
+                year={year}
+                language={language}
               />
             </React.Fragment>
           ),

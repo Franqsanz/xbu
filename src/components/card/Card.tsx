@@ -22,8 +22,8 @@ export function Card({
   description,
   author,
   category,
-  publicationDate,
-  sourceLink,
+  year,
+  language,
   numberPages,
 }: CardProps) {
   const borderCard = useColorModeValue('gray.200', '#8bd07a');
@@ -33,7 +33,7 @@ export function Card({
     <>
       <Box
         w='400px'
-        h='640px'
+        h={{ base: 'auto', md: '640px' }}
         m='2'
         rounded='30'
         border='1px'
@@ -87,7 +87,8 @@ export function Card({
               <Text noOfLines={10} lineHeight='1.6'>
                 {description}
               </Text>
-              <Box mt='5'>Fecha de lanzamiento: {publicationDate}</Box>
+              <Box mt='5'>Idioma: {language}</Box>
+              <Box>Fecha de lanzamiento: {year}</Box>
               <Box>N° de páginas: {numberPages}</Box>
               {/* <Box w='100px' mt='3'>
               <Link

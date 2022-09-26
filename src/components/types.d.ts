@@ -9,7 +9,8 @@ interface CardProps {
   description: string;
   author: string;
   category: string;
-  publicationDate: number;
+  year: number;
+  language: number;
   sourceLink: string;
   numberPages: number;
   // imgUrl: string
