@@ -17,6 +17,7 @@ import { ErrorPage } from './pages/404';
 import { Nav } from './components/nav/Nav';
 import { Footer } from './components/Footer';
 import { CatchError } from './CatchError';
+import { ScrollToTop } from './ScrollToTop';
 
 import theme from '../theme';
 
@@ -29,31 +30,33 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <BrowserRouter>
         <Nav />
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path='register' element={<Register />} />
-          <Route path='login' element={<Login />} />
-          <Route path='new-book' element={<NewBook />} />
-          <Route path='explore' element={<Explorer />} />
-          <Route path='categories' element={<Categories />} />
-          <Route
-            path='categories/:param'
-            element={
-              <CatchError>
-                <Category />
-              </CatchError>
-            }
-          />
-          <Route
-            path='book/:id'
-            element={
-              <CatchError>
-                <Book />
-              </CatchError>
-            }
-          />
-          <Route path='*' element={<ErrorPage />} />
-        </Routes>
+        <ScrollToTop>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path='register' element={<Register />} />
+            <Route path='login' element={<Login />} />
+            <Route path='new-book' element={<NewBook />} />
+            <Route path='explore' element={<Explorer />} />
+            <Route path='categories' element={<Categories />} />
+            <Route
+              path='categories/:param'
+              element={
+                <CatchError>
+                  <Category />
+                </CatchError>
+              }
+            />
+            <Route
+              path='book/:id'
+              element={
+                <CatchError>
+                  <Book />
+                </CatchError>
+              }
+            />
+            <Route path='*' element={<ErrorPage />} />
+          </Routes>
+        </ScrollToTop>
         <Footer />
       </BrowserRouter>
     </ChakraProvider>
