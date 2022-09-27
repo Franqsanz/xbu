@@ -104,15 +104,15 @@ export function FormNewBook() {
         align='center'
         justify='center'
         direction='column'
-        p={{ base: 5, md: 20 }}
-        bg={useColorModeValue('whitesmoke', 'gray.800')}
+        p={{ base: 3, md: 20 }}
+        bg={useColorModeValue('gray.50', 'gray.800')}
       >
         <Box
           w='full'
           boxShadow='2xl'
           p={{ base: 5, md: 10 }}
           rounded='lg'
-          maxWidth='800px'
+          maxWidth='900px'
           border='1px'
           bg={useColorModeValue('white', 'gray.900')}
           borderColor='#2de000'
@@ -134,7 +134,7 @@ export function FormNewBook() {
                   id='titulo'
                   type='text'
                   mb='5'
-                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  bg={useColorModeValue('gray.100', 'gray.800')}
                   size='lg'
                   placeholder='Titulo'
                   name='title'
@@ -149,7 +149,7 @@ export function FormNewBook() {
                   id='descripcion'
                   rows={10}
                   mb='5'
-                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  bg={useColorModeValue('gray.100', 'gray.800')}
                   size='lg'
                   name='description'
                   placeholder='Descripcion'
@@ -166,7 +166,7 @@ export function FormNewBook() {
                   id='autor'
                   type='text'
                   mb='5'
-                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  bg={useColorModeValue('gray.100', 'gray.800')}
                   size='lg'
                   placeholder='Autor'
                   name='author'
@@ -178,12 +178,12 @@ export function FormNewBook() {
             </Box>
             <Box w='full' ml={{ base: 0, md: 5 }}>
               <FormControl isRequired>
-                <FormLabel htmlFor='link'>Link adquirir el libro</FormLabel>
+                <FormLabel htmlFor='link'>Adquirir libro</FormLabel>
                 <Input
                   id='link'
                   type='text'
                   mb='5'
-                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  bg={useColorModeValue('gray.100', 'gray.800')}
                   size='lg'
                   name='sourceLink'
                   placeholder='https://ejemplo.com/'
@@ -198,7 +198,7 @@ export function FormNewBook() {
                   id='language'
                   type='text'
                   mb='5'
-                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  bg={useColorModeValue('gray.100', 'gray.800')}
                   size='lg'
                   placeholder='Idioma'
                   name='language'
@@ -213,7 +213,7 @@ export function FormNewBook() {
                   id='numeroPaginas'
                   type='number'
                   mb='5'
-                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  bg={useColorModeValue('gray.100', 'gray.800')}
                   size='lg'
                   placeholder='Número de páginas'
                   name='numberPages'
@@ -268,7 +268,7 @@ export function FormNewBook() {
                   id='año'
                   type='number'
                   mb='5'
-                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  bg={useColorModeValue('gray.100', 'gray.800')}
                   size='lg'
                   name='year'
                   placeholder='Ingresar año'
@@ -283,7 +283,7 @@ export function FormNewBook() {
                   id='categoria'
                   name='category'
                   size='lg'
-                  bg={useColorModeValue('gray.200', 'gray.800')}
+                  bg={useColorModeValue('gray.100', 'gray.800')}
                   value={books.category}
                   onChange={handleChange}
                   placeholder='Seleccione una categoria'
