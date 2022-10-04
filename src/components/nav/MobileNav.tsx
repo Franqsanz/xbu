@@ -7,8 +7,6 @@ import { RiMoonLine } from 'react-icons/ri';
 import {
   Box,
   Flex,
-  IconButton,
-  Icon,
   Button,
   Link,
   useColorModeValue,
@@ -29,7 +27,6 @@ export function MobileNav() {
     <>
       <Flex
         display={{ base: 'block', md: 'none' }}
-        as='header'
         w='full'
         justify='start'
         bg={useColorModeValue('#ffffff56', '#12121244')}

@@ -10,30 +10,21 @@ import {
   Tag,
   TagLeftIcon,
   TagLabel,
+  Icon,
 } from '@chakra-ui/react';
 import { BsTag } from 'react-icons/bs';
-import { FiExternalLink } from 'react-icons/fi';
+import { FiArrowRight } from 'react-icons/fi';
 
 import { CardProps } from '../types';
 
-export function Card({
-  id,
-  title,
-  description,
-  author,
-  category,
-  year,
-  language,
-  numberPages,
-}: CardProps) {
-  const borderCard = useColorModeValue('gray.200', '#8bd07a');
+export function Card({ id, title, description, author, category }: CardProps) {
+  const borderCard = useColorModeValue('gray.200', '#81ec66');
   const bgCard = useColorModeValue('white', 'black');
 
   return (
     <>
       <Box
         w='400px'
-        h={{ base: 'auto', md: '640px' }}
         m='2'
         rounded='30'
         border='1px'
@@ -42,70 +33,61 @@ export function Card({
         boxShadow='lg'
         my='5'
         bg={bgCard}
-        transition='.1s'
-        _active={{ transform: 'scale(.97)' }}
+        position='relative'
       >
-        <Link
-          as={NavLink}
-          to={`/book/${id}`}
-          _hover={{
-            outline: 'none',
-          }}
-        >
-          <Flex direction='column'>
-            {/* <Box>
+        <Flex direction='column'>
+          {/* <Box>
             <Image src={imgUrl} alt='' />
           </Box> */}
-            <Box p='7'>
-              <Link
-                as={NavLink}
-                to={`/categories/${category}`}
-                _hover={{ outline: 'none' }}
-              >
-                <Tag colorScheme='green' size='lg' variant='subtle'>
-                  <TagLeftIcon boxSize='16px' as={BsTag} />
-                  <TagLabel>{category}</TagLabel>
-                </Tag>
-              </Link>
-            </Box>
-            <Box
-              as='h1'
-              fontSize='2xl'
-              lineHeight='8'
-              fontWeight='800'
-              px='7'
-              mb='2'
-              color='#1e9800'
-              textTransform='uppercase'
+          <Box p='7'>
+            <Link
+              as={NavLink}
+              to={`/categories/${category}`}
+              _hover={{ outline: 'none' }}
             >
-              {title}
-            </Box>
-            <Box px='7' textTransform='uppercase'>
-              {author}
-            </Box>
-            <Box mb='2' p='7'>
-              <Text noOfLines={10} lineHeight='1.6'>
-                {description}
-              </Text>
-              <Box mt='5'>Idioma: {language}</Box>
-              <Box>Fecha de lanzamiento: {year}</Box>
-              <Box>N° de páginas: {numberPages}</Box>
-              {/* <Box w='100px' mt='3'>
-              <Link
-                href={sourceLink}
-                isExternal
-                color='blue.600'
-                fontWeight='bold'
-              >
-                <Flex align='center'>
-                  Ver aquí
-                  <FiExternalLink style={{ marginLeft: '6px' }} />
-                </Flex>
-              </Link>
-            </Box> */}
-            </Box>
-          </Flex>
-        </Link>
+              <Tag colorScheme='green' size='lg' variant='subtle'>
+                <TagLeftIcon boxSize='16px' as={BsTag} />
+                <TagLabel>{category}</TagLabel>
+              </Tag>
+            </Link>
+          </Box>
+          <Box
+            as='h1'
+            fontSize='2xl'
+            lineHeight='8'
+            fontWeight='800'
+            px='7'
+            mb='2'
+            color='#1f9c00'
+            textTransform='uppercase'
+          >
+            {title}
+          </Box>
+          <Box px='7' textTransform='uppercase'>
+            {author}
+          </Box>
+          <Box p='7' h='310px' mb='14'>
+            <Text noOfLines={10} lineHeight='1.6'>
+              {description}
+            </Text>
+          </Box>
+          <Link
+            as={NavLink}
+            to={`/book/${id}`}
+            w='full'
+            bg='#28c900'
+            py='4'
+            px='7'
+            position='absolute'
+            bottom='0'
+            _hover={{ outline: 'none', bg: '#24b300' }}
+          >
+            <Flex align='center'>
+              Más información
+              <Icon as={FiArrowRight} ml='2' />
+            </Flex>
+          </Link>
+        </Flex>
       </Box>
     </>
   );
