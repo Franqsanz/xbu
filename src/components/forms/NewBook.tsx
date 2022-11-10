@@ -25,7 +25,6 @@ import { useQuery } from '@tanstack/react-query';
 
 import { categoryLinks } from '../links';
 import { useMutatePost } from '../../hooks/querys';
-import { AllBooks } from '../AllBooks';
 
 export function FormNewBook() {
   // const toast = useToast();
@@ -117,9 +116,9 @@ export function FormNewBook() {
           bg={useColorModeValue('white', 'gray.900')}
           borderColor='#2de000'
         >
-          <Box mb='5' fontSize='3xl'>
+          {/* <Box mb='5' fontSize='3xl'>
             Publica tu libro favorito
-          </Box>
+          </Box> */}
           <Flex
             as='form'
             onSubmit={handleSubmit}
@@ -144,7 +143,7 @@ export function FormNewBook() {
                 />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel htmlFor='descripcion'>Descripcion</FormLabel>
+                <FormLabel htmlFor='descripcion'>Descripción</FormLabel>
                 <Textarea
                   id='descripcion'
                   rows={10}
@@ -152,7 +151,7 @@ export function FormNewBook() {
                   bg={useColorModeValue('gray.100', 'gray.800')}
                   size='lg'
                   name='description'
-                  placeholder='Descripcion'
+                  placeholder='Descripción'
                   value={books.description}
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
@@ -331,7 +330,6 @@ export function FormNewBook() {
           </Box>
         </Box>
       </Flex>
-      <AllBooks />
     </>
   );
 }

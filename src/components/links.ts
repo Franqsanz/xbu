@@ -10,8 +10,8 @@ const navLink: Array<LinkProps> = [
     href: 'explore',
   },
   {
-    name: 'Publicar un Libro',
-    href: 'new-book',
+    name: 'Publicar',
+    href: 'new-post',
   },
 ];
 

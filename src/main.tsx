@@ -35,7 +35,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             <Route index element={<Home />} />
             <Route path='register' element={<Register />} />
             <Route path='login' element={<Login />} />
-            <Route path='new-book' element={<NewBook />} />
+            <Route path='new-post' element={<NewBook />} />
             <Route path='explore' element={<Explorer />} />
             <Route path='categories' element={<Categories />} />
             <Route

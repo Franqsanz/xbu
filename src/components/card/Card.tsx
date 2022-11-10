@@ -19,7 +19,6 @@ import { CardProps } from '../types';
 
 export function Card({ id, title, description, author, category }: CardProps) {
   const borderCard = useColorModeValue('gray.200', '#81ec66');
-  const bgCard = useColorModeValue('white', 'black');
 
   return (
     <>
@@ -32,7 +31,7 @@ export function Card({ id, title, description, author, category }: CardProps) {
         overflow='hidden'
         boxShadow='lg'
         my='5'
-        bg={bgCard}
+        bg='transparent'
         position='relative'
       >
         <Flex direction='column'>
@@ -82,7 +81,7 @@ export function Card({ id, title, description, author, category }: CardProps) {
             bottom='0'
             _hover={{ outline: 'none', bg: '#24b300' }}
           >
-            <Flex align='center'>
+            <Flex align='center' color='black'>
               Más información
               <Icon as={FiArrowRight} ml='2' />
             </Flex>

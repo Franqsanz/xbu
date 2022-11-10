@@ -33,11 +33,7 @@ export function Explorer() {
           scrollSnapType='x mandatory'
           sx={{
             '&::-webkit-scrollbar': {
-              height: '0px',
-            },
-            '&:hover::-webkit-scrollbar': {
               height: '7px',
-              opacity: 0.3,
             },
             '&::-webkit-scrollbar-thumb': {
               background: useColorModeValue('gray.300', 'gray.600'),
