@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
 
 import { NewBook } from './pages/NewBook';
 import { Home } from './pages/Home';
@@ -22,6 +24,12 @@ import { ScrollToTop } from './ScrollToTop';
 import theme from '../theme';
 
 const queryClient = new QueryClient();
+
+Sentry.init({
+  dsn: 'https://08c55e456b9a49aa8721088ae6e825e4@o4504136634269696.ingest.sentry.io/4504140813434880',
+  integrations: [new BrowserTracing()],
+  tracesSampleRate: 1.0,
+});
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
