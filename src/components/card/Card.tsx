@@ -44,7 +44,7 @@ export function Card({ id, title, description, author, category }: CardProps) {
               to={`/categories/${category}`}
               _hover={{ outline: 'none' }}
             >
-              <Tag colorScheme='green' size='lg' variant='subtle'>
+              <Tag bg='#abf299' color='#0d4300' size='lg' variant='subtle'>
                 <TagLeftIcon boxSize='16px' as={BsTag} />
                 <TagLabel>{category}</TagLabel>
               </Tag>

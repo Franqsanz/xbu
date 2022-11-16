@@ -50,7 +50,7 @@ export function Home() {
           </Box>
           <Box maxW='2xl' m='auto'>
             <Box
-              color='green'
+              color='#1f9c00'
               fontSize={{ base: '3xl', md: '5xl' }}
               fontWeight='bold'
               my='3'

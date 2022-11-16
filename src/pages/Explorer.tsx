@@ -48,7 +48,13 @@ export function Explorer() {
               to={`/categories/${name}`}
               _hover={{ outline: 'none' }}
             >
-              <Tag colorScheme='green' size='lg' variant='subtle' m='1'>
+              <Tag
+                bg='#abf299'
+                color='#0d4300'
+                size='lg'
+                variant='subtle'
+                m='1'
+              >
                 <TagLeftIcon boxSize='16px' as={BsTag} />
                 <TagLabel>{name}</TagLabel>
               </Tag>
