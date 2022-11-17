@@ -26,7 +26,12 @@ export function Book() {
   return (
     <>
       <Title title={`${data.title} | XBuniverse`} />
-      <Flex direction={{ base: 'column', lg: 'row' }}>
+      <Flex
+        w='full'
+        maxW='1300px'
+        m='auto'
+        direction={{ base: 'column', lg: 'row' }}
+      >
         <Flex
           w='full'
           maxW='920px'
