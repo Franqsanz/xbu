@@ -30,6 +30,7 @@ export function Book() {
         w='full'
         maxW='1300px'
         m='auto'
+        align='flex-start'
         direction={{ base: 'column', lg: 'row' }}
       >
         <Flex
