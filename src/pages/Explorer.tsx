@@ -1,20 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {
-  Box,
-  Flex,
-  Tag,
-  TagLeftIcon,
-  TagLabel,
-  useColorModeValue,
-  Link,
-} from '@chakra-ui/react';
-import { BsTag } from 'react-icons/bs';
+import { Box, Flex, useColorModeValue, Link } from '@chakra-ui/react';
 
 import { AllBooks } from '../components/AllBooks';
 import { categoryLinks } from '../components/links';
 import { ContainerTitle } from '../components/ContainerTitle';
 import { Title } from '../components/Title';
+import { TagComponent } from '../components/TagComponent';
 
 export function Explorer() {
   return (
@@ -29,7 +21,7 @@ export function Explorer() {
           flexDirection='row'
           flexWrap={{ base: 'nowrap', md: 'wrap' }}
           mt='10'
-          mx={{ base: 5, md: 16 }}
+          mx={{ base: 1, md: 16 }}
           scrollSnapType='x mandatory'
           sx={{
             '&::-webkit-scrollbar': {
@@ -48,16 +40,7 @@ export function Explorer() {
               to={`/categories/${name}`}
               _hover={{ outline: 'none' }}
             >
-              <Tag
-                bg='#abf299'
-                color='#0d4300'
-                size='lg'
-                variant='subtle'
-                m='1'
-              >
-                <TagLeftIcon boxSize='16px' as={BsTag} />
-                <TagLabel>{name}</TagLabel>
-              </Tag>
+              <TagComponent name={name} m='1' />
             </Link>
           ))}
         </Box>

@@ -7,15 +7,12 @@ import {
   Text,
   useColorModeValue,
   Link,
-  Tag,
-  TagLeftIcon,
-  TagLabel,
   Icon,
 } from '@chakra-ui/react';
-import { BsTag } from 'react-icons/bs';
 import { FiArrowRight } from 'react-icons/fi';
 
 import { CardProps } from '../types';
+import { TagComponent } from '../TagComponent';
 
 export function Card({ id, title, description, author, category }: CardProps) {
   const borderCard = useColorModeValue('gray.200', '#81ec66');
@@ -44,10 +41,7 @@ export function Card({ id, title, description, author, category }: CardProps) {
               to={`/categories/${category}`}
               _hover={{ outline: 'none' }}
             >
-              <Tag bg='#abf299' color='#0d4300' size='lg' variant='subtle'>
-                <TagLeftIcon boxSize='16px' as={BsTag} />
-                <TagLabel>{category}</TagLabel>
-              </Tag>
+              <TagComponent name={category} />
             </Link>
           </Box>
           <Box

@@ -1,21 +1,13 @@
 import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
-import {
-  Box,
-  Flex,
-  Link,
-  Tag,
-  TagLabel,
-  TagLeftIcon,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react';
-import { BsTag } from 'react-icons/bs';
+import { Box, Flex, Link, Text, useColorModeValue } from '@chakra-ui/react';
 import { FiExternalLink } from 'react-icons/fi';
 import { Helmet } from 'react-helmet';
+
 import { useBook } from '../hooks/querys';
 import { Title } from '../components/Title';
 import { categoryLinks } from '../components/links';
+import { TagComponent } from '../components/TagComponent';
 
 export function Book() {
   const { id } = useParams();
@@ -42,10 +34,7 @@ export function Book() {
           m='2rem auto'
         >
           <Box>
-            <Tag bg='#abf299' color='#0d4300' size='lg' variant='subtle'>
-              <TagLeftIcon boxSize='16px' as={BsTag} />
-              <TagLabel>{data.category}</TagLabel>
-            </Tag>
+            <TagComponent name={data.category} />
           </Box>
           <Box
             as='h1'
@@ -101,16 +90,7 @@ export function Book() {
                 to={`/categories/${name}`}
                 _hover={{ outline: 'none' }}
               >
-                <Tag
-                  bg='#abf299'
-                  color='#0d4300'
-                  size='lg'
-                  variant='subtle'
-                  m='1'
-                >
-                  <TagLeftIcon boxSize='16px' as={BsTag} />
-                  <TagLabel>{name}</TagLabel>
-                </Tag>
+                <TagComponent name={name} m='1' />
               </Link>
             ))}
           </Box>

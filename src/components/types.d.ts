@@ -24,4 +24,9 @@ interface PageTitleProps {
   title: string;
 }
 
-export type { LinkProps, CardProps, TitleProps, PageTitleProps };
+interface PropsTag {
+  name: string;
+  m?: string;
+}
+
+export type { LinkProps, CardProps, TitleProps, PageTitleProps, PropsTag };
