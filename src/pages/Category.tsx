@@ -30,7 +30,7 @@ export function Category() {
           ({
             id,
             title,
-            description,
+            synopsis,
             author,
             category,
             year,
@@ -43,7 +43,7 @@ export function Category() {
                 category={category}
                 title={title}
                 author={author}
-                description={description}
+                synopsis={synopsis}
                 numberPages={numberPages}
                 sourceLink={sourceLink}
                 year={year}
