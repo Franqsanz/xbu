@@ -4,21 +4,15 @@ import {
   Button,
   Input,
   Flex,
-  Spinner,
   Box,
-  Heading,
   FormLabel,
-  Text,
   Textarea,
   Select,
   Image,
-  HStack,
-  VStack,
   Alert,
   AlertIcon,
   AlertTitle,
   useColorModeValue,
-  useToast,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 // import ImageUploading, { ImageListType } from "react-images-uploading";
@@ -35,9 +29,10 @@ export function FormNewBook() {
   // const [preview, setPreview] = useState<string>();
   const [books, setBooks] = useState({
     title: '',
+    author: '',
+    synopsis: '',
     description: '',
     year: '',
-    author: '',
     category: '',
     numberPages: '',
     sourceLink: '',
@@ -47,9 +42,9 @@ export function FormNewBook() {
 
   const disabled =
     !books.title ||
-    !books.description ||
-    !books.year ||
     !books.author ||
+    !books.synopsis ||
+    !books.year ||
     !books.category ||
     !books.numberPages ||
     !books.sourceLink ||
@@ -103,6 +98,7 @@ export function FormNewBook() {
         align='center'
         justify='center'
         direction='column'
+        my='8'
         p={{ base: 3, md: 20 }}
         bg={useColorModeValue('gray.50', 'gray.800')}
       >
@@ -116,9 +112,13 @@ export function FormNewBook() {
           bg={useColorModeValue('white', 'gray.900')}
           borderColor='#2de000'
         >
-          {/* <Box mb='5' fontSize='3xl'>
-            Publica tu libro favorito
-          </Box> */}
+          <Box mb='5' fontSize='md'>
+            Los campos con el{' '}
+            <Box display='inline' color='red.300'>
+              *
+            </Box>{' '}
+            son obligatorios
+          </Box>
           <Flex
             as='form'
             onSubmit={handleSubmit}
@@ -143,24 +143,7 @@ export function FormNewBook() {
                 />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel htmlFor='descripcion'>Descripción</FormLabel>
-                <Textarea
-                  id='descripcion'
-                  rows={10}
-                  mb='5'
-                  bg={useColorModeValue('gray.100', 'gray.800')}
-                  size='lg'
-                  name='description'
-                  placeholder='Descripción'
-                  value={books.description}
-                  onChange={handleChange}
-                  _focus={{ bg: 'transparent' }}
-                />
-              </FormControl>
-              <FormControl isRequired>
-                <FormLabel htmlFor='autor' mt='15px'>
-                  Autor
-                </FormLabel>
+                <FormLabel htmlFor='autor'>Autor</FormLabel>
                 <Input
                   id='autor'
                   type='text'
@@ -170,6 +153,41 @@ export function FormNewBook() {
                   placeholder='Autor'
                   name='author'
                   value={books.author}
+                  onChange={handleChange}
+                  _focus={{ bg: 'transparent' }}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor='sinopsis'>Sinopsis</FormLabel>
+                <Textarea
+                  id='sinopsis'
+                  rows={6}
+                  mb='5'
+                  bg={useColorModeValue('gray.100', 'gray.800')}
+                  size='lg'
+                  name='synopsis'
+                  placeholder='Sinopsis'
+                  value={books.synopsis}
+                  onChange={handleChange}
+                  _focus={{ bg: 'transparent' }}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel htmlFor='descripcion' mt='2.5'>
+                  Descripción{' '}
+                  <Box display='inline' fontSize='xs'>
+                    (Opcional)
+                  </Box>
+                </FormLabel>
+                <Textarea
+                  id='descripcion'
+                  rows={8}
+                  mb='5'
+                  bg={useColorModeValue('gray.100', 'gray.800')}
+                  size='lg'
+                  name='description'
+                  placeholder='Puedes dejar una breve descripción (este campo es opcional)'
+                  value={books.description}
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
                 />
@@ -262,11 +280,13 @@ export function FormNewBook() {
                 </ImageUploading>
               </FormControl> */}
               <FormControl isRequired>
-                <FormLabel htmlFor='año'>Año</FormLabel>
+                <FormLabel htmlFor='año' mt='17.5'>
+                  Año
+                </FormLabel>
                 <Input
                   id='año'
                   type='number'
-                  mb='5'
+                  mb={{ base: 5, md: 0 }}
                   bg={useColorModeValue('gray.100', 'gray.800')}
                   size='lg'
                   name='year'
@@ -293,7 +313,7 @@ export function FormNewBook() {
                   ))}
                 </Select>
               </FormControl>
-              <Box mt='10'>
+              <Box mt={{ base: 10, md: 44 }}>
                 <Button
                   type='submit'
                   w='full'

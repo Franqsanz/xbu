@@ -57,7 +57,7 @@ export function AllBooks() {
           ({
             id,
             title,
-            description,
+            synopsis,
             author,
             category,
             year,
@@ -71,7 +71,7 @@ export function AllBooks() {
                 category={category}
                 title={title}
                 author={author}
-                description={description}
+                synopsis={synopsis}
                 numberPages={numberPages}
                 sourceLink={sourceLink}
                 year={year}

@@ -14,7 +14,7 @@ import { FiArrowRight } from 'react-icons/fi';
 import { CardProps } from '../types';
 import { TagComponent } from '../TagComponent';
 
-export function Card({ id, title, description, author, category }: CardProps) {
+export function Card({ id, title, synopsis, author, category }: CardProps) {
   const borderCard = useColorModeValue('gray.200', '#81ec66');
 
   return (
@@ -61,7 +61,7 @@ export function Card({ id, title, description, author, category }: CardProps) {
           </Box>
           <Box p='7' h='310px' mb='14'>
             <Text noOfLines={10} lineHeight='1.6'>
-              {description}
+              {synopsis}
             </Text>
           </Box>
           <Link

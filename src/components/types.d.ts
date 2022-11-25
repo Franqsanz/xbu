@@ -6,7 +6,7 @@ interface LinkProps {
 interface CardProps {
   id?: string;
   title: string;
-  description: string;
+  synopsis: string;
   author: string;
   category: string;
   year: number;

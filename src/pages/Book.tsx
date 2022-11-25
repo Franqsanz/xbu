@@ -22,6 +22,7 @@ export function Book() {
         w='full'
         maxW='1300px'
         m='auto'
+        mb='28'
         align='flex-start'
         direction={{ base: 'column', lg: 'row' }}
       >
@@ -44,12 +45,64 @@ export function Book() {
           >
             {data.title}
           </Box>
-          <Box my='2' textTransform='uppercase'>
+          <Box
+            my='1'
+            fontSize={{ base: 'lg', md: '2xl' }}
+            textTransform='uppercase'
+          >
             {data.author}
           </Box>
-          <Text my='5'>{data.description}</Text>
-          <Box>{data.publicationDate}</Box>
-          <Box>{data.numberPages}</Box>
+          <Box mt='5'>
+            <Box as='span' fontSize='xl'>
+              Sinopsis
+            </Box>
+            <Text mt='3' mb='14'>
+              {data.synopsis}
+            </Text>
+          </Box>
+          {data.description === undefined ? (
+            <Box mt='5' display='none'>
+              <Box as='span' fontSize='xl'>
+                Descripción
+              </Box>
+              <Text mt='3' mb='14'>
+                {data.description}
+              </Text>
+            </Box>
+          ) : (
+            <Box mt='5'>
+              <Box as='span' fontSize='xl'>
+                Descripción
+              </Box>
+              <Text mt='3' mb='14'>
+                {data.description}
+              </Text>
+            </Box>
+          )}
+          <Box
+            bg={useColorModeValue('gray.100', 'gray.700')}
+            p='4'
+            rounded='lg'
+          >
+            <Box>
+              <Box as='span' fontSize='lg'>
+                Año:
+              </Box>{' '}
+              {data.year}
+            </Box>
+            <Box>
+              <Box as='span' fontSize='lg'>
+                N° paginas:
+              </Box>{' '}
+              {data.numberPages}
+            </Box>
+            <Box>
+              <Box as='span' fontSize='lg'>
+                Idioma:
+              </Box>{' '}
+              {data.language}
+            </Box>
+          </Box>
           <Box mt='10' mb='10px'>
             <Link
               w={{ base: '100%', md: '115px' }}
