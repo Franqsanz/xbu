@@ -38,7 +38,7 @@ export function CatchError({ children }: { children: React.ReactNode }) {
                 <Flex direction={{ base: 'column', md: 'row' }}>
                   <Link
                     as={NavLink}
-                    to='/explorer'
+                    to='/explore'
                     border='1px'
                     borderColor='#2de000'
                     borderRadius='lg'
@@ -77,7 +77,7 @@ export function CatchError({ children }: { children: React.ReactNode }) {
         >
           <Suspense
             fallback={
-              <Flex justify='center' my='64'>
+              <Flex justify='center' my='40vh'>
                 <Spinner size='xl' thickness='4px' speed='0.55s' />
               </Flex>
             }

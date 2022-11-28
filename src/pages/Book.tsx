@@ -11,9 +11,31 @@ import { TagComponent } from '../components/TagComponent';
 
 export function Book() {
   const { id } = useParams();
-  const borderCard = useColorModeValue('gray.200', 'gray.600');
+  const grayColor = useColorModeValue('gray.200', 'gray.600');
+  let ui;
 
   const { data } = useBook(id);
+
+  if (data.description === '') {
+    ui = (
+      <Box my='14'>
+        <Box as='span' ml='2' fontSize='md' fontStyle='italic' color='gray.600'>
+          No se a proporsionado una descripción
+        </Box>
+      </Box>
+    );
+  } else {
+    ui = (
+      <Box mt='5'>
+        <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
+          Descripción
+        </Box>
+        <Text mt='3' mb='14'>
+          {data.description}
+        </Text>
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -53,55 +75,49 @@ export function Book() {
             {data.author}
           </Box>
           <Box mt='5'>
-            <Box as='span' fontSize='xl'>
+            <Box
+              p='2'
+              fontSize='xl'
+              bg={useColorModeValue('gray.200', 'gray.600')}
+              roundedTop='lg'
+            >
               Sinopsis
             </Box>
-            <Text mt='3' mb='14'>
+            <Text p='2' mt='3' mb='10' fontSize='lg'>
               {data.synopsis}
             </Text>
           </Box>
-          {data.description === undefined ? (
-            <Box mt='5' display='none'>
-              <Box as='span' fontSize='xl'>
-                Descripción
-              </Box>
-              <Text mt='3' mb='14'>
-                {data.description}
-              </Text>
-            </Box>
-          ) : (
-            <Box mt='5'>
-              <Box as='span' fontSize='xl'>
-                Descripción
-              </Box>
-              <Text mt='3' mb='14'>
-                {data.description}
-              </Text>
-            </Box>
-          )}
+          {ui}
+          <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
+            Caracteristicas
+          </Box>
           <Box
             bg={useColorModeValue('gray.100', 'gray.700')}
             p='4'
-            rounded='lg'
+            roundedBottom='lg'
           >
-            <Box>
-              <Box as='span' fontSize='lg'>
-                Año:
-              </Box>{' '}
-              {data.year}
-            </Box>
-            <Box>
-              <Box as='span' fontSize='lg'>
-                N° paginas:
-              </Box>{' '}
-              {data.numberPages}
-            </Box>
-            <Box>
-              <Box as='span' fontSize='lg'>
-                Idioma:
-              </Box>{' '}
-              {data.language}
-            </Box>
+            <Flex align='center'>
+              <Flex direction='column'>
+                <Box as='span'>Autor:</Box>
+                <Box as='span' my='2'>
+                  Año:
+                </Box>
+                <Box as='span' mb='2'>
+                  N° paginas:
+                </Box>
+                <Box as='span'>Idioma:</Box>
+              </Flex>
+              <Flex direction='column' ml='10'>
+                <Box as='span'>{data.author}</Box>
+                <Box as='span' my='2'>
+                  {data.year}
+                </Box>
+                <Box as='span' mb='2'>
+                  {data.numberPages}
+                </Box>
+                <Box as='span'>{data.language}</Box>
+              </Flex>
+            </Flex>
           </Box>
           <Box mt='10' mb='10px'>
             <Link
@@ -130,7 +146,7 @@ export function Book() {
             m='2rem auto'
             rounded='10'
             border='1px'
-            borderColor={borderCard}
+            borderColor={grayColor}
             boxShadow='lg'
           >
             <Box mb='4' fontSize='2xl' textAlign='center'>

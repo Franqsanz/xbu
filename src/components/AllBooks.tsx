@@ -18,7 +18,7 @@ export function AllBooks() {
 
   if (isLoading) {
     return (
-      <Flex justify='center' py='20vh'>
+      <Flex justify='center' py='40vh'>
         <Spinner size='xl' thickness='4px' speed='0.55s' />
       </Flex>
     );
