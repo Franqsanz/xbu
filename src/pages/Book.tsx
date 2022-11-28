@@ -12,20 +12,21 @@ import { TagComponent } from '../components/TagComponent';
 export function Book() {
   const { id } = useParams();
   const grayColor = useColorModeValue('gray.200', 'gray.600');
-  let ui;
+  let uiDescription;
+  let uiLink;
 
   const { data } = useBook(id);
 
   if (data.description === '') {
-    ui = (
+    uiDescription = (
       <Box my='14'>
         <Box as='span' ml='2' fontSize='md' fontStyle='italic' color='gray.600'>
-          No se a proporsionado una descripción
+          El autor de la publicación no a proporsionado una descripción
         </Box>
       </Box>
     );
   } else {
-    ui = (
+    uiDescription = (
       <Box mt='5'>
         <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
           Descripción
@@ -34,6 +35,36 @@ export function Book() {
           {data.description}
         </Text>
       </Box>
+    );
+  }
+
+  if (data.sourceLink === '') {
+    uiLink = (
+      <Box my='14'>
+        <Box as='span' ml='2' fontSize='md' fontStyle='italic' color='gray.600'>
+          El autor de la publicación no a proporsionado un link
+        </Box>
+      </Box>
+    );
+  } else {
+    uiLink = (
+      <Link
+        w={{ base: '100%', md: '115px' }}
+        display='block'
+        href={data.sourceLink}
+        isExternal
+        bg='#2de000'
+        color='black'
+        p='3'
+        rounded='10'
+        textAlign='center'
+        _hover={{ outline: 'none', bg: '#28c900' }}
+      >
+        <Flex align='center'>
+          Ver Libro
+          <FiExternalLink style={{ marginLeft: '6px' }} />
+        </Flex>
+      </Link>
     );
   }
 
@@ -87,7 +118,7 @@ export function Book() {
               {data.synopsis}
             </Text>
           </Box>
-          {ui}
+          {uiDescription}
           <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
             Caracteristicas
           </Box>
@@ -96,31 +127,46 @@ export function Book() {
             p='4'
             roundedBottom='lg'
           >
-            <Flex align='center'>
-              <Flex direction='column'>
-                <Box as='span'>Autor:</Box>
-                <Box as='span' my='2'>
-                  Año:
-                </Box>
-                <Box as='span' mb='2'>
-                  N° paginas:
-                </Box>
-                <Box as='span'>Idioma:</Box>
-              </Flex>
-              <Flex direction='column' ml='10'>
-                <Box as='span'>{data.author}</Box>
-                <Box as='span' my='2'>
-                  {data.year}
-                </Box>
-                <Box as='span' mb='2'>
-                  {data.numberPages}
-                </Box>
-                <Box as='span'>{data.language}</Box>
-              </Flex>
+            <Flex direction='column'>
+              <Box flex='1 1 auto'>
+                <Flex>
+                  <Box w='130px'>
+                    <Box as='span'>Autor:</Box>
+                  </Box>
+                  <Box>
+                    <Box as='span'>{data.author}</Box>
+                  </Box>
+                </Flex>
+                <Flex my='2'>
+                  <Box w='130px'>
+                    <Box as='span'>Año:</Box>
+                  </Box>
+                  <Box>
+                    <Box as='span'>{data.year}</Box>
+                  </Box>
+                </Flex>
+                <Flex mb='2'>
+                  <Box w='130px'>
+                    <Box as='span'>N° paginas:</Box>
+                  </Box>
+                  <Box>
+                    <Box as='span'>{data.numberPages}</Box>
+                  </Box>
+                </Flex>
+                <Flex>
+                  <Box w='130px'>
+                    <Box as='span'>Idioma:</Box>
+                  </Box>
+                  <Box>
+                    <Box as='span'>{data.language}</Box>
+                  </Box>
+                </Flex>
+              </Box>
             </Flex>
           </Box>
           <Box mt='10' mb='10px'>
-            <Link
+            {uiLink}
+            {/* <Link
               w={{ base: '100%', md: '115px' }}
               display='block'
               href={data.sourceLink}
@@ -136,7 +182,7 @@ export function Book() {
                 Ver Libro
                 <FiExternalLink style={{ marginLeft: '6px' }} />
               </Flex>
-            </Link>
+            </Link> */}
           </Box>
         </Flex>
         <Flex w={{ base: 'full', lg: '400px' }} px='3'>
