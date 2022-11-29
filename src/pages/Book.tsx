@@ -21,15 +21,12 @@ export function Book() {
   if (data.description === '') {
     uiDescription = (
       <Box mb='10'>
-        <Box
-          as='span'
-          ml='2'
-          fontSize='md'
-          fontStyle='italic'
-          color={infoTextColor}
-        >
-          El autor de la publicación no a proporsionado una descripción
+        <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
+          Descripción
         </Box>
+        <Text fontSize='md' my='7' fontStyle='italic' color={infoTextColor}>
+          El autor de la publicación no a proporsionado una descripción
+        </Text>
       </Box>
     );
   } else {
@@ -88,6 +85,7 @@ export function Book() {
         w='full'
         maxW='1300px'
         m='auto'
+        mt={{ base: 0, md: 10 }}
         mb='28'
         align='flex-start'
         direction={{ base: 'column', lg: 'row' }}
@@ -98,7 +96,7 @@ export function Book() {
           direction='column'
           justify='center'
           p={{ base: 5, md: 14 }}
-          m='2rem auto'
+          m='1rem auto'
         >
           <Box>
             <TagComponent name={data.category} />
@@ -127,7 +125,7 @@ export function Book() {
             >
               Sinopsis
             </Box>
-            <Text p='2' mt='3' mb='10' fontSize='lg'>
+            <Text mt='3' mb='10' fontSize='lg'>
               {data.synopsis}
             </Text>
           </Box>
@@ -185,7 +183,7 @@ export function Book() {
           <Box
             maxW={{ base: '920px', lg: '300px' }}
             p={{ base: 5, md: 10 }}
-            m='2rem auto'
+            m='1rem auto'
             rounded='10'
             border='1px'
             borderColor={grayColor}
