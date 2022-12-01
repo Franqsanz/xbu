@@ -13,6 +13,7 @@ interface CardProps {
   language: number;
   sourceLink: string;
   numberPages: number;
+  format: string;
   // imgUrl: string
 }
 

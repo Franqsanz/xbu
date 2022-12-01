@@ -172,6 +172,14 @@ export function Book() {
                     <Box as='span'>{data.language}</Box>
                   </Box>
                 </Flex>
+                <Flex>
+                  <Box w='160px'>
+                    <Box as='span'>Formato:</Box>
+                  </Box>
+                  <Box>
+                    <Box as='span'>{data.format}</Box>
+                  </Box>
+                </Flex>
               </Box>
             </Flex>
           </Box>

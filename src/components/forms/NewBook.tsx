@@ -13,6 +13,9 @@ import {
   AlertIcon,
   AlertTitle,
   useColorModeValue,
+  RadioGroup,
+  Radio,
+  Stack,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 // import ImageUploading, { ImageListType } from "react-images-uploading";
@@ -37,6 +40,7 @@ export function FormNewBook() {
     numberPages: '',
     sourceLink: '',
     language: '',
+    format: 'Físico',
     // imgUrl: new ArrayBuffer(0)
   });
 
@@ -47,7 +51,6 @@ export function FormNewBook() {
     !books.year ||
     !books.category ||
     !books.numberPages ||
-    !books.sourceLink ||
     !books.language;
 
   // console.log(JSON.stringify(books) === '{}');
@@ -83,7 +86,7 @@ export function FormNewBook() {
   ) {
     setBooks({
       ...books,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.currentTarget.value,
     });
   }
 
@@ -100,7 +103,6 @@ export function FormNewBook() {
         direction='column'
         my='8'
         p={{ base: 3, md: 20 }}
-        bg={useColorModeValue('gray.50', 'gray.800')}
       >
         <Box
           w='full'
@@ -194,8 +196,13 @@ export function FormNewBook() {
               </FormControl>
             </Box>
             <Box w='full' ml={{ base: 0, md: 5 }}>
-              <FormControl isRequired>
-                <FormLabel htmlFor='link'>Adquirir libro</FormLabel>
+              <FormControl>
+                <FormLabel htmlFor='link'>
+                  Adquirir libro{' '}
+                  <Box display='inline' fontSize='xs'>
+                    (Opcional)
+                  </Box>
+                </FormLabel>
                 <Input
                   id='link'
                   type='text'
@@ -280,7 +287,7 @@ export function FormNewBook() {
                 </ImageUploading>
               </FormControl> */}
               <FormControl isRequired>
-                <FormLabel htmlFor='año' mt='17.5'>
+                <FormLabel htmlFor='año' mt={{ base: 0, md: '17.5' }}>
                   Año
                 </FormLabel>
                 <Input
@@ -313,7 +320,46 @@ export function FormNewBook() {
                   ))}
                 </Select>
               </FormControl>
-              <Box mt={{ base: 10, md: 44 }}>
+              <FormControl>
+                <FormLabel htmlFor='formato' mt='18' mb='4'>
+                  Formato
+                </FormLabel>
+                <RadioGroup onChange={handleChange as any} value={books.format}>
+                  <Stack direction='row' spacing='5'>
+                    <Radio
+                      name='Físico'
+                      value='Físico'
+                      checked={books.format === 'Físico'}
+                      colorScheme='green'
+                      size='lg'
+                    >
+                      Físico
+                    </Radio>
+                    <Radio
+                      name='Electrónico'
+                      value='Electrónico'
+                      checked={books.format === 'Electrónico'}
+                      colorScheme='green'
+                      size='lg'
+                    >
+                      Electrónico
+                    </Radio>
+                  </Stack>
+                </RadioGroup>
+                {/* <Input
+                  id='año'
+                  type='number'
+                  mb={{ base: 5, md: 0 }}
+                  bg={useColorModeValue('gray.100', 'gray.800')}
+                  size='lg'
+                  name='year'
+                  placeholder='Ingresar año'
+                  value={books.year}
+                  onChange={handleChange}
+                  _focus={{ bg: 'transparent' }}
+                /> */}
+              </FormControl>
+              <Box mt={{ base: 10, md: 35 }}>
                 <Button
                   type='submit'
                   w='full'

@@ -37,6 +37,7 @@ export function Category() {
             language,
             sourceLink,
             numberPages,
+            format,
           }: CardProps) => (
             <React.Fragment key={id}>
               <Card
@@ -48,6 +49,7 @@ export function Category() {
                 sourceLink={sourceLink}
                 year={year}
                 language={language}
+                format={format}
               />
             </React.Fragment>
           ),
