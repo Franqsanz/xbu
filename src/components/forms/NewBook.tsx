@@ -95,6 +95,8 @@ export function FormNewBook() {
     mutate(books);
   }
 
+  console.log(books);
+
   return (
     <>
       <Flex
@@ -183,7 +185,7 @@ export function FormNewBook() {
                 </FormLabel>
                 <Textarea
                   id='descripcion'
-                  rows={8}
+                  rows={10}
                   mb='5'
                   bg={useColorModeValue('gray.100', 'gray.800')}
                   size='lg'
@@ -320,7 +322,23 @@ export function FormNewBook() {
                   ))}
                 </Select>
               </FormControl>
-              <FormControl>
+              <FormControl isRequired mt={{ base: 5, md: 8 }}>
+                <FormLabel htmlFor='formato'>Formato</FormLabel>
+                <Select
+                  id='formato'
+                  name='format'
+                  size='lg'
+                  bg={useColorModeValue('gray.100', 'gray.800')}
+                  value={books.format}
+                  onChange={handleChange}
+                  placeholder='Seleccione un Formato'
+                  _focus={{ bg: 'transparent' }}
+                >
+                  <option value='Físico'>Físico</option>
+                  <option value='Electrónico'>Electrónico</option>
+                </Select>
+              </FormControl>
+              {/* <FormControl>
                 <FormLabel htmlFor='formato' mt='18' mb='4'>
                   Formato
                 </FormLabel>
@@ -346,20 +364,8 @@ export function FormNewBook() {
                     </Radio>
                   </Stack>
                 </RadioGroup>
-                {/* <Input
-                  id='año'
-                  type='number'
-                  mb={{ base: 5, md: 0 }}
-                  bg={useColorModeValue('gray.100', 'gray.800')}
-                  size='lg'
-                  name='year'
-                  placeholder='Ingresar año'
-                  value={books.year}
-                  onChange={handleChange}
-                  _focus={{ bg: 'transparent' }}
-                /> */}
-              </FormControl>
-              <Box mt={{ base: 10, md: 35 }}>
+              </FormControl> */}
+              <Box mt={{ base: 10, md: 14 }}>
                 <Button
                   type='submit'
                   w='full'
