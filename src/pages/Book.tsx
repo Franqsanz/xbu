@@ -156,7 +156,7 @@ export function Book() {
                     <Box as='span'>{data.year}</Box>
                   </Box>
                 </Flex>
-                <Flex mb='2'>
+                <Flex>
                   <Box w='160px'>
                     <Box as='span'>N° paginas:</Box>
                   </Box>
@@ -164,7 +164,7 @@ export function Book() {
                     <Box as='span'>{data.numberPages}</Box>
                   </Box>
                 </Flex>
-                <Flex>
+                <Flex my='2'>
                   <Box w='160px'>
                     <Box as='span'>Idioma:</Box>
                   </Box>

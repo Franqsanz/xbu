@@ -95,8 +95,6 @@ export function FormNewBook() {
     mutate(books);
   }
 
-  console.log(books);
-
   return (
     <>
       <Flex
