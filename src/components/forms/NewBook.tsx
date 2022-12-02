@@ -40,7 +40,7 @@ export function FormNewBook() {
     numberPages: '',
     sourceLink: '',
     language: '',
-    format: 'Físico',
+    format: '',
     // imgUrl: new ArrayBuffer(0)
   });
 
