@@ -35,7 +35,7 @@ export function Book() {
         <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
           Descripción
         </Box>
-        <Text mt='3' mb='14'>
+        <Text mt='3' mx='3' mb='14'>
           {data.description}
         </Text>
       </Box>
@@ -125,7 +125,7 @@ export function Book() {
             >
               Sinopsis
             </Box>
-            <Text mt='3' mb='10' fontSize='lg'>
+            <Text mt='3' mx='3' mb='10' fontSize='lg'>
               {data.synopsis}
             </Text>
           </Box>
