@@ -15,7 +15,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 
-import { Title } from '../components/Title';
+import { Title } from '../components/Head';
 import iconBook from '../assets/imgBook.svg';
 import iconBookReading from '../assets/iconBookReading.svg';
 // import iconsBooksGray from '../assets/iconsBooksGray.svg';
@@ -28,7 +28,10 @@ export function Home() {
 
   return (
     <>
-      <Title title='XBuniverse' />
+      <Title
+        title='XBuniverse'
+        description='Comparte tus libros favoritos con la comunidad.'
+      />
       <Container
         maxW='9xl'
         p='0'

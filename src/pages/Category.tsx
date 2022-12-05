@@ -6,7 +6,7 @@ import { Card } from '../components/card/Card';
 import { CardProps } from '../components/types';
 import { useCategory } from '../hooks/querys';
 import { ContainerTitle } from '../components/ContainerTitle';
-import { Title } from '../components/Title';
+import { Title } from '../components/Head';
 
 export function Category() {
   const { param } = useParams();

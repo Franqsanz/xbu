@@ -21,8 +21,9 @@ interface TitleProps {
   title: string | undefined;
 }
 
-interface PageTitleProps {
+interface HeadProps {
   title: string;
+  description?: string;
 }
 
 interface PropsTag {
@@ -30,4 +31,4 @@ interface PropsTag {
   m?: string;
 }
 
-export type { LinkProps, CardProps, TitleProps, PageTitleProps, PropsTag };
+export type { LinkProps, CardProps, TitleProps, HeadProps, PropsTag };

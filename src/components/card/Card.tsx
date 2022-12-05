@@ -76,7 +76,7 @@ export function Card({ id, title, synopsis, author, category }: CardProps) {
             _hover={{ outline: 'none', bg: '#24b300' }}
           >
             <Flex align='center' color='black'>
-              Más información
+              Más sobre el libro
               <Icon as={FiArrowRight} ml='2' />
             </Flex>
           </Link>

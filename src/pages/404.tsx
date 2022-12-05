@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Link, Text, VStack, Box } from '@chakra-ui/react';
 
-import { Title } from '../components/Title';
+import { Title } from '../components/Head';
 
 export function ErrorPage() {
   return (

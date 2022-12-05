@@ -4,7 +4,7 @@ import { GrGoogle, GrTwitter } from 'react-icons/gr';
 import { BsFacebook } from 'react-icons/bs';
 
 import { ContainerTitle } from '../components/ContainerTitle';
-import { Title } from '../components/Title';
+import { Title } from '../components/Head';
 
 export function Login() {
   return (

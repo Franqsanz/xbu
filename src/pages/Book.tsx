@@ -5,7 +5,7 @@ import { FiExternalLink } from 'react-icons/fi';
 import { Helmet } from 'react-helmet';
 
 import { useBook } from '../hooks/querys';
-import { Title } from '../components/Title';
+import { Title } from '../components/Head';
 import { categoryLinks } from '../components/links';
 import { TagComponent } from '../components/TagComponent';
 
@@ -80,7 +80,7 @@ export function Book() {
 
   return (
     <>
-      <Title title={`${data.title} | XBuniverse`} />
+      <Title title={`${data.title} | XBuniverse`} description={data.synopsis} />
       <Flex
         w='full'
         maxW='1300px'

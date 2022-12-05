@@ -22,7 +22,7 @@ import {
 } from '@chakra-ui/react';
 
 import { FormNewBook } from '../components/forms/NewBook';
-import { Title } from '../components/Title';
+import { Title } from '../components/Head';
 import { ContainerTitle } from '../components/ContainerTitle';
 
 export function NewBook() {
