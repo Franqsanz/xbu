@@ -31,6 +31,7 @@ export function Home() {
       <Title
         title='XBuniverse'
         description='Comparte tus libros favoritos con la comunidad.'
+        urlImage='https://xbu.netlify.app/public/ogImage.png'
       />
       <Container
         maxW='9xl'

@@ -24,6 +24,7 @@ interface TitleProps {
 interface HeadProps {
   title: string;
   description?: string;
+  urlImage?: string;
 }
 
 interface PropsTag {
