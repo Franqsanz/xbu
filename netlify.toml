@@ -4,6 +4,6 @@
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/index.c8bac217.js"
   status = 200
   force = true
