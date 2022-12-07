@@ -11,7 +11,7 @@ export default defineConfig({
     port: 1010,
   },
   resolve: {
-    extensions: ['.mjs'],
+    extensions: ['.js', '.mjs'],
   },
   build: {
     outDir: './dist',
