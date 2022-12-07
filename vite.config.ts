@@ -10,6 +10,9 @@ export default defineConfig({
   server: {
     port: 1010,
   },
+  resolve: {
+    extensions: ['.mjs'],
+  },
   build: {
     outDir: './dist',
     chunkSizeWarningLimit: 1500,
