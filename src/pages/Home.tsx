@@ -15,7 +15,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 
-import { Title } from '../components/Head';
+import { MainHead } from '../components/Head';
 import iconBook from '../assets/imgBook.svg';
 import iconBookReading from '../assets/iconBookReading.svg';
 // import iconsBooksGray from '../assets/iconsBooksGray.svg';
@@ -28,10 +28,10 @@ export function Home() {
 
   return (
     <>
-      <Title
+      <MainHead
         title='XBuniverse'
         description='Comparte tus libros favoritos con la comunidad.'
-        urlImage='https://xbu.netlify.app/public/ogImage.png'
+        urlImage='https://xbu.netlify.app/ogImage.png'
       />
       <Container
         maxW='9xl'

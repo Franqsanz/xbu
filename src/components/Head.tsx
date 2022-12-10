@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 
 import { HeadProps } from './types';
 
-export function Title({ title, description, urlImage }: HeadProps) {
+export function MainHead({ title, description, urlImage }: HeadProps) {
   return (
     <Helmet>
       <title>{title}</title>

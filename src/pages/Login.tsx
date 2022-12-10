@@ -4,12 +4,12 @@ import { GrGoogle, GrTwitter } from 'react-icons/gr';
 import { BsFacebook } from 'react-icons/bs';
 
 import { ContainerTitle } from '../components/ContainerTitle';
-import { Title } from '../components/Head';
+import { MainHead } from '../components/Head';
 
 export function Login() {
   return (
     <>
-      <Title title='Iniciar Sesión' />
+      <MainHead title='Iniciar Sesión' />
       <ContainerTitle title='Iniciar Sesión' />
       <Flex justify='center' py={{ base: '10vh', md: '15vh' }}>
         <Stack direction='column' spacing='5'>

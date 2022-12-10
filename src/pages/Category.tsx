@@ -6,7 +6,7 @@ import { Card } from '../components/card/Card';
 import { CardProps } from '../components/types';
 import { useCategory } from '../hooks/querys';
 import { ContainerTitle } from '../components/ContainerTitle';
-import { Title } from '../components/Head';
+import { MainHead } from '../components/Head';
 
 export function Category() {
   const { param } = useParams();
@@ -16,7 +16,7 @@ export function Category() {
 
   return (
     <>
-      <Title title={`${param} | Categorias`} />
+      <MainHead title={`${param} | Categorias`} />
       <ContainerTitle title={param} />
       <Flex
         w='full'

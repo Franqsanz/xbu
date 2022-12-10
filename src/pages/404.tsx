@@ -2,12 +2,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Link, Text, VStack, Box } from '@chakra-ui/react';
 
-import { Title } from '../components/Head';
+import { MainHead } from '../components/Head';
 
 export function ErrorPage() {
   return (
     <>
-      <Title title='Page not found' />
+      <MainHead title='Page not found' />
       <VStack fontSize='2xl' py='44' h='90vh'>
         <Box as='h1' fontSize='9xl' fontWeight='bold' color='#2de000'>
           404
