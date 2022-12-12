@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { Box, Flex, Link, Text, useColorModeValue } from '@chakra-ui/react';
 import { FiExternalLink } from 'react-icons/fi';
-import { Helmet } from 'react-helmet';
 
 import { useBook } from '../hooks/querys';
 import { MainHead } from '../components/Head';
