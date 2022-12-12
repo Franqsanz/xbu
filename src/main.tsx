@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
+import { HelmetProvider } from 'react-helmet-async';
 
 import { NewBook } from './pages/NewBook';
 import { Home } from './pages/Home';
@@ -36,37 +37,39 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <QueryClientProvider client={queryClient}>
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <BrowserRouter>
-        <Nav />
-        <ScrollToTop>
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path='register' element={<Register />} />
-            <Route path='login' element={<Login />} />
-            <Route path='new-post' element={<NewBook />} />
-            <Route path='explore' element={<Explorer />} />
-            <Route path='categories' element={<Categories />} />
-            <Route
-              path='categories/:param'
-              element={
-                <CatchError>
-                  <Category />
-                </CatchError>
-              }
-            />
-            <Route
-              path='book/:id'
-              element={
-                <CatchError>
-                  <Book />
-                </CatchError>
-              }
-            />
-            <Route path='*' element={<ErrorPage />} />
-          </Routes>
-        </ScrollToTop>
-        <Footer />
-      </BrowserRouter>
+      <HelmetProvider>
+        <BrowserRouter>
+          <Nav />
+          <ScrollToTop>
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path='register' element={<Register />} />
+              <Route path='login' element={<Login />} />
+              <Route path='new-post' element={<NewBook />} />
+              <Route path='explore' element={<Explorer />} />
+              <Route path='categories' element={<Categories />} />
+              <Route
+                path='categories/:param'
+                element={
+                  <CatchError>
+                    <Category />
+                  </CatchError>
+                }
+              />
+              <Route
+                path='book/:id'
+                element={
+                  <CatchError>
+                    <Book />
+                  </CatchError>
+                }
+              />
+              <Route path='*' element={<ErrorPage />} />
+            </Routes>
+          </ScrollToTop>
+          <Footer />
+        </BrowserRouter>
+      </HelmetProvider>
     </ChakraProvider>
     <ReactQueryDevtools />
   </QueryClientProvider>,

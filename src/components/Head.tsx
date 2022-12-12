@@ -1,13 +1,12 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+// import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 import { HeadProps } from './types';
 
 export function MainHead({ title, description, urlImage }: HeadProps) {
   return (
     <Helmet>
-      <meta name='theme-color' content='#2de000' />
-      <meta name='viewport' content='width=device-width, initial-scale=1.0' />
       <title>{title}</title>
       <meta name='description' content={description} />
       <meta name='twitter:card' content='summary_large_image' />
@@ -17,6 +16,7 @@ export function MainHead({ title, description, urlImage }: HeadProps) {
       <meta name='twitter:url' content='https://xbu.netlify.app/' />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:image' content={urlImage} />
+      <meta property='og:type' content='website' />
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
       <meta property='og:site_name' content='XBuniverse' />
@@ -25,8 +25,6 @@ export function MainHead({ title, description, urlImage }: HeadProps) {
       <meta property='og:image' content={urlImage} />
       <meta property='og:image:width' content='1358' />
       <meta property='og:image:height' content='583' />
-      <link rel='canonical' href='https://xbu.netlify.app/' />
-      <link rel='icon' type='image/svg+xml' href='/logo.png' />
     </Helmet>
   );
 }
