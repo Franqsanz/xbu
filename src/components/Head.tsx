@@ -7,8 +7,6 @@ import { HeadProps } from './types';
 
 export function MainHead({ title, description, urlImage }: HeadProps) {
   return (
-    // <HelmetProvider>
-    // <HeadProvider>
     <Helmet prioritizeSeoTags>
       <title>{title}</title>
       <meta data-rh='true' charSet='UTF-8' />
@@ -61,7 +59,5 @@ export function MainHead({ title, description, urlImage }: HeadProps) {
         rel='stylesheet'
       />
     </Helmet>
-    // </HeadProvider>
-    // </HelmetProvider>
   );
 }
