@@ -7,6 +7,7 @@ import { useBook } from '../hooks/querys';
 import { MainHead } from '../components/Head';
 import { categoryLinks } from '../components/links';
 import { TagComponent } from '../components/TagComponent';
+import { RelatedPost } from '../components/RelatedPost';
 
 export function Book() {
   const { id } = useParams();
@@ -34,7 +35,7 @@ export function Book() {
         <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
           Descripción
         </Box>
-        <Text mt='3' mx='3' mb='14'>
+        <Text mt='3' mx='2' mb='14'>
           {data.description}
         </Text>
       </Box>
@@ -82,13 +83,14 @@ export function Book() {
       <MainHead
         title={`${data.title} | XBuniverse`}
         description={data.synopsis}
+        urlImage='https://xbu.netlify.app/ogImage.png'
       />
       <Flex
         w='full'
         maxW='1300px'
         m='auto'
         mt={{ base: 0, md: 10 }}
-        mb='28'
+        mb='25'
         align='flex-start'
         direction={{ base: 'column', lg: 'row' }}
       >
@@ -127,7 +129,7 @@ export function Book() {
             >
               Sinopsis
             </Box>
-            <Text mt='3' mx='3' mb='10' fontSize='lg'>
+            <Text mt='3' mx='2' mb='10' fontSize='lg'>
               {data.synopsis}
             </Text>
           </Box>
@@ -185,9 +187,15 @@ export function Book() {
               </Box>
             </Flex>
           </Box>
-          <Box mt='10' mb='10px'>
-            {uiLink}
-          </Box>
+          <Box mt='10'>{uiLink}</Box>
+          <Flex mt='32' direction='column'>
+            <Box p='2' bg={grayColor} fontSize='xl' roundedTop='lg'>
+              Libros relacionados
+            </Box>
+            <Box overflow='auto' scrollSnapType='x mandatory'>
+              <RelatedPost param={data.category} />
+            </Box>
+          </Flex>
         </Flex>
         <Flex w={{ base: 'full', lg: '400px' }} px='3'>
           <Box
@@ -215,6 +223,20 @@ export function Book() {
           </Box>
         </Flex>
       </Flex>
+      {/* <Flex mb='20' p='5' direction='column' align='center'>
+        <Box
+          w='full'
+          maxW='700px'
+          p='2'
+          bg={grayColor}
+          fontSize='xl'
+          textAlign='center'
+          roundedTop='lg'
+        >
+          Libros relacionados
+        </Box>
+        <RelatedPost param={data.category} />
+      </Flex> */}
     </>
   );
 }

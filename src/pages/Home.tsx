@@ -28,11 +28,11 @@ export function Home() {
 
   return (
     <>
-      {/* <MainHead
+      <MainHead
         title='XBuniverse'
         description='Comparte tus libros favoritos con la comunidad.'
         urlImage='https://xbu.netlify.app/ogImage.png'
-      /> */}
+      />
       <Container
         maxW='9xl'
         p='0'

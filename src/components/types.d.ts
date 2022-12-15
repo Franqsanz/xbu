@@ -6,14 +6,14 @@ interface LinkProps {
 interface CardProps {
   id?: string;
   title: string;
-  synopsis: string;
+  synopsis?: string;
   author: string;
   category: string;
-  year: number;
-  language: number;
-  sourceLink: string;
-  numberPages: number;
-  format: string;
+  year?: number;
+  language?: number;
+  sourceLink?: string;
+  numberPages?: number;
+  format?: string;
   // imgUrl: string
 }
 

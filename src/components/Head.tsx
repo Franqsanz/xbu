@@ -9,52 +9,35 @@ export function MainHead({ title, description, urlImage }: HeadProps) {
   return (
     <Helmet prioritizeSeoTags>
       <title>{title}</title>
-      <meta data-rh='true' charSet='UTF-8' />
-      <meta data-rh='true' name='theme-color' content='#2de000' />
-      <meta
-        data-rh='true'
-        name='viewport'
-        content='width=device-width, initial-scale=1.0'
-      />
-      <meta data-rh='true' name='description' content={description} />
-      <meta data-rh='true' name='twitter:card' content='summary_large_image' />
-      <meta data-rh='true' name='twitter:title' content={title} />
+      <meta charSet='UTF-8' />
+      <meta name='theme-color' content='#2de000' />
+      <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+      <meta name='description' content={description} />
+      <meta name='twitter:card' content='summary_large_image' />
+      <meta name='twitter:title' content={title} />
       {/* <meta name='twitter:site' content='@Franqsanz' />
       <meta name='twitter:creator' content='@Franqsanz' /> */}
-      <meta
-        data-rh='true'
-        name='twitter:url'
-        content='https://xbu.netlify.app/'
-      />
-      <meta data-rh='true' name='twitter:description' content={description} />
-      <meta data-rh='true' name='twitter:image' content={urlImage} />
-      <meta data-rh='true' property='og:type' content='website' />
-      <meta data-rh='true' property='og:title' content={title} />
-      <meta data-rh='true' property='og:description' content={description} />
-      <meta data-rh='true' property='og:site_name' content='XBuniverse' />
-      <meta
-        data-rh='true'
-        property='og:url'
-        content='https://xbu.netlify.app/'
-      />
-      <meta data-rh='true' property='og:locale' content='es_AR' />
-      <meta data-rh='true' property='og:image' content={urlImage} />
-      <meta data-rh='true' property='og:image:width' content='1358' />
-      <meta data-rh='true' property='og:image:height' content='583' />
-      <link data-rh='true' rel='canonical' href='https://xbu.netlify.app/' />
-      <link data-rh='true' rel='icon' type='image/svg+xml' href='/logo.png' />
+      <meta name='twitter:url' content='https://xbu.netlify.app/' />
+      <meta name='twitter:description' content={description} />
+      <meta name='twitter:image' content={urlImage} />
+      <meta property='og:type' content='website' />
+      <meta property='og:title' content={title} />
+      <meta property='og:description' content={description} />
+      <meta property='og:site_name' content='XBuniverse' />
+      <meta property='og:url' content='https://xbu.netlify.app/' />
+      <meta property='og:locale' content='es_AR' />
+      <meta property='og:image' content={urlImage} />
+      <meta property='og:image:width' content='1358' />
+      <meta property='og:image:height' content='583' />
+      <link rel='canonical' href='https://xbu.netlify.app/' />
+      <link rel='icon' type='image/svg+xml' href='/logo.png' />
+      <link rel='preconnect' href='https://fonts.googleapis.com' />
       <link
-        data-rh='true'
-        rel='preconnect'
-        href='https://fonts.googleapis.com'
-      />
-      {/* <link
         rel='preconnect'
         href='https://fonts.gstatic.com'
-        as='crossorigin'
-      /> */}
+        crossOrigin='anonymous'
+      />
       <link
-        data-rh='true'
         href='https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap'
         rel='stylesheet'
       />
