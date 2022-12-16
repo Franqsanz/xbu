@@ -26,13 +26,14 @@ export function RelatedCard({
   return (
     <>
       <Box
-        h={{ base: '300px', md: '220px' }}
+        w='full'
+        h={{ base: 'auto', md: '190px' }}
         m='2'
         rounded='30'
         border='1px'
         borderColor={borderCard}
-        overflow='hidden'
         boxShadow='lg'
+        overflow='hidden'
         my='5'
         bg='transparent'
         position='relative'
@@ -41,7 +42,7 @@ export function RelatedCard({
           {/* <Box>
             <Image src={imgUrl} alt='' />
           </Box> */}
-          <Box p='7'>
+          <Box p='4'>
             <Link
               as={NavLink}
               to={`/categories/${category}`}
@@ -51,7 +52,7 @@ export function RelatedCard({
             </Link>
           </Box>
           <Flex direction='column'>
-            <Box w='350px' p={{ base: 2, md: 6 }} px='5'>
+            <Box p='3'>
               <Box
                 as='h1'
                 fontSize='xl'
@@ -78,7 +79,7 @@ export function RelatedCard({
             bg='#28c900'
             py='4'
             px='7'
-            position='absolute'
+            position={{ base: 'initial', md: 'absolute' }}
             bottom='0'
             _hover={{ outline: 'none', bg: '#24b300' }}
           >
