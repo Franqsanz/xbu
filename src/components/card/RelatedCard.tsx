@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useQuery } from '@tanstack/react-query';
 import { NavLink } from 'react-router-dom';
 import {
   Flex,
@@ -42,7 +41,7 @@ export function RelatedCard({
           {/* <Box>
             <Image src={imgUrl} alt='' />
           </Box> */}
-          <Box p='4'>
+          {/* <Box pt='3' px='4'>
             <Link
               as={NavLink}
               to={`/categories/${category}`}
@@ -50,9 +49,9 @@ export function RelatedCard({
             >
               <TagComponent name={category} />
             </Link>
-          </Box>
+          </Box> */}
           <Flex direction='column'>
-            <Box p='3'>
+            <Box p='4'>
               <Box
                 as='h1'
                 fontSize='xl'

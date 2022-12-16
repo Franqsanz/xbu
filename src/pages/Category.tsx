@@ -33,23 +33,16 @@ export function Category() {
             synopsis,
             author,
             category,
-            year,
-            language,
             sourceLink,
-            numberPages,
-            format,
           }: CardProps) => (
             <React.Fragment key={id}>
               <Card
+                id={id}
                 category={category}
                 title={title}
                 author={author}
                 synopsis={synopsis}
-                numberPages={numberPages}
                 sourceLink={sourceLink}
-                year={year}
-                language={language}
-                format={format}
               />
             </React.Fragment>
           ),

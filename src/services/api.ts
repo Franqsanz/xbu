@@ -37,6 +37,13 @@ async function getBookCategory(category: any) {
   // throw new Error('Error al actualizar el libro');
 }
 
+async function getRelatedPost() {
+  const res = await fetch(`${url}?limit=3`);
+
+  if (res.ok) return await res.json();
+  // throw new Error('Error al actualizar el libro');
+}
+
 async function deleteBook(id: any) {
   // const res = await fetch('http://localhost:9090/api/', {
   const res = await fetch(`${url}/${id}`, {
@@ -50,4 +57,11 @@ async function deleteBook(id: any) {
   return true;
 }
 
-export { getAllBooks, getBook, getBookCategory, postBook, deleteBook };
+export {
+  getAllBooks,
+  getBook,
+  getBookCategory,
+  getRelatedPost,
+  postBook,
+  deleteBook,
+};

@@ -1,6 +1,13 @@
 import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
-import { Box, Flex, Link, Text, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  Divider,
+  Flex,
+  Link,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { FiExternalLink } from 'react-icons/fi';
 
 import { useBook } from '../hooks/querys';
@@ -188,11 +195,14 @@ export function Book() {
             </Flex>
           </Box>
           <Box mt='10'>{uiLink}</Box>
-          <Flex mt='32' direction='column'>
-            <Box p='2' bg={grayColor} fontSize='xl' roundedTop='lg'>
+          <Box my='14'>
+            <Divider borderColor='gray.400' />
+          </Box>
+          <Flex direction='column'>
+            <Box p='2' mb='2' bg={grayColor} fontSize='xl' roundedTop='lg'>
               Libros relacionados
             </Box>
-            <Box overflow='auto' scrollSnapType='x mandatory'>
+            <Box>
               <RelatedPost param={data.category} />
             </Box>
           </Flex>

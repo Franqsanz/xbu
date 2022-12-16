@@ -3,6 +3,7 @@ import {
   getAllBooks,
   getBook,
   getBookCategory,
+  getRelatedPost,
   postBook,
 } from '../services/api';
 
@@ -29,10 +30,16 @@ function useCategory(category: any) {
   });
 }
 
+function useRelatedPost() {
+  return useQuery([key], () => getRelatedPost(), {
+    suspense: true,
+  });
+}
+
 function useBook(id: string | undefined) {
   return useQuery([key, id], () => getBook(id), {
     suspense: true,
   });
 }
 
-export { useMutatePost, useAllBooks, useBook, useCategory };
+export { useMutatePost, useAllBooks, useBook, useCategory, useRelatedPost };
