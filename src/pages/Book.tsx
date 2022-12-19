@@ -203,7 +203,7 @@ export function Book() {
               Libros relacionados
             </Box>
             <Box>
-              <RelatedPost param={data.category} />
+              <RelatedPost />
             </Box>
           </Flex>
         </Flex>
