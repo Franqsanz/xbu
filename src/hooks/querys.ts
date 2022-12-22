@@ -33,6 +33,7 @@ function useCategory(category: any) {
 function useRelatedPost() {
   return useQuery([key], () => getRelatedPost(), {
     suspense: true,
+    refetchOnWindowFocus: false,
   });
 }
 

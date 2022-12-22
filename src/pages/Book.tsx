@@ -200,7 +200,7 @@ export function Book() {
           </Box>
           <Flex direction='column'>
             <Box p='2' mb='2' bg={grayColor} fontSize='xl' roundedTop='lg'>
-              Libros relacionados
+              Más libros en XBuniverse
             </Box>
             <Box>
               <RelatedPost />

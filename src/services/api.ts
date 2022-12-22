@@ -34,14 +34,12 @@ async function getBookCategory(category: any) {
   );
 
   if (res.ok) return await res.json();
-  // throw new Error('Error al actualizar el libro');
 }
 
 async function getRelatedPost() {
-  const res = await fetch(`${url}?limit=3`);
+  const res = await fetch(`${url}/related-post`);
 
   if (res.ok) return await res.json();
-  // throw new Error('Error al actualizar el libro');
 }
 
 async function deleteBook(id: any) {
