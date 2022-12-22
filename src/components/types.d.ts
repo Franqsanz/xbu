@@ -14,6 +14,7 @@ interface CardProps {
   sourceLink?: string;
   numberPages?: number;
   format?: string;
+  refetchQueries: () => any | unknown;
   // imgUrl: string
 }
 

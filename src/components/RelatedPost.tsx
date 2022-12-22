@@ -7,7 +7,7 @@ import { useRelatedPost } from '../hooks/querys';
 
 export function RelatedPost() {
   const colorCard = useColorModeValue('gray.900', 'gray.100');
-  const { data } = useRelatedPost();
+  const { data, refetch } = useRelatedPost();
 
   return (
     <>
@@ -20,6 +20,7 @@ export function RelatedPost() {
               title={title}
               author={author}
               synopsis={synopsis}
+              refetchQueries={refetch}
             />
           </React.Fragment>
         ))}

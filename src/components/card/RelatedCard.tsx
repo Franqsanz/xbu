@@ -11,15 +11,9 @@ import {
 import { FiArrowRight } from 'react-icons/fi';
 
 import { CardProps } from '../types';
-import { TagComponent } from '../TagComponent';
+// import { TagComponent } from '../TagComponent';
 
-export function RelatedCard({
-  id,
-  title,
-  synopsis,
-  author,
-  category,
-}: CardProps) {
+export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
   const borderCard = useColorModeValue('gray.200', '#81ec66');
 
   return (
@@ -74,6 +68,7 @@ export function RelatedCard({
           <Link
             as={NavLink}
             to={`/book/${id}`}
+            onClick={refetchQueries}
             w='full'
             bg='#28c900'
             py='4'
