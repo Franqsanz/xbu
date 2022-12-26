@@ -18,10 +18,8 @@ import {
 import { MainHead } from '../components/Head';
 import iconBook from '../assets/imgBook.svg';
 import iconBookReading from '../assets/iconBookReading.svg';
-// import iconsBooksGray from '../assets/iconsBooksGray.svg';
-// import iconsBooksDark from '../assets/iconsBooksDark.svg';
-import blobSceneBlack from '../assets/blob-scene-black.svg';
-import blobSceneWhite from '../assets/blob-scene-white.svg';
+import patternBlack from '../assets/patternpadBlack.svg';
+import patternWhite from '../assets/patternpadWhite.svg';
 
 export function Home() {
   const { colorMode } = useColorMode();
@@ -39,7 +37,7 @@ export function Home() {
         bg={useColorModeValue('gray.50', 'none')}
         backgroundSize='cover'
         backgroundPosition='center center'
-        backgroundImage={colorMode === 'dark' ? blobSceneBlack : blobSceneWhite} // backgroundAttachment='fixed'
+        backgroundImage={colorMode === 'dark' ? patternBlack : patternWhite} // backgroundAttachment='fixed'
       >
         <Box py={{ base: 10, md: '20vh' }} pt={{ base: 24, lg: 28 }}>
           <Box
