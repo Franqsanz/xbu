@@ -11,7 +11,7 @@ export function RelatedPost() {
 
   return (
     <>
-      <Flex flexWrap='wrap' color={colorCard}>
+      <Flex flexWrap={{ base: 'wrap', xl: 'nowrap' }} color={colorCard}>
         {data.map(({ id, title, synopsis, author, category }: CardProps) => (
           <React.Fragment key={id}>
             <RelatedCard

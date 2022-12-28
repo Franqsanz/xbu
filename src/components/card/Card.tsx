@@ -15,7 +15,7 @@ import { CardProps } from '../types';
 import { TagComponent } from '../TagComponent';
 
 export function Card({ id, title, synopsis, author, category }: CardProps) {
-  const borderCard = useColorModeValue('gray.200', '#81ec66');
+  const borderCard = useColorModeValue('gray.200', '#28c900');
 
   return (
     <>

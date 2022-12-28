@@ -26,16 +26,7 @@ export function Book() {
   const { data } = useBook(id);
 
   if (data.description === '') {
-    uiDescription = (
-      <Box mb='10'>
-        <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
-          Descripción
-        </Box>
-        <Text fontSize='md' my='7' fontStyle='italic' color={infoTextColor}>
-          El autor de la publicación no a proporsionado una descripción
-        </Text>
-      </Box>
-    );
+    uiDescription = <Box mb='10'></Box>;
   } else {
     uiDescription = (
       <Box mt='5'>
@@ -66,7 +57,7 @@ export function Book() {
   } else {
     uiLink = (
       <Link
-        w={{ base: '100%', md: '115px' }}
+        w={{ base: '100%', md: '165px' }}
         display='block'
         href={data.sourceLink}
         isExternal
@@ -77,8 +68,8 @@ export function Book() {
         textAlign='center'
         _hover={{ outline: 'none', bg: '#28c900' }}
       >
-        <Flex align='center'>
-          Ver Libro
+        <Flex align='center' justify='center'>
+          Comprar Libro
           <FiExternalLink style={{ marginLeft: '6px' }} />
         </Flex>
       </Link>
@@ -233,20 +224,6 @@ export function Book() {
           </Box>
         </Flex>
       </Flex>
-      {/* <Flex mb='20' p='5' direction='column' align='center'>
-        <Box
-          w='full'
-          maxW='700px'
-          p='2'
-          bg={grayColor}
-          fontSize='xl'
-          textAlign='center'
-          roundedTop='lg'
-        >
-          Libros relacionados
-        </Box>
-        <RelatedPost param={data.category} />
-      </Flex> */}
     </>
   );
 }

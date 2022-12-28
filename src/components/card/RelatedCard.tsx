@@ -14,20 +14,20 @@ import { CardProps } from '../types';
 // import { TagComponent } from '../TagComponent';
 
 export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
-  const borderCard = useColorModeValue('gray.200', '#81ec66');
+  const borderCard = useColorModeValue('gray.200', '#28c900');
 
   return (
     <>
       <Box
         w='full'
-        h={{ base: 'auto', md: '190px' }}
-        m='2'
+        h={{ base: 'auto', md: '215px' }}
+        mx={{ base: 0, md: 2 }}
         rounded='30'
         border='1px'
         borderColor={borderCard}
         boxShadow='lg'
         overflow='hidden'
-        my='5'
+        my='2'
         bg='transparent'
         position='relative'
       >
@@ -57,7 +57,9 @@ export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
               >
                 {title}
               </Box>
-              <Box textTransform='uppercase'>{author}</Box>
+              <Box textTransform='uppercase' fontSize='sm'>
+                {author}
+              </Box>
               {/* <Box>
               <Text noOfLines={10} lineHeight='1.6'>
                 {synopsis}
