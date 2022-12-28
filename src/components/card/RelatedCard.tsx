@@ -20,7 +20,7 @@ export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
     <>
       <Box
         w='full'
-        h={{ base: 'auto', md: '215px' }}
+        h={{ base: 'auto', md: '245px' }}
         mx={{ base: 0, md: 2 }}
         rounded='30'
         border='1px'
