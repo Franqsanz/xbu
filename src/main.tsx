@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
-import { HelmetProvider, Helmet } from 'react-helmet-async';
+import { HelmetProvider } from 'react-helmet-async';
 
 import { NewBook } from './pages/NewBook';
 import { Home } from './pages/Home';
