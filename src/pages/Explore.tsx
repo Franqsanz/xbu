@@ -12,6 +12,7 @@ import { TagComponent } from '../components/TagComponent';
 export function Explore() {
   const bgArrows = useColorModeValue('white', 'black');
   const borderArrows = useColorModeValue('gray.200', '#28c900');
+  const gradientColor = useColorModeValue('white', '#1A202C');
 
   function slideLeft() {
     let slider = document.getElementById('slider') as HTMLElement;
@@ -27,7 +28,7 @@ export function Explore() {
     <>
       <MainHead title='Explorar' description='¡Explora cientos de libros!' />
       <ContainerTitle title='Explorar' />
-      <Flex justify='center' align='center' mx='5'>
+      <Flex justify='center' align='center' mx='4'>
         <Box
           display={{ base: 'none', md: 'inline' }}
           bg={bgArrows}
@@ -51,8 +52,15 @@ export function Explore() {
           flexDirection='row'
           flexWrap='nowrap'
           mt='4'
-          mx={{ base: 1, md: 3 }}
+          mx={{ base: 0, md: 1 }}
+          position='relative'
         >
+          <Box
+            position='sticky'
+            p='2'
+            left='-1px'
+            bgGradient={`linear(270deg, #ffffff00 0%, ${gradientColor} 60%)`}
+          ></Box>
           {categoryLinks.map(({ name }) => (
             <Link
               key={name}
@@ -63,6 +71,12 @@ export function Explore() {
               <TagComponent name={name} m='1' />
             </Link>
           ))}
+          <Box
+            position='sticky'
+            p='2'
+            right='-2px'
+            bgGradient={`linear(88deg, #ffffff00 0%, ${gradientColor} 60%)`}
+          ></Box>
         </Box>
         <Box
           display={{ base: 'none', md: 'inline' }}
