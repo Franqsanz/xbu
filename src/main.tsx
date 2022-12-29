@@ -12,7 +12,7 @@ import { NewBook } from './pages/NewBook';
 import { Home } from './pages/Home';
 import { Register } from './pages/Register';
 import { Login } from './pages/Login';
-import { Explorer } from './pages/Explore';
+import { Explore } from './pages/Explore';
 import { Categories } from './pages/Categories';
 import { Category } from './pages/Category';
 import { Book } from './pages/Book';
@@ -46,7 +46,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
               <Route path='register' element={<Register />} />
               <Route path='login' element={<Login />} />
               <Route path='new-post' element={<NewBook />} />
-              <Route path='explore' element={<Explorer />} />
+              <Route path='explore' element={<Explore />} />
               <Route path='categories' element={<Categories />} />
               <Route
                 path='categories/:param'
