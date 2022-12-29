@@ -17,21 +17,12 @@ export function Explorer() {
         <Box
           display='flex'
           w='8xl'
-          overflow='auto'
+          overflowX='auto'
           flexDirection='row'
           flexWrap={{ base: 'nowrap', md: 'wrap' }}
-          mt='10'
+          mt='4'
           mx={{ base: 1, md: 16 }}
           scrollSnapType='x mandatory'
-          sx={{
-            '&::-webkit-scrollbar': {
-              height: '7px',
-            },
-            '&::-webkit-scrollbar-thumb': {
-              background: useColorModeValue('gray.300', 'gray.600'),
-              borderRadius: '30px',
-            },
-          }}
         >
           {categoryLinks.map(({ name }) => (
             <Link
