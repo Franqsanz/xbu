@@ -64,6 +64,7 @@ export function Book() {
         bg='#2de000'
         color='black'
         p='3'
+        border='1px'
         rounded='10'
         textAlign='center'
         _hover={{ outline: 'none', bg: '#28c900' }}
