@@ -5,7 +5,7 @@ import { RelatedCard } from '../components/card/RelatedCard';
 import { CardProps } from '../components/types';
 import { useRelatedPost } from '../hooks/querys';
 
-export function RelatedPost() {
+export default function RelatedPost() {
   const colorCard = useColorModeValue('gray.900', 'gray.100');
   const { data, refetch } = useRelatedPost();
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import {
   Box,
@@ -7,6 +7,7 @@ import {
   Link,
   Text,
   useColorModeValue,
+  Spinner,
 } from '@chakra-ui/react';
 import { FiExternalLink } from 'react-icons/fi';
 
@@ -14,7 +15,7 @@ import { useBook } from '../hooks/querys';
 import { MainHead } from '../components/Head';
 import { categoryLinks } from '../components/links';
 import { TagComponent } from '../components/TagComponent';
-import { RelatedPost } from '../components/RelatedPost';
+const RelatedPost = lazy(() => import('../components/RelatedPost'));
 
 export function Book() {
   const { id } = useParams();
@@ -194,9 +195,17 @@ export function Book() {
             <Box p='2' mb='2' bg={grayColor} fontSize='xl' roundedTop='lg'>
               Más libros en XBuniverse
             </Box>
-            <Box>
-              <RelatedPost />
-            </Box>
+            <Suspense
+              fallback={
+                <Box p='3'>
+                  <Spinner size='lg' />
+                </Box>
+              }
+            >
+              <Box>
+                <RelatedPost />
+              </Box>
+            </Suspense>
           </Flex>
         </Flex>
         <Flex w={{ base: 'full', lg: '400px' }} px='3'>

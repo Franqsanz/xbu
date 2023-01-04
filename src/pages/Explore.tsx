@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Box, Flex, Link, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, Flex, Link, useColorModeValue } from '@chakra-ui/react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 import { AllBooks } from '../components/AllBooks';
@@ -29,7 +29,7 @@ export function Explore() {
       <MainHead title='Explorar' description='¡Explora cientos de libros!' />
       <ContainerTitle title='Explorar' />
       <Flex justify='center' align='center' mx='4'>
-        <Box
+        <Button
           display={{ base: 'none', md: 'inline' }}
           bg={bgArrows}
           rounded='full'
@@ -41,7 +41,7 @@ export function Explore() {
           cursor='pointer'
         >
           <MdChevronLeft onClick={slideLeft} size='30' />
-        </Box>
+        </Button>
         <Box
           id='slider'
           display='flex'
@@ -78,7 +78,7 @@ export function Explore() {
             bgGradient={`linear(88deg, #ffffff00 0%, ${gradientColor} 60%)`}
           ></Box>
         </Box>
-        <Box
+        <Button
           display={{ base: 'none', md: 'inline' }}
           bg={bgArrows}
           rounded='full'
@@ -90,7 +90,7 @@ export function Explore() {
           cursor='pointer'
         >
           <MdChevronRight onClick={slideRight} size='30' />
-        </Box>
+        </Button>
       </Flex>
       <AllBooks />
     </>
