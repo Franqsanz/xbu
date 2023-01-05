@@ -1,17 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {
-  Flex,
-  Box,
-  Text,
-  useColorModeValue,
-  Link,
-  Icon,
-} from '@chakra-ui/react';
+import { Flex, Box, useColorModeValue, Link, Icon } from '@chakra-ui/react';
 import { FiArrowRight } from 'react-icons/fi';
 
 import { CardProps } from '../types';
-// import { TagComponent } from '../TagComponent';
 
 export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
   const borderCard = useColorModeValue('gray.200', '#28c900');
@@ -60,11 +52,6 @@ export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
               <Box textTransform='uppercase' fontSize='sm'>
                 {author}
               </Box>
-              {/* <Box>
-              <Text noOfLines={10} lineHeight='1.6'>
-                {synopsis}
-              </Text>
-            </Box> */}
             </Box>
           </Flex>
           <Link

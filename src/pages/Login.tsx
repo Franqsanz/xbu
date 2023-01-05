@@ -11,7 +11,7 @@ export function Login() {
     <>
       <MainHead title='Iniciar Sesión' />
       <ContainerTitle title='Iniciar Sesión' />
-      <Flex justify='center' py={{ base: '10vh', md: '15vh' }}>
+      <Flex justify='center' py={{ base: '20vh', md: '15vh' }}>
         <Stack direction='column' spacing='5'>
           <Button
             w='250px'
