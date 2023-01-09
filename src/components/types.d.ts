@@ -33,4 +33,17 @@ interface PropsTag {
   m?: string;
 }
 
-export type { LinkProps, CardProps, TitleProps, HeadProps, PropsTag };
+interface Book {
+  title: string;
+  author: string;
+  synopsis: string;
+  description?: string;
+  year: string;
+  category: string;
+  numberPages: string;
+  sourceLink?: string;
+  language: string;
+  format: string;
+}
+
+export type { LinkProps, CardProps, TitleProps, HeadProps, PropsTag, Book };

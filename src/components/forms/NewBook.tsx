@@ -8,19 +8,20 @@ import {
   FormLabel,
   Textarea,
   Select,
-  Image,
+  // Image,
   Alert,
   AlertIcon,
   AlertTitle,
   useColorModeValue,
-  RadioGroup,
-  Radio,
-  Stack,
+  // RadioGroup,
+  // Radio,
+  // Stack,
 } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
+// import { useQuery } from '@tanstack/react-query';
 // import ImageUploading, { ImageListType } from "react-images-uploading";
 
 import { categoryLinks } from '../links';
+import { Book } from '../types';
 import { useMutatePost } from '../../hooks/querys';
 
 export function FormNewBook() {
@@ -44,24 +45,13 @@ export function FormNewBook() {
     // imgUrl: new ArrayBuffer(0)
   });
 
-  const disabled =
-    !books.title ||
-    !books.author ||
-    !books.synopsis ||
-    !books.year ||
-    !books.category ||
-    !books.numberPages ||
-    !books.language;
+  function allFieldsBook(book: Book): boolean {
+    return Object.entries(book)
+      .filter(([key]) => key !== 'description' && key !== 'sourceLink')
+      .every(([, value]) => value);
+  }
 
-  // console.log(JSON.stringify(books) === '{}');
-  // if (Object.values(books).length === 0) {
-  //   console.log('vacio');
-  // } else {
-  //   console.log('no vacio');
-  // }
-  // Object.entries({ ...books }).some((d) => {
-  //   console.log(d[1] === '');
-  // });
+  const disabled = !allFieldsBook(books);
 
   // const maxNumber = 69;
 
@@ -72,10 +62,10 @@ export function FormNewBook() {
   //   setImages(imageList as never[]);
   // };
 
-  const { data } = useQuery(['Books'], async () => {
-    const res = await fetch('https://xb-api.vercel.app/api');
-    return res.json();
-  });
+  // const { data } = useQuery(['Books'], async () => {
+  //   const res = await fetch('https://xb-api.vercel.app/api');
+  //   return res.json();
+  // });
 
   const { mutate, isLoading, isSuccess, error } = useMutatePost();
 
