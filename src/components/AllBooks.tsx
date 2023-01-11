@@ -11,6 +11,7 @@ import {
 import { CardProps } from './types';
 import { useAllBooks } from '../hooks/querys';
 import { Card } from './card/Card';
+import { ResultLength } from './ResultLength';
 
 export function AllBooks() {
   const colorCard = useColorModeValue('gray.900', 'gray.100');
@@ -45,35 +46,38 @@ export function AllBooks() {
 
   return (
     <>
-      <Flex
-        w='full'
-        justify='center'
-        py='5'
-        m='auto'
-        flexWrap='wrap'
-        color={colorCard}
-      >
-        {data.map(
-          ({
-            id,
-            title,
-            synopsis,
-            author,
-            category,
-            sourceLink,
-          }: CardProps) => (
-            <React.Fragment key={id}>
-              <Card
-                id={id}
-                category={category}
-                title={title}
-                author={author}
-                synopsis={synopsis}
-                sourceLink={sourceLink}
-              />
-            </React.Fragment>
-          ),
-        )}
+      <Flex direction='column'>
+        <ResultLength data={data} />
+        <Flex
+          w='full'
+          justify='center'
+          py='5'
+          m='auto'
+          flexWrap='wrap'
+          color={colorCard}
+        >
+          {data.map(
+            ({
+              id,
+              title,
+              synopsis,
+              author,
+              category,
+              sourceLink,
+            }: CardProps) => (
+              <React.Fragment key={id}>
+                <Card
+                  id={id}
+                  category={category}
+                  title={title}
+                  author={author}
+                  synopsis={synopsis}
+                  sourceLink={sourceLink}
+                />
+              </React.Fragment>
+            ),
+          )}
+        </Flex>
       </Flex>
     </>
   );

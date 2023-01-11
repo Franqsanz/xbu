@@ -24,18 +24,6 @@ export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
         position='relative'
       >
         <Flex direction={{ base: 'column', md: 'row' }}>
-          {/* <Box>
-            <Image src={imgUrl} alt='' />
-          </Box> */}
-          {/* <Box pt='3' px='4'>
-            <Link
-              as={NavLink}
-              to={`/categories/${category}`}
-              _hover={{ outline: 'none' }}
-            >
-              <TagComponent name={category} />
-            </Link>
-          </Box> */}
           <Flex direction='column'>
             <Box p='4'>
               <Box

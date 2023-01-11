@@ -7,6 +7,7 @@ import { CardProps } from '../components/types';
 import { useCategory } from '../hooks/querys';
 import { ContainerTitle } from '../components/ContainerTitle';
 import { MainHead } from '../components/Head';
+import { ResultLength } from '../components/ResultLength';
 
 export function Category() {
   const { param } = useParams();
@@ -18,6 +19,7 @@ export function Category() {
     <>
       <MainHead title={`${param} | Categorias`} />
       <ContainerTitle title={param} />
+      <ResultLength data={data} />
       <Flex
         w='full'
         justify='center'
