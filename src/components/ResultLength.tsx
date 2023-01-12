@@ -5,11 +5,10 @@ export function ResultLength({ data }: any) {
   return (
     <Box w='85%' mt='5'>
       <Box fontSize='lg' textAlign={{ base: 'center', lg: 'left' }}>
-        Total:{' '}
+        Total Libros:{' '}
         <Box as='span' fontWeight='bold' fontFamily='arial'>
           {data.length}
-        </Box>{' '}
-        Libros
+        </Box>
       </Box>
     </Box>
   );

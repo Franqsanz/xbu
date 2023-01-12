@@ -10,12 +10,14 @@ export default extendTheme({
     global: {
       body: {
         '&::-webkit-scrollbar': {
-          width: '8px',
+          width: '17px',
           height: '7px',
+          background: '#f2f2f2',
         },
         '&::-webkit-scrollbar-thumb': {
-          background: '#CBD5E0',
+          background: '#a2aab3',
           borderRadius: '30px',
+          border: '4px solid #f2f2f2',
         },
       },
     },
