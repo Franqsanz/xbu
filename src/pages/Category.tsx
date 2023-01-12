@@ -19,7 +19,6 @@ export function Category() {
     <>
       <MainHead title={`${param} | Categorias`} />
       <ContainerTitle title={param} />
-      <ResultLength data={data} />
       <Flex
         w='full'
         justify='center'
@@ -28,6 +27,7 @@ export function Category() {
         flexWrap='wrap'
         color={colorCard}
       >
+        <ResultLength data={data} />
         {data.map(
           ({
             id,

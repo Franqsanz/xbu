@@ -46,38 +46,36 @@ export function AllBooks() {
 
   return (
     <>
-      <Flex direction='column'>
+      <Flex
+        w='full'
+        justify='center'
+        py='5'
+        m='auto'
+        flexWrap='wrap'
+        color={colorCard}
+      >
         <ResultLength data={data} />
-        <Flex
-          w='full'
-          justify='center'
-          py='5'
-          m='auto'
-          flexWrap='wrap'
-          color={colorCard}
-        >
-          {data.map(
-            ({
-              id,
-              title,
-              synopsis,
-              author,
-              category,
-              sourceLink,
-            }: CardProps) => (
-              <React.Fragment key={id}>
-                <Card
-                  id={id}
-                  category={category}
-                  title={title}
-                  author={author}
-                  synopsis={synopsis}
-                  sourceLink={sourceLink}
-                />
-              </React.Fragment>
-            ),
-          )}
-        </Flex>
+        {data.map(
+          ({
+            id,
+            title,
+            synopsis,
+            author,
+            category,
+            sourceLink,
+          }: CardProps) => (
+            <React.Fragment key={id}>
+              <Card
+                id={id}
+                category={category}
+                title={title}
+                author={author}
+                synopsis={synopsis}
+                sourceLink={sourceLink}
+              />
+            </React.Fragment>
+          ),
+        )}
       </Flex>
     </>
   );
