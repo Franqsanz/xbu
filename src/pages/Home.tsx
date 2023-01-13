@@ -37,7 +37,8 @@ export function Home() {
         bg={useColorModeValue('gray.50', 'none')}
         backgroundSize='cover'
         backgroundPosition='center center'
-        backgroundImage={colorMode === 'dark' ? patternBlack : patternWhite} // backgroundAttachment='fixed'
+        backgroundImage={colorMode === 'dark' ? patternBlack : patternWhite}
+        backgroundAttachment='fixed'
       >
         <Box py={{ base: 10, md: '20vh' }} pt={{ base: 24, lg: 28 }}>
           <Box
@@ -127,7 +128,7 @@ export function Home() {
         px='10'
         direction={{ base: 'column', md: 'row' }}
       >
-        <Image src={iconBook} w='500px' alt='' />
+        <Image src={iconBook} w='500px' alt='' decoding='async' />
         <Stack direction='column' ml={{ base: 0, md: 3 }} spacing='4'>
           <Heading
             mb='10'
@@ -174,7 +175,7 @@ export function Home() {
             Descubre que leer en tu proximo viaje o tiempo libre.
           </Text>
         </Stack>
-        <Image src={iconBookReading} w='500px' alt='' />
+        <Image src={iconBookReading} w='500px' alt='' decoding='async' />
       </Flex>
     </>
   );
