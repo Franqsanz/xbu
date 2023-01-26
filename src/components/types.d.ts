@@ -15,7 +15,7 @@ interface CardProps {
   numberPages?: number;
   format?: string;
   refetchQueries?: () => any | unknown;
-  // imgUrl: string
+  image: string;
 }
 
 interface TitleProps {

@@ -1,25 +1,41 @@
-import { url } from '../config';
+import { API_URL_PROD, API_URL_DEV } from '../config';
 
 async function getAllBooks() {
-  // const res = await fetch('http://localhost:9090/api/');
-  const res = await fetch(url);
+  // const res = await fetch(API_URL_DEV);
+  const res = await fetch(API_URL_PROD);
   return res.json();
 }
 
 async function getBook(id: string | undefined) {
-  // const res = await fetch('http://localhost:9090/api/');
-  const res = await fetch(`${url}/${id}`);
+  // const res = await fetch(API_URL_DEV);
+  const res = await fetch(`${API_URL_PROD}/${id}`);
   return res.json();
 }
 
 async function postBook(books: any) {
-  // const res = await fetch('http://localhost:9090/api/', {
-  const res = await fetch(url, {
+  // const formData = new FormData();
+  // formData.append('file', books.image);
+  // formData.append('upload_preset', 'your_upload_preset');
+
+  // // Upload image to cloudinary
+  // const imageResponse = await fetch(
+  //   'https://api.cloudinary.com/v1_1/your_cloud_name/image/upload',
+  //   {
+  //     method: 'POST',
+  //     body: formData,
+  //   },
+  // );
+  // const imageData = await imageResponse.json();
+
+  // books.image = {
+  //   url: imageData.url,
+  //   id: imageData.public_id,
+  // };
+
+  // const res = await fetch(API_URL_DEV, {
+  const res = await fetch(API_URL_PROD, {
     method: 'POST',
-    headers: {
-      accept: 'application/json',
-      'content-type': 'application/json',
-    },
+    headers: { 'content-type': 'application/json' },
     body: JSON.stringify(books),
   });
 
@@ -29,22 +45,22 @@ async function postBook(books: any) {
 
 async function getBookCategory(category: any) {
   const res = await fetch(
-    `${url}?category=${category}`,
-    // `http://localhost:9090/api/?category=${category}`,
+    `${API_URL_PROD}?category=${category}`,
+    // `${API_URL_DEV}?category=${category}`,
   );
 
   if (res.ok) return await res.json();
 }
 
 async function getRelatedPost() {
-  const res = await fetch(`${url}/related-post`);
+  const res = await fetch(`${API_URL_PROD}/related-post`);
 
   if (res.ok) return await res.json();
 }
 
 async function deleteBook(id: any) {
-  // const res = await fetch('http://localhost:9090/api/', {
-  const res = await fetch(`${url}/${id}`, {
+  // const res = await fetch(API_URL_DEV, {
+  const res = await fetch(`${API_URL_PROD}/${id}`, {
     method: 'DELETE',
   });
 
