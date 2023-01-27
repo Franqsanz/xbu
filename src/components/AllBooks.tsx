@@ -20,7 +20,7 @@ export function AllBooks() {
   if (isLoading) {
     return (
       <Flex justify='center' py={{ base: '25vh', md: '40vh' }}>
-        <Spinner size='xl' thickness='4px' speed='0.55s' />
+        <Spinner size='xl' thickness='4px' speed='0.40s' />
       </Flex>
     );
   }
@@ -34,7 +34,7 @@ export function AllBooks() {
         alignItems='center'
         justifyContent='center'
         textAlign='center'
-        height='200px'
+        height='500px'
       >
         <AlertIcon boxSize='50px' />
         <AlertTitle mt='5' fontSize='xl'>
@@ -63,6 +63,7 @@ export function AllBooks() {
             author,
             category,
             sourceLink,
+            image,
           }: CardProps) => (
             <React.Fragment key={id}>
               <Card
@@ -72,6 +73,7 @@ export function AllBooks() {
                 author={author}
                 synopsis={synopsis}
                 sourceLink={sourceLink}
+                image={image}
               />
             </React.Fragment>
           ),

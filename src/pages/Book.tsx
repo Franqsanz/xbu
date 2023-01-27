@@ -21,25 +21,9 @@ export function Book() {
   const { id } = useParams();
   const grayColor = useColorModeValue('gray.200', 'gray.600');
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
-  let uiDescription;
   let uiLink;
 
   const { data } = useBook(id);
-
-  if (data.description === '') {
-    uiDescription = <Box mb='10'></Box>;
-  } else {
-    uiDescription = (
-      <Box mt='5'>
-        <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
-          Descripción
-        </Box>
-        <Text mt='3' mx='2' mb='14'>
-          {data.description}
-        </Text>
-      </Box>
-    );
-  }
 
   if (data.sourceLink === '') {
     uiLink = (
@@ -133,7 +117,6 @@ export function Book() {
               {data.synopsis}
             </Text>
           </Box>
-          {uiDescription}
           <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
             Caracteristicas
           </Box>

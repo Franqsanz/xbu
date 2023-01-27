@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   FormControl,
   Button,
@@ -8,66 +8,54 @@ import {
   FormLabel,
   Textarea,
   Select,
-  // Image,
+  Image,
   Alert,
   AlertIcon,
   AlertTitle,
   useColorModeValue,
-  // RadioGroup,
-  // Radio,
-  // Stack,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Icon,
 } from '@chakra-ui/react';
-// import { useQuery } from '@tanstack/react-query';
-// import ImageUploading, { ImageListType } from "react-images-uploading";
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
+import { AiOutlineCloudUpload } from 'react-icons/ai';
 
 import { categoryLinks } from '../links';
 import { Book } from '../types';
 import { useMutatePost } from '../../hooks/querys';
 
 export function FormNewBook() {
-  // const toast = useToast();
-  // const [imageSrc, setImageSrc] = useState();
-  // const [uploadData, setUploadData] = useState();
-  // const [images, setImages] = useState([]);
-  // const [image, setImage] = useState<File>();
-  // const [preview, setPreview] = useState<string>();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { mutate, isLoading, isSuccess, error } = useMutatePost();
+  const [cropData, setCropData] = useState('');
+  const [crop, setCrop] = useState<any>();
   const [books, setBooks] = useState({
     title: '',
     author: '',
     synopsis: '',
-    description: '',
     year: '',
     category: '',
     numberPages: '',
     sourceLink: '',
     language: '',
     format: '',
-    // imgUrl: new ArrayBuffer(0)
+    image: null,
   });
 
   function allFieldsBook(book: Book): boolean {
     return Object.entries(book)
-      .filter(([key]) => key !== 'description' && key !== 'sourceLink')
+      .filter(([key]) => key !== 'sourceLink')
       .every(([, value]) => value);
   }
 
   const disabled = !allFieldsBook(books);
-
-  // const maxNumber = 69;
-
-  // const onChange = (
-  //   imageList: ImageListType,
-  //   addUpdateIndex: number[] | undefined
-  // ) => {
-  //   setImages(imageList as never[]);
-  // };
-
-  // const { data } = useQuery(['Books'], async () => {
-  //   const res = await fetch('https://xb-api.vercel.app/api');
-  //   return res.json();
-  // });
-
-  const { mutate, isLoading, isSuccess, error } = useMutatePost();
 
   function handleChange(
     e: React.ChangeEvent<
@@ -80,9 +68,35 @@ export function FormNewBook() {
     });
   }
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  function handleImageChange(e: any) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = function () {
+      const base64Image = reader.result as string;
+      setCropData(base64Image);
+    };
+    onOpen();
+  }
+
+  function getCropData() {
+    if (typeof crop !== 'undefined') {
+      // setCropData(crop.getCroppedCanvas().toDataURL());
+      setBooks({ ...books, image: crop.getCroppedCanvas().toDataURL() });
+    }
+  }
+
   function handleSubmit(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    mutate(books);
+    mutate({ ...books });
   }
 
   return (
@@ -164,26 +178,108 @@ export function FormNewBook() {
                   _focus={{ bg: 'transparent' }}
                 />
               </FormControl>
-              <FormControl>
-                <FormLabel htmlFor='descripcion' mt='2.5'>
-                  Descripción{' '}
-                  <Box display='inline' fontSize='xs'>
-                    (Opcional)
-                  </Box>
+              <FormControl isRequired>
+                <FormLabel htmlFor='sinopsis' mt='3'>
+                  Subir Imagen
                 </FormLabel>
-                <Textarea
-                  id='descripcion'
-                  rows={10}
-                  mb='5'
-                  bg={useColorModeValue('gray.100', 'gray.800')}
+                <Button
+                  w='100%'
+                  onClick={handleButtonClick}
+                  fontWeight='500'
+                  border='1px'
+                  bg={useColorModeValue('#2de000', '#24b300')}
+                  color='black'
+                  _hover={{ bg: '#28c900' }}
+                  _active={{ bg: '#28c900' }}
+                >
+                  <Flex align='center' justify='center'>
+                    <Icon as={AiOutlineCloudUpload} fontSize='25' mr='2' />
+                    Seleccionar una imagen
+                  </Flex>
+                </Button>
+                <Input
+                  accept='image/png, image/jpeg, image/webp'
+                  display='none'
+                  ref={fileInputRef}
+                  type='file'
                   size='lg'
-                  name='description'
-                  placeholder='Puedes dejar una breve descripción (este campo es opcional)'
-                  value={books.description}
-                  onChange={handleChange}
-                  _focus={{ bg: 'transparent' }}
+                  onChange={handleImageChange}
                 />
               </FormControl>
+              <Box my='3' mb='5'>
+                <Modal
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  isCentered
+                  size={{ base: 'xs', md: 'lg' }}
+                >
+                  <ModalOverlay backdropFilter='blur(5px)' />
+                  <ModalContent>
+                    <ModalHeader fontSize='md'>
+                      Recorta nueva imagen
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      <Cropper
+                        style={{ width: '100%', height: 'auto' }}
+                        zoomTo={0.5}
+                        initialAspectRatio={1}
+                        aspectRatio={234 / 360}
+                        preview='.img-preview'
+                        src={cropData}
+                        viewMode={2}
+                        minCropBoxHeight={234}
+                        minCropBoxWidth={360}
+                        background={false}
+                        responsive={true}
+                        autoCropArea={1}
+                        checkOrientation={false}
+                        onInitialized={(instance) => setCrop(instance)}
+                      />
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button
+                        onClick={() => {
+                          getCropData();
+                          onClose();
+                        }}
+                        fontWeight='500'
+                        border='1px'
+                        bg={useColorModeValue('#2de000', '#24b300')}
+                        color='black'
+                        _hover={{ bg: '#28c900' }}
+                        _active={{ bg: '#28c900' }}
+                      >
+                        Cortar
+                      </Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
+                {books.image === null ? (
+                  <Box
+                    py='3'
+                    h='379px'
+                    m='auto'
+                    outline='1px dashed gray'
+                    rounded='lg'
+                    fontSize='sm'
+                  >
+                    <Box px='2' textAlign='center' py='40'>
+                      Aquí verás una vista previa de la imagen.
+                    </Box>
+                  </Box>
+                ) : (
+                  <Box py='3' h='379px' outline='1px dashed gray' rounded='lg'>
+                    <Image
+                      h='360px'
+                      m='auto'
+                      rounded='lg'
+                      src={books.image || ''}
+                      alt='Preview'
+                    />
+                  </Box>
+                )}
+              </Box>
             </Box>
             <Box w='full' ml={{ base: 0, md: 5 }}>
               <FormControl>
@@ -236,46 +332,6 @@ export function FormNewBook() {
                   _focus={{ bg: 'transparent' }}
                 />
               </FormControl>
-              {/* <FormControl isRequired>
-                <FormLabel htmlFor='imgUrl'>Subir imagen del Libro</FormLabel>
-                 <ImageUploading
-                  acceptType={['jpg', 'png']}
-                  value={images}
-                  onChange={onChange}
-                  maxNumber={maxNumber}
-                >
-                  {({
-                    imageList,
-                    onImageUpload,
-                    onImageUpdate,
-                    onImageRemove,
-                    isDragging,
-                    dragProps
-                  }) => (
-                    <Box mb='5'>
-                      <Box>
-                        <Button
-                          w='full'
-                          onClick={onImageUpload}
-                          {...dragProps}
-                        >
-                          Subir
-                        </Button>
-                      </Box>
-                      {imageList.map((image, index) => (
-                        <Box key={index} mt='12'>
-                          <Image
-                            w="full"
-                            rounded='lg'
-                            src={image.dataURL}
-                            alt=""
-                          />
-                        </Box>
-                      ))}
-                    </Box>
-                  )}
-                </ImageUploading>
-              </FormControl> */}
               <FormControl isRequired>
                 <FormLabel htmlFor='año' mt={{ base: 0, md: '17.5' }}>
                   Año
@@ -326,42 +382,16 @@ export function FormNewBook() {
                   <option value='Electrónico'>Electrónico</option>
                 </Select>
               </FormControl>
-              {/* <FormControl>
-                <FormLabel htmlFor='formato' mt='18' mb='4'>
-                  Formato
-                </FormLabel>
-                <RadioGroup onChange={handleChange as any} value={books.format}>
-                  <Stack direction='row' spacing='5'>
-                    <Radio
-                      name='Físico'
-                      value='Físico'
-                      checked={books.format === 'Físico'}
-                      colorScheme='green'
-                      size='lg'
-                    >
-                      Físico
-                    </Radio>
-                    <Radio
-                      name='Electrónico'
-                      value='Electrónico'
-                      checked={books.format === 'Electrónico'}
-                      colorScheme='green'
-                      size='lg'
-                    >
-                      Electrónico
-                    </Radio>
-                  </Stack>
-                </RadioGroup>
-              </FormControl> */}
-              <Box mt={{ base: 10, md: 14 }}>
+              <Box mt={{ base: 10, md: 56 }}>
                 <Button
                   type='submit'
                   w='full'
                   size='lg'
-                  bg='#26be00'
+                  border='1px'
+                  bg={useColorModeValue('#2de000', '#24b300')}
                   color='black'
-                  _hover={{ bg: '#1f9b00' }}
-                  _active={{ bg: '#1f9b00' }}
+                  _hover={{ bg: '#28c900' }}
+                  _active={{ bg: '#28c900' }}
                   isDisabled={disabled}
                   loadingText='Publicando...'
                   isLoading={isLoading}

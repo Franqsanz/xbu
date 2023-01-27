@@ -8,13 +8,21 @@ import {
   useColorModeValue,
   Link,
   Icon,
+  Image,
 } from '@chakra-ui/react';
 import { FiArrowRight } from 'react-icons/fi';
 
 import { CardProps } from '../types';
 import { TagComponent } from '../TagComponent';
 
-export function Card({ id, title, synopsis, author, category }: CardProps) {
+export function Card({
+  id,
+  title,
+  image,
+  synopsis,
+  author,
+  category,
+}: CardProps) {
   const borderCard = useColorModeValue('gray.200', '#28c900');
 
   return (
@@ -32,9 +40,6 @@ export function Card({ id, title, synopsis, author, category }: CardProps) {
         position='relative'
       >
         <Flex direction='column'>
-          {/* <Box>
-            <Image src={imgUrl} alt='' />
-          </Box> */}
           <Box p='7'>
             <Link
               as={NavLink}
@@ -43,6 +48,9 @@ export function Card({ id, title, synopsis, author, category }: CardProps) {
             >
               <TagComponent name={category} />
             </Link>
+          </Box>
+          <Box m='auto' mb='5'>
+            <Image h='80' src={image} alt='' boxShadow='lg' />
           </Box>
           <Box
             as='h1'
