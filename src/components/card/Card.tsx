@@ -31,12 +31,11 @@ export function Card({
         w='400px'
         m='2'
         rounded='30'
-        border='1px'
-        borderColor={borderCard}
+        // border='1px'
+        // borderColor={borderCard}
         overflow='hidden'
-        boxShadow='lg'
+        // boxShadow='lg'
         my='5'
-        bg='transparent'
         position='relative'
       >
         <Flex direction='column'>
@@ -49,9 +48,20 @@ export function Card({
               <TagComponent name={category} />
             </Link>
           </Box>
-          <Box m='auto' mb='5'>
-            <Image h='80' src={image} alt='' boxShadow='lg' />
-          </Box>
+          {image === undefined ? (
+            <Box></Box>
+          ) : (
+            <Box m='auto' mb='7'>
+              <Image
+                h='80'
+                src={image}
+                alt=''
+                rounded='lg'
+                border='1px solid #A0AEC0'
+                boxShadow='xl'
+              />
+            </Box>
+          )}
           <Box
             as='h1'
             fontSize='2xl'

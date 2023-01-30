@@ -78,6 +78,14 @@ export function FormNewBook() {
 
   function handleImageChange(e: any) {
     const file = e.target.files[0];
+    if (file.size > 1000000) {
+      // 1 MB
+      alert(
+        `El tamaño de la imagen es demasiado grande.
+        Por favor, seleccione una imagen de menor tamaño`,
+      );
+      return;
+    }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = function () {
@@ -222,8 +230,7 @@ export function FormNewBook() {
                     <ModalBody>
                       <Cropper
                         style={{ width: '100%', height: 'auto' }}
-                        zoomTo={0.5}
-                        initialAspectRatio={1}
+                        zoomable={false}
                         aspectRatio={234 / 360}
                         preview='.img-preview'
                         src={cropData}
@@ -234,6 +241,7 @@ export function FormNewBook() {
                         responsive={true}
                         autoCropArea={1}
                         checkOrientation={false}
+                        guides={false}
                         onInitialized={(instance) => setCrop(instance)}
                       />
                     </ModalBody>
@@ -256,18 +264,27 @@ export function FormNewBook() {
                   </ModalContent>
                 </Modal>
                 {books.image === null ? (
-                  <Box
+                  <Flex
                     py='3'
                     h='379px'
                     m='auto'
                     outline='1px dashed gray'
                     rounded='lg'
                     fontSize='sm'
+                    align='center'
                   >
-                    <Box px='2' textAlign='center' py='40'>
-                      Aquí verás una vista previa de la imagen.
+                    <Box px='3' textAlign='center'>
+                      <Box as='span'>
+                        Aquí verás una vista previa de la imagen recortada.
+                      </Box>
+                      <Box mt='1' fontSize='13px'>
+                        <Box as='span'>
+                          Solo se aceptan formatos PNG, JPG y WebP con un máximo
+                          de 1 MB.
+                        </Box>
+                      </Box>
                     </Box>
-                  </Box>
+                  </Flex>
                 ) : (
                   <Box py='3' h='379px' outline='1px dashed gray' rounded='lg'>
                     <Image
