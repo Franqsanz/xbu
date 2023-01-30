@@ -2,7 +2,7 @@ import { API_URL_PROD, API_URL_DEV } from '../config';
 
 async function getAllBooks() {
   // const res = await fetch(API_URL_DEV);
-  const res = await fetch('https://xb-api.vercel.app/api');
+  const res = await fetch(API_URL_PROD);
   return res.json();
 }
 
