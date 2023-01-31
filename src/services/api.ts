@@ -10,7 +10,7 @@ async function getBook(id: string | undefined) {
   return res.json();
 }
 
-async function uploadImage(image: Blob) {
+async function uploadImage(image: any) {
   const formData = new FormData();
   formData.append('file', image);
   formData.append('upload_preset', 'xbu-uploads');

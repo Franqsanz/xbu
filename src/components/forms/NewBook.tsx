@@ -29,6 +29,7 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 
 import { categoryLinks } from '../links';
 import { Book } from '../types';
+import { uploadImage } from '../../services/api';
 import { useMutatePost } from '../../hooks/querys';
 
 export function FormNewBook() {
@@ -76,13 +77,15 @@ export function FormNewBook() {
     }
   };
 
-  function handleImageChange(e: any) {
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.files) return;
+
     const file = e.target.files[0];
+
     if (file.size > 1000000) {
       // 1 MB
       alert(
-        `El tamaño de la imagen es demasiado grande.
-        Por favor, seleccione una imagen de menor tamaño`,
+        `El tamaño de la imagen es demasiado grande. Por favor, seleccione una imagen de menor tamaño`,
       );
       return;
     }
@@ -97,14 +100,18 @@ export function FormNewBook() {
 
   function getCropData() {
     if (typeof crop !== 'undefined') {
-      // setCropData(crop.getCroppedCanvas().toDataURL());
       setBooks({ ...books, image: crop.getCroppedCanvas().toDataURL() });
     }
   }
 
   function handleSubmit(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    mutate({ ...books });
+
+    uploadImage(books.image).then((imageData) =>
+      setBooks({ ...books, image: imageData.url }),
+    );
+
+    mutate(books);
   }
 
   return (
@@ -272,6 +279,7 @@ export function FormNewBook() {
                     rounded='lg'
                     fontSize='sm'
                     align='center'
+                    justify='center'
                   >
                     <Box px='3' textAlign='center'>
                       <Box as='span'>
