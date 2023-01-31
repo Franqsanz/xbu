@@ -55,7 +55,7 @@ export function Card({
               <Image
                 h='80'
                 src={image}
-                alt=''
+                alt={`Imagen de "${title}"`}
                 rounded='lg'
                 border='1px solid #A0AEC0'
                 boxShadow='xl'
