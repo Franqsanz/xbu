@@ -1,4 +1,4 @@
-import { API_URL, URL_CLOUDINARY } from '../config';
+import { API_URL } from '../config';
 
 async function getAllBooks() {
   const res = await fetch(API_URL);
@@ -8,19 +8,6 @@ async function getAllBooks() {
 async function getBook(id: string | undefined) {
   const res = await fetch(`${API_URL}/${id}`);
   return res.json();
-}
-
-async function uploadImage(image: any) {
-  const formData = new FormData();
-  formData.append('file', image);
-  formData.append('upload_preset', 'xbu-uploads');
-
-  const imageResponse = await fetch(URL_CLOUDINARY, {
-    method: 'POST',
-    body: formData,
-  });
-
-  return await imageResponse.json();
 }
 
 async function postBook(books: any) {
@@ -63,7 +50,6 @@ export {
   getBook,
   getBookCategory,
   getRelatedPost,
-  uploadImage,
   postBook,
   deleteBook,
 };

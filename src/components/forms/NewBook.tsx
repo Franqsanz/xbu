@@ -29,7 +29,6 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 
 import { categoryLinks } from '../links';
 import { Book } from '../types';
-import { uploadImage } from '../../services/api';
 import { useMutatePost } from '../../hooks/querys';
 
 export function FormNewBook() {
@@ -37,7 +36,7 @@ export function FormNewBook() {
   const { mutate, isLoading, isSuccess, error } = useMutatePost();
   const [cropData, setCropData] = useState('');
   const [crop, setCrop] = useState<any>();
-  const [books, setBooks] = useState({
+  const [books, setBooks] = useState<Book>({
     title: '',
     author: '',
     synopsis: '',
@@ -78,9 +77,8 @@ export function FormNewBook() {
   };
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (!e.target.files) return;
-
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
+    if (!file) return;
 
     if (file.size > 1000000) {
       // 1 MB
@@ -89,6 +87,7 @@ export function FormNewBook() {
       );
       return;
     }
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = function () {
@@ -106,11 +105,6 @@ export function FormNewBook() {
 
   function handleSubmit(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-
-    uploadImage(books.image).then((imageData) =>
-      setBooks({ ...books, image: imageData.url }),
-    );
-
     mutate(books);
   }
 
