@@ -46,8 +46,12 @@ export function FormNewBook() {
     sourceLink: '',
     language: '',
     format: '',
-    image: null,
+    image: {
+      url: null,
+      public_id: '',
+    },
   });
+  let previewImgUI;
 
   function allFieldsBook(book: Book): boolean {
     return Object.entries(book)
@@ -99,13 +103,56 @@ export function FormNewBook() {
 
   function getCropData() {
     if (typeof crop !== 'undefined') {
-      setBooks({ ...books, image: crop.getCroppedCanvas().toDataURL() });
+      setBooks({
+        ...books,
+        image: { url: crop.getCroppedCanvas().toDataURL(), public_id: '' },
+      });
     }
   }
 
   function handleSubmit(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     mutate(books);
+  }
+
+  if (books.image) {
+    if (books.image.url === null) {
+      previewImgUI = (
+        <Flex
+          py='3'
+          h='379px'
+          m='auto'
+          outline='1px dashed gray'
+          rounded='lg'
+          fontSize='sm'
+          align='center'
+          justify='center'
+        >
+          <Box px='3' textAlign='center'>
+            <Box as='span'>
+              Aquí verás una vista previa de la imagen recortada.
+            </Box>
+            <Box mt='1' fontSize='13px'>
+              <Box as='span'>
+                Solo se aceptan formatos PNG, JPG y WebP con un máximo de 1 MB.
+              </Box>
+            </Box>
+          </Box>
+        </Flex>
+      );
+    } else {
+      previewImgUI = (
+        <Box py='3' h='379px' outline='1px dashed gray' rounded='lg'>
+          <Image
+            h='360px'
+            m='auto'
+            rounded='lg'
+            src={books.image.url || ''}
+            alt='Preview'
+          />
+        </Box>
+      );
+    }
   }
 
   return (
@@ -264,40 +311,7 @@ export function FormNewBook() {
                     </ModalFooter>
                   </ModalContent>
                 </Modal>
-                {books.image === null ? (
-                  <Flex
-                    py='3'
-                    h='379px'
-                    m='auto'
-                    outline='1px dashed gray'
-                    rounded='lg'
-                    fontSize='sm'
-                    align='center'
-                    justify='center'
-                  >
-                    <Box px='3' textAlign='center'>
-                      <Box as='span'>
-                        Aquí verás una vista previa de la imagen recortada.
-                      </Box>
-                      <Box mt='1' fontSize='13px'>
-                        <Box as='span'>
-                          Solo se aceptan formatos PNG, JPG y WebP con un máximo
-                          de 1 MB.
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Flex>
-                ) : (
-                  <Box py='3' h='379px' outline='1px dashed gray' rounded='lg'>
-                    <Image
-                      h='360px'
-                      m='auto'
-                      rounded='lg'
-                      src={books.image || ''}
-                      alt='Preview'
-                    />
-                  </Box>
-                )}
+                {previewImgUI}
               </Box>
             </Box>
             <Box w='full' ml={{ base: 0, md: 5 }}>
