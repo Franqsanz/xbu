@@ -24,6 +24,26 @@ export function Card({
   category,
 }: CardProps) {
   const borderCard = useColorModeValue('gray.200', '#28c900');
+  let imgUI;
+
+  if (typeof image === 'undefined') {
+    imgUI = <Box></Box>;
+  } else {
+    imgUI = (
+      <Box m='auto' mb='7'>
+        <Image
+          h='80'
+          src={image.url}
+          alt={`Imagen de "${title}"`}
+          rounded='lg'
+          border='1px solid #A0AEC0'
+          boxShadow='xl'
+          decoding='async'
+          loading='lazy'
+        />
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -48,20 +68,7 @@ export function Card({
               <TagComponent name={category} />
             </Link>
           </Box>
-          {image === undefined ? (
-            <Box></Box>
-          ) : (
-            <Box m='auto' mb='7'>
-              <Image
-                h='80'
-                src={image}
-                alt={`Imagen de "${title}"`}
-                rounded='lg'
-                border='1px solid #A0AEC0'
-                boxShadow='xl'
-              />
-            </Box>
-          )}
+          {imgUI}
           <Box
             as='h1'
             fontSize='2xl'

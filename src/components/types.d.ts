@@ -15,7 +15,9 @@ interface CardProps {
   numberPages?: number;
   format?: string;
   refetchQueries?: () => any | unknown;
-  image?: string;
+  image?: {
+    url: string;
+  };
 }
 
 interface TitleProps {
@@ -43,7 +45,10 @@ interface Book {
   sourceLink?: string;
   language: string;
   format: string;
-  image?: null;
+  image?: {
+    url: null;
+    public_id: string;
+  };
 }
 
 export type { LinkProps, CardProps, TitleProps, HeadProps, PropsTag, Book };

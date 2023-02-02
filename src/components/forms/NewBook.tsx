@@ -289,7 +289,7 @@ export function FormNewBook() {
                         responsive={true}
                         autoCropArea={1}
                         checkOrientation={false}
-                        guides={false}
+                        guides={true}
                         onInitialized={(instance) => setCrop(instance)}
                       />
                     </ModalBody>
