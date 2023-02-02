@@ -1,6 +1,6 @@
 import React from 'react';
-// import { useQuery } from '@tanstack/react-query';
 import { NavLink } from 'react-router-dom';
+import LazyLoad from 'react-lazy-load';
 import {
   Flex,
   Box,
@@ -26,21 +26,32 @@ export function Card({
   const borderCard = useColorModeValue('gray.200', '#28c900');
   let imgUI;
 
+  function handleImageLoad(e: React.SyntheticEvent) {
+    const target = e.target as HTMLImageElement;
+    target.style.filter = 'blur(0)';
+  }
+
   if (typeof image === 'undefined') {
     imgUI = <Box></Box>;
   } else {
     imgUI = (
       <Box m='auto' mb='7'>
-        <Image
-          h='80'
-          src={image.url}
-          alt={`Imagen de "${title}"`}
-          rounded='lg'
-          border='1px solid #A0AEC0'
-          boxShadow='xl'
-          decoding='async'
-          loading='lazy'
-        />
+        <LazyLoad width={234} height={360} offset={0} threshold={0.99}>
+          <Image
+            w='234px'
+            h='360px'
+            src={image.url}
+            alt={`Imagen de "${title}"`}
+            rounded='lg'
+            border='1px solid #A0AEC0'
+            boxShadow='xl'
+            decoding='async'
+            loading='lazy'
+            filter='blur(10px)'
+            transition='filter 0.5s ease-in-out'
+            onLoad={handleImageLoad}
+          />
+        </LazyLoad>
       </Box>
     );
   }

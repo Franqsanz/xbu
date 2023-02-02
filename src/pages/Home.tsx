@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';
+import LazyLoad from 'react-lazy-load';
 import {
   Flex,
   Box,
@@ -128,7 +129,9 @@ export function Home() {
         px='10'
         direction={{ base: 'column', md: 'row' }}
       >
-        <Image src={iconBook} w='500px' alt='' decoding='async' />
+        <LazyLoad width={500} offset={0}>
+          <Image src={iconBook} w='500px' alt='' decoding='async' />
+        </LazyLoad>
         <Stack direction='column' ml={{ base: 0, md: 3 }} spacing='4'>
           <Heading
             mb='10'
@@ -175,7 +178,9 @@ export function Home() {
             Descubre que leer en tu proximo viaje o tiempo libre.
           </Text>
         </Stack>
-        <Image src={iconBookReading} w='500px' alt='' decoding='async' />
+        <LazyLoad width={500} offset={0}>
+          <Image src={iconBookReading} w='500px' alt='' decoding='async' />
+        </LazyLoad>
       </Flex>
     </>
   );
