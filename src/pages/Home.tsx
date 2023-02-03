@@ -129,7 +129,7 @@ export function Home() {
         px='10'
         direction={{ base: 'column', md: 'row' }}
       >
-        <LazyLoad width={500} offset={0}>
+        <LazyLoad offset={0}>
           <Image src={iconBook} w='500px' alt='' decoding='async' />
         </LazyLoad>
         <Stack direction='column' ml={{ base: 0, md: 3 }} spacing='4'>
@@ -178,7 +178,7 @@ export function Home() {
             Descubre que leer en tu proximo viaje o tiempo libre.
           </Text>
         </Stack>
-        <LazyLoad width={500} offset={0}>
+        <LazyLoad offset={0}>
           <Image src={iconBookReading} w='500px' alt='' decoding='async' />
         </LazyLoad>
       </Flex>
