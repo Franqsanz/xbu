@@ -272,7 +272,7 @@ export function FormNewBook() {
                   <ModalOverlay backdropFilter='blur(5px)' />
                   <ModalContent>
                     <ModalHeader fontSize='md'>
-                      Recorta nueva imagen
+                      Recortar nueva imagen
                     </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
@@ -439,13 +439,15 @@ export function FormNewBook() {
               <Alert status='success' rounded='xl'>
                 <AlertIcon />
                 <AlertTitle fontWeight='normal'>
-                  Publicado Correctamente
+                  ¡Publicación exitosa!
                 </AlertTitle>
               </Alert>
             ) : error ? (
               <Alert status='error' rounded='xl'>
                 <AlertIcon />
-                <AlertTitle fontWeight='normal'>Error al publicar</AlertTitle>
+                <AlertTitle fontWeight='normal'>
+                  Ha ocurrido un error al publicar.
+                </AlertTitle>
               </Alert>
             ) : (
               <Alert display='none' />
