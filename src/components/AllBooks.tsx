@@ -46,6 +46,7 @@ export function AllBooks() {
 
   return (
     <>
+      <ResultLength data={data} />
       <Flex
         w='full'
         justify='center'
@@ -54,7 +55,6 @@ export function AllBooks() {
         flexWrap='wrap'
         color={colorCard}
       >
-        <ResultLength data={data} />
         {data.map(
           ({
             id,
