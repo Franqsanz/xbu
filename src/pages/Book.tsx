@@ -90,7 +90,7 @@ export function Book() {
               w='160px'
               h='230px'
               src={data.image.url}
-              rounded='xl'
+              rounded='md'
               border='1px solid #A0AEC0'
               decoding='async'
               filter='blur(10px)'
@@ -228,7 +228,7 @@ export function Book() {
                   w='234px'
                   h='360px'
                   src={data.image.url}
-                  rounded='xl'
+                  rounded='lg'
                   border='1px solid #A0AEC0'
                   decoding='async'
                   filter='blur(10px)'
