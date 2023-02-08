@@ -14,6 +14,7 @@ import { FiArrowRight } from 'react-icons/fi';
 
 import { CardProps } from '../types';
 import { TagComponent } from '../TagComponent';
+import { handleImageLoad } from '../../utils/utils';
 
 export function Card({
   id,
@@ -25,11 +26,6 @@ export function Card({
 }: CardProps) {
   const borderCard = useColorModeValue('gray.200', '#28c900');
   let imgUI;
-
-  function handleImageLoad(e: React.SyntheticEvent) {
-    const target = e.target as HTMLImageElement;
-    target.style.filter = 'blur(0)';
-  }
 
   if (typeof image === 'undefined') {
     imgUI = <Box></Box>;

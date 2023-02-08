@@ -8,10 +8,13 @@ import {
   Text,
   useColorModeValue,
   Spinner,
+  Image,
 } from '@chakra-ui/react';
 import { FiExternalLink } from 'react-icons/fi';
+import LazyLoad from 'react-lazy-load';
 
 import { useBook } from '../hooks/querys';
+import { handleImageLoad } from '../utils/utils';
 import { MainHead } from '../components/Head';
 import { categoryLinks } from '../components/links';
 import { TagComponent } from '../components/TagComponent';
@@ -73,20 +76,38 @@ export function Book() {
         w='full'
         maxW='1300px'
         m='auto'
-        mt={{ base: 0, md: 10 }}
+        mt={{ base: 5, md: 10 }}
         mb='25'
         align='flex-start'
         direction={{ base: 'column', lg: 'row' }}
       >
+        <Box display={{ base: 'block', md: 'none' }} mx='4' mt='4'>
+          <TagComponent name={data.category} />
+        </Box>
+        <Box display={{ base: 'block', md: 'none' }} m='auto' py='4'>
+          <LazyLoad width={160} height={230} offset={0} threshold={0.99}>
+            <Image
+              w='160px'
+              h='230px'
+              src={data.image.url}
+              rounded='xl'
+              border='1px solid #A0AEC0'
+              decoding='async'
+              filter='blur(10px)'
+              transition='filter 0.5s ease-in-out'
+              onLoad={handleImageLoad}
+            />
+          </LazyLoad>
+        </Box>
         <Flex
           w='full'
           maxW='920px'
           direction='column'
           justify='center'
-          p={{ base: 5, md: 14 }}
+          px='5'
           m='1rem auto'
         >
-          <Box>
+          <Box display={{ base: 'none', md: 'block' }}>
             <TagComponent name={data.category} />
           </Box>
           <Box
@@ -194,26 +215,48 @@ export function Book() {
         <Flex w={{ base: 'full', lg: '400px' }} px='3'>
           <Box
             maxW={{ base: '920px', lg: '300px' }}
-            p={{ base: 5, md: 10 }}
+            p='4'
             m='1rem auto'
             rounded='10'
             border='1px'
             borderColor={grayColor}
             boxShadow='lg'
           >
-            <Box mb='4' fontSize='2xl' textAlign='center'>
+            <Box display={{ base: 'none', lg: 'block' }}>
+              <LazyLoad width={234} height={360} offset={0} threshold={0.99}>
+                <Image
+                  w='234px'
+                  h='360px'
+                  src={data.image.url}
+                  rounded='xl'
+                  border='1px solid #A0AEC0'
+                  decoding='async'
+                  filter='blur(10px)'
+                  transition='filter 0.5s ease-in-out'
+                  onLoad={handleImageLoad}
+                />
+              </LazyLoad>
+            </Box>
+            <Box
+              mt={{ base: 0, md: 8 }}
+              mb='3'
+              fontSize='2xl'
+              textAlign='center'
+            >
               Categorias
             </Box>
-            {categoryLinks.map(({ name }) => (
-              <Link
-                key={name}
-                as={NavLink}
-                to={`/categories/${name}`}
-                _hover={{ outline: 'none' }}
-              >
-                <TagComponent name={name} m='1' />
-              </Link>
-            ))}
+            <Flex direction={{ base: 'row', xl: 'column' }} flexWrap='wrap'>
+              {categoryLinks.map(({ name }) => (
+                <Link
+                  key={name}
+                  as={NavLink}
+                  to={`/categories/${name}`}
+                  _hover={{ outline: 'none' }}
+                >
+                  <TagComponent name={name} m='1' />
+                </Link>
+              ))}
+            </Flex>
           </Box>
         </Flex>
       </Flex>
