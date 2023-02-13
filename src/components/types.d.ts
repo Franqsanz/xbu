@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface LinkProps {
   name: string;
   href?: string;
@@ -51,4 +53,22 @@ interface Book {
   };
 }
 
-export type { LinkProps, CardProps, TitleProps, HeadProps, PropsTag, Book };
+interface ModalCropperType {
+  isOpen: boolean;
+  onClose: () => void;
+  getCropData: () => any;
+}
+
+type ModalCropperProps = ModalCropperType & {
+  children: React.ReactNode;
+};
+
+export type {
+  LinkProps,
+  CardProps,
+  TitleProps,
+  HeadProps,
+  PropsTag,
+  Book,
+  ModalCropperProps,
+};

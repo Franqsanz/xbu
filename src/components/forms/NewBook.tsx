@@ -14,13 +14,6 @@ import {
   AlertTitle,
   useColorModeValue,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   Icon,
 } from '@chakra-ui/react';
 import Cropper from 'react-cropper';
@@ -30,6 +23,7 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { categoryLinks } from '../links';
 import { Book } from '../types';
 import { useMutatePost } from '../../hooks/querys';
+import { ModalCropper } from '../forms/ModalCropper';
 
 export function FormNewBook() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -51,7 +45,6 @@ export function FormNewBook() {
       public_id: '',
     },
   });
-  let previewImgUI;
 
   function allFieldsBook(book: Book): boolean {
     return Object.entries(book)
@@ -74,11 +67,11 @@ export function FormNewBook() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleButtonClick = () => {
+  function handleButtonClick() {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
-  };
+  }
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -114,6 +107,8 @@ export function FormNewBook() {
     e.preventDefault();
     mutate(books);
   }
+
+  let previewImgUI;
 
   if (books.image) {
     if (books.image.url === null) {
@@ -153,6 +148,28 @@ export function FormNewBook() {
         </Box>
       );
     }
+  }
+
+  let alertMessage;
+
+  if (isSuccess) {
+    alertMessage = (
+      <Alert status='success' rounded='xl'>
+        <AlertIcon />
+        <AlertTitle fontWeight='normal'>¡Publicación exitosa!</AlertTitle>
+      </Alert>
+    );
+  } else if (error) {
+    alertMessage = (
+      <Alert status='error' rounded='xl'>
+        <AlertIcon />
+        <AlertTitle fontWeight='normal'>
+          Ha ocurrido un error al publicar.
+        </AlertTitle>
+      </Alert>
+    );
+  } else {
+    alertMessage = <Alert display='none' />;
   }
 
   return (
@@ -263,54 +280,28 @@ export function FormNewBook() {
                 />
               </FormControl>
               <Box my='3' mb='5'>
-                <Modal
+                <ModalCropper
                   isOpen={isOpen}
                   onClose={onClose}
-                  isCentered
-                  size={{ base: 'xs', md: 'lg' }}
+                  getCropData={getCropData}
                 >
-                  <ModalOverlay backdropFilter='blur(5px)' />
-                  <ModalContent>
-                    <ModalHeader fontSize='md'>
-                      Recortar nueva imagen
-                    </ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                      <Cropper
-                        style={{ width: '100%', height: 'auto' }}
-                        zoomable={false}
-                        aspectRatio={234 / 360}
-                        preview='.img-preview'
-                        src={cropData}
-                        viewMode={2}
-                        minCropBoxHeight={234}
-                        minCropBoxWidth={360}
-                        background={false}
-                        responsive={true}
-                        autoCropArea={1}
-                        checkOrientation={false}
-                        guides={true}
-                        onInitialized={(instance) => setCrop(instance)}
-                      />
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button
-                        onClick={() => {
-                          getCropData();
-                          onClose();
-                        }}
-                        fontWeight='500'
-                        border='1px'
-                        bg={useColorModeValue('#2de000', '#24b300')}
-                        color='black'
-                        _hover={{ bg: '#28c900' }}
-                        _active={{ bg: '#28c900' }}
-                      >
-                        Cortar
-                      </Button>
-                    </ModalFooter>
-                  </ModalContent>
-                </Modal>
+                  <Cropper
+                    style={{ width: '100%', height: 'auto' }}
+                    zoomable={false}
+                    aspectRatio={234 / 360}
+                    preview='.img-preview'
+                    src={cropData}
+                    viewMode={2}
+                    minCropBoxHeight={234}
+                    minCropBoxWidth={360}
+                    background={false}
+                    responsive={true}
+                    autoCropArea={1}
+                    checkOrientation={false}
+                    guides={true}
+                    onInitialized={(instance) => setCrop(instance)}
+                  />
+                </ModalCropper>
                 {previewImgUI}
               </Box>
             </Box>
@@ -434,25 +425,7 @@ export function FormNewBook() {
               </Box>
             </Box>
           </Flex>
-          <Box mt='10'>
-            {isSuccess ? (
-              <Alert status='success' rounded='xl'>
-                <AlertIcon />
-                <AlertTitle fontWeight='normal'>
-                  ¡Publicación exitosa!
-                </AlertTitle>
-              </Alert>
-            ) : error ? (
-              <Alert status='error' rounded='xl'>
-                <AlertIcon />
-                <AlertTitle fontWeight='normal'>
-                  Ha ocurrido un error al publicar.
-                </AlertTitle>
-              </Alert>
-            ) : (
-              <Alert display='none' />
-            )}
-          </Box>
+          <Box mt='10'>{alertMessage}</Box>
         </Box>
       </Flex>
     </>

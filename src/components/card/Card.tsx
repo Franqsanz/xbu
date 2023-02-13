@@ -24,7 +24,7 @@ export function Card({
   author,
   category,
 }: CardProps) {
-  const borderCard = useColorModeValue('gray.200', '#28c900');
+  // const borderCard = useColorModeValue('gray.200', '#28c900');
   let imgUI;
 
   if (typeof image === 'undefined') {
@@ -43,8 +43,8 @@ export function Card({
             boxShadow='xl'
             decoding='async'
             loading='lazy'
-            filter='blur(10px)'
-            transition='filter 0.5s ease-in-out'
+            filter='blur(20px)'
+            transition='filter 0.6s ease-in-out'
             onLoad={handleImageLoad}
           />
         </LazyLoad>
