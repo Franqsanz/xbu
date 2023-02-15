@@ -4,15 +4,17 @@ import { Box, Button, Flex, Link, useColorModeValue } from '@chakra-ui/react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 import { AllBooks } from '../components/AllBooks';
-import { categoryLinks } from '../components/links';
 import { ContainerTitle } from '../components/ContainerTitle';
 import { MainHead } from '../components/Head';
 import { TagComponent } from '../components/TagComponent';
+import { useAllBooks } from '../hooks/querys';
+import { CardProps } from '../components/types';
 
 export function Explore() {
   const bgArrows = useColorModeValue('white', 'black');
   const borderArrows = useColorModeValue('gray.200', '#28c900');
   const gradientColor = useColorModeValue('white', '#1A202C');
+  const { data } = useAllBooks();
 
   function slideLeft() {
     let slider = document.getElementById('slider') as HTMLElement;
@@ -22,6 +24,15 @@ export function Explore() {
   function slideRight() {
     let slider = document.getElementById('slider') as HTMLElement;
     slider.scrollLeft = slider.scrollLeft + 200;
+  }
+
+  let categories = new Set();
+
+  data && data.map(({ category }: CardProps) => categories.add(category));
+  const categoryLinks = Array.from(categories);
+
+  function countCategory(ctry: any) {
+    return data.filter(({ category }: CardProps) => category === ctry).length;
   }
 
   return (
@@ -39,8 +50,9 @@ export function Explore() {
           p='1'
           mt='3'
           cursor='pointer'
+          onClick={slideLeft}
         >
-          <MdChevronLeft onClick={slideLeft} size='30' />
+          <MdChevronLeft size='30' />
         </Button>
         <Box
           id='slider'
@@ -61,14 +73,19 @@ export function Explore() {
             left='-1px'
             bgGradient={`linear(270deg, #ffffff00 0%, ${gradientColor} 60%)`}
           ></Box>
-          {categoryLinks.map(({ name }) => (
+          {categoryLinks.map((category, index) => (
             <Link
-              key={name}
+              display='flex'
+              key={index}
               as={NavLink}
-              to={`/categories/${name}`}
+              to={`/categories/${category}`}
               _hover={{ outline: 'none' }}
             >
-              <TagComponent name={name} m='1' />
+              <TagComponent
+                name={category}
+                count={countCategory(category)}
+                m='1'
+              />
             </Link>
           ))}
           <Box
@@ -88,8 +105,9 @@ export function Explore() {
           p='1'
           mt='3'
           cursor='pointer'
+          onClick={slideRight}
         >
-          <MdChevronRight onClick={slideRight} size='30' />
+          <MdChevronRight size='30' />
         </Button>
       </Flex>
       <AllBooks />

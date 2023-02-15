@@ -33,7 +33,8 @@ interface HeadProps {
 }
 
 interface PropsTag {
-  name: string;
+  name: string | any;
+  count?: number;
   m?: string;
 }
 
