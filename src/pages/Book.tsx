@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   Box,
   Divider,
@@ -16,8 +16,9 @@ import LazyLoad from 'react-lazy-load';
 import { useBook } from '../hooks/querys';
 import { handleImageLoad } from '../utils/utils';
 import { MainHead } from '../components/Head';
-import { categoryLinks } from '../components/links';
 import { TagComponent } from '../components/TagComponent';
+// import { CategoriesComp } from '../components/CategoriesComp';
+const CategoriesComp = lazy(() => import('../components/CategoriesComp'));
 const RelatedPost = lazy(() => import('../components/RelatedPost'));
 
 export function Book() {
@@ -224,7 +225,7 @@ export function Book() {
             borderColor={grayColor}
             boxShadow='lg'
           >
-            <Box display={{ base: 'none', lg: 'block' }}>
+            <Box display={{ base: 'none', lg: 'flex' }} justifyContent='center'>
               <LazyLoad width={234} height={360} offset={0} threshold={0.99}>
                 <Image
                   w='234px'
@@ -249,18 +250,19 @@ export function Book() {
             >
               Categorias
             </Box>
-            <Flex direction={{ base: 'row', xl: 'column' }} flexWrap='wrap'>
-              {categoryLinks.map(({ name }) => (
-                <Link
-                  key={name}
-                  as={NavLink}
-                  to={`/categories/${name}`}
-                  _hover={{ outline: 'none' }}
-                >
-                  <TagComponent name={name} m='1' />
-                </Link>
-              ))}
-            </Flex>
+            <Box>
+              <Suspense
+                fallback={
+                  <Box display='flex' justifyContent='center'>
+                    <Spinner size='lg' />
+                  </Box>
+                }
+              >
+                <Flex direction={{ base: 'row', xl: 'column' }} flexWrap='wrap'>
+                  <CategoriesComp />
+                </Flex>
+              </Suspense>
+            </Box>
           </Box>
         </Flex>
       </Flex>
