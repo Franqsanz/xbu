@@ -52,6 +52,7 @@ export function AllBooks() {
         justify='center'
         py='5'
         m='auto'
+        px='1'
         flexWrap='wrap'
         color={colorCard}
       >

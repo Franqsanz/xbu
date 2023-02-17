@@ -17,7 +17,6 @@ import { useBook } from '../hooks/querys';
 import { handleImageLoad } from '../utils/utils';
 import { MainHead } from '../components/Head';
 import { TagComponent } from '../components/TagComponent';
-// import { CategoriesComp } from '../components/CategoriesComp';
 const CategoriesComp = lazy(() => import('../components/CategoriesComp'));
 const RelatedPost = lazy(() => import('../components/RelatedPost'));
 
@@ -82,7 +81,7 @@ export function Book() {
         align='flex-start'
         direction={{ base: 'column', lg: 'row' }}
       >
-        <Box display={{ base: 'block', md: 'none' }} mx='4' mt='4'>
+        <Box display={{ base: 'block', md: 'none' }} mx='5' mt='4'>
           <TagComponent name={data.category} />
         </Box>
         <Box display={{ base: 'block', md: 'none' }} m='auto' py='4'>
@@ -115,7 +114,7 @@ export function Book() {
           </Box>
           <Box
             as='h1'
-            fontSize={{ base: '3xl', md: '4xl' }}
+            fontSize={{ base: '2xl', md: '4xl' }}
             my='5'
             textTransform='uppercase'
           >
