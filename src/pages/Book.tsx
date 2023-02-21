@@ -9,9 +9,27 @@ import {
   useColorModeValue,
   Spinner,
   Image,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { FiExternalLink } from 'react-icons/fi';
+import { FiExternalLink, FiShare2 } from 'react-icons/fi';
 import LazyLoad from 'react-lazy-load';
+import {
+  WhatsappShareButton,
+  TwitterShareButton,
+  TwitterIcon,
+  FacebookIcon,
+  FacebookShareButton,
+  WhatsappIcon,
+  TelegramShareButton,
+  TelegramIcon,
+} from 'react-share';
 
 import { useBook } from '../hooks/querys';
 import { handleImageLoad } from '../utils/utils';
@@ -21,9 +39,14 @@ const CategoriesComp = lazy(() => import('../components/CategoriesComp'));
 const RelatedPost = lazy(() => import('../components/RelatedPost'));
 
 export function Book() {
+  const shareUrl = window.location.href;
   const { id } = useParams();
   const grayColor = useColorModeValue('gray.200', 'gray.600');
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
+  const bgButton = useColorModeValue('white', 'black');
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const borderCard = useColorModeValue('gray.200', '#28c900');
+
   let uiLink;
 
   const { data } = useBook(id);
@@ -193,7 +216,54 @@ export function Book() {
               </Box>
             </Flex>
           </Box>
-          <Box mt='10'>{uiLink}</Box>
+          <Flex direction={{ base: 'column', md: 'row' }} mt='10' gap='3'>
+            {uiLink}
+            <Button
+              w={{ base: '100%', md: '130px' }}
+              bg={bgButton}
+              fontWeight='light'
+              onClick={onOpen}
+              p='6'
+              border='1px'
+              borderColor='#28c900'
+              rounded='10'
+              textAlign='center'
+              _hover={{ color: 'white', bg: 'black' }}
+            >
+              <Flex align='center' justify='center'>
+                Compartir
+                <FiShare2 style={{ marginLeft: '6px' }} />
+              </Flex>
+            </Button>
+          </Flex>
+          <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            isCentered
+            size={{ base: 'xs', md: 'lg' }}
+          >
+            <ModalOverlay backdropFilter='blur(5px)' />
+            <ModalContent>
+              <ModalHeader>Compartir</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Flex gap='3' mb='3'>
+                  <WhatsappShareButton url={shareUrl}>
+                    <WhatsappIcon size={52} round={true} />
+                  </WhatsappShareButton>
+                  <FacebookShareButton url={shareUrl}>
+                    <FacebookIcon size={52} round={true} />
+                  </FacebookShareButton>
+                  <TwitterShareButton url={shareUrl}>
+                    <TwitterIcon size={52} round={true} />
+                  </TwitterShareButton>
+                  <TelegramShareButton url={shareUrl}>
+                    <TelegramIcon size={52} round={true} />
+                  </TelegramShareButton>
+                </Flex>
+              </ModalBody>
+            </ModalContent>
+          </Modal>
           <Box my='14'>
             <Divider borderColor='gray.400' />
           </Box>
