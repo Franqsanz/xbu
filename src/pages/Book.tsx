@@ -248,16 +248,16 @@ export function Book() {
               <ModalCloseButton />
               <ModalBody>
                 <Flex gap='3' mb='3'>
-                  <WhatsappShareButton url={shareUrl}>
+                  <WhatsappShareButton url={shareUrl} title={data.title}>
                     <WhatsappIcon size={52} round={true} />
                   </WhatsappShareButton>
-                  <FacebookShareButton url={shareUrl}>
+                  <FacebookShareButton url={shareUrl} title={data.title}>
                     <FacebookIcon size={52} round={true} />
                   </FacebookShareButton>
-                  <TwitterShareButton url={shareUrl}>
+                  <TwitterShareButton url={shareUrl} title={data.title}>
                     <TwitterIcon size={52} round={true} />
                   </TwitterShareButton>
-                  <TelegramShareButton url={shareUrl}>
+                  <TelegramShareButton url={shareUrl} title={data.title}>
                     <TelegramIcon size={52} round={true} />
                   </TelegramShareButton>
                 </Flex>
