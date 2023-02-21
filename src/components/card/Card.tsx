@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import LazyLoad from 'react-lazy-load';
 import {
   Flex,
@@ -16,9 +16,16 @@ import { TagComponent } from '../TagComponent';
 import { handleImageLoad } from '../../utils/utils';
 
 export function Card({ id, title, image, author, category }: CardProps) {
+  const navigate = useNavigate();
   const borderCard = useColorModeValue('gray.200', 'gray.600');
   const outlineCard = useColorModeValue('black', 'white');
   let imgUI;
+
+  function handleKeyPress(e: React.KeyboardEvent) {
+    if (e.key === 'Enter') {
+      navigate(`/book/${id}`);
+    }
+  }
 
   if (typeof image === 'undefined') {
     imgUI = <Box></Box>;
@@ -58,10 +65,11 @@ export function Card({ id, title, image, author, category }: CardProps) {
         my='5'
         pb='4'
         tabIndex={0}
+        onKeyPress={handleKeyPress}
         _focus={{ outline: `3px solid ${outlineCard}` }}
         _hover={{
           borderColor: 'transparent',
-          outline: `2px solid ${outlineCard}`,
+          outline: `3px solid ${outlineCard}`,
         }}
       >
         <LinkOverlay
