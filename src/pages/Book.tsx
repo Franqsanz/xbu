@@ -17,6 +17,9 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  Input,
+  useToast,
+  Icon,
 } from '@chakra-ui/react';
 import { FiExternalLink, FiShare2 } from 'react-icons/fi';
 import LazyLoad from 'react-lazy-load';
@@ -29,6 +32,8 @@ import {
   WhatsappIcon,
   TelegramShareButton,
   TelegramIcon,
+  EmailShareButton,
+  EmailIcon,
 } from 'react-share';
 
 import { useBook } from '../hooks/querys';
@@ -44,12 +49,29 @@ export function Book() {
   const grayColor = useColorModeValue('gray.200', 'gray.600');
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
   const bgButton = useColorModeValue('white', 'black');
+  const bgInput = useColorModeValue('gray.200', 'gray.900');
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const borderCard = useColorModeValue('gray.200', '#28c900');
-
+  const toast = useToast();
   let uiLink;
 
   const { data } = useBook(id);
+
+  async function copyToClipboard(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({
+        title: 'El enlace se ha copiado al portapapeles.',
+        status: 'success',
+        duration: 9000,
+      });
+    } catch (err) {
+      console.error('Error al copiar el texto al portapapeles:', err);
+    }
+  }
+
+  function handleCopyClick() {
+    copyToClipboard(shareUrl);
+  }
 
   if (data.sourceLink === '') {
     uiLink = (
@@ -76,13 +98,13 @@ export function Book() {
         color='black'
         p='3'
         border='1px'
-        rounded='10'
+        rounded='lg'
         textAlign='center'
         _hover={{ outline: 'none', bg: '#28c900' }}
       >
         <Flex align='center' justify='center'>
+          <FiExternalLink style={{ marginRight: '6px' }} />
           Comprar Libro
-          <FiExternalLink style={{ marginLeft: '6px' }} />
         </Flex>
       </Link>
     );
@@ -226,13 +248,13 @@ export function Book() {
               p='6'
               border='1px'
               borderColor='#28c900'
-              rounded='10'
+              rounded='lg'
               textAlign='center'
               _hover={{ color: 'white', bg: 'black' }}
             >
               <Flex align='center' justify='center'>
+                <FiShare2 style={{ marginRight: '6px' }} />
                 Compartir
-                <FiShare2 style={{ marginLeft: '6px' }} />
               </Flex>
             </Button>
           </Flex>
@@ -247,19 +269,95 @@ export function Book() {
               <ModalHeader>Compartir</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <Flex gap='3' mb='3'>
-                  <WhatsappShareButton url={shareUrl} title={data.title}>
-                    <WhatsappIcon size={52} round={true} />
-                  </WhatsappShareButton>
-                  <FacebookShareButton url={shareUrl} title={data.title}>
-                    <FacebookIcon size={52} round={true} />
-                  </FacebookShareButton>
-                  <TwitterShareButton url={shareUrl} title={data.title}>
-                    <TwitterIcon size={52} round={true} />
-                  </TwitterShareButton>
-                  <TelegramShareButton url={shareUrl} title={data.title}>
-                    <TelegramIcon size={52} round={true} />
-                  </TelegramShareButton>
+                <Flex gap='3' mb='5' justify='space-evenly' flexWrap='wrap'>
+                  <Flex direction='column' align='center'>
+                    <WhatsappShareButton url={shareUrl} title={data.title}>
+                      <Icon
+                        as={WhatsappIcon}
+                        boxSize={{ base: 10, md: 12 }}
+                        rounded='3xl'
+                      />
+                    </WhatsappShareButton>
+                    <Box as='span' fontSize='sm' mt='3'>
+                      WhatsApp
+                    </Box>
+                  </Flex>
+                  <Flex direction='column' align='center'>
+                    <FacebookShareButton url={shareUrl} title={data.title}>
+                      <Icon
+                        as={FacebookIcon}
+                        boxSize={{ base: 10, md: 12 }}
+                        rounded='3xl'
+                      />
+                    </FacebookShareButton>
+                    <Box as='span' fontSize='sm' mt='3'>
+                      Facebook
+                    </Box>
+                  </Flex>
+                  <Flex direction='column' align='center'>
+                    <TwitterShareButton url={shareUrl} title={data.title}>
+                      <Icon
+                        as={TwitterIcon}
+                        boxSize={{ base: 10, md: 12 }}
+                        rounded='3xl'
+                      />
+                    </TwitterShareButton>
+                    <Box as='span' fontSize='sm' mt='3'>
+                      Twitter
+                    </Box>
+                  </Flex>
+                  <Flex direction='column' align='center'>
+                    <TelegramShareButton url={shareUrl} title={data.title}>
+                      <Icon
+                        as={TelegramIcon}
+                        boxSize={{ base: 10, md: 12 }}
+                        rounded='3xl'
+                      />
+                    </TelegramShareButton>
+                    <Box as='span' fontSize='sm' mt='3'>
+                      Telegram
+                    </Box>
+                  </Flex>
+                  <Flex direction='column' align='center'>
+                    <EmailShareButton url={shareUrl} title={data.title}>
+                      <Icon
+                        as={EmailIcon}
+                        boxSize={{ base: 10, md: 12 }}
+                        rounded='3xl'
+                      />
+                    </EmailShareButton>
+                    <Box
+                      w='90px'
+                      textAlign='center'
+                      as='span'
+                      fontSize='sm'
+                      mt='3'
+                    >
+                      Correo electrónico
+                    </Box>
+                  </Flex>
+                </Flex>
+                <Flex justify='center' mb='4'>
+                  <Input
+                    w='xs'
+                    fontSize='sm'
+                    bg={bgInput}
+                    value={shareUrl}
+                    readOnly
+                  />
+                  <Button
+                    onClick={handleCopyClick}
+                    ml='2'
+                    bg='#2de000'
+                    color='black'
+                    p='4'
+                    fontWeight='light'
+                    border='1px'
+                    rounded='lg'
+                    _hover={{ outline: 'none', bg: '#28c900' }}
+                  >
+                    Copiar
+                  </Button>
                 </Flex>
               </ModalBody>
             </ModalContent>
