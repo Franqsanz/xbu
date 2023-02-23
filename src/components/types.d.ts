@@ -64,6 +64,13 @@ type ModalCropperProps = ModalCropperType & {
   children: React.ReactNode;
 };
 
+interface ModalProps {
+  shareUrl: string;
+  data: string;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
 export type {
   LinkProps,
   CardProps,
@@ -72,4 +79,5 @@ export type {
   PropsTag,
   Book,
   ModalCropperProps,
+  ModalProps,
 };
