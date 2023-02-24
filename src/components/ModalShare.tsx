@@ -26,20 +26,30 @@ import {
   EmailShareButton,
   EmailIcon,
 } from 'react-share';
+import { FaCheckCircle } from 'react-icons/fa';
 
 import { ModalProps } from './types';
 
 export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalProps) {
   const bgInput = useColorModeValue('gray.200', 'gray.900');
+  const bgToast = useColorModeValue('black', 'white');
+  const colorToast = useColorModeValue('white', 'black');
   const toast = useToast();
 
   async function copyToClipboard(text: string) {
     try {
       await navigator.clipboard.writeText(text);
       toast({
-        title: 'El enlace se ha copiado al portapapeles.',
-        status: 'info',
-        duration: 6000,
+        duration: 3000,
+        containerStyle: {
+          fontFamily: 'sans-serif',
+        },
+        render: () => (
+          <Flex color={colorToast} p={3} bg={bgToast} rounded='lg'>
+            <Icon as={FaCheckCircle} boxSize='5' mr='2' />
+            El enlace se ha copiado al portapapeles
+          </Flex>
+        ),
       });
     } catch (err) {
       console.error('Error al copiar el texto al portapapeles:', err);
