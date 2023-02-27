@@ -75,6 +75,12 @@ const categoryLinks: Array<LinkProps> = [
   {
     name: 'Cómics',
   },
+  {
+    name: 'Literatura',
+  },
+  {
+    name: 'Novela contemporánea',
+  },
 ];
 
 export { navLink, accountLinks, categoryLinks };
