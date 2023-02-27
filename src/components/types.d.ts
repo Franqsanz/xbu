@@ -71,6 +71,10 @@ interface ModalProps {
   onClose: () => void;
 }
 
+interface ReleatedBooksProps {
+  currentBookId: string | undefined;
+}
+
 export type {
   LinkProps,
   CardProps,
@@ -80,4 +84,5 @@ export type {
   Book,
   ModalCropperProps,
   ModalProps,
+  ReleatedBooksProps,
 };

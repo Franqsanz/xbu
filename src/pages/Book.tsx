@@ -240,7 +240,7 @@ export function Book() {
               }
             >
               <Box>
-                <RelatedPost />
+                <RelatedPost currentBookId={id} />
               </Box>
             </Suspense>
           </Flex>
