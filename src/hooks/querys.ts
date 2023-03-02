@@ -4,6 +4,7 @@ import {
   getAllBooks,
   getBook,
   getBookCategory,
+  getBooksFilter,
   getRelatedPost,
   postBook,
 } from '../services/api';
@@ -24,11 +25,22 @@ function useAllBooks() {
   return useQuery([keys.all], () => getAllBooks());
 }
 
-function useCategory(category: any) {
+function useCategory(category: string | undefined) {
   return useQuery([keys.category, category], () => getBookCategory(category), {
     suspense: true,
     cacheTime: 3000,
   });
+}
+
+function useFilterParams(query: any, param: any) {
+  return useQuery(
+    ['booksYear', query, param],
+    () => getBooksFilter(query, param),
+    {
+      suspense: true,
+      cacheTime: 3000,
+    },
+  );
 }
 
 function useRelatedPost() {
@@ -47,4 +59,11 @@ function useBook(id: string | undefined) {
   });
 }
 
-export { useMutatePost, useAllBooks, useBook, useCategory, useRelatedPost };
+export {
+  useMutatePost,
+  useAllBooks,
+  useBook,
+  useCategory,
+  useFilterParams,
+  useRelatedPost,
+};

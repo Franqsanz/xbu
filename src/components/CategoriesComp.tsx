@@ -25,7 +25,7 @@ export default function CategoriesComp() {
           display='flex'
           key={index}
           as={NavLink}
-          to={`/categories/${category}`}
+          to={`/books/categories/${category}`}
           _hover={{ outline: 'none' }}
         >
           <TagComponent name={category} count={countCategory(category)} m='1' />

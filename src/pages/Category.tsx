@@ -23,8 +23,9 @@ export function Category() {
       <Flex
         w='full'
         justify='center'
-        py='10'
+        py='5'
         m='auto'
+        px='1'
         flexWrap='wrap'
         color={colorCard}
       >

@@ -82,7 +82,7 @@ export function Card({ id, title, image, author, category }: CardProps) {
             <Box p='4' ml='4' zIndex='0'>
               <Link
                 as={NavLink}
-                to={`/categories/${category}`}
+                to={`/books/categories/${category}`}
                 _focus={{ outline: `2px solid ${outlineCard}` }}
                 _hover={{ outline: 'none' }}
               >
