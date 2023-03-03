@@ -32,7 +32,7 @@ function useCategory(category: string | undefined) {
   });
 }
 
-function useFilterParams(query: any, param: any) {
+function useFilter(query: any, param: any) {
   return useQuery(
     ['booksYear', query, param],
     () => getBooksFilter(query, param),
@@ -64,6 +64,6 @@ export {
   useAllBooks,
   useBook,
   useCategory,
-  useFilterParams,
+  useFilter,
   useRelatedPost,
 };

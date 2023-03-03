@@ -15,6 +15,7 @@ import { Login } from './pages/Login';
 import { Explore } from './pages/Explore';
 import { Categories } from './pages/Categories';
 import { Category } from './pages/Category';
+import { Search } from './pages/Search';
 import { Book } from './pages/Book';
 import { ErrorPage } from './pages/404';
 import { Nav } from './components/nav/Nav';
@@ -27,12 +28,12 @@ import theme from '../theme';
 const queryClient = new QueryClient();
 
 Sentry.init({
-  dsn: 'https://08c55e456b9a49aa8721088ae6e825e4@o4504136634269696.ingest.sentry.io/4504140813434880',
+  dsn: import.meta.env.VITE_SENTRY_DNS,
   integrations: [new BrowserTracing()],
   tracesSampleRate: 1.0,
 });
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const html = (
   // <React.StrictMode>
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
@@ -49,10 +50,18 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
               <Route path='explore' element={<Explore />} />
               <Route path='categories' element={<Categories />} />
               <Route
-                path='categories/:param'
+                path='/books/categories/:param'
                 element={
                   <CatchError>
                     <Category />
+                  </CatchError>
+                }
+              />
+              <Route
+                path='/books/search/:query/:param'
+                element={
+                  <CatchError>
+                    <Search />
                   </CatchError>
                 }
               />
@@ -72,6 +81,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       </ChakraProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>
-  </HelmetProvider>,
-  // </React.StrictMode>
+  </HelmetProvider>
+);
+// </React.StrictMode>
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  html,
 );
