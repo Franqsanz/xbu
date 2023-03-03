@@ -7,7 +7,7 @@ async function getAllBooks() {
 }
 
 async function getBook(id: string | undefined) {
-  const res = await fetch(`${API_URL}${id}`);
+  const res = await fetch(`${API_URL}/${id}`);
 
   if (res.ok) return await res.json();
 }
@@ -36,13 +36,13 @@ async function getBooksFilter(query: any, param: any) {
 }
 
 async function getRelatedPost() {
-  const res = await fetch(`${API_URL}related-post`);
+  const res = await fetch(`${API_URL}/related-post`);
 
   if (res.ok) return await res.json();
 }
 
 async function deleteBook(id: any) {
-  const res = await fetch(`${API_URL}${id}`, {
+  const res = await fetch(`${API_URL}/${id}`, {
     method: 'DELETE',
   });
 
