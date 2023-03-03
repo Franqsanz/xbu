@@ -8,7 +8,7 @@ import {
   Select,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { FiSearch } from 'react-icons/fi';
+import { FiSearch, FiFilter } from 'react-icons/fi';
 
 import { useAllBooks } from '../../hooks/querys';
 import { CardProps } from '../../components/types';
@@ -57,7 +57,7 @@ export function Filter() {
     <>
       <Flex
         w='full'
-        maxW='590px'
+        maxW='615px'
         p='3'
         m='auto'
         mt='7'
@@ -66,9 +66,10 @@ export function Filter() {
         align={{ base: 'center', md: 'flex-start' }}
         onSubmit={handleSearch}
       >
-        <Box mb='4' fontSize='lg'>
+        <Flex mb='4' fontSize='xl' align='center'>
+          <FiFilter style={{ marginRight: 6 }} />
           Hacer una busqueda:
-        </Box>
+        </Flex>
         <Flex
           direction={{ base: 'column', md: 'row' }}
           justify='center'
