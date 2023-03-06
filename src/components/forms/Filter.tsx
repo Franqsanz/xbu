@@ -58,17 +58,19 @@ export function Filter() {
       <Flex
         w='full'
         maxW='620px'
-        p='3'
+        p='5'
         m='auto'
-        mt='7'
+        my='8'
         direction='column'
         as='form'
         align={{ base: 'center', md: 'flex-start' }}
+        // bg='gray.300'
+        rounded='lg'
         onSubmit={handleSearch}
       >
         <Flex mb='4' fontSize='xl' align='center'>
           <FiFilter style={{ marginRight: 6 }} />
-          Hacer una busqueda:
+          Hacer una búsqueda:
         </Flex>
         <Flex
           direction={{ base: 'column', md: 'row' }}

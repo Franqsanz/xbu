@@ -260,6 +260,7 @@ export function FormNewBook() {
                   onClick={handleButtonClick}
                   fontWeight='500'
                   border='1px'
+                  size='lg'
                   bg={useColorModeValue('#2de000', '#24b300')}
                   color='black'
                   _hover={{ bg: '#28c900' }}
@@ -279,7 +280,7 @@ export function FormNewBook() {
                   onChange={handleImageChange}
                 />
               </FormControl>
-              <Box my='3' mb='5'>
+              <Box my='5' mb='5'>
                 <ModalCropper
                   isOpen={isOpen}
                   onClose={onClose}
@@ -406,7 +407,7 @@ export function FormNewBook() {
                   <option value='Electrónico'>Electrónico</option>
                 </Select>
               </FormControl>
-              <Box mt={{ base: 10, md: 56 }}>
+              <Box mt={{ base: 10, md: 60 }}>
                 <Button
                   type='submit'
                   w='full'
