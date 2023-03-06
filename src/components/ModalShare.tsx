@@ -137,13 +137,14 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalProps) {
             </Flex>
             <Flex justify='center' mb='4'>
               <Input
-                w='xs'
+                size='lg'
                 fontSize='sm'
                 bg={bgInput}
                 value={shareUrl}
                 readOnly
               />
               <Button
+                size='lg'
                 onClick={handleCopyClick}
                 ml='2'
                 bg='#2de000'

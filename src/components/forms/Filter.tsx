@@ -57,7 +57,7 @@ export function Filter() {
     <>
       <Flex
         w='full'
-        maxW='615px'
+        maxW='620px'
         p='3'
         m='auto'
         mt='7'
@@ -76,13 +76,13 @@ export function Filter() {
           gap='3'
         >
           <FormControl
-            w={{ base: 'full', md: '160px' }}
+            w={{ base: 'full', md: '220px' }}
             display='flex'
             alignItems='center'
             isRequired
           >
             <Select
-              size='md'
+              size='lg'
               bg={useColorModeValue('gray.100', 'gray.800')}
               onChange={handleChange}
               placeholder='Filtrar por:'
@@ -93,9 +93,15 @@ export function Filter() {
               <option value='category'>Categoria</option>
             </Select>
           </FormControl>
-          <FormControl w='250px' display='flex' alignItems='center' isRequired>
+          <FormControl
+            w='full'
+            maxW='290px'
+            display='flex'
+            alignItems='center'
+            isRequired
+          >
             <Select
-              size='md'
+              size='lg'
               bg={useColorModeValue('gray.100', 'gray.800')}
               value={value}
               onChange={handleValueChange}
@@ -110,6 +116,7 @@ export function Filter() {
             </Select>
           </FormControl>
           <Button
+            size='lg'
             ml={{ base: 0, md: 3 }}
             type='submit'
             bg='#2de000'
