@@ -79,10 +79,16 @@ const categoryLinks: Array<LinkProps> = [
     name: 'Literatura',
   },
   {
+    name: 'Novela Histórica',
+  },
+  {
     name: 'Novela contemporánea',
   },
   {
     name: 'Música',
+  },
+  {
+    name: 'Historia',
   },
 ];
 

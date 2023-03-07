@@ -73,67 +73,79 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalProps) {
           <ModalHeader>Compartir</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Flex gap='3' mb='7' justify='space-evenly' flexWrap='wrap'>
-              <Flex direction='column' align='center'>
-                <WhatsappShareButton url={shareUrl} title={data}>
+            <Flex
+              gap='3'
+              mb='7'
+              justify='space-evenly'
+              align='flex-start'
+              flexWrap='wrap'
+            >
+              <WhatsappShareButton url={shareUrl} title={data}>
+                <Flex direction='column' align='center'>
                   <Icon
                     as={WhatsappIcon}
                     boxSize={{ base: 10, md: 12 }}
                     rounded='3xl'
                   />
-                </WhatsappShareButton>
-                <Box as='span' fontSize='sm' mt='3'>
-                  WhatsApp
-                </Box>
-              </Flex>
-              <Flex direction='column' align='center'>
-                <FacebookShareButton url={shareUrl} title={data}>
+                  <Box as='span' fontSize='sm' mt='3'>
+                    WhatsApp
+                  </Box>
+                </Flex>
+              </WhatsappShareButton>
+              <FacebookShareButton url={shareUrl} title={data}>
+                <Flex direction='column' align='center'>
                   <Icon
                     as={FacebookIcon}
                     boxSize={{ base: 10, md: 12 }}
                     rounded='3xl'
                   />
-                </FacebookShareButton>
-                <Box as='span' fontSize='sm' mt='3'>
-                  Facebook
-                </Box>
-              </Flex>
-              <Flex direction='column' align='center'>
-                <TwitterShareButton url={shareUrl} title={data}>
+                  <Box as='span' fontSize='sm' mt='3'>
+                    Facebook
+                  </Box>
+                </Flex>
+              </FacebookShareButton>
+              <TwitterShareButton url={shareUrl} title={data}>
+                <Flex direction='column' align='center'>
                   <Icon
                     as={TwitterIcon}
                     boxSize={{ base: 10, md: 12 }}
                     rounded='3xl'
                   />
-                </TwitterShareButton>
-                <Box as='span' fontSize='sm' mt='3'>
-                  Twitter
-                </Box>
-              </Flex>
-              <Flex direction='column' align='center'>
-                <TelegramShareButton url={shareUrl} title={data}>
+                  <Box as='span' fontSize='sm' mt='3'>
+                    Twitter
+                  </Box>
+                </Flex>
+              </TwitterShareButton>
+              <TelegramShareButton url={shareUrl} title={data}>
+                <Flex direction='column' align='center'>
                   <Icon
                     as={TelegramIcon}
                     boxSize={{ base: 10, md: 12 }}
                     rounded='3xl'
                   />
-                </TelegramShareButton>
-                <Box as='span' fontSize='sm' mt='3'>
-                  Telegram
-                </Box>
-              </Flex>
-              <Flex direction='column' align='center'>
-                <EmailShareButton url={shareUrl} title={data}>
+                  <Box as='span' fontSize='sm' mt='3'>
+                    Telegram
+                  </Box>
+                </Flex>
+              </TelegramShareButton>
+              <EmailShareButton url={shareUrl} title={data}>
+                <Flex direction='column' align='center'>
                   <Icon
                     as={EmailIcon}
                     boxSize={{ base: 10, md: 12 }}
                     rounded='3xl'
                   />
-                </EmailShareButton>
-                <Box w='90px' textAlign='center' as='span' fontSize='sm' mt='3'>
-                  Correo electrónico
-                </Box>
-              </Flex>
+                  <Box
+                    w='90px'
+                    textAlign='center'
+                    as='span'
+                    fontSize='sm'
+                    mt='3'
+                  >
+                    Correo electrónico
+                  </Box>
+                </Flex>
+              </EmailShareButton>
             </Flex>
             <Flex justify='center' mb='4'>
               <Input
