@@ -78,7 +78,7 @@ export function CatchError({ children }: { children: React.ReactNode }) {
           <Suspense
             fallback={
               <Flex justify='center' my='40vh'>
-                <Spinner size='xl' thickness='4px' speed='0.55s' />
+                <Spinner size='xl' thickness='4px' speed='0.40s' />
               </Flex>
             }
           >

@@ -123,6 +123,7 @@ export function Book() {
             fontSize={{ base: '2xl', md: '4xl' }}
             my='5'
             textTransform='uppercase'
+            fontWeight='extrabold'
           >
             {data.title}
           </Box>

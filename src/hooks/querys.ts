@@ -32,9 +32,9 @@ function useCategory(category: string | undefined) {
   });
 }
 
-function useFilter(query: any, param: any) {
+function useFilter(query: string | undefined, param: string | undefined) {
   return useQuery(
-    ['booksYear', query, param],
+    [keys.filter, query, param],
     () => getBooksFilter(query, param),
     {
       suspense: true,

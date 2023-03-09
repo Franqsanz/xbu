@@ -4,6 +4,7 @@ const keys = {
   all: 'Books',
   one: 'BookOne',
   category: 'BooksCategory',
+  filter: 'booksFilter',
   random: 'BooksRandom',
 };
 

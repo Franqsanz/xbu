@@ -29,7 +29,10 @@ async function getBookCategory(category: any) {
   if (res.ok) return await res.json();
 }
 
-async function getBooksFilter(query: any, param: any) {
+async function getBooksFilter(
+  query: string | undefined,
+  param: string | undefined,
+) {
   const res = await fetch(`${API_URL}?${query}=${param}`);
 
   if (res.ok) return await res.json();

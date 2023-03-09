@@ -24,6 +24,8 @@ import patternWhite from '../assets/patternpadWhite.svg';
 
 export function Home() {
   const { colorMode } = useColorMode();
+  const bgButton = useColorModeValue('#2de000', '#24b300');
+  const bContainer = useColorModeValue('gray.50', 'none');
 
   return (
     <>
@@ -35,7 +37,7 @@ export function Home() {
       <Container
         maxW='9xl'
         p='0'
-        bg={useColorModeValue('gray.50', 'none')}
+        bg={bContainer}
         backgroundSize='cover'
         backgroundPosition='center center'
         backgroundImage={colorMode === 'dark' ? patternBlack : patternWhite}
@@ -80,7 +82,7 @@ export function Home() {
                 to='/register'
                 as={NavLink}
                 border='1px'
-                bg={useColorModeValue('#2de000', '#24b300')}
+                bg={bgButton}
                 color='black'
                 borderRadius='lg'
                 p='3'
@@ -98,7 +100,7 @@ export function Home() {
                 as={NavLink}
                 border='1px'
                 borderColor='black'
-                bg={useColorModeValue('#2de000', '#24b300')}
+                bg={bgButton}
                 color='black'
                 borderRadius='lg'
                 mt={{ base: 5, md: 0 }}
