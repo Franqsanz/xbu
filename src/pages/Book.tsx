@@ -91,10 +91,10 @@ export function Book() {
           <TagComponent name={data.category} />
         </Box>
         <Box display={{ base: 'block', md: 'none' }} m='auto' py='4'>
-          <LazyLoad width={160} height={230} offset={0} threshold={0.99}>
+          <LazyLoad width={200} height={290} offset={0} threshold={0.99}>
             <Image
-              w='160px'
-              h='230px'
+              w='200px'
+              h='290px'
               src={data.image.url}
               alt={`Imagen de "${data.title}"`}
               rounded='md'
