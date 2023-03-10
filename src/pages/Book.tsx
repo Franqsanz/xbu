@@ -87,10 +87,10 @@ export function Book() {
         align='flex-start'
         direction={{ base: 'column', lg: 'row' }}
       >
-        <Box display={{ base: 'block', md: 'none' }} mx='5' mt='4'>
+        <Box display={{ base: 'block', lg: 'none' }} mx='5' mt='4'>
           <TagComponent name={data.category} />
         </Box>
-        <Box display={{ base: 'block', md: 'none' }} m='auto' py='4'>
+        <Box display={{ base: 'block', lg: 'none' }} m='auto' py='4'>
           <LazyLoad width={200} height={290} offset={0} threshold={0.99}>
             <Image
               w='200px'
@@ -115,7 +115,7 @@ export function Book() {
           px='5'
           m='1rem auto'
         >
-          <Box display={{ base: 'none', md: 'block' }}>
+          <Box display={{ base: 'none', lg: 'block' }}>
             <TagComponent name={data.category} />
           </Box>
           <Box
