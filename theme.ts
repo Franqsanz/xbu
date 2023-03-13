@@ -6,6 +6,20 @@ const config: ThemeConfig = {
 };
 
 export default extendTheme({
+  colors: {
+    green: {
+      50: '#abf299',
+      100: '#96ef7f',
+      200: '#6ce94c',
+      300: '#56e632',
+      400: '#42e319',
+      500: '#2de000',
+      600: '#28c900',
+      700: '#24b300',
+      800: '#1f9c00',
+      900: '#0d4300',
+    },
+  },
   styles: {
     global: {
       body: {
@@ -19,6 +33,12 @@ export default extendTheme({
           borderRadius: '30px',
           border: '4px solid #f2f2f2',
         },
+      },
+      h1: {
+        fontWeight: 'extrabold',
+      },
+      p: {
+        fontWeight: '100',
       },
     },
   },

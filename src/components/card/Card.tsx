@@ -17,7 +17,7 @@ import { handleImageLoad } from '../../utils/utils';
 
 export function Card({ id, title, image, author, category }: CardProps) {
   const navigate = useNavigate();
-  const borderCard = useColorModeValue('gray.200', 'gray.600');
+  const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
   const outlineCard = useColorModeValue('black', 'white');
   let imgUI;
 
@@ -40,7 +40,7 @@ export function Card({ id, title, image, author, category }: CardProps) {
             alt={`Imagen de "${title}"`}
             rounded='lg'
             border='1px solid #A0AEC0'
-            boxShadow='xl'
+            boxShadow='dark-lg'
             decoding='async'
             loading='lazy'
             filter='blur(20px)'
@@ -58,10 +58,6 @@ export function Card({ id, title, image, author, category }: CardProps) {
         w='300px'
         m='2'
         rounded='lg'
-        border='1px'
-        borderColor={borderCard}
-        overflow='hidden'
-        boxShadow='lg'
         my='5'
         pb='4'
         tabIndex={0}
@@ -92,19 +88,22 @@ export function Card({ id, title, image, author, category }: CardProps) {
             {imgUI}
             <Flex direction='column' alignItems='center'>
               <Box
-                as='h1'
-                fontSize='lg'
+                fontSize='md'
                 lineHeight='8'
-                fontWeight='800'
+                fontWeight='400'
                 mx='1'
                 textAlign='center'
                 mb='2'
-                color='#1f9c00'
                 textTransform='uppercase'
               >
                 {title}
               </Box>
-              <Box px='7' fontSize='sm' textTransform='uppercase'>
+              <Box
+                px='7'
+                fontSize='xs'
+                textTransform='uppercase'
+                color={colorAuthorCard}
+              >
                 {author}
               </Box>
             </Flex>

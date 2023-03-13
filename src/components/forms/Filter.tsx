@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Box,
   Button,
   Flex,
   FormControl,
@@ -64,7 +63,6 @@ export function Filter() {
         direction='column'
         as='form'
         align={{ base: 'center', md: 'flex-start' }}
-        rounded='lg'
         onSubmit={handleSearch}
       >
         <Flex mb='4' fontSize={{ base: 'lg', md: 'xl' }} align='center'>
@@ -72,12 +70,13 @@ export function Filter() {
           Hacer una búsqueda:
         </Flex>
         <Flex
+          w={{ base: '300px', md: 'full' }}
           direction={{ base: 'column', md: 'row' }}
           justify='center'
           gap='3'
         >
           <FormControl
-            w={{ base: 'full', md: '220px' }}
+            w={{ base: 'full', md: '300px' }}
             display='flex'
             alignItems='center'
             isRequired
@@ -95,8 +94,7 @@ export function Filter() {
             </Select>
           </FormControl>
           <FormControl
-            w='full'
-            maxW='290px'
+            w={{ base: 'full', md: '500px' }}
             display='flex'
             alignItems='center'
             isRequired

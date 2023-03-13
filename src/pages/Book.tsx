@@ -55,13 +55,13 @@ export function Book() {
         display='block'
         href={data.sourceLink}
         isExternal
-        bg='#2de000'
+        bg='green.500'
         color='black'
         p='3'
         border='1px'
         rounded='lg'
         textAlign='center'
-        _hover={{ outline: 'none', bg: '#28c900' }}
+        _hover={{ outline: 'none', bg: 'green.600' }}
       >
         <Flex align='center' justify='center'>
           <FiExternalLink style={{ marginRight: '6px' }} />
@@ -123,7 +123,6 @@ export function Book() {
             fontSize={{ base: '2xl', md: '4xl' }}
             my='5'
             textTransform='uppercase'
-            fontWeight='extrabold'
           >
             {data.title}
           </Box>

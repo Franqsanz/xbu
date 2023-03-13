@@ -50,7 +50,6 @@ export function Home() {
             fontSize={{ base: '3.35rem', md: '9xl' }}
             bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
             bgClip='text'
-            fontWeight='extrabold'
           >
             XBuniverse
           </Box>
