@@ -204,7 +204,7 @@ export function Book() {
             <Button
               w={{ base: '100%', md: '130px' }}
               bg={bgButton}
-              fontWeight='light'
+              fontWeight='normal'
               onClick={onOpen}
               p='6'
               border='1px'

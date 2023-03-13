@@ -154,14 +154,14 @@ export function FormNewBook() {
 
   if (isSuccess) {
     alertMessage = (
-      <Alert status='success' rounded='xl'>
+      <Alert status='success' variant='solid' rounded='xl'>
         <AlertIcon />
         <AlertTitle fontWeight='normal'>¡Publicación exitosa!</AlertTitle>
       </Alert>
     );
   } else if (error) {
     alertMessage = (
-      <Alert status='error' rounded='xl'>
+      <Alert status='error' variant='solid' rounded='xl'>
         <AlertIcon />
         <AlertTitle fontWeight='normal'>
           Ha ocurrido un error al publicar.

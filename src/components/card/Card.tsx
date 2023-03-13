@@ -88,6 +88,7 @@ export function Card({ id, title, image, author, category }: CardProps) {
             {imgUI}
             <Flex direction='column' alignItems='center'>
               <Box
+                w='240px'
                 fontSize='md'
                 lineHeight='8'
                 fontWeight='400'
