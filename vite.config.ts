@@ -9,7 +9,13 @@ import compression from 'vite-plugin-compression';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), compression()],
+  plugins: [
+    react(),
+    compression({
+      algorithm: 'gzip',
+      ext: '.js,.css,.html,.svg',
+    }),
+  ],
   server: {
     port: 1010,
   },
