@@ -29,6 +29,7 @@
     "react-lazy-load": "4.0.1",
     "react-router-dom": "6.8.1",
     "react-share": "4.4.1",
+    "vite-plugin-compression": "0.5.1",
     "vite-plugin-svgr": "2.4.0"
   },
   "devDependencies": {
