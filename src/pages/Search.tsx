@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { useParams } from 'react-router-dom';
-import { Flex, useColorModeValue } from '@chakra-ui/react';
+import { Box, Flex, Spinner, useColorModeValue } from '@chakra-ui/react';
 
 import { Card } from '../components/card/Card';
 import { CardProps } from '../components/types';
 import { useFilter } from '../hooks/querys';
 import { ContainerTitle } from '../components/ContainerTitle';
 import { MainHead } from '../components/Head';
-import { ResultLength } from '../components/ResultLength';
+const ResultLength = lazy(() => import('../components/ResultLength'));
 
 export function Search() {
   const { query, param } = useParams();
@@ -19,7 +19,15 @@ export function Search() {
     <>
       <MainHead title={`Libros de ${param} | XBuniverse`} />
       <ContainerTitle title={`Libros de ${param}`} />
-      <ResultLength data={data} />
+      <Suspense
+        fallback={
+          <Box p='10' textAlign='center'>
+            <Spinner />
+          </Box>
+        }
+      >
+        <ResultLength data={data} />
+      </Suspense>
       <Flex
         w='full'
         justify='center'

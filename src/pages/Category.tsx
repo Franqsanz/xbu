@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { useParams } from 'react-router-dom';
 import { Flex, useColorModeValue } from '@chakra-ui/react';
 
@@ -7,8 +7,8 @@ import { CardProps } from '../components/types';
 import { useCategory } from '../hooks/querys';
 import { ContainerTitle } from '../components/ContainerTitle';
 import { MainHead } from '../components/Head';
-import { ResultLength } from '../components/ResultLength';
-
+// import { ResultLength } from '../components/ResultLength';
+const ResultLength = lazy(() => import('../components/ResultLength'));
 export function Category() {
   const { param } = useParams();
   const colorCard = useColorModeValue('gray.900', 'gray.100');

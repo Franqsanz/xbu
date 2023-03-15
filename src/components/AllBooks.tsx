@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import {
   Flex,
   Spinner,
@@ -6,12 +6,13 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  Box,
 } from '@chakra-ui/react';
 
 import { CardProps } from './types';
 import { useAllBooks } from '../hooks/querys';
 import { Card } from './card/Card';
-import { ResultLength } from './ResultLength';
+const ResultLength = lazy(() => import('./ResultLength'));
 
 export function AllBooks() {
   const colorCard = useColorModeValue('gray.900', 'gray.100');
@@ -46,7 +47,15 @@ export function AllBooks() {
 
   return (
     <>
-      <ResultLength data={data} />
+      <Suspense
+        fallback={
+          <Box p='10' textAlign='center'>
+            <Spinner />
+          </Box>
+        }
+      >
+        <ResultLength data={data} />
+      </Suspense>
       <Flex
         w='full'
         justify='center'

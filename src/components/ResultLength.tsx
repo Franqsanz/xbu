@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@chakra-ui/react';
 import { Filter } from './forms/Filter';
 
-export function ResultLength({ data }: any) {
+export default function ResultLength({ data }: any) {
   return (
     <Box w='85%' m='auto' mt='7'>
       <Filter />
