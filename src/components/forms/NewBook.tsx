@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { Suspense, lazy, useState, useRef } from 'react';
 import {
   FormControl,
   Button,
@@ -15,8 +15,8 @@ import {
   useColorModeValue,
   useDisclosure,
   Icon,
+  Skeleton,
 } from '@chakra-ui/react';
-import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 
@@ -24,6 +24,8 @@ import { categoryLinks } from '../links';
 import { Book } from '../types';
 import { useMutatePost } from '../../hooks/querys';
 import { ModalCropper } from '../forms/ModalCropper';
+
+const Cropper = lazy(() => import('react-cropper'));
 
 export function FormNewBook() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -92,6 +94,7 @@ export function FormNewBook() {
       setCropData(base64Image);
     };
     onOpen();
+    setCropData('');
   }
 
   function getCropData() {
@@ -286,22 +289,28 @@ export function FormNewBook() {
                   onClose={onClose}
                   getCropData={getCropData}
                 >
-                  <Cropper
-                    style={{ width: '100%', height: 'auto' }}
-                    zoomable={false}
-                    aspectRatio={234 / 360}
-                    preview='.img-preview'
-                    src={cropData}
-                    viewMode={2}
-                    minCropBoxHeight={234}
-                    minCropBoxWidth={360}
-                    background={false}
-                    responsive={true}
-                    autoCropArea={1}
-                    checkOrientation={false}
-                    guides={true}
-                    onInitialized={(instance) => setCrop(instance)}
-                  />
+                  <Suspense>
+                    {cropData === '' ? (
+                      <Skeleton h='250px' />
+                    ) : (
+                      <Cropper
+                        style={{ width: '100%', height: '300px' }}
+                        zoomable={false}
+                        aspectRatio={234 / 360}
+                        preview='.img-preview'
+                        src={cropData}
+                        viewMode={2}
+                        minCropBoxHeight={234}
+                        minCropBoxWidth={360}
+                        background={false}
+                        responsive={true}
+                        autoCropArea={1}
+                        checkOrientation={false}
+                        guides={true}
+                        onInitialized={(instance) => setCrop(instance)}
+                      />
+                    )}
+                  </Suspense>
                 </ModalCropper>
                 {previewImgUI}
               </Box>

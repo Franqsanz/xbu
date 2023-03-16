@@ -1,13 +1,14 @@
 import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
+import { ChakraProvider, ColorModeScript, Skeleton } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
 import { HelmetProvider } from 'react-helmet-async';
 
+import { Home } from './pages/Home';
 import { Register } from './pages/Register';
 import { Login } from './pages/Login';
 import { Categories } from './pages/Categories';
@@ -20,7 +21,6 @@ import { ScrollToTop } from './ScrollToTop';
 
 import theme from '../theme';
 
-const Home = lazy(() => import('./pages/Home'));
 const Explore = lazy(() => import('./pages/Explore'));
 const Book = lazy(() => import('./pages/Book'));
 const Search = lazy(() => import('./pages/Search'));
@@ -43,7 +43,7 @@ const html = (
         <BrowserRouter>
           <Nav />
           <ScrollToTop>
-            <Suspense fallback='...'>
+            <Suspense fallback={<Skeleton h='100vh' />}>
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='register' element={<Register />} />

@@ -22,7 +22,7 @@ import iconBookReading from '../assets/iconBookReading.svg';
 import patternBlack from '../assets/patternpadBlack.svg';
 import patternWhite from '../assets/patternpadWhite.svg';
 
-export default function Home() {
+export function Home() {
   const { colorMode } = useColorMode();
   const bgButton = useColorModeValue('#2de000', '#24b300');
   const bContainer = useColorModeValue('gray.50', 'none');
