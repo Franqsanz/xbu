@@ -1,19 +1,13 @@
-import React, { Suspense, lazy } from 'react';
-import {
-  Box,
-  Button,
-  Flex,
-  Spinner,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import React from 'react';
+import { Box, Button, Flex, useColorModeValue } from '@chakra-ui/react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 import { AllBooks } from '../components/AllBooks';
 import { ContainerTitle } from '../components/ContainerTitle';
 import { MainHead } from '../components/Head';
-const CategoriesComp = lazy(() => import('../components/CategoriesComp'));
+import CategoriesComp from '../components/CategoriesComp';
 
-export function Explore() {
+export default function Explore() {
   const bgArrows = useColorModeValue('white', 'black');
   const borderArrows = useColorModeValue('gray.200', '#28c900');
   const gradientColor = useColorModeValue('white', '#1A202C');
@@ -66,15 +60,7 @@ export function Explore() {
             left='-1px'
             bgGradient={`linear(270deg, #ffffff00 0%, ${gradientColor} 60%)`}
           ></Box>
-          <Suspense
-            fallback={
-              <Box m='auto' textAlign='center'>
-                <Spinner />
-              </Box>
-            }
-          >
-            <CategoriesComp />
-          </Suspense>
+          <CategoriesComp />
           <Box
             position='sticky'
             p='2'

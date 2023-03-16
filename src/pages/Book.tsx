@@ -23,7 +23,7 @@ import { ModalShare } from '../components/ModalShare';
 const CategoriesComp = lazy(() => import('../components/CategoriesComp'));
 const RelatedPost = lazy(() => import('../components/RelatedPost'));
 
-export function Book() {
+export default function Book() {
   const shareUrl = window.location.href;
   const { id } = useParams();
   const grayColor = useColorModeValue('gray.200', 'gray.600');

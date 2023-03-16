@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
@@ -8,15 +8,10 @@ import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
 import { HelmetProvider } from 'react-helmet-async';
 
-import { NewBook } from './pages/NewBook';
-import { Home } from './pages/Home';
 import { Register } from './pages/Register';
 import { Login } from './pages/Login';
-import { Explore } from './pages/Explore';
 import { Categories } from './pages/Categories';
 import { Category } from './pages/Category';
-import { Search } from './pages/Search';
-import { Book } from './pages/Book';
 import { ErrorPage } from './pages/404';
 import { Nav } from './components/nav/Nav';
 import { Footer } from './components/Footer';
@@ -24,6 +19,12 @@ import { CatchError } from './CatchError';
 import { ScrollToTop } from './ScrollToTop';
 
 import theme from '../theme';
+
+const Home = lazy(() => import('./pages/Home'));
+const Explore = lazy(() => import('./pages/Explore'));
+const Book = lazy(() => import('./pages/Book'));
+const Search = lazy(() => import('./pages/Search'));
+const NewBook = lazy(() => import('./pages/NewBook'));
 
 const queryClient = new QueryClient();
 
@@ -42,39 +43,41 @@ const html = (
         <BrowserRouter>
           <Nav />
           <ScrollToTop>
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='register' element={<Register />} />
-              <Route path='login' element={<Login />} />
-              <Route path='new-post' element={<NewBook />} />
-              <Route path='explore' element={<Explore />} />
-              <Route path='categories' element={<Categories />} />
-              <Route
-                path='/books/categories/:param'
-                element={
-                  <CatchError>
-                    <Category />
-                  </CatchError>
-                }
-              />
-              <Route
-                path='/books/search/:query/:param'
-                element={
-                  <CatchError>
-                    <Search />
-                  </CatchError>
-                }
-              />
-              <Route
-                path='book/:id'
-                element={
-                  <CatchError>
-                    <Book />
-                  </CatchError>
-                }
-              />
-              <Route path='*' element={<ErrorPage />} />
-            </Routes>
+            <Suspense fallback='...'>
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='register' element={<Register />} />
+                <Route path='login' element={<Login />} />
+                <Route path='new-post' element={<NewBook />} />
+                <Route path='explore' element={<Explore />} />
+                <Route path='categories' element={<Categories />} />
+                <Route
+                  path='/books/categories/:param'
+                  element={
+                    <CatchError>
+                      <Category />
+                    </CatchError>
+                  }
+                />
+                <Route
+                  path='/books/search/:query/:param'
+                  element={
+                    <CatchError>
+                      <Search />
+                    </CatchError>
+                  }
+                />
+                <Route
+                  path='book/:id'
+                  element={
+                    <CatchError>
+                      <Book />
+                    </CatchError>
+                  }
+                />
+                <Route path='*' element={<ErrorPage />} />
+              </Routes>
+            </Suspense>
           </ScrollToTop>
           <Footer />
         </BrowserRouter>

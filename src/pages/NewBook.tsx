@@ -4,7 +4,7 @@ import { FormNewBook } from '../components/forms/NewBook';
 import { MainHead } from '../components/Head';
 import { ContainerTitle } from '../components/ContainerTitle';
 
-export function NewBook() {
+export default function NewBook() {
   return (
     <>
       <MainHead title='Nueva Publicación' />

@@ -9,7 +9,7 @@ import { ContainerTitle } from '../components/ContainerTitle';
 import { MainHead } from '../components/Head';
 const ResultLength = lazy(() => import('../components/ResultLength'));
 
-export function Search() {
+export default function Search() {
   const { query, param } = useParams();
   const colorCard = useColorModeValue('gray.900', 'gray.100');
 
