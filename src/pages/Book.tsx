@@ -250,7 +250,7 @@ export default function Book() {
             maxW={{ base: '920px', lg: '300px' }}
             p='4'
             m='1rem auto'
-            rounded='10'
+            rounded='lg'
             border='1px'
             borderColor={grayColor}
             boxShadow='lg'

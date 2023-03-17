@@ -79,10 +79,10 @@ export function FormNewBook() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 1000000) {
-      // 1 MB
+    if (file.size > 5000000) {
+      // 5 MB
       alert(
-        `El tamaño de la imagen es demasiado grande. Por favor, seleccione una imagen de menor tamaño`,
+        `El tamaño de la imagen es demasiado grande. Por favor, seleccione una imagen de menor tamaño.`,
       );
       return;
     }
@@ -132,7 +132,7 @@ export function FormNewBook() {
             </Box>
             <Box mt='1' fontSize='13px'>
               <Box as='span'>
-                Solo se aceptan formatos PNG, JPG y WebP con un máximo de 1 MB.
+                Solo se aceptan formatos PNG, JPG y WebP con un máximo de 5 MB.
               </Box>
             </Box>
           </Box>
@@ -289,13 +289,13 @@ export function FormNewBook() {
                   onClose={onClose}
                   getCropData={getCropData}
                 >
-                  <Suspense>
+                  <Suspense fallback={<Skeleton h='250px' />}>
                     {cropData === '' ? (
                       <Skeleton h='250px' />
                     ) : (
                       <Cropper
                         style={{ width: '100%', height: '300px' }}
-                        zoomable={false}
+                        zoomable={true}
                         aspectRatio={234 / 360}
                         preview='.img-preview'
                         src={cropData}

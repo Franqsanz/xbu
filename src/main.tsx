@@ -1,7 +1,12 @@
 import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ChakraProvider, ColorModeScript, Skeleton } from '@chakra-ui/react';
+import {
+  ChakraProvider,
+  ColorModeScript,
+  Skeleton,
+  Stack,
+} from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import * as Sentry from '@sentry/react';
@@ -11,8 +16,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Home } from './pages/Home';
 import { Register } from './pages/Register';
 import { Login } from './pages/Login';
-import { Categories } from './pages/Categories';
-import { Category } from './pages/Category';
 import { ErrorPage } from './pages/404';
 import { Nav } from './components/nav/Nav';
 import { Footer } from './components/Footer';
@@ -43,22 +46,20 @@ const html = (
         <BrowserRouter>
           <Nav />
           <ScrollToTop>
-            <Suspense fallback={<Skeleton h='100vh' />}>
+            <Suspense
+              fallback={
+                <Stack spacing='4'>
+                  <Skeleton py={{ base: 20, md: 36 }} />
+                  <Skeleton h='100vh' />
+                </Stack>
+              }
+            >
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='register' element={<Register />} />
                 <Route path='login' element={<Login />} />
                 <Route path='new-post' element={<NewBook />} />
                 <Route path='explore' element={<Explore />} />
-                <Route path='categories' element={<Categories />} />
-                <Route
-                  path='/books/categories/:param'
-                  element={
-                    <CatchError>
-                      <Category />
-                    </CatchError>
-                  }
-                />
                 <Route
                   path='/books/search/:query/:param'
                   element={
