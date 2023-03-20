@@ -4,10 +4,8 @@
 
 import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
-// import svgr from 'vite-plugin-svgr';
 import compression from 'vite-plugin-compression';
 import webfontDownload from 'vite-plugin-webfont-dl';
-// import { ViteMinifyPlugin } from 'vite-plugin-minify';
 import { createHtmlPlugin } from 'vite-plugin-html';
 
 // https://vitejs.dev/config/
@@ -17,7 +15,6 @@ export default defineConfig({
     react(),
     webfontDownload(),
     createHtmlPlugin({ minify: true }),
-    // ViteMinifyPlugin({}),
     compression({
       algorithm: 'brotliCompress',
       ext: '.js,.css,.html,.svg',
