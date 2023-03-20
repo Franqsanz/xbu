@@ -6,13 +6,15 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 // import svgr from 'vite-plugin-svgr';
 import compression from 'vite-plugin-compression';
+import webfontDownload from 'vite-plugin-webfont-dl';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    webfontDownload(),
     compression({
-      algorithm: 'gzip',
+      algorithm: 'brotliCompress',
       ext: '.js,.css,.html,.svg',
     }),
   ],
