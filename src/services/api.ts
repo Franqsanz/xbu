@@ -23,12 +23,6 @@ async function postBook(books: any) {
   throw new Error('Error al publicar el libro');
 }
 
-async function getBookCategory(category: any) {
-  const res = await fetch(`${API_URL}?category=${category}`);
-
-  if (res.ok) return await res.json();
-}
-
 async function getBooksFilter(
   query: string | undefined,
   param: string | undefined,
@@ -59,7 +53,6 @@ async function deleteBook(id: any) {
 export {
   getAllBooks,
   getBook,
-  getBookCategory,
   getBooksFilter,
   getRelatedPost,
   postBook,
