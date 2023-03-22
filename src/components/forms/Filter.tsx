@@ -10,7 +10,7 @@ import {
 import { FiSearch, FiFilter } from 'react-icons/fi';
 
 import { useAllBooks } from '../../hooks/querys';
-import { CardProps } from '../../components/types';
+// import { CardProps } from '../../components/types';
 
 export function Filter() {
   const [query, setQuery] = useState('');
@@ -19,9 +19,9 @@ export function Filter() {
   const navigate = useNavigate();
   const { data } = useAllBooks();
 
-  function createSet(data: CardProps[], key: string): Set<string> {
+  function createSet(data: any, key: string): Set<string> {
     const set = new Set<string>();
-    data && data.map((item: any) => set.add(item[key]));
+    data && data.results.map((item: any) => set.add(item[key]));
     return set;
   }
 

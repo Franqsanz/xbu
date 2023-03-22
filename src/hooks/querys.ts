@@ -1,9 +1,9 @@
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useInfiniteQuery } from '@tanstack/react-query';
 
 import {
   getAllBooks,
+  getBooksPaginate,
   getBook,
-  getBookCategory,
   getBooksFilter,
   getRelatedPost,
   postBook,
@@ -25,11 +25,17 @@ function useAllBooks() {
   return useQuery([keys.all], () => getAllBooks());
 }
 
-function useCategory(category: string | undefined) {
-  return useQuery([keys.category, category], () => getBookCategory(category), {
-    suspense: true,
-    cacheTime: 3000,
-  });
+function useBooksPaginate() {
+  return useInfiniteQuery(
+    [keys.paginate],
+    ({ pageParam = 0 }) => getBooksPaginate(pageParam),
+    {
+      getNextPageParam: (lastPage) => {
+        if (lastPage.info.nextPage === null) return;
+        return lastPage.info.nextPage;
+      },
+    },
+  );
 }
 
 function useFilter(query: string | undefined, param: string | undefined) {
@@ -62,8 +68,8 @@ function useBook(id: string | undefined) {
 export {
   useMutatePost,
   useAllBooks,
+  useBooksPaginate,
   useBook,
-  useCategory,
   useFilter,
   useRelatedPost,
 };

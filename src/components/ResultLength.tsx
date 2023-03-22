@@ -11,7 +11,7 @@ export default function ResultLength({ data }: any) {
         textAlign={{ base: 'center', lg: 'left' }}
         direction='column'
       >
-        <Box as='span' fontSize='3xl' fontWeight='bold' fontFamily='arial'>
+        <Box as='span' fontSize='3xl' fontWeight='bold'>
           Libros
         </Box>
         {data.length} Resultados

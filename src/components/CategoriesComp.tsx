@@ -11,11 +11,13 @@ export default function CategoriesComp() {
 
   let categories = new Set();
 
-  data && data.map(({ category }: CardProps) => categories.add(category));
+  data &&
+    data.results.map(({ category }: CardProps) => categories.add(category));
   const categoryLinks = Array.from(categories).sort();
 
   function countCategory(ctry: any) {
-    return data.filter(({ category }: CardProps) => category === ctry).length;
+    return data.results.filter(({ category }: CardProps) => category === ctry)
+      .length;
   }
 
   return (

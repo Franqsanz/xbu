@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { useEffect } from 'react';
 import {
   Flex,
   Spinner,
@@ -8,15 +8,36 @@ import {
   AlertTitle,
   Box,
 } from '@chakra-ui/react';
+import { useInView } from 'react-intersection-observer';
 
 import { CardProps } from './types';
-import { useAllBooks } from '../hooks/querys';
+import { useBooksPaginate } from '../hooks/querys';
 import { Card } from './card/Card';
-const ResultLength = lazy(() => import('./ResultLength'));
+import { Filter } from './forms/Filter';
 
 export function AllBooks() {
+  const { ref, inView } = useInView();
+  // const [totalBooks, setTotalBooks] = useState<number[]>([]);
   const colorCard = useColorModeValue('gray.900', 'gray.100');
-  const { data, isLoading, error } = useAllBooks();
+  const { data, isLoading, error, fetchNextPage, isFetchingNextPage } =
+    useBooksPaginate();
+
+  // useEffect(() => {
+  //   const newBooks = data?.pages.map((page) => page.info.totalBooks) ?? [];
+
+  //   // crea un conjunto a partir de los libros existentes
+  //   const existingBooks = new Set(totalBooks);
+
+  //   // agrega solo los libros que no existen en el conjunto
+  //   const uniqueBooks = newBooks?.filter((book) => !existingBooks.has(book));
+
+  //   // agrega los nuevos libros al estado
+  //   setTotalBooks([...totalBooks, ...uniqueBooks]);
+  // }, [data]);
+
+  useEffect(() => {
+    if (inView) fetchNextPage();
+  }, [inView]);
 
   if (isLoading) {
     return (
@@ -47,15 +68,19 @@ export function AllBooks() {
 
   return (
     <>
-      <Suspense
-        fallback={
-          <Box p='10' textAlign='center'>
-            <Spinner />
+      <Filter />
+      {/* <Box w='78%' m='auto' mt='7'>
+        <Flex
+          fontSize='lg'
+          textAlign={{ base: 'center', lg: 'left' }}
+          direction='column'
+        >
+          <Box as='span' fontSize='3xl' fontWeight='bold'>
+            Libros
           </Box>
-        }
-      >
-        <ResultLength data={data} />
-      </Suspense>
+          {totalBooks} Resultados
+        </Flex>
+      </Box> */}
       <Flex
         w='full'
         justify='center'
@@ -65,30 +90,43 @@ export function AllBooks() {
         flexWrap='wrap'
         color={colorCard}
       >
-        {data.map(
-          ({
-            id,
-            title,
-            synopsis,
-            author,
-            category,
-            sourceLink,
-            image,
-          }: CardProps) => (
-            <React.Fragment key={id}>
-              <Card
-                id={id}
-                category={category}
-                title={title}
-                author={author}
-                synopsis={synopsis}
-                sourceLink={sourceLink}
-                image={image}
-              />
-            </React.Fragment>
-          ),
-        )}
+        {data?.pages.map((page, index) => (
+          <React.Fragment key={index}>
+            {page.results.map(
+              ({
+                id,
+                title,
+                synopsis,
+                author,
+                category,
+                sourceLink,
+                image,
+              }: CardProps) => (
+                <React.Fragment key={id}>
+                  <Card
+                    id={id}
+                    category={category}
+                    title={title}
+                    author={author}
+                    synopsis={synopsis}
+                    sourceLink={sourceLink}
+                    image={image}
+                  />
+                </React.Fragment>
+              ),
+            )}
+          </React.Fragment>
+        ))}
       </Flex>
+      <Box ref={ref}>
+        {isFetchingNextPage ? (
+          <Box p='10' textAlign='center'>
+            <Spinner size='xl' thickness='4px' speed='0.40s' />
+          </Box>
+        ) : (
+          ''
+        )}
+      </Box>
     </>
   );
 }
