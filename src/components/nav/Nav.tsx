@@ -34,7 +34,7 @@ export function Nav() {
         boxShadow='sm'
         backdropFilter='auto'
         backdropBlur='12px'
-        zIndex='1'
+        zIndex='99999'
       >
         <Flex w='100%' justify='space-around' align='center'>
           <Flex align='center'>
