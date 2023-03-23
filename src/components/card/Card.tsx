@@ -31,7 +31,7 @@ export function Card({ id, title, image, author, category }: CardProps) {
     imgUI = <Box></Box>;
   } else {
     imgUI = (
-      <Box m='auto' mb='7'>
+      <Box m='auto' mb='7' zIndex='-1'>
         <LazyLoad width={234} height={360} offset={0} threshold={0.99}>
           <Image
             w='234px'
@@ -74,8 +74,8 @@ export function Card({ id, title, image, author, category }: CardProps) {
           tabIndex={-1}
           _hover={{ outline: 'none' }}
         >
-          <Flex direction='column'>
-            <Box p='4' ml='4' zIndex='0'>
+          <Flex direction='column' position='relative'>
+            <Box p='4' ml='4' position='absolute' top='-8' left='-4'>
               <Link
                 as={NavLink}
                 to={`/books/search/category/${category}`}

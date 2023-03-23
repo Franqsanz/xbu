@@ -87,9 +87,6 @@ export default function Book() {
         align='flex-start'
         direction={{ base: 'column', lg: 'row' }}
       >
-        <Box display={{ base: 'block', lg: 'none' }} mx='5' mt='4'>
-          <TagComponent name={data.category} />
-        </Box>
         <Box display={{ base: 'block', lg: 'none' }} m='auto' py='4'>
           <LazyLoad width={200} height={290} offset={0} threshold={0.99}>
             <Image
@@ -115,7 +112,7 @@ export default function Book() {
           px='5'
           m='1rem auto'
         >
-          <Box display={{ base: 'none', lg: 'block' }}>
+          <Box>
             <TagComponent name={data.category} />
           </Box>
           <Box
@@ -142,7 +139,7 @@ export default function Book() {
             >
               Sinopsis
             </Box>
-            <Text mt='3' mx='2' mb='10' fontSize='lg'>
+            <Text mt='3' mb='10' fontSize='lg'>
               {data.synopsis}
             </Text>
           </Box>
@@ -225,11 +222,17 @@ export default function Book() {
             shareUrl={shareUrl}
             data={data.title}
           />
-          <Box my='14'>
+          <Box my='12'>
             <Divider borderColor='gray.400' />
           </Box>
-          <Flex direction='column'>
-            <Box p='2' mb='2' bg={grayColor} fontSize='xl' roundedTop='lg'>
+          <Flex direction='column' mb='10'>
+            <Box
+              p='2'
+              mb='3'
+              fontSize='2xl'
+              textAlign={{ base: 'center', lg: 'left' }}
+              ml={{ base: 0, lg: 2 }}
+            >
               Más libros en XBuniverse
             </Box>
             <Suspense
@@ -245,7 +248,7 @@ export default function Book() {
             </Suspense>
           </Flex>
         </Flex>
-        <Flex w={{ base: 'full', lg: '400px' }} px='3'>
+        <Flex display={{ base: 'none', lg: 'block' }} w='400px' px='3'>
           <Box
             maxW={{ base: '920px', lg: '300px' }}
             p='4'
@@ -255,7 +258,7 @@ export default function Book() {
             borderColor={grayColor}
             boxShadow='lg'
           >
-            <Box display={{ base: 'none', lg: 'flex' }} justifyContent='center'>
+            <Flex justifyContent='center'>
               <LazyLoad width={234} height={360} offset={0} threshold={0.99}>
                 <Image
                   w='234px'
@@ -271,13 +274,8 @@ export default function Book() {
                   onLoad={handleImageLoad}
                 />
               </LazyLoad>
-            </Box>
-            <Box
-              mt={{ base: 0, md: 8 }}
-              mb='3'
-              fontSize='2xl'
-              textAlign='center'
-            >
+            </Flex>
+            <Box mt='8' mb='3' fontSize='2xl' textAlign='center'>
               Categorias
             </Box>
             <Box>
@@ -288,7 +286,7 @@ export default function Book() {
                   </Box>
                 }
               >
-                <Flex direction={{ base: 'row', xl: 'column' }} flexWrap='wrap'>
+                <Flex direction='column' flexWrap='wrap'>
                   <CategoriesComp />
                 </Flex>
               </Suspense>

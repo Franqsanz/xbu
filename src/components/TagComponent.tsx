@@ -31,7 +31,14 @@ export function TagComponent({ name, m, count }: PropsTag) {
   }
 
   return (
-    <Tag bg='#abf299' color='#0d4300' size='lg' variant='subtle' m={m}>
+    <Tag
+      bg='#abf299'
+      color='#0d4300'
+      size='lg'
+      border='1px'
+      variant='subtle'
+      m={m}
+    >
       <TagLeftIcon boxSize='16px' as={BsTag} />
       <TagLabel
         display='flex'
