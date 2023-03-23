@@ -12,7 +12,7 @@ import { FiSearch, FiFilter } from 'react-icons/fi';
 import { useAllBooks } from '../../hooks/querys';
 // import { CardProps } from '../../components/types';
 
-export function Filter() {
+export default function Filter() {
   const [query, setQuery] = useState('');
   const [value, setValue] = useState('');
   const [values, setValues] = useState<string[]>([]);

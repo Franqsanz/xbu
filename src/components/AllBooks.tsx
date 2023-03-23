@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import {
   Flex,
   Spinner,
@@ -13,7 +13,7 @@ import { useInView } from 'react-intersection-observer';
 import { CardProps } from './types';
 import { useBooksPaginate } from '../hooks/querys';
 import { Card } from './card/Card';
-import { Filter } from './forms/Filter';
+const Filter = lazy(() => import('./forms/Filter'));
 
 export function AllBooks() {
   const { ref, inView } = useInView();
@@ -68,7 +68,15 @@ export function AllBooks() {
 
   return (
     <>
-      <Filter />
+      <Suspense
+        fallback={
+          <Box mt='5' textAlign='center'>
+            <Spinner />
+          </Box>
+        }
+      >
+        <Filter />
+      </Suspense>
       {/* <Box w='78%' m='auto' mt='7'>
         <Flex
           fontSize='lg'

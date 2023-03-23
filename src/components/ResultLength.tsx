@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Flex } from '@chakra-ui/react';
-import { Filter } from './forms/Filter';
+import Filter from './forms/Filter';
 
 export default function ResultLength({ data }: any) {
   return (
