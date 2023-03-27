@@ -57,7 +57,9 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalProps) {
   }
 
   function handleCopyClick() {
-    copyToClipboard(shareUrl);
+    if (shareUrl !== undefined) {
+      copyToClipboard(shareUrl);
+    }
   }
 
   return (
@@ -80,7 +82,7 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalProps) {
               align='flex-start'
               flexWrap='wrap'
             >
-              <WhatsappShareButton url={shareUrl} title={data}>
+              <WhatsappShareButton url={shareUrl || ''} title={data}>
                 <Flex direction='column' align='center'>
                   <Icon
                     as={WhatsappIcon}
@@ -92,7 +94,7 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalProps) {
                   </Box>
                 </Flex>
               </WhatsappShareButton>
-              <FacebookShareButton url={shareUrl} title={data}>
+              <FacebookShareButton url={shareUrl || ''} title={data}>
                 <Flex direction='column' align='center'>
                   <Icon
                     as={FacebookIcon}
@@ -104,7 +106,7 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalProps) {
                   </Box>
                 </Flex>
               </FacebookShareButton>
-              <TwitterShareButton url={shareUrl} title={data}>
+              <TwitterShareButton url={shareUrl || ''} title={data}>
                 <Flex direction='column' align='center'>
                   <Icon
                     as={TwitterIcon}
@@ -116,7 +118,7 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalProps) {
                   </Box>
                 </Flex>
               </TwitterShareButton>
-              <TelegramShareButton url={shareUrl} title={data}>
+              <TelegramShareButton url={shareUrl || ''} title={data}>
                 <Flex direction='column' align='center'>
                   <Icon
                     as={TelegramIcon}
@@ -128,7 +130,7 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalProps) {
                   </Box>
                 </Flex>
               </TelegramShareButton>
-              <EmailShareButton url={shareUrl} title={data}>
+              <EmailShareButton url={shareUrl || ''} title={data}>
                 <Flex direction='column' align='center'>
                   <Icon
                     as={EmailIcon}
@@ -152,7 +154,7 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalProps) {
                 size='lg'
                 fontSize='sm'
                 bg={bgInput}
-                value={shareUrl}
+                value={shareUrl || ''}
                 readOnly
               />
               <Button
