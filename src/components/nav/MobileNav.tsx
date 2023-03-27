@@ -37,7 +37,7 @@ export function MobileNav() {
         position='sticky'
         top='0'
         p='2'
-        zIndex='99999'
+        zIndex='999'
       >
         <Flex w='100%' justify='space-between' align='center'>
           <Button

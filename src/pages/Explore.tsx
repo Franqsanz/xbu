@@ -31,7 +31,7 @@ export default function Explore() {
   return (
     <>
       <MainHead title='Explorar' description='¡Explora cientos de libros!' />
-      <ContainerTitle title='Explorar' />
+      <ContainerTitle title='Explorar' showSearch={true} />
       <Flex justify='center' align='center' mx='4'>
         <Button
           display={{ base: 'none', md: 'inline' }}

@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Flex,
   Spinner,
@@ -13,27 +13,12 @@ import { useInView } from 'react-intersection-observer';
 import { CardProps } from './types';
 import { useBooksPaginate } from '../hooks/querys';
 import { Card } from './card/Card';
-const Filter = lazy(() => import('./forms/Filter'));
 
 export function AllBooks() {
   const { ref, inView } = useInView();
-  // const [totalBooks, setTotalBooks] = useState<number[]>([]);
   const colorCard = useColorModeValue('gray.900', 'gray.100');
   const { data, isLoading, error, fetchNextPage, isFetchingNextPage } =
     useBooksPaginate();
-
-  // useEffect(() => {
-  //   const newBooks = data?.pages.map((page) => page.info.totalBooks) ?? [];
-
-  //   // crea un conjunto a partir de los libros existentes
-  //   const existingBooks = new Set(totalBooks);
-
-  //   // agrega solo los libros que no existen en el conjunto
-  //   const uniqueBooks = newBooks?.filter((book) => !existingBooks.has(book));
-
-  //   // agrega los nuevos libros al estado
-  //   setTotalBooks([...totalBooks, ...uniqueBooks]);
-  // }, [data]);
 
   useEffect(() => {
     if (inView) fetchNextPage();
@@ -68,32 +53,12 @@ export function AllBooks() {
 
   return (
     <>
-      <Suspense
-        fallback={
-          <Box mt='5' textAlign='center'>
-            <Spinner />
-          </Box>
-        }
-      >
-        <Filter />
-      </Suspense>
-      {/* <Box w='78%' m='auto' mt='7'>
-        <Flex
-          fontSize='lg'
-          textAlign={{ base: 'center', lg: 'left' }}
-          direction='column'
-        >
-          <Box as='span' fontSize='3xl' fontWeight='bold'>
-            Libros
-          </Box>
-          {totalBooks} Resultados
-        </Flex>
-      </Box> */}
       <Flex
         w='full'
         justify='center'
         py='5'
         m='auto'
+        mt='20'
         px='1'
         flexWrap='wrap'
         color={colorCard}

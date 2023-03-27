@@ -7,7 +7,7 @@ import {
   Select,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { FiSearch, FiFilter } from 'react-icons/fi';
+import { FiSearch } from 'react-icons/fi';
 
 import { useAllBooks } from '../../hooks/querys';
 // import { CardProps } from '../../components/types';
@@ -55,32 +55,14 @@ export default function Filter() {
   return (
     <>
       <Flex
-        w='full'
-        maxW='620px'
-        p='5'
-        m='auto'
-        my='8'
+        py='5'
         direction='column'
         as='form'
-        align={{ base: 'center', md: 'flex-start' }}
+        justify='center'
         onSubmit={handleSearch}
       >
-        <Flex mb='4' fontSize={{ base: 'lg', md: 'xl' }} align='center'>
-          <FiFilter style={{ marginRight: 6 }} />
-          Hacer una búsqueda:
-        </Flex>
-        <Flex
-          w={{ base: '300px', md: 'full' }}
-          direction={{ base: 'column', md: 'row' }}
-          justify='center'
-          gap='3'
-        >
-          <FormControl
-            w={{ base: 'full', md: '300px' }}
-            display='flex'
-            alignItems='center'
-            isRequired
-          >
+        <Flex direction='column' justify='center' gap='3'>
+          <FormControl display='flex' alignItems='center' isRequired>
             <Select
               size='lg'
               bg={useColorModeValue('gray.100', 'gray.800')}
@@ -93,12 +75,7 @@ export default function Filter() {
               <option value='category'>Categoria</option>
             </Select>
           </FormControl>
-          <FormControl
-            w={{ base: 'full', md: '500px' }}
-            display='flex'
-            alignItems='center'
-            isRequired
-          >
+          <FormControl display='flex' alignItems='center' isRequired>
             <Select
               size='lg'
               bg={useColorModeValue('gray.100', 'gray.800')}
@@ -116,7 +93,6 @@ export default function Filter() {
           </FormControl>
           <Button
             size='lg'
-            ml={{ base: 0, md: 3 }}
             type='submit'
             bg='#2de000'
             color='black'

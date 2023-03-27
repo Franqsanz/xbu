@@ -19,7 +19,6 @@ export function Card({ id, title, image, author, category }: CardProps) {
   const navigate = useNavigate();
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
   const outlineCard = useColorModeValue('black', 'white');
-  let imgUI;
 
   function handleKeyPress(e: React.KeyboardEvent) {
     if (e.key === 'Enter') {
@@ -27,47 +26,9 @@ export function Card({ id, title, image, author, category }: CardProps) {
     }
   }
 
-  if (typeof image === 'undefined') {
-    imgUI = <Box></Box>;
-  } else {
-    imgUI = (
-      <Box m='auto' mb='7' zIndex='-1'>
-        <LazyLoad width={234} height={360} offset={0} threshold={0.99}>
-          <Image
-            w='234px'
-            h='360px'
-            src={image.url}
-            alt={`Imagen de "${title}"`}
-            rounded='lg'
-            border='1px solid #A0AEC0'
-            boxShadow='dark-lg'
-            decoding='async'
-            loading='lazy'
-            filter='blur(20px)'
-            transition='filter 0.6s ease-in-out'
-            onLoad={handleImageLoad}
-          />
-        </LazyLoad>
-      </Box>
-    );
-  }
-
   return (
     <>
-      <LinkBox
-        w='300px'
-        m='2'
-        rounded='lg'
-        my='5'
-        pb='4'
-        tabIndex={0}
-        onKeyPress={handleKeyPress}
-        _focus={{ outline: `3px solid ${outlineCard}` }}
-        _hover={{
-          borderColor: 'transparent',
-          outline: `3px solid ${outlineCard}`,
-        }}
-      >
+      <LinkBox w='300px' m='2' rounded='lg' my='5' pb='4'>
         <LinkOverlay
           as={NavLink}
           to={`/book/${id}`}
@@ -79,13 +40,38 @@ export function Card({ id, title, image, author, category }: CardProps) {
               <Link
                 as={NavLink}
                 to={`/books/search/category/${category}`}
-                _focus={{ outline: `2px solid ${outlineCard}` }}
+                outline='none'
+                tabIndex={-1}
                 _hover={{ outline: 'none' }}
               >
                 <TagComponent name={category} />
               </Link>
             </Box>
-            {imgUI}
+            <Box m='auto' mb='7'>
+              <LazyLoad width={234} height={360} offset={0} threshold={0.99}>
+                <Image
+                  w='234px'
+                  h='360px'
+                  src={image?.url}
+                  alt={`Imagen de "${title}"`}
+                  rounded='lg'
+                  border='1px solid #A0AEC0'
+                  boxShadow='dark-lg'
+                  decoding='async'
+                  loading='lazy'
+                  filter='blur(20px)'
+                  transition='filter 0.6s ease-in-out'
+                  onLoad={handleImageLoad}
+                  tabIndex={0}
+                  onKeyPress={handleKeyPress}
+                  _hover={{
+                    borderColor: 'transparent',
+                    outline: `4px solid ${outlineCard}`,
+                  }}
+                  _focus={{ outline: `4px solid ${outlineCard}` }}
+                />
+              </LazyLoad>
+            </Box>
             <Flex direction='column' alignItems='center'>
               <Box
                 w='240px'

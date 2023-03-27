@@ -18,7 +18,7 @@ export default function Search() {
   return (
     <>
       <MainHead title={`Libros de ${param} | XBuniverse`} />
-      <ContainerTitle title={`Libros de ${param}`} />
+      <ContainerTitle title={`Libros de ${param}`} showSearch={true} />
       <Suspense
         fallback={
           <Box p='10' textAlign='center'>
@@ -33,6 +33,7 @@ export default function Search() {
         justify='center'
         py='5'
         m='auto'
+        mt='10'
         px='1'
         flexWrap='wrap'
         color={colorCard}

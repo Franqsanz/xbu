@@ -1,11 +1,9 @@
 import React from 'react';
 import { Box, Flex } from '@chakra-ui/react';
-import Filter from './forms/Filter';
 
 export default function ResultLength({ data }: any) {
   return (
     <Box w='78%' m='auto' mt='7'>
-      <Filter />
       <Flex
         fontSize='lg'
         textAlign={{ base: 'center', lg: 'left' }}

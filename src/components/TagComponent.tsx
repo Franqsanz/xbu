@@ -1,10 +1,17 @@
 import React from 'react';
-import { Tag, TagLabel, TagLeftIcon, Box } from '@chakra-ui/react';
+import {
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  Box,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { BsTag } from 'react-icons/bs';
 
 import { PropsTag } from './types';
 
 export function TagComponent({ name, m, count }: PropsTag) {
+  const outlineCard = useColorModeValue('black', 'white');
   let countUI;
 
   if (count === undefined) {
@@ -38,6 +45,9 @@ export function TagComponent({ name, m, count }: PropsTag) {
       border='1px'
       variant='subtle'
       m={m}
+      tabIndex={0}
+      outline='none'
+      _focus={{ outline: `2px solid ${outlineCard}` }}
     >
       <TagLeftIcon boxSize='16px' as={BsTag} />
       <TagLabel

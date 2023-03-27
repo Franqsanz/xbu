@@ -24,6 +24,7 @@ interface CardProps {
 
 interface TitleProps {
   title: string | undefined;
+  showSearch: boolean;
 }
 
 interface HeadProps {
@@ -65,8 +66,8 @@ type ModalCropperProps = ModalCropperType & {
 };
 
 interface ModalProps {
-  shareUrl: string;
-  data: string;
+  shareUrl?: string;
+  data?: string;
   isOpen: boolean;
   onClose: () => void;
 }
