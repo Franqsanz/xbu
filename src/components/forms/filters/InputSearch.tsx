@@ -27,7 +27,7 @@ import { useAllBooks } from '../../../hooks/querys';
 export function InputSearch() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const colorIcons = useColorModeValue('gray.700', 'gray.300');
-  const bgInput = useColorModeValue('gray.100', 'gray.800');
+  const bgInput = useColorModeValue('gray.50', 'gray.800');
   const colorInput = useColorModeValue('gray.900', 'gray.100');
   const focusInput = useColorModeValue('white', 'gray.900');
   const hoverButton = useColorModeValue('gray.300', 'black');
@@ -117,9 +117,11 @@ export function InputSearch() {
               <Link
                 as={NavLink}
                 to={`/book/${book.id}`}
+                tabIndex={-1}
                 _hover={{ outline: 'none' }}
               >
                 <ListItem
+                  tabIndex={0}
                   textAlign='left'
                   p='3'
                   mb='3'
@@ -127,7 +129,9 @@ export function InputSearch() {
                   bg={colorListBg}
                   _hover={{ bg: `${colorListBgHover}` }}
                 >
-                  <Box fontSize='lg'>{book.title}</Box>
+                  <Box fontSize={{ base: 'sm', sm: 'lg' }} mb='1'>
+                    {book.title}
+                  </Box>
                   <Box fontSize='xs'>{book.author}</Box>
                 </ListItem>
               </Link>
