@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Box, useColorModeValue } from '@chakra-ui/react';
 
-import { SearchBooks } from '../components/forms/SearchBooks';
+import { SearchBooks } from './forms/filters/SearchBooks';
 import { TitleProps } from './types';
 
 export function ContainerTitle({ title, showSearch }: TitleProps) {

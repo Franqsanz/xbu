@@ -14,50 +14,49 @@ import {
 import { CgOptions } from 'react-icons/cg';
 import { FiSearch } from 'react-icons/fi';
 
-import { ModalFilter } from '../../components/ModalFilter';
+import { ModalFilter } from './ModalFilter';
 
 export function SearchBooks() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const colorIcons = useColorModeValue('gray.700', 'gray.300');
+  const bgInput = useColorModeValue('gray.100', 'gray.800');
+  const colorInput = useColorModeValue('gray.900', 'gray.100');
+  const focusInput = useColorModeValue('white', 'gray.900');
+  const hoverButton = useColorModeValue('gray.300', 'black');
 
   return (
     <>
       <FormControl>
-        <InputGroup w='80%' size='lg' m='auto' mt='10'>
+        <InputGroup w='80%' size='lg' m='auto' mt={{ base: 5, md: 10 }}>
           <InputLeftElement w='3rem' p='2'>
-            <Icon
-              as={FiSearch}
-              boxSize='20px'
-              color={useColorModeValue('gray.700', 'gray.300')}
-            />
+            <Icon as={FiSearch} boxSize='20px' color={colorIcons} />
           </InputLeftElement>
           <Input
             type='text'
-            bg={useColorModeValue('gray.100', 'gray.800')}
+            fontSize='md'
+            bg={bgInput}
             border='1px solid black'
-            color={useColorModeValue('gray.900', 'gray.100')}
+            color={colorInput}
             placeholder='Búscar por titulo'
+            _focus={{ bg: `${focusInput}` }}
             _hover={{ outline: 'none' }}
           />
-          <InputRightElement w='4.5rem' p='2'>
+          <InputRightElement justifyContent='flex-end' w='4.5rem' p='2'>
             <Button
+              px='0'
               onClick={onOpen}
-              aria-label='Opciones de búsqueda'
               bg='none'
               title='Opciones de búsqueda'
               _hover={{
-                bg: `${useColorModeValue('gray.300', 'black')}`,
+                bg: `${hoverButton}`,
               }}
             >
-              <Icon
-                as={CgOptions}
-                boxSize='20px'
-                color={useColorModeValue('gray.700', 'gray.300')}
-              />
+              <Icon as={CgOptions} boxSize='20px' color={colorIcons} />
             </Button>
-            <ModalFilter isOpen={isOpen} onClose={onClose} />
           </InputRightElement>
         </InputGroup>
       </FormControl>
+      <ModalFilter isOpen={isOpen} onClose={onClose} />
     </>
   );
 }

@@ -9,10 +9,11 @@ import {
 } from '@chakra-ui/react';
 import { FiSearch } from 'react-icons/fi';
 
-import { useAllBooks } from '../../hooks/querys';
+import { useAllBooks } from '../../../hooks/querys';
 // import { CardProps } from '../../components/types';
 
 export default function Filter() {
+  const bgSelect = useColorModeValue('gray.100', 'gray.800');
   const [query, setQuery] = useState('');
   const [value, setValue] = useState('');
   const [values, setValues] = useState<string[]>([]);
@@ -65,7 +66,7 @@ export default function Filter() {
           <FormControl display='flex' alignItems='center' isRequired>
             <Select
               size='lg'
-              bg={useColorModeValue('gray.100', 'gray.800')}
+              bg={bgSelect}
               onChange={handleChange}
               placeholder='Filtrar por:'
               _focus={{ bg: 'transparent' }}
@@ -78,10 +79,11 @@ export default function Filter() {
           <FormControl display='flex' alignItems='center' isRequired>
             <Select
               size='lg'
-              bg={useColorModeValue('gray.100', 'gray.800')}
+              bg={bgSelect}
               value={value}
               onChange={handleValueChange}
               placeholder='Seleccione una opción'
+              isDisabled={!query}
               _focus={{ bg: 'transparent' }}
             >
               {values.map((value) => (
