@@ -137,7 +137,7 @@ export function Home() {
           <Heading
             mb='10'
             mt={{ base: 14, md: 0 }}
-            fontSize='4xl'
+            fontSize={{ base: '3xl', sm: '4xl' }}
             fontFamily='Poppins, sans-serif'
           >
             ¿Qué es XBuniverse?
@@ -170,7 +170,7 @@ export function Home() {
           <Heading
             mb='10'
             mt={{ base: 10, md: 0 }}
-            fontSize='4xl'
+            fontSize={{ base: '3xl', sm: '4xl' }}
             fontFamily='Poppins, sans-serif'
           >
             Explora cientos de libros

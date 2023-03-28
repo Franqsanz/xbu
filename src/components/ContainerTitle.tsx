@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Box, useColorModeValue } from '@chakra-ui/react';
 
-import { SearchBooks } from './forms/filters/SearchBooks';
+import { InputSearch } from './forms/filters/InputSearch';
 import { TitleProps } from './types';
 
 export function ContainerTitle({ title, showSearch }: TitleProps) {
@@ -12,7 +12,7 @@ export function ContainerTitle({ title, showSearch }: TitleProps) {
     <Container maxW='full' p='0'>
       <Box py={{ base: 16, md: 24 }} bg={bgContainer}>
         <Box
-          maxW='90%'
+          maxW='95%'
           w='3xl'
           m='auto'
           textAlign='center'
@@ -21,7 +21,7 @@ export function ContainerTitle({ title, showSearch }: TitleProps) {
           color={colorTitle}
         >
           {title}
-          {showSearch && <SearchBooks />}
+          {showSearch && <InputSearch />}
         </Box>
       </Box>
     </Container>
