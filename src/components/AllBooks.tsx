@@ -7,6 +7,7 @@ import {
   AlertIcon,
   AlertTitle,
   Box,
+  SimpleGrid,
 } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
 
@@ -53,14 +54,14 @@ export function AllBooks() {
 
   return (
     <>
-      <Flex
-        w='full'
-        justify='center'
-        py='5'
+      <SimpleGrid
+        maxW='full'
+        w='8xl'
+        columns={{ base: 2, md: 3, lg: 4, xl: 5 }}
+        justifyItems='center'
         m='auto'
-        mt='20'
-        px='1'
-        flexWrap='wrap'
+        mt={{ base: '10', sm: '20' }}
+        px={{ base: 5, md: 10 }}
         color={colorCard}
       >
         {data?.pages.map((page, index) => (
@@ -90,7 +91,7 @@ export function AllBooks() {
             )}
           </React.Fragment>
         ))}
-      </Flex>
+      </SimpleGrid>
       <Box ref={ref}>
         {isFetchingNextPage ? (
           <Box p='10' textAlign='center'>

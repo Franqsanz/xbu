@@ -28,30 +28,40 @@ export function Card({ id, title, image, author, category }: CardProps) {
 
   return (
     <>
-      <LinkBox w='300px' m='2' rounded='lg' my='5' pb='4'>
+      <LinkBox mx='1' my='5' pb='4'>
         <LinkOverlay
           as={NavLink}
           to={`/book/${id}`}
           tabIndex={-1}
           _hover={{ outline: 'none' }}
         >
-          <Flex direction='column' position='relative'>
-            <Box p='4' ml='4' position='absolute' top='-8' left='-4'>
-              <Link
-                as={NavLink}
-                to={`/books/search/category/${category}`}
-                outline='none'
-                tabIndex={-1}
-                _hover={{ outline: 'none' }}
+          <Flex direction='column'>
+            <Flex
+              w={{ base: '100px', sm: '150px', md: '200px' }}
+              m='auto'
+              mb='7'
+              direction='column'
+              position='relative'
+            >
+              <Box
+                display={{ base: 'none', md: 'block' }}
+                position='absolute'
+                top='-2'
+                left='-2'
               >
-                <TagComponent name={category} />
-              </Link>
-            </Box>
-            <Box m='auto' mb='7'>
-              <LazyLoad width={234} height={360} offset={0} threshold={0.99}>
+                <Link
+                  as={NavLink}
+                  to={`/books/search/category/${category}`}
+                  outline='none'
+                  tabIndex={-1}
+                  _hover={{ outline: 'none' }}
+                >
+                  <TagComponent name={category} />
+                </Link>
+              </Box>
+              <LazyLoad width='auto' height='auto' offset={0} threshold={0.99}>
                 <Image
-                  w='234px'
-                  h='360px'
+                  h={{ base: 'auto', md: '300px' }}
                   src={image?.url}
                   alt={`Imagen de "${title}"`}
                   rounded='lg'
@@ -71,15 +81,14 @@ export function Card({ id, title, image, author, category }: CardProps) {
                   _focus={{ outline: `4px solid ${outlineCard}` }}
                 />
               </LazyLoad>
-            </Box>
-            <Flex direction='column' alignItems='center'>
+            </Flex>
+            <Flex direction='column' alignItems='center' textAlign='center'>
               <Box
-                w='240px'
-                fontSize='md'
-                lineHeight='8'
+                w='full'
+                maxW='240px'
+                fontSize={{ base: 'xs', sm: 'md' }}
                 fontWeight='400'
                 mx='1'
-                textAlign='center'
                 mb='2'
                 textTransform='uppercase'
               >
@@ -87,7 +96,7 @@ export function Card({ id, title, image, author, category }: CardProps) {
               </Box>
               <Box
                 px='7'
-                fontSize='xs'
+                fontSize={{ base: '0.55rem', sm: 'xs' }}
                 textTransform='uppercase'
                 color={colorAuthorCard}
               >

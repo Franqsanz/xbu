@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Flex, Spinner, useColorModeValue } from '@chakra-ui/react';
+import { Box, SimpleGrid, Spinner, useColorModeValue } from '@chakra-ui/react';
 
 import { Card } from '../components/card/Card';
 import { CardProps } from '../components/types';
@@ -28,14 +28,14 @@ export default function Search() {
       >
         <ResultLength data={data} />
       </Suspense>
-      <Flex
-        w='full'
-        justify='center'
-        py='5'
+      <SimpleGrid
+        maxW='full'
+        w='8xl'
+        columns={{ base: 2, md: 3, lg: 4, xl: 5 }}
+        justifyItems='center'
         m='auto'
-        mt='10'
-        px='1'
-        flexWrap='wrap'
+        mt={{ base: '10', sm: '20' }}
+        px={{ base: 5, md: 10 }}
         color={colorCard}
       >
         {data.map(
@@ -61,7 +61,7 @@ export default function Search() {
             </React.Fragment>
           ),
         )}
-      </Flex>
+      </SimpleGrid>
     </>
   );
 }
