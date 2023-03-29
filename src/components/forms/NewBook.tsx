@@ -20,7 +20,7 @@ import {
 import 'cropperjs/dist/cropper.css';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 
-import { categoryLinks } from '../links';
+import { categories } from '../links';
 import { Book } from '../types';
 import { useMutatePost } from '../../hooks/querys';
 import { ModalCropper } from '../forms/ModalCropper';
@@ -55,6 +55,9 @@ export function FormNewBook() {
   }
 
   const disabled = !allFieldsBook(books);
+
+  const category = categories.map((category) => category.name);
+  const categoryLinks = Array.from(category).sort();
 
   function handleChange(
     e: React.ChangeEvent<
@@ -395,7 +398,7 @@ export function FormNewBook() {
                   placeholder='Seleccione una categoria'
                   _focus={{ bg: 'transparent' }}
                 >
-                  {categoryLinks.map(({ name }) => (
+                  {categoryLinks.map((name) => (
                     <option key={name}>{name}</option>
                   ))}
                 </Select>

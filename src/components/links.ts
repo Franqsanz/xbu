@@ -26,7 +26,7 @@ const accountLinks: Array<LinkProps> = [
   },
 ];
 
-const categoryLinks: Array<LinkProps> = [
+const categories: Array<LinkProps> = [
   {
     name: 'Ciencia Ficción',
   },
@@ -79,6 +79,12 @@ const categoryLinks: Array<LinkProps> = [
     name: 'Literatura',
   },
   {
+    name: 'Literatura Infantil',
+  },
+  {
+    name: 'Deportes',
+  },
+  {
     name: 'Novela Histórica',
   },
   {
@@ -92,4 +98,4 @@ const categoryLinks: Array<LinkProps> = [
   },
 ];
 
-export { navLink, accountLinks, categoryLinks };
+export { navLink, accountLinks, categories };

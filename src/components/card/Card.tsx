@@ -9,6 +9,7 @@ import {
   Image,
   LinkBox,
   LinkOverlay,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 
 import { CardProps } from '../types';
@@ -19,6 +20,11 @@ export function Card({ id, title, image, author, category }: CardProps) {
   const navigate = useNavigate();
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
   const outlineCard = useColorModeValue('black', 'white');
+  const height = useBreakpointValue({
+    base: '183px',
+    sm: '275px',
+    md: '300px',
+  });
 
   function handleKeyPress(e: React.KeyboardEvent) {
     if (e.key === 'Enter') {
@@ -37,7 +43,7 @@ export function Card({ id, title, image, author, category }: CardProps) {
         >
           <Flex direction='column'>
             <Flex
-              w={{ base: '100px', sm: '150px', md: '200px' }}
+              w={{ base: '120px', sm: '180px', md: '200px' }}
               m='auto'
               mb='7'
               direction='column'
@@ -59,7 +65,7 @@ export function Card({ id, title, image, author, category }: CardProps) {
                   <TagComponent name={category} />
                 </Link>
               </Box>
-              <LazyLoad width='auto' height='auto' offset={0} threshold={0.99}>
+              <LazyLoad height={height} offset={0} threshold={0.99}>
                 <Image
                   h={{ base: 'auto', md: '300px' }}
                   src={image?.url}

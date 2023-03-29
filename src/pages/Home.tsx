@@ -14,6 +14,7 @@ import {
   Link,
   Icon,
   Stack,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 
 import { MainHead } from '../components/Head';
@@ -26,6 +27,11 @@ export function Home() {
   const { colorMode } = useColorMode();
   const bgButton = useColorModeValue('#2de000', '#24b300');
   const bContainer = useColorModeValue('gray.50', 'none');
+  const height = useBreakpointValue({
+    base: '163px',
+    sm: '311px',
+    md: '268px',
+  });
 
   return (
     <>
@@ -130,7 +136,7 @@ export function Home() {
         px='10'
         direction={{ base: 'column', md: 'row' }}
       >
-        <LazyLoad offset={0}>
+        <LazyLoad height={height} offset={0}>
           <Image src={iconBook} w='500px' alt='' decoding='async' />
         </LazyLoad>
         <Stack direction='column' ml={{ base: 0, md: 3 }} spacing='4'>

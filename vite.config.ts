@@ -1,6 +1,5 @@
 /// <reference types="vitest" />
 /// <reference types="vite/client" />
-/// <reference types="vite-plugin-svgr/client" />
 
 import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
