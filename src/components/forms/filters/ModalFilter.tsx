@@ -25,7 +25,7 @@ export function ModalFilter({ isOpen, onClose }: ModalProps) {
           <ModalHeader>Opciones de Búsqueda</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Filter />
+            <Filter onClose={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>

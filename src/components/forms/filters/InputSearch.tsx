@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   Box,
@@ -10,7 +10,6 @@ import {
   Button,
   FormControl,
   Icon,
-  useDisclosure,
   Container,
   List,
   ListItem,
@@ -20,12 +19,14 @@ import {
 import { CgOptions } from 'react-icons/cg';
 import { FiSearch } from 'react-icons/fi';
 
-import { ModalFilter } from './ModalFilter';
 import { Book } from '../../types';
 import { useAllBooks } from '../../../hooks/querys';
 
-export function InputSearch() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+interface Props {
+  onOpen: () => void;
+}
+
+export function InputSearch({ onOpen }: Props) {
   const colorIcons = useColorModeValue('gray.700', 'gray.300');
   const bgInput = useColorModeValue('gray.50', 'gray.800');
   const colorInput = useColorModeValue('gray.900', 'gray.100');
@@ -140,7 +141,6 @@ export function InputSearch() {
         ))}
         {alertMessage}
       </Container>
-      <ModalFilter isOpen={isOpen} onClose={onClose} />
     </>
   );
 }

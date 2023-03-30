@@ -12,7 +12,11 @@ import { FiSearch } from 'react-icons/fi';
 import { useAllBooks } from '../../../hooks/querys';
 // import { CardProps } from '../../components/types';
 
-export default function Filter() {
+interface Props {
+  onClose: () => void;
+}
+
+export default function Filter({ onClose }: Props) {
   const bgSelect = useColorModeValue('gray.100', 'gray.800');
   const [query, setQuery] = useState('');
   const [value, setValue] = useState('');
@@ -51,6 +55,7 @@ export default function Filter() {
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     navigate(`/books/search/${query}/${value}`);
+    onClose();
   }
 
   return (
