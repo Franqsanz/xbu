@@ -108,6 +108,7 @@ export default function Filter({ onClose }: Props) {
             fontWeight='light'
             border='1px'
             rounded='lg'
+            isDisabled={!value}
             _hover={{ outline: 'none', bg: '#28c900' }}
           >
             <Flex align='center' justify='center'>

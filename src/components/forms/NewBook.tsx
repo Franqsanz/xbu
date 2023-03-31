@@ -161,8 +161,10 @@ export function FormNewBook() {
   if (isSuccess) {
     alertMessage = (
       <Alert status='success' variant='solid' rounded='xl'>
-        <AlertIcon />
-        <AlertTitle fontWeight='normal'>¡Publicación exitosa!</AlertTitle>
+        <AlertIcon color='black' />
+        <AlertTitle fontWeight='normal' color='black'>
+          ¡Publicación exitosa!
+        </AlertTitle>
       </Alert>
     );
   } else if (error) {
