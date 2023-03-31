@@ -5,9 +5,9 @@ import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import compression from 'vite-plugin-compression';
 import webfontDownload from 'vite-plugin-webfont-dl';
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { createHtmlPlugin } from 'vite-plugin-html';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     splitVendorChunkPlugin(),
@@ -16,7 +16,49 @@ export default defineConfig({
     createHtmlPlugin({ minify: true }),
     compression({
       algorithm: 'brotliCompress',
-      ext: '.js,.css,.html,.svg',
+      ext: '.br',
+    }),
+    ViteImageOptimizer({
+      test: /\.(jpg|png|webp|svg)$/i,
+      exclude: undefined,
+      include: undefined,
+      includePublic: true,
+      logStats: true,
+      svg: {
+        multipass: true,
+        plugins: [
+          {
+            name: 'preset-default',
+            params: {
+              overrides: {
+                cleanupNumericValues: false,
+                removeViewBox: false,
+              },
+              cleanupIDs: {
+                minify: false,
+                remove: false,
+              },
+              convertPathData: false,
+            },
+          },
+          'sortAttrs',
+          {
+            name: 'addAttributesToSVGElement',
+            params: {
+              attributes: [{ xmlns: 'http://www.w3.org/2000/svg' }],
+            },
+          },
+        ],
+      },
+      png: {
+        quality: 100,
+      },
+      jpg: {
+        quality: 100,
+      },
+      webp: {
+        lossless: true,
+      },
     }),
   ],
   server: {
