@@ -31,7 +31,14 @@ export default function CategoriesComp() {
           tabIndex={-1}
           _hover={{ outline: 'none' }}
         >
-          <TagComponent name={category} count={countCategory(category)} m='1' />
+          <TagComponent
+            name={category}
+            size='lg'
+            tabIndex={0}
+            isFocused={true}
+            count={countCategory(category)}
+            margin='1'
+          />
         </Link>
       ))}
     </>

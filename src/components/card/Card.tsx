@@ -5,7 +5,6 @@ import {
   Flex,
   Box,
   useColorModeValue,
-  Link,
   Image,
   LinkBox,
   LinkOverlay,
@@ -54,16 +53,14 @@ export function Card({ id, title, image, author, category }: CardProps) {
                 position='absolute'
                 top='-2'
                 left='-2'
+                zIndex='1'
               >
-                <Link
-                  as={NavLink}
-                  to={`/books/search/category/${category}`}
-                  outline='none'
+                <TagComponent
+                  name={category}
+                  size='md'
+                  isFocused={false}
                   tabIndex={-1}
-                  _hover={{ outline: 'none' }}
-                >
-                  <TagComponent name={category} />
-                </Link>
+                />
               </Box>
               <LazyLoad height={height} offset={0} threshold={0.99}>
                 <Image

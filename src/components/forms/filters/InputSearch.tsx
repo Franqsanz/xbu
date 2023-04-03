@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   Box,
@@ -112,33 +112,35 @@ export function InputSearch({ onOpen }: Props) {
         color={colorContainer}
         fontWeight='500'
       >
-        {filteredBooks.map((book) => (
-          <>
-            <List fontSize='md'>
-              <Link
-                as={NavLink}
-                to={`/book/${book.id}`}
-                tabIndex={-1}
-                _hover={{ outline: 'none' }}
+        <List fontSize='md'>
+          {filteredBooks.map((book) => (
+            <>
+              <ListItem
+                key={book.id}
+                tabIndex={0}
+                textAlign='left'
+                mb='3'
+                rounded='lg'
+                bg={colorListBg}
+                _hover={{ bg: `${colorListBgHover}` }}
               >
-                <ListItem
-                  tabIndex={0}
-                  textAlign='left'
+                <Link
+                  as={NavLink}
+                  to={`/book/${book.id}`}
+                  display='block'
                   p='3'
-                  mb='3'
-                  rounded='lg'
-                  bg={colorListBg}
-                  _hover={{ bg: `${colorListBgHover}` }}
+                  tabIndex={-1}
+                  _hover={{ outline: 'none' }}
                 >
                   <Box fontSize={{ base: 'sm', sm: 'lg' }} mb='1'>
                     {book.title}
                   </Box>
                   <Box fontSize='xs'>{book.author}</Box>
-                </ListItem>
-              </Link>
-            </List>
-          </>
-        ))}
+                </Link>
+              </ListItem>
+            </>
+          ))}
+        </List>
         {alertMessage}
       </Container>
     </>

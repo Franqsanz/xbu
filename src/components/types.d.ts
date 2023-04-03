@@ -35,8 +35,11 @@ interface HeadProps {
 
 interface PropsTag {
   name: string | any;
+  size: string;
   count?: number;
-  m?: string;
+  margin?: string;
+  isFocused?: boolean;
+  tabIndex?: number;
 }
 
 interface Book {

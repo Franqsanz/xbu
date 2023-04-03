@@ -10,7 +10,14 @@ import { BsTag } from 'react-icons/bs';
 
 import { PropsTag } from './types';
 
-export function TagComponent({ name, m, count }: PropsTag) {
+export function TagComponent({
+  name,
+  size,
+  margin,
+  count,
+  isFocused,
+  tabIndex,
+}: PropsTag) {
   const outlineCard = useColorModeValue('black', 'white');
   let countUI;
 
@@ -41,13 +48,13 @@ export function TagComponent({ name, m, count }: PropsTag) {
     <Tag
       bg='#abf299'
       color='#0d4300'
-      size='lg'
+      size={size}
       border='1px'
       variant='subtle'
-      m={m}
-      tabIndex={0}
+      m={margin}
+      tabIndex={tabIndex}
       outline='none'
-      _focus={{ outline: `2px solid ${outlineCard}` }}
+      _focus={isFocused === true ? { outline: `2px solid ${outlineCard}` } : {}}
     >
       <TagLeftIcon boxSize='16px' as={BsTag} />
       <TagLabel

@@ -30,8 +30,8 @@ const Cropper = lazy(() => import('react-cropper'));
 export function FormNewBook() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { mutate, isLoading, isSuccess, error } = useMutatePost();
-  const [cropData, setCropData] = useState('');
-  const [crop, setCrop] = useState<any>();
+  const [cropData, setCropData] = useState<string | null>(null);
+  const [crop, setCrop] = useState<any>('');
   const [books, setBooks] = useState<Book>({
     title: '',
     author: '',
@@ -97,7 +97,7 @@ export function FormNewBook() {
       setCropData(base64Image);
     };
     onOpen();
-    setCropData('');
+    // setCropData(null);
   }
 
   function getCropData() {
@@ -303,7 +303,7 @@ export function FormNewBook() {
                         zoomable={true}
                         aspectRatio={234 / 360}
                         preview='.img-preview'
-                        src={cropData}
+                        src={cropData || undefined}
                         viewMode={2}
                         minCropBoxHeight={234}
                         minCropBoxWidth={360}
