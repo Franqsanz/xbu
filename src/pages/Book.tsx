@@ -113,7 +113,7 @@ export default function Book() {
           m='1rem auto'
         >
           <Box>
-            <TagComponent name={data.category} />
+            <TagComponent name={data.category} size='lg' tabIndex={-1} />
           </Box>
           <Box
             as='h1'

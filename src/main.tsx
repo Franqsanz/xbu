@@ -28,6 +28,7 @@ const Explore = lazy(() => import('./pages/Explore'));
 const Book = lazy(() => import('./pages/Book'));
 const Search = lazy(() => import('./pages/Search'));
 const NewBook = lazy(() => import('./pages/NewBook'));
+const Profile = lazy(() => import('./pages/profile/Profile'));
 
 const queryClient = new QueryClient();
 
@@ -38,56 +39,57 @@ Sentry.init({
 });
 
 const html = (
-  // <React.StrictMode>
-  <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={theme}>
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <BrowserRouter>
-          <Nav />
-          <ScrollToTop>
-            <Suspense
-              fallback={
-                <Stack spacing='4'>
-                  <Skeleton py={{ base: 20, md: 36 }} />
-                  <Skeleton h='100vh' />
-                </Stack>
-              }
-            >
-              <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='register' element={<Register />} />
-                <Route path='login' element={<Login />} />
-                <Route path='new-post' element={<NewBook />} />
-                <Route path='explore' element={<Explore />} />
-                <Route
-                  path='/books/search/:query/:param'
-                  element={
-                    <CatchError>
-                      <Search />
-                    </CatchError>
-                  }
-                />
-                <Route
-                  path='book/:id'
-                  element={
-                    <CatchError>
-                      <Book />
-                    </CatchError>
-                  }
-                />
-                <Route path='*' element={<ErrorPage />} />
-              </Routes>
-            </Suspense>
-          </ScrollToTop>
-          <Footer />
-        </BrowserRouter>
-      </ChakraProvider>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
-  </HelmetProvider>
+  <React.StrictMode>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={theme}>
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+          <BrowserRouter>
+            <Nav />
+            <ScrollToTop>
+              <Suspense
+                fallback={
+                  <Stack spacing='4'>
+                    <Skeleton py={{ base: 20, md: 36 }} />
+                    <Skeleton h='100vh' />
+                  </Stack>
+                }
+              >
+                <Routes>
+                  <Route path='/' element={<Home />} />
+                  <Route path='register' element={<Register />} />
+                  <Route path='login' element={<Login />} />
+                  <Route path='new-post' element={<NewBook />} />
+                  <Route path='explore' element={<Explore />} />
+                  <Route path=':user' element={<Profile />} />
+                  <Route
+                    path='/books/search/:query/:param'
+                    element={
+                      <CatchError>
+                        <Search />
+                      </CatchError>
+                    }
+                  />
+                  <Route
+                    path='book/:id'
+                    element={
+                      <CatchError>
+                        <Book />
+                      </CatchError>
+                    }
+                  />
+                  <Route path='*' element={<ErrorPage />} />
+                </Routes>
+              </Suspense>
+            </ScrollToTop>
+            <Footer />
+          </BrowserRouter>
+        </ChakraProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </HelmetProvider>
+  </React.StrictMode>
 );
-// </React.StrictMode>
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   html,
 );
