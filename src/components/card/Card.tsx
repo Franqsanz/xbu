@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 
 import { CardProps } from '../types';
-import { TagComponent } from '../TagComponent';
+import { MyTag } from '../MyTag';
 import { handleImageLoad } from '../../utils/utils';
 
 export function Card({ id, title, image, author, category }: CardProps) {
@@ -55,7 +55,7 @@ export function Card({ id, title, image, author, category }: CardProps) {
                 left='-2'
                 zIndex='1'
               >
-                <TagComponent
+                <MyTag
                   name={category}
                   size='md'
                   isFocused={false}

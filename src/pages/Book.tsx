@@ -18,9 +18,9 @@ import LazyLoad from 'react-lazy-load';
 import { useBook } from '../hooks/querys';
 import { handleImageLoad } from '../utils/utils';
 import { MainHead } from '../components/Head';
-import { TagComponent } from '../components/TagComponent';
+import { MyTag } from '../components/MyTag';
 import { ModalShare } from '../components/ModalShare';
-const CategoriesComp = lazy(() => import('../components/CategoriesComp'));
+const Categories = lazy(() => import('../components/Categories'));
 const RelatedPost = lazy(() => import('../components/RelatedPost'));
 
 export default function Book() {
@@ -113,7 +113,7 @@ export default function Book() {
           m='1rem auto'
         >
           <Box>
-            <TagComponent name={data.category} size='lg' tabIndex={-1} />
+            <MyTag name={data.category} size='lg' tabIndex={-1} />
           </Box>
           <Box
             as='h1'
@@ -287,7 +287,7 @@ export default function Book() {
                 }
               >
                 <Flex direction='column' flexWrap='wrap'>
-                  <CategoriesComp />
+                  <Categories />
                 </Flex>
               </Suspense>
             </Box>

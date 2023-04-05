@@ -2,22 +2,20 @@ import React, { useEffect } from 'react';
 import {
   Flex,
   Spinner,
-  useColorModeValue,
   Alert,
   AlertIcon,
   AlertTitle,
   Box,
-  SimpleGrid,
 } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
 
 import { CardProps } from './types';
 import { useBooksPaginate } from '../hooks/querys';
+import { MySimpleGrid } from './MySimpleGrid';
 import { Card } from './card/Card';
 
 export function AllBooks() {
   const { ref, inView } = useInView();
-  const colorCard = useColorModeValue('gray.900', 'gray.100');
   const { data, isLoading, error, fetchNextPage, isFetchingNextPage } =
     useBooksPaginate();
 
@@ -54,16 +52,7 @@ export function AllBooks() {
 
   return (
     <>
-      <SimpleGrid
-        maxW='full'
-        w='8xl'
-        columns={{ base: 2, md: 3, lg: 4, xl: 5 }}
-        justifyItems='center'
-        m='auto'
-        mt={{ base: '10', sm: '20' }}
-        px={{ base: 5, md: 10 }}
-        color={colorCard}
-      >
+      <MySimpleGrid>
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
             {page.results.map(
@@ -91,7 +80,7 @@ export function AllBooks() {
             )}
           </React.Fragment>
         ))}
-      </SimpleGrid>
+      </MySimpleGrid>
       <Box ref={ref}>
         {isFetchingNextPage ? (
           <Box p='10' textAlign='center'>

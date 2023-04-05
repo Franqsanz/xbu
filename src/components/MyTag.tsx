@@ -10,7 +10,7 @@ import { BsTag } from 'react-icons/bs';
 
 import { PropsTag } from './types';
 
-export function TagComponent({
+export function MyTag({
   name,
   size,
   margin,

@@ -2,11 +2,11 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Link } from '@chakra-ui/react';
 
-import { TagComponent } from '../components/TagComponent';
+import { MyTag } from '../components/MyTag';
 import { useAllBooks } from '../hooks/querys';
 import { CardProps } from '../components/types';
 
-export default function CategoriesComp() {
+export default function Categories() {
   const { data } = useAllBooks();
 
   let categories = new Set();
@@ -31,7 +31,7 @@ export default function CategoriesComp() {
           tabIndex={-1}
           _hover={{ outline: 'none' }}
         >
-          <TagComponent
+          <MyTag
             name={category}
             size='lg'
             tabIndex={0}

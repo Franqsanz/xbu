@@ -11,7 +11,7 @@ import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import { AllBooks } from '../components/AllBooks';
 import { ContainerTitle } from '../components/ContainerTitle';
 import { MainHead } from '../components/Head';
-const CategoriesComp = lazy(() => import('../components/CategoriesComp'));
+const Categories = lazy(() => import('../components/Categories'));
 
 export default function Explore() {
   const bgArrows = useColorModeValue('white', 'black');
@@ -73,7 +73,7 @@ export default function Explore() {
               </Box>
             }
           >
-            <CategoriesComp />
+            <Categories />
           </Suspense>
           <Box
             position='sticky'

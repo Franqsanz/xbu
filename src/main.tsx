@@ -19,8 +19,8 @@ import { Login } from './pages/Login';
 import { ErrorPage } from './pages/404';
 import { Nav } from './components/nav/Nav';
 import { Footer } from './components/Footer';
-import { CatchError } from './CatchError';
-import { ScrollToTop } from './ScrollToTop';
+import { CatchError } from './utils/CatchError';
+import { ScrollToTop } from './utils/ScrollToTop';
 
 import theme from '../theme';
 
