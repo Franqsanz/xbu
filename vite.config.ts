@@ -7,8 +7,6 @@ import compression from 'vite-plugin-compression';
 import webfontDownload from 'vite-plugin-webfont-dl';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { createHtmlPlugin } from 'vite-plugin-html';
-import { htmlPrerender } from 'vite-plugin-html-prerender';
-import path from 'path';
 
 export default defineConfig({
   plugins: [
@@ -60,17 +58,6 @@ export default defineConfig({
       },
       webp: {
         lossless: true,
-      },
-    }),
-    htmlPrerender({
-      staticDir: path.join(__dirname, 'dist'),
-      routes: ['/', '/explore', '/book', '/new-post'],
-      minify: {
-        collapseBooleanAttributes: true,
-        collapseWhitespace: true,
-        decodeEntities: true,
-        keepClosingSlash: true,
-        sortAttributes: true,
       },
     }),
   ],

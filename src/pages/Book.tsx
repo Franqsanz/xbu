@@ -76,7 +76,7 @@ export default function Book() {
       <MainHead
         title={`${data.title} | XBuniverse`}
         description={data.synopsis}
-        urlImage='https://xbu.netlify.app/ogImage.png'
+        urlImage={data.image.url}
       />
       <Flex
         w='full'
