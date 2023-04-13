@@ -9,7 +9,7 @@ import { MainHead } from '../components/Head';
 export function Register() {
   return (
     <>
-      <MainHead title='Crear cuenta' />
+      <MainHead title='Crear cuenta | XBuniverse' />
       <ContainerTitle title='Crear cuenta' showSearch={false} />
       <Flex justify='center' py={{ base: '10vh', md: '15vh' }}>
         <Stack direction='column' spacing='5'>
@@ -35,6 +35,9 @@ export function Register() {
             borderRadius='lg'
             p='7'
             fontSize='xl'
+            onClick={() =>
+              window.open('https://xb-api.vercel.app/auth/twitter', '_self')
+            }
           >
             Twitter
           </Button>
@@ -46,6 +49,9 @@ export function Register() {
             borderRadius='lg'
             p='7'
             fontSize='xl'
+            onClick={() =>
+              window.open('https://xb-api.vercel.app/auth/facebook', '_self')
+            }
           >
             Facebook
           </Button>

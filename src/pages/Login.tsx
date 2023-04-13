@@ -9,7 +9,7 @@ import { MainHead } from '../components/Head';
 export function Login() {
   return (
     <>
-      <MainHead title='Iniciar Sesión' />
+      <MainHead title='Iniciar Sesión | XBuniverse' />
       <ContainerTitle title='Iniciar Sesión' showSearch={false} />
       <Flex justify='center' py={{ base: '20vh', md: '15vh' }}>
         <Stack direction='column' spacing='5'>
@@ -46,6 +46,9 @@ export function Login() {
             borderRadius='lg'
             p='7'
             fontSize='xl'
+            onClick={() =>
+              window.open('http://localhost:9090/auth/facebook', '_self')
+            }
           >
             Facebook
           </Button>

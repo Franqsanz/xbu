@@ -30,7 +30,10 @@ export default function Explore() {
 
   return (
     <>
-      <MainHead title='Explorar' description='¡Explora cientos de libros!' />
+      <MainHead
+        title='Explorar | XBuniverse'
+        description='¡Explora cientos de libros!'
+      />
       <ContainerTitle title='Explorar' showSearch={true} />
       <Flex justify='center' align='center' mx='4'>
         <Button
