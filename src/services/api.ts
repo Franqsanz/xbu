@@ -44,6 +44,12 @@ async function getRelatedPost() {
   if (res.ok) return await res.json();
 }
 
+async function getAllCategories() {
+  const res = await fetch(`${API_URL}/categories`);
+
+  if (res.ok) return await res.json();
+}
+
 async function deleteBook(id: any) {
   const res = await fetch(`${API_URL}/${id}`, {
     method: 'DELETE',
@@ -61,6 +67,7 @@ export {
   getBooksPaginate,
   getBook,
   getBooksFilter,
+  getAllCategories,
   getRelatedPost,
   postBook,
   deleteBook,

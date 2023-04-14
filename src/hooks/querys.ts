@@ -2,6 +2,7 @@ import { useQuery, useMutation, useInfiniteQuery } from '@tanstack/react-query';
 
 import {
   getAllBooks,
+  getAllCategories,
   getBooksPaginate,
   getBook,
   getBooksFilter,
@@ -23,6 +24,10 @@ function useMutatePost() {
 
 function useAllBooks() {
   return useQuery([keys.all], () => getAllBooks());
+}
+
+function useAllCategories() {
+  return useQuery([keys.categories], () => getAllCategories());
 }
 
 function useBooksPaginate() {
@@ -67,6 +72,7 @@ function useBook(id: string | undefined) {
 
 export {
   useMutatePost,
+  useAllCategories,
   useAllBooks,
   useBooksPaginate,
   useBook,
