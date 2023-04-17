@@ -3,26 +3,15 @@ import { NavLink } from 'react-router-dom';
 import { Link } from '@chakra-ui/react';
 
 import { MyTag } from '../components/MyTag';
-import { useAllCategories } from '../hooks/querys';
+import { useAllFilterOptions } from '../hooks/querys';
 
 export default function Categories() {
-  const { data } = useAllCategories();
-
-  // let categories = new Set();
-
-  // data &&
-  //   data.results.map(({ category }: CardProps) => categories.add(category));
-  // const categoryLinks = Array.from(categories).sort();
-
-  // function countCategory(ctry: any) {
-  //   return data.results.filter(({ category }: CardProps) => category === ctry)
-  //     .length;
-  // }
+  const { data } = useAllFilterOptions();
 
   return (
     <>
       {data &&
-        data.map(({ _id, count }) => (
+        data[0].categories[0].map(({ _id, count }) => (
           <Link
             display='flex'
             key={_id}

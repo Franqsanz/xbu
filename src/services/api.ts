@@ -44,8 +44,8 @@ async function getRelatedPost() {
   if (res.ok) return await res.json();
 }
 
-async function getAllCategories() {
-  const res = await fetch(`${API_URL}/categories`);
+async function getAllFilterOptions() {
+  const res = await fetch(`${API_URL}/options`);
 
   if (res.ok) return await res.json();
 }
@@ -67,7 +67,7 @@ export {
   getBooksPaginate,
   getBook,
   getBooksFilter,
-  getAllCategories,
+  getAllFilterOptions,
   getRelatedPost,
   postBook,
   deleteBook,

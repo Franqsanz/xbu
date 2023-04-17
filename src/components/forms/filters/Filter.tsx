@@ -9,8 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { FiSearch } from 'react-icons/fi';
 
-import { useAllBooks } from '../../../hooks/querys';
-// import { CardProps } from '../../components/types';
+import { useAllFilterOptions } from '../../../hooks/querys';
 
 interface Props {
   onClose: () => void;
@@ -22,27 +21,28 @@ export default function Filter({ onClose }: Props) {
   const [value, setValue] = useState('');
   const [values, setValues] = useState<string[]>([]);
   const navigate = useNavigate();
-  const { data } = useAllBooks();
+  const { data } = useAllFilterOptions();
 
-  function createSet(data: any, key: string): Set<string> {
-    const set = new Set<string>();
-    data && data.results.map((item: any) => set.add(item[key]));
-    return set;
-  }
+  const categories = data[0].categories[0].map(({ _id, count }) => ({
+    value: _id,
+    total: count,
+  }));
 
-  function setToArray(set: Set<string>): string[] {
-    return Array.from(set).sort();
-  }
+  const years = data[0].years[0].map(({ _id, count }) => ({
+    value: _id,
+    total: count,
+  }));
 
-  const years = setToArray(createSet(data, 'year'));
-  const languages = setToArray(createSet(data, 'language'));
-  const categories = setToArray(createSet(data, 'category'));
+  const languages = data[0].languages[0].map(({ _id, count }) => ({
+    value: _id,
+    total: count,
+  }));
 
   useEffect(() => {
     if (query === 'year') setValues(years);
     if (query === 'language') setValues(languages);
     if (query === 'category') setValues(categories);
-  }, [query]);
+  }, [query, data]);
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setQuery(e.target.value);
@@ -91,9 +91,9 @@ export default function Filter({ onClose }: Props) {
               isDisabled={!query}
               _focus={{ bg: 'transparent' }}
             >
-              {values.map((value) => (
+              {values.map(({ value, total }) => (
                 <option key={value} value={value}>
-                  {value}
+                  {value} ({total})
                 </option>
               ))}
             </Select>
