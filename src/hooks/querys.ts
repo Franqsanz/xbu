@@ -27,7 +27,7 @@ function useAllBooks() {
 }
 
 function useAllFilterOptions() {
-  return useQuery([keys.categories], () => getAllFilterOptions());
+  return useQuery([keys.filtersOptions], () => getAllFilterOptions());
 }
 
 function useBooksPaginate() {

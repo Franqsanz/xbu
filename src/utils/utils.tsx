@@ -3,7 +3,7 @@ import React from 'react';
 const keys = {
   all: 'Books',
   one: 'BookOne',
-  categories: 'BookCategories',
+  filtersOptions: 'BookFiltersOptions',
   paginate: 'BookPaginate',
   filter: 'booksFilter',
   random: 'BooksRandom',
