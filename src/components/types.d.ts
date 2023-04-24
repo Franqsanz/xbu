@@ -5,6 +5,16 @@ interface LinkProps {
   href?: string;
 }
 
+interface BooksCategory {
+  value: string;
+  label: string;
+}
+
+interface BooksFormat {
+  value: string;
+  label: string;
+}
+
 interface CardProps {
   id?: string;
   title: string;
@@ -82,6 +92,8 @@ interface ReleatedBooksProps {
 
 export type {
   LinkProps,
+  BooksCategory,
+  BooksFormat,
   CardProps,
   TitleProps,
   HeadProps,

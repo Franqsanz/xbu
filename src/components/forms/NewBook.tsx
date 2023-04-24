@@ -7,7 +7,6 @@ import {
   Box,
   FormLabel,
   Textarea,
-  Select,
   Image,
   Alert,
   AlertIcon,
@@ -17,10 +16,11 @@ import {
   Icon,
   Skeleton,
 } from '@chakra-ui/react';
+import { Select } from 'chakra-react-select';
 import 'cropperjs/dist/cropper.css';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 
-import { categories } from '../links';
+import { categories, format } from '../links';
 import { Book } from '../types';
 import { useMutatePost } from '../../hooks/querys';
 import { ModalCropper } from '../forms/ModalCropper';
@@ -56,8 +56,11 @@ export function FormNewBook() {
 
   const disabled = !allFieldsBook(books);
 
-  const category = categories.map((category) => category.name);
-  const categoryLinks = Array.from(category).sort();
+  const sortedCategories = categories.sort((a, b) => {
+    if (a.label < b.label) return -1;
+    if (a.label > b.label) return 1;
+    return 0;
+  });
 
   function handleChange(
     e: React.ChangeEvent<
@@ -68,6 +71,14 @@ export function FormNewBook() {
       ...books,
       [e.target.name]: e.currentTarget.value,
     });
+  }
+
+  function handleCategoryChange(category) {
+    setBooks((books) => ({ ...books, category }));
+  }
+
+  function handleFormatChange(format) {
+    setBooks((books) => ({ ...books, format }));
   }
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -394,16 +405,13 @@ export function FormNewBook() {
                   id='categoria'
                   name='category'
                   size='lg'
-                  bg={useColorModeValue('gray.100', 'gray.800')}
-                  value={books.category}
-                  onChange={handleChange}
+                  variant='filled'
+                  onChange={(selectedOption) =>
+                    handleCategoryChange(selectedOption?.value)
+                  }
+                  options={sortedCategories}
                   placeholder='Seleccione una categoria'
-                  _focus={{ bg: 'transparent' }}
-                >
-                  {categoryLinks.map((name) => (
-                    <option key={name}>{name}</option>
-                  ))}
-                </Select>
+                />
               </FormControl>
               <FormControl isRequired mt={{ base: 5, md: 8 }}>
                 <FormLabel htmlFor='formato'>Formato</FormLabel>
@@ -411,15 +419,13 @@ export function FormNewBook() {
                   id='formato'
                   name='format'
                   size='lg'
-                  bg={useColorModeValue('gray.100', 'gray.800')}
-                  value={books.format}
-                  onChange={handleChange}
+                  variant='filled'
+                  options={format}
+                  onChange={(selectedOption) =>
+                    handleFormatChange(selectedOption?.value)
+                  }
                   placeholder='Seleccione un Formato'
-                  _focus={{ bg: 'transparent' }}
-                >
-                  <option value='Físico'>Físico</option>
-                  <option value='Electrónico'>Electrónico</option>
-                </Select>
+                />
               </FormControl>
               <Box mt={{ base: 10, md: 60 }}>
                 <Button

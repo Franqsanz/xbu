@@ -1,4 +1,4 @@
-import { LinkProps } from './types';
+import { LinkProps, BooksCategory, BooksFormat } from './types';
 
 const navLink: Array<LinkProps> = [
   {
@@ -26,76 +26,114 @@ const accountLinks: Array<LinkProps> = [
   },
 ];
 
-const categories: Array<LinkProps> = [
+const categories: Array<BooksCategory> = [
   {
-    name: 'Ciencia Ficción',
+    value: 'Ciencia Ficción',
+    label: 'Ciencia Ficción',
   },
   {
-    name: 'Terror',
+    value: 'Terror',
+    label: 'Terror',
   },
   {
-    name: 'Suspenso',
+    value: 'Suspenso',
+    label: 'Suspenso',
   },
   {
-    name: 'Economía',
+    value: 'Economía',
+    label: 'Economía',
   },
   {
-    name: 'Románticos',
+    value: 'Románticos',
+    label: 'Románticos',
   },
   {
-    name: 'Fantasía',
+    value: 'Fantasía',
+    label: 'Fantasía',
   },
   {
-    name: 'Poesía',
+    value: 'Poesía',
+    label: 'Poesía',
   },
   {
-    name: 'Politica',
+    value: 'Politica',
+    label: 'Politica',
   },
   {
-    name: 'Medicina',
+    value: 'Psicoterapia',
+    label: 'Psicoterapia',
   },
   {
-    name: 'Policiales',
+    value: 'Medicina',
+    label: 'Medicina',
   },
   {
-    name: 'Ciencias',
+    value: 'Policiales',
+    label: 'Policiales',
   },
   {
-    name: 'Programación',
+    value: 'Ciencias',
+    label: 'Ciencias',
   },
   {
-    name: 'Tecnología',
+    value: 'Programación',
+    label: 'Programación',
   },
   {
-    name: 'Física',
+    value: 'Tecnología',
+    label: 'Tecnología',
   },
   {
-    name: 'Ingenierías',
+    value: 'Física',
+    label: 'Física',
   },
   {
-    name: 'Cómics',
+    value: 'Ingenierías',
+    label: 'Ingenierías',
   },
   {
-    name: 'Literatura',
+    value: 'Cómics',
+    label: 'Cómics',
   },
   {
-    name: 'Literatura Infantil',
+    value: 'Literatura',
+    label: 'Literatura',
   },
   {
-    name: 'Deportes',
+    value: 'Literatura Infantil',
+    label: 'Literatura Infantil',
   },
   {
-    name: 'Novela Histórica',
+    value: 'Deportes',
+    label: 'Deportes',
   },
   {
-    name: 'Novela contemporánea',
+    value: 'Novela Histórica',
+    label: 'Novela Histórica',
   },
   {
-    name: 'Música',
+    value: 'Novela contemporánea',
+    label: 'Novela contemporánea',
   },
   {
-    name: 'Historia',
+    value: 'Música',
+    label: 'Música',
+  },
+  {
+    value: 'Historia',
+    label: 'Historia',
   },
 ];
 
-export { navLink, accountLinks, categories };
+const format: Array<BooksFormat> = [
+  {
+    value: 'Físico',
+    label: 'Físico',
+  },
+  {
+    value: 'Electrónico',
+    label: 'Electrónico',
+  },
+];
+
+export { navLink, accountLinks, categories, format };
