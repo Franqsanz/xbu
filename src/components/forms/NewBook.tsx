@@ -410,6 +410,9 @@ export function FormNewBook() {
                     handleCategoryChange(selectedOption?.value)
                   }
                   options={sortedCategories}
+                  noOptionsMessage={({ inputValue }) =>
+                    `Esta opción "${inputValue}" no existe`
+                  }
                   placeholder='Seleccione una categoria'
                 />
               </FormControl>
@@ -420,9 +423,12 @@ export function FormNewBook() {
                   name='format'
                   size='lg'
                   variant='filled'
-                  options={format}
                   onChange={(selectedOption) =>
                     handleFormatChange(selectedOption?.value)
+                  }
+                  options={format}
+                  noOptionsMessage={({ inputValue }) =>
+                    `Esta opción "${inputValue}" no existe`
                   }
                   placeholder='Seleccione un Formato'
                 />

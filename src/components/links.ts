@@ -52,6 +52,10 @@ const categories: Array<BooksCategory> = [
     label: 'Fantasía',
   },
   {
+    value: 'Filosofía',
+    label: 'Filosofía',
+  },
+  {
     value: 'Poesía',
     label: 'Poesía',
   },
