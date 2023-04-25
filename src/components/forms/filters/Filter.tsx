@@ -15,11 +15,16 @@ interface Props {
   onClose: () => void;
 }
 
+interface SelectProps {
+  value: string;
+  total: number;
+}
+
 export default function Filter({ onClose }: Props) {
   const bgSelect = useColorModeValue('gray.100', 'gray.800');
   const [query, setQuery] = useState('');
   const [value, setValue] = useState('');
-  const [values, setValues] = useState<string[]>([]);
+  const [values, setValues] = useState([]);
   const navigate = useNavigate();
   const { data } = useAllFilterOptions();
 
@@ -91,7 +96,7 @@ export default function Filter({ onClose }: Props) {
               isDisabled={!query}
               _focus={{ bg: 'transparent' }}
             >
-              {values.map(({ value, total }) => (
+              {values.map(({ value, total }: SelectProps) => (
                 <option key={value} value={value}>
                   {value} ({total})
                 </option>
