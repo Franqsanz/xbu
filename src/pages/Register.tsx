@@ -24,6 +24,10 @@ export function Register() {
             fontSize='xl'
             _hover={{ bg: '#D23C2F' }}
             _active={{ bg: '#BB352A' }}
+            onClick={() =>
+              // window.open('https://xb-api.vercel.app/auth/twitter', '_self')
+              window.open('http://localhost:9090/auth/google', '_self')
+            }
           >
             Google
           </Button>
@@ -35,8 +39,10 @@ export function Register() {
             borderRadius='lg'
             p='7'
             fontSize='xl'
-            onClick={() =>
-              window.open('https://xb-api.vercel.app/auth/twitter', '_self')
+            onClick={
+              () =>
+                window.open('https://xb-api.vercel.app/auth/twitter', '_self')
+              // window.open('http://localhost:9090/auth/twitter', '_self')
             }
           >
             Twitter
@@ -49,8 +55,10 @@ export function Register() {
             borderRadius='lg'
             p='7'
             fontSize='xl'
-            onClick={() =>
-              window.open('https://xb-api.vercel.app/auth/facebook', '_self')
+            onClick={
+              () =>
+                window.open('https://xb-api.vercel.app/auth/facebook', '_self')
+              // window.open('http://localhost:9090/auth/facebook', '_self')
             }
           >
             Facebook
