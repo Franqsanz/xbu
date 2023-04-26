@@ -29,6 +29,9 @@ const Cropper = lazy(() => import('react-cropper'));
 
 export function FormNewBook() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const bgColorBox = useColorModeValue('white', 'gray.900');
+  const bgColorInput = useColorModeValue('gray.100', 'gray.800');
+  const bgColorButton = useColorModeValue('#2de000', '#24b300');
   const { mutate, isLoading, isSuccess, error } = useMutatePost();
   const [cropData, setCropData] = useState<string | null>(null);
   const [crop, setCrop] = useState<any>('');
@@ -207,7 +210,7 @@ export function FormNewBook() {
           rounded='lg'
           maxWidth='900px'
           border='1px'
-          bg={useColorModeValue('white', 'gray.900')}
+          bg={bgColorBox}
           borderColor='#2de000'
         >
           <Box mb='5' fontSize='md'>
@@ -231,7 +234,7 @@ export function FormNewBook() {
                   id='titulo'
                   type='text'
                   mb='5'
-                  bg={useColorModeValue('gray.100', 'gray.800')}
+                  bg={bgColorInput}
                   size='lg'
                   placeholder='Titulo'
                   name='title'
@@ -246,7 +249,7 @@ export function FormNewBook() {
                   id='autor'
                   type='text'
                   mb='5'
-                  bg={useColorModeValue('gray.100', 'gray.800')}
+                  bg={bgColorInput}
                   size='lg'
                   placeholder='Autor'
                   name='author'
@@ -261,7 +264,7 @@ export function FormNewBook() {
                   id='sinopsis'
                   rows={6}
                   mb='5'
-                  bg={useColorModeValue('gray.100', 'gray.800')}
+                  bg={bgColorInput}
                   size='lg'
                   name='synopsis'
                   placeholder='Sinopsis'
@@ -280,7 +283,7 @@ export function FormNewBook() {
                   fontWeight='500'
                   border='1px'
                   size='lg'
-                  bg={useColorModeValue('#2de000', '#24b300')}
+                  bg={bgColorButton}
                   color='black'
                   _hover={{ bg: '#28c900' }}
                   _active={{ bg: '#28c900' }}
@@ -343,7 +346,7 @@ export function FormNewBook() {
                   id='link'
                   type='text'
                   mb='5'
-                  bg={useColorModeValue('gray.100', 'gray.800')}
+                  bg={bgColorInput}
                   size='lg'
                   name='sourceLink'
                   placeholder='https://ejemplo.com/'
@@ -358,7 +361,7 @@ export function FormNewBook() {
                   id='language'
                   type='text'
                   mb='5'
-                  bg={useColorModeValue('gray.100', 'gray.800')}
+                  bg={bgColorInput}
                   size='lg'
                   placeholder='Idioma'
                   name='language'
@@ -373,7 +376,7 @@ export function FormNewBook() {
                   id='numeroPaginas'
                   type='number'
                   mb='5'
-                  bg={useColorModeValue('gray.100', 'gray.800')}
+                  bg={bgColorInput}
                   size='lg'
                   placeholder='Número de páginas'
                   name='numberPages'
@@ -390,7 +393,7 @@ export function FormNewBook() {
                   id='año'
                   type='number'
                   mb={{ base: 5, md: 0 }}
-                  bg={useColorModeValue('gray.100', 'gray.800')}
+                  bg={bgColorInput}
                   size='lg'
                   name='year'
                   placeholder='Ingresar año'
@@ -439,7 +442,7 @@ export function FormNewBook() {
                   w='full'
                   size='lg'
                   border='1px'
-                  bg={useColorModeValue('#2de000', '#24b300')}
+                  bg={bgColorButton}
                   color='black'
                   _hover={{ bg: '#28c900' }}
                   _active={{ bg: '#28c900' }}
