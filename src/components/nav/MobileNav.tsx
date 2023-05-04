@@ -14,14 +14,19 @@ import {
   useColorMode,
   List,
   ListItem,
-  Collapse,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerBody,
+  DrawerFooter,
 } from '@chakra-ui/react';
 
 import { navLink, accountLinks } from '../links';
 
 export function MobileNav() {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onToggle } = useDisclosure();
+  const { isOpen, onToggle, onClose } = useDisclosure();
 
   return (
     <>
@@ -75,54 +80,68 @@ export function MobileNav() {
             )}
           </Button>
         </Flex>
-        <Collapse in={isOpen}>
-          <Box w='full'>
-            <List>
-              {navLink.map(({ name, href }) => (
-                <ListItem key={name} my='2'>
-                  <Link
-                    display='block'
-                    onClick={onToggle}
-                    as={NavLink}
-                    to={href as string}
-                    mx='5'
-                    p='3'
-                    rounded='xl'
-                    fontWeight='medium'
-                    _hover={{
-                      bg: 'gray.700',
-                      border: 'none',
-                      color: '#2de000',
-                    }}
-                  >
-                    {name}
-                  </Link>
-                </ListItem>
-              ))}
-              {accountLinks.map(({ name, href }) => (
-                <ListItem key={name} my='2'>
-                  <Link
-                    display='block'
-                    onClick={onToggle}
-                    as={NavLink}
-                    to={href as string}
-                    mx='5'
-                    p='3'
-                    rounded='xl'
-                    fontWeight='medium'
-                    _hover={{
-                      bg: 'gray.700',
-                      border: 'none',
-                      color: '#2de000',
-                    }}
-                  >
-                    {name}
-                  </Link>
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-        </Collapse>
+        <Drawer isOpen={isOpen} placement='left' onClose={onClose}>
+          <DrawerOverlay bg='#12121211' />
+          <DrawerContent
+            bg={useColorModeValue('#ffffff56', '#12121244')}
+            boxShadow='sm'
+            backdropFilter='auto'
+            backdropBlur='12px'
+            zIndex='999'
+          >
+            <DrawerCloseButton />
+            <DrawerBody>
+              <List mt='10'>
+                {navLink.map(({ name, href }) => (
+                  <ListItem key={name} my='2'>
+                    <Link
+                      display='block'
+                      onClick={onToggle}
+                      as={NavLink}
+                      to={href as string}
+                      mx='5'
+                      p='3'
+                      rounded='xl'
+                      fontWeight='medium'
+                      _hover={{
+                        bg: 'gray.700',
+                        border: 'none',
+                        color: '#2de000',
+                      }}
+                    >
+                      {name}
+                    </Link>
+                  </ListItem>
+                ))}
+              </List>
+            </DrawerBody>
+            <DrawerFooter justifyContent='flex-start' borderTopWidth='1px'>
+              <List>
+                {accountLinks.map(({ name, href }) => (
+                  <ListItem key={name} my='2'>
+                    <Link
+                      display='block'
+                      onClick={onToggle}
+                      as={NavLink}
+                      to={href as string}
+                      mx='5'
+                      p='3'
+                      rounded='xl'
+                      fontWeight='medium'
+                      _hover={{
+                        bg: 'gray.700',
+                        border: 'none',
+                        color: '#2de000',
+                      }}
+                    >
+                      {name}
+                    </Link>
+                  </ListItem>
+                ))}
+              </List>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
       </Flex>
     </>
   );
