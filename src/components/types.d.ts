@@ -3,6 +3,7 @@ import React from 'react';
 interface LinkProps {
   name: string;
   href?: string;
+  icon?: React.ReactComponentElement;
 }
 
 interface BooksCategory {

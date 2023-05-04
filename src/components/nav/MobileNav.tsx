@@ -8,6 +8,7 @@ import {
   Box,
   Flex,
   Button,
+  Icon,
   Link,
   useColorModeValue,
   useDisclosure,
@@ -83,7 +84,7 @@ export function MobileNav() {
         <Drawer isOpen={isOpen} placement='left' onClose={onClose}>
           <DrawerOverlay bg='#12121211' />
           <DrawerContent
-            bg={useColorModeValue('#ffffff56', '#12121244')}
+            bg={useColorModeValue('#ffffffba', '#1212129a')}
             boxShadow='sm'
             backdropFilter='auto'
             backdropBlur='12px'
@@ -92,14 +93,14 @@ export function MobileNav() {
             <DrawerCloseButton />
             <DrawerBody>
               <List mt='10'>
-                {navLink.map(({ name, href }) => (
+                {navLink.map(({ icon, name, href }) => (
                   <ListItem key={name} my='2'>
                     <Link
-                      display='block'
+                      display='flex'
+                      alignItems='center'
                       onClick={onToggle}
                       as={NavLink}
                       to={href as string}
-                      mx='5'
                       p='3'
                       rounded='xl'
                       fontWeight='medium'
@@ -109,6 +110,7 @@ export function MobileNav() {
                         color: '#2de000',
                       }}
                     >
+                      <Icon as={icon} boxSize='5' mr='5' />
                       {name}
                     </Link>
                   </ListItem>
@@ -116,7 +118,7 @@ export function MobileNav() {
               </List>
             </DrawerBody>
             <DrawerFooter justifyContent='flex-start' borderTopWidth='1px'>
-              <List>
+              <List w='full'>
                 {accountLinks.map(({ name, href }) => (
                   <ListItem key={name} my='2'>
                     <Link
@@ -124,7 +126,6 @@ export function MobileNav() {
                       onClick={onToggle}
                       as={NavLink}
                       to={href as string}
-                      mx='5'
                       p='3'
                       rounded='xl'
                       fontWeight='medium'

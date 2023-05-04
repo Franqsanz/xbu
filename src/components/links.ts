@@ -1,17 +1,24 @@
+import { FiHome } from 'react-icons/fi';
+import { MdOutlineExplore } from 'react-icons/md';
+import { AiOutlineCloudUpload } from 'react-icons/ai';
+
 import { LinkProps, BooksCategory, BooksFormat } from './types';
 
 const navLink: Array<LinkProps> = [
   {
     name: 'Inicio',
     href: '/',
+    icon: FiHome,
   },
   {
     name: 'Explorar',
     href: 'explore',
+    icon: MdOutlineExplore,
   },
   {
     name: 'Publicar',
     href: 'new-post',
+    icon: AiOutlineCloudUpload,
   },
 ];
 
