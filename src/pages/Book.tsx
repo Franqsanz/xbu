@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box,
   Divider,
@@ -11,8 +11,9 @@ import {
   Image,
   Button,
   useDisclosure,
+  Icon,
 } from '@chakra-ui/react';
-import { FiExternalLink, FiShare2 } from 'react-icons/fi';
+import { FiArrowLeft, FiExternalLink, FiShare2 } from 'react-icons/fi';
 import LazyLoad from 'react-lazy-load';
 
 import { useBook } from '../hooks/querys';
@@ -30,7 +31,12 @@ export default function Book() {
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
   const bgButton = useColorModeValue('white', 'black');
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
   let uiLink;
+
+  function handleGoBack() {
+    navigate(-1);
+  }
 
   const { data } = useBook(id);
 
@@ -78,11 +84,26 @@ export default function Book() {
         description={data.synopsis}
         urlImage={data.image.url}
       />
+      <Box w='full' maxW='1300px' m='auto' px='2' py='4'>
+        <Button
+          bg='none'
+          mt={{ base: 1, md: 5 }}
+          fontWeight='500'
+          w='100px'
+          onClick={handleGoBack}
+          _hover={{ bg: 'none' }}
+          _active={{ bg: 'none' }}
+        >
+          <Flex align='center' justify='center'>
+            <Icon as={FiArrowLeft} boxSize='5' mr='2' />
+            Volver
+          </Flex>
+        </Button>
+      </Box>
       <Flex
         w='full'
         maxW='1300px'
         m='auto'
-        mt={{ base: 5, md: 10 }}
         mb='25'
         align='flex-start'
         direction={{ base: 'column', lg: 'row' }}

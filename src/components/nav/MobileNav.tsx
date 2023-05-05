@@ -81,14 +81,13 @@ export function MobileNav() {
             )}
           </Button>
         </Flex>
-        <Drawer isOpen={isOpen} placement='left' onClose={onClose}>
+        <Drawer isOpen={isOpen} placement='left' onClose={onClose} size='xs'>
           <DrawerOverlay bg='#12121211' />
           <DrawerContent
-            bg={useColorModeValue('#ffffffba', '#1212129a')}
-            boxShadow='sm'
+            bg={useColorModeValue('#ffffffcf', '#121212cf')}
+            // zIndex='999'
             backdropFilter='auto'
             backdropBlur='12px'
-            zIndex='999'
           >
             <DrawerCloseButton />
             <DrawerBody>
