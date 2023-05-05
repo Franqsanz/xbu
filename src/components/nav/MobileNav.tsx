@@ -84,7 +84,7 @@ export function MobileNav() {
         <Drawer isOpen={isOpen} placement='left' onClose={onClose} size='xs'>
           <DrawerOverlay bg='#12121211' />
           <DrawerContent
-            bg={useColorModeValue('#ffffffcf', '#121212cf')}
+            bg={useColorModeValue('#ffffffe0', '#121212e4')}
             // zIndex='999'
             backdropFilter='auto'
             backdropBlur='12px'
