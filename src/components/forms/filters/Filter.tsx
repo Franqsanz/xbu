@@ -28,20 +28,26 @@ export default function Filter({ onClose }: Props) {
   const navigate = useNavigate();
   const { data } = useAllFilterOptions();
 
-  const categories = data[0].categories[0].map(({ _id, count }) => ({
-    value: _id,
-    total: count,
-  }));
+  const categories =
+    data &&
+    data[0].categories[0].map(({ _id, count }) => ({
+      value: _id,
+      total: count,
+    }));
 
-  const years = data[0].years[0].map(({ _id, count }) => ({
-    value: _id,
-    total: count,
-  }));
+  const years =
+    data &&
+    data[0].years[0].map(({ _id, count }) => ({
+      value: _id,
+      total: count,
+    }));
 
-  const languages = data[0].languages[0].map(({ _id, count }) => ({
-    value: _id,
-    total: count,
-  }));
+  const languages =
+    data &&
+    data[0].languages[0].map(({ _id, count }) => ({
+      value: _id,
+      total: count,
+    }));
 
   useEffect(() => {
     if (query === 'year') setValues(years);

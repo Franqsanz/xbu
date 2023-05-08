@@ -82,7 +82,7 @@ export function MobileNav() {
           </Button>
         </Flex>
         <Drawer isOpen={isOpen} placement='left' onClose={onClose} size='xs'>
-          <DrawerOverlay bg='#12121211' />
+          <DrawerOverlay bg='#1212126e' />
           <DrawerContent
             bg={useColorModeValue('#ffffffe0', '#121212e4')}
             // zIndex='999'
