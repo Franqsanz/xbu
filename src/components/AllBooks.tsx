@@ -6,6 +6,7 @@ import {
   AlertIcon,
   AlertTitle,
   Box,
+  Text,
 } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
 
@@ -13,6 +14,7 @@ import { CardProps } from './types';
 import { useBooksPaginate } from '../hooks/querys';
 import { MySimpleGrid } from './MySimpleGrid';
 import { Card } from './card/Card';
+import { Aside } from './Aside';
 
 export function AllBooks() {
   const { ref, inView } = useInView();
@@ -50,46 +52,66 @@ export function AllBooks() {
     );
   }
 
+  let fetchingNextPageUI;
+
+  if (isFetchingNextPage) {
+    fetchingNextPageUI = (
+      <Box p='10' textAlign='center'>
+        <Spinner size='xl' thickness='4px' speed='0.40s' />
+      </Box>
+    );
+  }
+
   return (
     <>
-      <MySimpleGrid>
-        {data?.pages.map((page, index) => (
-          <React.Fragment key={index}>
-            {page.results.map(
-              ({
-                id,
-                title,
-                synopsis,
-                author,
-                category,
-                sourceLink,
-                image,
-              }: CardProps) => (
-                <React.Fragment key={id}>
-                  <Card
-                    id={id}
-                    category={category}
-                    title={title}
-                    author={author}
-                    synopsis={synopsis}
-                    sourceLink={sourceLink}
-                    image={image}
-                  />
-                </React.Fragment>
-              ),
-            )}
-          </React.Fragment>
-        ))}
-      </MySimpleGrid>
-      <Box ref={ref}>
-        {isFetchingNextPage ? (
-          <Box p='10' textAlign='center'>
-            <Spinner size='xl' thickness='4px' speed='0.40s' />
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        px={{ base: 5, md: 10, '2xl': 16 }}
+      >
+        <Aside>
+          <Box mt={{ base: '7', md: '97px' }}>
+            <Flex textAlign={{ base: 'center', lg: 'left' }} direction='column'>
+              <Box as='span' fontSize='2xl' fontWeight='bold'>
+                Catálogo de Libros
+              </Box>
+              <Text mt='2'>
+                Explora todos los libros publicados y encuentra tu próxima
+                lectura favorita.
+              </Text>
+            </Flex>
           </Box>
-        ) : (
-          ''
-        )}
-      </Box>
+        </Aside>
+        <MySimpleGrid>
+          {data?.pages.map((page, index) => (
+            <React.Fragment key={index}>
+              {page.results.map(
+                ({
+                  id,
+                  title,
+                  synopsis,
+                  author,
+                  category,
+                  sourceLink,
+                  image,
+                }: CardProps) => (
+                  <React.Fragment key={id}>
+                    <Card
+                      id={id}
+                      category={category}
+                      title={title}
+                      author={author}
+                      synopsis={synopsis}
+                      sourceLink={sourceLink}
+                      image={image}
+                    />
+                  </React.Fragment>
+                ),
+              )}
+            </React.Fragment>
+          ))}
+        </MySimpleGrid>
+      </Flex>
+      <Box ref={ref}>{fetchingNextPageUI}</Box>
     </>
   );
 }

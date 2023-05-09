@@ -3,7 +3,7 @@ import { Box, Flex } from '@chakra-ui/react';
 
 export default function ResultLength({ data }: any) {
   return (
-    <Box w='78%' m='auto' mt='7'>
+    <Box mt={{ base: '7', md: '97px' }}>
       <Flex
         fontSize='lg'
         textAlign={{ base: 'center', lg: 'left' }}

@@ -7,13 +7,14 @@ export function MySimpleGrid({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SimpleGrid
+        as='section'
         maxW='full'
         w='8xl'
-        columns={{ base: 2, md: 3, lg: 4, xl: 5 }}
+        columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }}
         justifyItems='center'
         m='auto'
-        mt={{ base: '10', sm: '20' }}
-        px={{ base: 5, md: 10 }}
+        mt={{ base: 10, sm: 20 }}
+        pl={{ base: 0, md: 5 }}
         color={colorCard}
       >
         {children}
