@@ -31,7 +31,7 @@ import ResultLength from '../components/ResultLength';
 export default function Search() {
   const { isOpen, onToggle, onClose } = useDisclosure();
   const bgButtonApply = useColorModeValue('#2de000', '#24b300');
-  const bgButtonCancel = useColorModeValue('white', 'black');
+  const bgButtonCancel = useColorModeValue('transparent', 'black');
   const bgContentCheckbox = useColorModeValue('white', 'gray.800');
   const [languages, setLanguages] = useState<string[]>([]);
   const { query, param } = useParams();
@@ -91,9 +91,9 @@ export default function Search() {
       <Flex
         display={{ base: 'flex', md: 'none' }}
         py='3'
-        px='14'
+        px='12'
         justify='flex-end'
-        borderBottom='1px gray solid'
+        borderBottom='1px solid #A0AEC0'
       >
         <Button onClick={onToggle} fontWeight='500' size='md'>
           <Icon as={CgOptions} boxSize='20px' mr='3' />
