@@ -20,6 +20,7 @@ export function AllBooks() {
   const { ref, inView } = useInView();
   const { data, isLoading, error, fetchNextPage, isFetchingNextPage } =
     useBooksPaginate();
+  let fetchingNextPageUI;
 
   useEffect(() => {
     if (inView) fetchNextPage();
@@ -52,8 +53,6 @@ export function AllBooks() {
     );
   }
 
-  let fetchingNextPageUI;
-
   if (isFetchingNextPage) {
     fetchingNextPageUI = (
       <Box p='10' textAlign='center'>
@@ -77,6 +76,13 @@ export function AllBooks() {
               <Text mt='2'>
                 Explora todos los libros publicados y encuentra tu próxima
                 lectura favorita.
+              </Text>
+              <Text mt='5'>
+                "Un libro es un sueño que sostienes en tus manos" -{' '}
+                <Box as='span' fontWeight='500'>
+                  Neil Gaiman
+                </Box>
+                .
               </Text>
             </Flex>
           </Box>
