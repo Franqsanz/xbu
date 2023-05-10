@@ -128,7 +128,7 @@ export default function Search() {
                   p='3'
                   rounded='lg'
                   direction='column-reverse'
-                  gap='3'
+                  gap='5'
                 >
                   {language &&
                     language.map((language) => (
@@ -140,7 +140,7 @@ export default function Search() {
               </CheckboxGroup>
             </Flex>
           </DrawerBody>
-          <DrawerFooter mb='2' borderTopWidth='1px'>
+          <DrawerFooter mb='12' borderTopWidth='1px'>
             <Button
               onClick={onClose}
               border='1px'
