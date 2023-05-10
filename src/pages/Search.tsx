@@ -30,7 +30,8 @@ import ResultLength from '../components/ResultLength';
 
 export default function Search() {
   const { isOpen, onToggle, onClose } = useDisclosure();
-  const bgColorButton = useColorModeValue('#2de000', '#24b300');
+  const bgButtonApply = useColorModeValue('#2de000', '#24b300');
+  const bgButtonCancel = useColorModeValue('white', 'black');
   const bgContentCheckbox = useColorModeValue('white', 'gray.800');
   const [languages, setLanguages] = useState<string[]>([]);
   const { query, param } = useParams();
@@ -87,19 +88,16 @@ export default function Search() {
     <>
       <MainHead title={`Libros de ${param} | XBuniverse`} />
       <ContainerTitle title={`Libros de ${param}`} showSearch={true} />
-      <Flex display={{ base: 'flex', md: 'none' }} mt='5' justify='center'>
-        <Button
-          onClick={onToggle}
-          fontWeight='500'
-          border='1px'
-          size='md'
-          bg={bgColorButton}
-          color='black'
-          _hover={{ bg: '#28c900' }}
-          _active={{ bg: '#28c900' }}
-        >
+      <Flex
+        display={{ base: 'flex', md: 'none' }}
+        py='3'
+        px='14'
+        justify='flex-end'
+        borderBottom='1px gray solid'
+      >
+        <Button onClick={onToggle} fontWeight='500' size='md'>
           <Icon as={CgOptions} boxSize='20px' mr='3' />
-          Filtros
+          Filtrar
         </Button>
       </Flex>
 
@@ -140,18 +138,30 @@ export default function Search() {
               </CheckboxGroup>
             </Flex>
           </DrawerBody>
-          <DrawerFooter mb='12' borderTopWidth='1px'>
-            <Button
-              onClick={onClose}
-              border='1px'
-              size='lg'
-              bg={bgColorButton}
-              color='black'
-              _hover={{ bg: '#28c900' }}
-              _active={{ bg: '#28c900' }}
-            >
-              Aplicar
-            </Button>
+          <DrawerFooter justifyContent='center' borderTopWidth='1px'>
+            <Flex mb='14' gap='5'>
+              <Button
+                onClick={onClose}
+                bg={bgButtonCancel}
+                border='1px'
+                size='lg'
+                borderColor='#28c900'
+                _hover={{ color: 'white', bg: 'black' }}
+              >
+                Cancelar
+              </Button>
+              <Button
+                onClick={onClose}
+                border='1px'
+                size='lg'
+                bg={bgButtonApply}
+                color='black'
+                _hover={{ bg: '#28c900' }}
+                _active={{ bg: '#28c900' }}
+              >
+                Aplicar
+              </Button>
+            </Flex>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
