@@ -16,7 +16,7 @@ export function Footer() {
         align='center'
       >
         Hecho con ❤ por Franqsanz
-        <Link as={NavLink} to='/privacy_policies' mt='3'>
+        <Link as={NavLink} to='/privacy-policies' mt='3'>
           Política de Privacidad
         </Link>
       </Flex>

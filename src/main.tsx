@@ -60,7 +60,7 @@ const html = (
                 <Route path='/' element={<Home />} />
                 <Route path='register' element={<Register />} />
                 <Route path='login' element={<Login />} />
-                <Route path='privacy_policies' element={<PrivacyPolicies />} />
+                <Route path='privacy-policies' element={<PrivacyPolicies />} />
                 <Route path='new-post' element={<NewBook />} />
                 <Route path='explore' element={<Explore />} />
                 <Route path=':user' element={<Profile />} />

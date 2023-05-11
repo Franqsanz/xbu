@@ -35,7 +35,8 @@ export default function Search() {
   const bgContentCheckbox = useColorModeValue('white', 'gray.800');
   const [languages, setLanguages] = useState<string[]>([]);
   const { query, param } = useParams();
-  let bookFilter;
+  let asideFilter;
+  let buttonFilter;
 
   const { data } = useFilter(query, param);
 
@@ -60,7 +61,7 @@ export default function Search() {
   }
 
   if (language && language?.length > 0) {
-    bookFilter = (
+    asideFilter = (
       <Flex display={{ base: 'none', md: 'flex' }} direction='column' mt='10'>
         <CheckboxGroup
           value={languages}
@@ -82,25 +83,27 @@ export default function Search() {
         </CheckboxGroup>
       </Flex>
     );
+
+    buttonFilter = (
+      <Flex py='3' px='10' justify='flex-end' borderBottom='1px solid #A0AEC0'>
+        <Button
+          display={{ base: 'flex', md: 'none' }}
+          onClick={onToggle}
+          fontWeight='500'
+          size='md'
+        >
+          <Icon as={CgOptions} boxSize='20px' mr='3' />
+          Filtrar
+        </Button>
+      </Flex>
+    );
   }
 
   return (
     <>
       <MainHead title={`Libros de ${param} | XBuniverse`} />
       <ContainerTitle title={`Libros de ${param}`} showSearch={true} />
-      <Flex
-        display={{ base: 'flex', md: 'none' }}
-        py='3'
-        px='12'
-        justify='flex-end'
-        borderBottom='1px solid #A0AEC0'
-      >
-        <Button onClick={onToggle} fontWeight='500' size='md'>
-          <Icon as={CgOptions} boxSize='20px' mr='3' />
-          Filtrar
-        </Button>
-      </Flex>
-
+      {buttonFilter}
       <Drawer isOpen={isOpen} placement='left' onClose={onClose} size='full'>
         <DrawerOverlay bg='#1212126e' />
         <DrawerContent
@@ -145,6 +148,7 @@ export default function Search() {
                 bg={bgButtonCancel}
                 border='1px'
                 size='lg'
+                fontWeight='light'
                 borderColor='#28c900'
                 _hover={{ color: 'white', bg: 'black' }}
               >
@@ -152,9 +156,10 @@ export default function Search() {
               </Button>
               <Button
                 onClick={onClose}
+                bg={bgButtonApply}
                 border='1px'
                 size='lg'
-                bg={bgButtonApply}
+                fontWeight='light'
                 color='black'
                 _hover={{ bg: '#28c900' }}
                 _active={{ bg: '#28c900' }}
@@ -172,7 +177,7 @@ export default function Search() {
       >
         <Aside>
           <ResultLength data={data} />
-          {bookFilter}
+          {asideFilter}
         </Aside>
         <MySimpleGrid>
           {filteredBooks.map(
