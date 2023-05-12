@@ -28,6 +28,7 @@ import { navLink, accountLinks } from '../links';
 export function MobileNav() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onToggle, onClose } = useDisclosure();
+  const bgDrawer = useColorModeValue('#ffffffe0', '#121212e4');
 
   return (
     <>
@@ -84,7 +85,7 @@ export function MobileNav() {
         <Drawer isOpen={isOpen} placement='left' onClose={onClose} size='xs'>
           <DrawerOverlay bg='#1212126e' />
           <DrawerContent
-            bg={useColorModeValue('#ffffffe0', '#121212e4')}
+            bg={bgDrawer}
             backdropFilter='auto'
             backdropBlur='12px'
           >

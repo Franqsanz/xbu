@@ -10,14 +10,10 @@ import {
 import { FiSearch } from 'react-icons/fi';
 
 import { useAllFilterOptions } from '../../../hooks/querys';
+import { SelectProps } from '../../../components/types';
 
 interface Props {
   onClose: () => void;
-}
-
-interface SelectProps {
-  value: string;
-  total: number;
 }
 
 export default function Filter({ onClose }: Props) {

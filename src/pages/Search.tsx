@@ -7,16 +7,7 @@ import {
   Button,
   Flex,
   Icon,
-  useColorModeValue,
   useDisclosure,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerHeader,
-  DrawerCloseButton,
-  DrawerBody,
-  DrawerFooter,
-  Box,
 } from '@chakra-ui/react';
 
 import { Card } from '../components/card/Card';
@@ -27,12 +18,10 @@ import { MySimpleGrid } from '../components/MySimpleGrid';
 import { MainHead } from '../components/Head';
 import { Aside } from '../components/Aside';
 import ResultLength from '../components/ResultLength';
+import { FilterDrawer } from '../components/FilterDrawer';
 
 export default function Search() {
   const { isOpen, onToggle, onClose } = useDisclosure();
-  const bgButtonApply = useColorModeValue('#2de000', '#24b300');
-  const bgButtonCancel = useColorModeValue('transparent', 'black');
-  const bgContentCheckbox = useColorModeValue('white', 'gray.800');
   const [languages, setLanguages] = useState<string[]>([]);
   const { query, param } = useParams();
   let asideFilter;
@@ -104,73 +93,13 @@ export default function Search() {
       <MainHead title={`Libros de ${param} | XBuniverse`} />
       <ContainerTitle title={`Libros de ${param}`} showSearch={true} />
       {buttonFilter}
-      <Drawer isOpen={isOpen} placement='left' onClose={onClose} size='full'>
-        <DrawerOverlay bg='#1212126e' />
-        <DrawerContent
-          bg={useColorModeValue('#ffffffe0', '#121212e4')}
-          backdropFilter='auto'
-          backdropBlur='12px'
-        >
-          <DrawerHeader>Filtrar</DrawerHeader>
-          <DrawerCloseButton />
-          <DrawerBody>
-            <Flex px='2' direction='column'>
-              <Box mb='4' borderBottom='1px'>
-                Idioma
-              </Box>
-              <CheckboxGroup
-                value={languages}
-                onChange={handleLanguageChange}
-                colorScheme='green'
-              >
-                <Flex
-                  mx='3'
-                  bg={bgContentCheckbox}
-                  p='3'
-                  rounded='lg'
-                  direction='column-reverse'
-                  gap='5'
-                >
-                  {language &&
-                    language.map((language) => (
-                      <Checkbox key={language} value={language}>
-                        {language}
-                      </Checkbox>
-                    ))}
-                </Flex>
-              </CheckboxGroup>
-            </Flex>
-          </DrawerBody>
-          <DrawerFooter justifyContent='center' borderTopWidth='1px'>
-            <Flex mb='14' gap='5'>
-              <Button
-                onClick={onClose}
-                bg={bgButtonCancel}
-                border='1px'
-                size='lg'
-                fontWeight='light'
-                borderColor='#28c900'
-                _hover={{ color: 'white', bg: 'black' }}
-              >
-                Cancelar
-              </Button>
-              <Button
-                onClick={onClose}
-                bg={bgButtonApply}
-                border='1px'
-                size='lg'
-                fontWeight='light'
-                color='black'
-                _hover={{ bg: '#28c900' }}
-                _active={{ bg: '#28c900' }}
-              >
-                Aplicar
-              </Button>
-            </Flex>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-
+      <FilterDrawer
+        isOpen={isOpen}
+        onClose={onClose}
+        language={language}
+        handleLanguageChange={handleLanguageChange}
+        languages={languages}
+      />
       <Flex
         direction={{ base: 'column', md: 'row' }}
         px={{ base: 5, md: 10, '2xl': 16 }}

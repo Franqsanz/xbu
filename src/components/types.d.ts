@@ -91,6 +91,19 @@ interface ReleatedBooksProps {
   currentBookId: string | undefined;
 }
 
+interface SelectProps {
+  value: string;
+  total: number;
+}
+
+interface PropsDrawer {
+  isOpen: boolean;
+  onClose: () => void;
+  languages: Array<string>;
+  handleLanguageChange: (languages: any) => void;
+  language: (number | undefined)[] | null;
+}
+
 export type {
   LinkProps,
   BooksCategory,
@@ -103,4 +116,6 @@ export type {
   ModalCropperProps,
   ModalProps,
   ReleatedBooksProps,
+  SelectProps,
+  PropsDrawer,
 };
