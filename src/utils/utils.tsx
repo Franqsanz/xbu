@@ -2,6 +2,7 @@ import React from 'react';
 
 const keys = {
   all: 'Books',
+  allSearch: 'BooksSearch',
   one: 'BookOne',
   filtersOptions: 'BookFiltersOptions',
   paginate: 'BookPaginate',

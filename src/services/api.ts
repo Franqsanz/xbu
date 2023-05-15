@@ -6,6 +6,12 @@ async function getAllBooks() {
   if (res.ok) return await res.json();
 }
 
+async function getAllSearchBooks() {
+  const res = await fetch(`${API_URL}/search`);
+
+  if (res.ok) return await res.json();
+}
+
 async function getBooksPaginate(page: number | undefined) {
   const res = await fetch(`${API_URL}?limit=10&page=${page}`);
 
@@ -64,6 +70,7 @@ async function deleteBook(id: any) {
 
 export {
   getAllBooks,
+  getAllSearchBooks,
   getBooksPaginate,
   getBook,
   getBooksFilter,

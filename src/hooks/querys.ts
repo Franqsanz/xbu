@@ -2,6 +2,7 @@ import { useQuery, useMutation, useInfiniteQuery } from '@tanstack/react-query';
 
 import {
   getAllBooks,
+  getAllSearchBooks,
   getAllFilterOptions,
   getBooksPaginate,
   getBook,
@@ -24,6 +25,9 @@ function useMutatePost() {
 
 function useAllBooks() {
   return useQuery([keys.all], () => getAllBooks());
+}
+function useAllSearchBooks() {
+  return useQuery([keys.allSearch], () => getAllSearchBooks());
 }
 
 function useAllFilterOptions() {
@@ -74,6 +78,7 @@ export {
   useMutatePost,
   useAllFilterOptions,
   useAllBooks,
+  useAllSearchBooks,
   useBooksPaginate,
   useBook,
   useFilter,

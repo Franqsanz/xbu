@@ -74,7 +74,13 @@ export default function Search() {
     );
 
     buttonFilter = (
-      <Flex py='3' px='10' justify='flex-end' borderBottom='1px solid #A0AEC0'>
+      <Flex
+        display={{ base: 'flex', md: 'none' }}
+        py='3'
+        px='10'
+        justify='flex-end'
+        borderBottom='1px solid #A0AEC0'
+      >
         <Button
           display={{ base: 'flex', md: 'none' }}
           onClick={onToggle}

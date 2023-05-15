@@ -20,7 +20,7 @@ import { CgOptions } from 'react-icons/cg';
 import { FiSearch } from 'react-icons/fi';
 
 import { Book } from '../../types';
-import { useAllBooks } from '../../../hooks/querys';
+import { useAllSearchBooks } from '../../../hooks/querys';
 
 interface Props {
   onOpen: () => void;
@@ -40,10 +40,10 @@ export function InputSearch({ onOpen }: Props) {
   const [search, setSearch] = useState({ query: '' });
   let alertMessage;
 
-  const { data } = useAllBooks();
+  const { data } = useAllSearchBooks();
 
   useEffect(() => {
-    if (data && data.results) setBooks(data.results);
+    if (data && data) setBooks(data);
   }, [data]);
 
   const filteredBooks = useMemo(() => {
