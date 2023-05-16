@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { useEffect, useRef, Suspense, lazy } from 'react';
 import {
   Box,
   Button,
@@ -17,6 +17,37 @@ export default function Explore() {
   const bgArrows = useColorModeValue('white', 'black');
   const borderArrows = useColorModeValue('gray.200', '#28c900');
   const gradientColor = useColorModeValue('white', '#1A202C');
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const container = containerRef.current as any;
+    let isHovered = false;
+
+    function handleScroll(event) {
+      if (isHovered) {
+        container.scrollLeft += event.deltaY;
+        event.preventDefault(); // Evitar desplazamiento vertical de la página
+      }
+    }
+
+    function handleMouseEnter() {
+      isHovered = true;
+    }
+
+    function handleMouseLeave() {
+      isHovered = false;
+    }
+
+    container.addEventListener('wheel', handleScroll);
+    container.addEventListener('mouseenter', handleMouseEnter);
+    container.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      container.removeEventListener('wheel', handleScroll);
+      container.removeEventListener('mouseenter', handleMouseEnter);
+      container.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, []);
 
   function slideLeft() {
     let slider = document.getElementById('slider') as HTMLElement;
@@ -62,6 +93,7 @@ export default function Explore() {
           mt='4'
           mx={{ base: 0, md: 1 }}
           position='relative'
+          ref={containerRef}
         >
           <Box
             position='sticky'
