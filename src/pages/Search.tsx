@@ -8,10 +8,11 @@ import {
   Flex,
   Icon,
   useDisclosure,
+  Box,
 } from '@chakra-ui/react';
 
 import { Card } from '../components/card/Card';
-import { CardProps } from '../components/types';
+import { CardProps, PropsDrawer } from '../components/types';
 import { useFilter } from '../hooks/querys';
 import { ContainerTitle } from '../components/ContainerTitle';
 import { MySimpleGrid } from '../components/MySimpleGrid';
@@ -29,17 +30,32 @@ export default function Search() {
 
   const { data } = useFilter(query, param);
 
-  function getLanguages(data: Array<CardProps>) {
-    const languages = [...new Set(data.map((book) => book.language))];
+  interface LanguageProps {
+    language: string[];
+    languagesMap: { [key: string]: number };
+  }
 
-    if (languages.length === 1) {
+  function getLanguages(data: Array<CardProps>): LanguageProps | null {
+    const languagesMap = data.reduce((acc, book) => {
+      const language = book.language;
+
+      if (language) {
+        acc[language] = (acc[language] || 0) + 1;
+      }
+
+      return acc;
+    }, {});
+
+    const language = Object.keys(languagesMap);
+
+    if (language.length === 1) {
       return null;
     }
 
-    return languages;
+    return { language, languagesMap };
   }
 
-  const language = getLanguages(data);
+  const languagesData = getLanguages(data);
 
   const filteredBooks = data.filter(({ language }) => {
     return languages.length === 0 || languages.includes(language);
@@ -49,7 +65,9 @@ export default function Search() {
     setLanguages(languages);
   }
 
-  if (language && language?.length > 0) {
+  if (languagesData) {
+    const { language, languagesMap } = languagesData;
+
     asideFilter = (
       <Flex display={{ base: 'none', md: 'flex' }} direction='column' mt='10'>
         <CheckboxGroup
@@ -66,6 +84,9 @@ export default function Search() {
               language.map((language) => (
                 <Checkbox key={language} value={language}>
                   {language}
+                  <Box as='span' ml='2' color='gray.500'>
+                    ({languagesMap[language]})
+                  </Box>
                 </Checkbox>
               ))}
           </Flex>
@@ -102,7 +123,8 @@ export default function Search() {
       <FilterDrawer
         isOpen={isOpen}
         onClose={onClose}
-        language={language}
+        language={languagesData?.language}
+        languagesMap={languagesData?.languagesMap}
         handleLanguageChange={handleLanguageChange}
         languages={languages}
       />

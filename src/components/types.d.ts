@@ -101,7 +101,8 @@ interface PropsDrawer {
   onClose: () => void;
   languages: Array<string>;
   handleLanguageChange: (languages: any) => void;
-  language: (number | undefined)[] | null;
+  language: string[] | undefined;
+  languagesMap: { [key: string]: number } | undefined;
 }
 
 export type {

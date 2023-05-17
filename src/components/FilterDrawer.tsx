@@ -23,6 +23,7 @@ export function FilterDrawer({
   languages,
   handleLanguageChange,
   language,
+  languagesMap,
 }: PropsDrawer) {
   const bgDrawer = useColorModeValue('#ffffffe0', '#121212e4');
   const bgContentCheckbox = useColorModeValue('white', 'gray.800');
@@ -58,6 +59,9 @@ export function FilterDrawer({
                     language.map((language) => (
                       <Checkbox key={language} value={language}>
                         {language}
+                        <Box as='span' ml='2' color='gray.500'>
+                          ({languagesMap && languagesMap[language]})
+                        </Box>
                       </Checkbox>
                     ))}
                 </Flex>
