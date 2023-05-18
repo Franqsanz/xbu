@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 
 import { Card } from '../components/card/Card';
-import { CardProps, PropsDrawer } from '../components/types';
+import { CardProps, LanguageProps } from '../components/types';
 import { useFilter } from '../hooks/querys';
 import { ContainerTitle } from '../components/ContainerTitle';
 import { MySimpleGrid } from '../components/MySimpleGrid';
@@ -29,11 +29,6 @@ export default function Search() {
   let buttonFilter;
 
   const { data } = useFilter(query, param);
-
-  interface LanguageProps {
-    language: string[];
-    languagesMap: { [key: string]: number };
-  }
 
   function getLanguages(data: Array<CardProps>): LanguageProps | null {
     const languagesMap = data.reduce((acc, book) => {
@@ -85,7 +80,7 @@ export default function Search() {
                 <Checkbox key={language} value={language}>
                   {language}
                   <Box as='span' ml='2' color='gray.500'>
-                    ({languagesMap[language]})
+                    ({languagesMap && languagesMap[language]})
                   </Box>
                 </Checkbox>
               ))}

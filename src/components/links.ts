@@ -2,7 +2,7 @@ import { FiHome } from 'react-icons/fi';
 import { MdOutlineExplore } from 'react-icons/md';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 
-import { LinkProps, BooksCategory, BooksFormat } from './types';
+import { LinkProps, SelectBooksprops } from './types';
 
 const navLink: Array<LinkProps> = [
   {
@@ -33,7 +33,7 @@ const accountLinks: Array<LinkProps> = [
   },
 ];
 
-const categories: Array<BooksCategory> = [
+const categories: Array<SelectBooksprops> = [
   {
     value: 'Ciencia Ficción',
     label: 'Ciencia Ficción',
@@ -136,7 +136,7 @@ const categories: Array<BooksCategory> = [
   },
 ];
 
-const format: Array<BooksFormat> = [
+const format: Array<SelectBooksprops> = [
   {
     value: 'Físico',
     label: 'Físico',

@@ -269,16 +269,8 @@ export default function Book() {
             </Suspense>
           </Flex>
         </Flex>
-        <Flex display={{ base: 'none', lg: 'block' }} w='400px' px='3'>
-          <Box
-            maxW={{ base: '920px', lg: '300px' }}
-            p='4'
-            m='1rem auto'
-            rounded='lg'
-            border='1px'
-            borderColor={grayColor}
-            boxShadow='lg'
-          >
+        <Flex display={{ base: 'none', lg: 'block' }} w='335px' px='3'>
+          <Box maxW={{ base: '920px', lg: 'auto' }} m='1rem auto'>
             <Flex justifyContent='center'>
               <LazyLoad width={234} height={360} offset={0} threshold={0.99}>
                 <Image
@@ -288,7 +280,7 @@ export default function Book() {
                   alt={`Imagen de "${data.title}"`}
                   rounded='lg'
                   border='1px solid #A0AEC0'
-                  boxShadow='xl'
+                  boxShadow='dark-lg'
                   decoding='async'
                   filter='blur(10px)'
                   transition='filter 0.5s ease-in-out'
@@ -296,10 +288,18 @@ export default function Book() {
                 />
               </LazyLoad>
             </Flex>
-            <Box mt='8' mb='3' fontSize='2xl' textAlign='center'>
-              Categorias
-            </Box>
-            <Box>
+            <Box
+              mt='20'
+              p='5'
+              border='1px'
+              borderColor={grayColor}
+              boxShadow='xl'
+              rounded='xl'
+            >
+              <Box m='2' mb='7' fontSize='2xl'>
+                Categorias
+                <Box mt='2' borderBottom='1px'></Box>
+              </Box>
               <Suspense
                 fallback={
                   <Box display='flex' justifyContent='center'>

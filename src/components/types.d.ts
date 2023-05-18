@@ -1,17 +1,17 @@
 import React from 'react';
 
+interface DisclosureProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
 interface LinkProps {
   name: string;
   href?: string;
   icon?: React.ReactComponentElement;
 }
 
-interface BooksCategory {
-  value: string;
-  label: string;
-}
-
-interface BooksFormat {
+interface SelectBooksprops {
   value: string;
   label: string;
 }
@@ -70,9 +70,7 @@ interface Book {
   };
 }
 
-interface ModalCropperType {
-  isOpen: boolean;
-  onClose: () => void;
+interface ModalCropperType extends DisclosureProps {
   getCropData: () => any;
 }
 
@@ -80,11 +78,9 @@ type ModalCropperProps = ModalCropperType & {
   children: React.ReactNode;
 };
 
-interface ModalProps {
+interface ModalProps extends DisclosureProps {
   shareUrl?: string;
   data?: string;
-  isOpen: boolean;
-  onClose: () => void;
 }
 
 interface ReleatedBooksProps {
@@ -96,19 +92,19 @@ interface SelectProps {
   total: number;
 }
 
-interface PropsDrawer {
-  isOpen: boolean;
-  onClose: () => void;
-  languages: Array<string>;
-  handleLanguageChange: (languages: any) => void;
+interface LanguageProps {
   language: string[] | undefined;
   languagesMap: { [key: string]: number } | undefined;
 }
 
+interface PropsDrawer extends DisclosureProps, LanguageProps {
+  languages: Array<string>;
+  handleLanguageChange: (languages: any) => void;
+}
+
 export type {
   LinkProps,
-  BooksCategory,
-  BooksFormat,
+  SelectBooksprops,
   CardProps,
   TitleProps,
   HeadProps,
@@ -119,4 +115,5 @@ export type {
   ReleatedBooksProps,
   SelectProps,
   PropsDrawer,
+  LanguageProps,
 };
