@@ -84,7 +84,7 @@ export default function Book() {
         description={data.synopsis}
         urlImage={data.image.url}
       />
-      <Box w='full' maxW='1300px' m='auto' px='7' py='4'>
+      <Box w='full' maxW='1300px' m='auto' px={{ base: 1, xl: 8 }} py='4'>
         <Button
           bg='none'
           mt={{ base: 1, md: 5 }}
