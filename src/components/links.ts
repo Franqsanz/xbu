@@ -39,6 +39,10 @@ const categories: Array<SelectBooksprops> = [
     label: 'Ciencia Ficción',
   },
   {
+    value: 'Clásicos',
+    label: 'Clásicos',
+  },
+  {
     value: 'Terror',
     label: 'Terror',
   },
