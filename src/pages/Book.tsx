@@ -28,6 +28,7 @@ export default function Book() {
   const shareUrl = window.location.href;
   const { id } = useParams();
   const grayColor = useColorModeValue('gray.200', 'gray.600');
+  const bgSectionCategory = useColorModeValue('white', 'gray.800');
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
   const bgButton = useColorModeValue('white', 'black');
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -299,13 +300,11 @@ export default function Book() {
               rounded='xl'
               sx={{
                 '&::-webkit-scrollbar': {
-                  width: '17px',
-                  height: '7px',
+                  width: '7px',
                 },
                 '&::-webkit-scrollbar-thumb': {
                   background: '#a2aab3',
                   borderRadius: '30px',
-                  border: '5px solid #ffffff',
                 },
               }}
             >
@@ -315,7 +314,7 @@ export default function Book() {
                 fontSize='2xl'
                 position='sticky'
                 top='0'
-                bg='white'
+                bg={bgSectionCategory}
               >
                 Categorias
                 <Box mt='2' borderBottom='1px'></Box>
