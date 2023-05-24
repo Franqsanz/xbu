@@ -127,8 +127,8 @@ const categories: Array<SelectBooksprops> = [
     label: 'Novela Histórica',
   },
   {
-    value: 'Novela contemporánea',
-    label: 'Novela contemporánea',
+    value: 'Novela',
+    label: 'Novela',
   },
   {
     value: 'Música',

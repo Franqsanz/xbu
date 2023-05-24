@@ -160,7 +160,7 @@ export default function Book() {
             >
               Sinopsis
             </Box>
-            <Text mt='3' mb='10' fontSize='lg'>
+            <Text mt='3' mb='10' fontSize='lg' whiteSpace='pre-wrap'>
               {data.synopsis}
             </Text>
           </Box>
@@ -289,14 +289,34 @@ export default function Book() {
               </LazyLoad>
             </Flex>
             <Box
+              h='650px'
+              overflowX='hidden'
               mt='20'
-              p='5'
+              p='0 1.25rem 1.25rem 1.25rem'
               border='1px'
               borderColor={grayColor}
               boxShadow='xl'
               rounded='xl'
+              sx={{
+                '&::-webkit-scrollbar': {
+                  width: '17px',
+                  height: '7px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: '#a2aab3',
+                  borderRadius: '30px',
+                  border: '5px solid #ffffff',
+                },
+              }}
             >
-              <Box m='2' mb='7' fontSize='2xl'>
+              <Box
+                p='1.25rem 2px 2px 2px'
+                mb='7'
+                fontSize='2xl'
+                position='sticky'
+                top='0'
+                bg='white'
+              >
                 Categorias
                 <Box mt='2' borderBottom='1px'></Box>
               </Box>
