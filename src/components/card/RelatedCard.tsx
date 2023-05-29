@@ -7,7 +7,9 @@ import { CardProps } from '../types';
 
 export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
   const navigate = useNavigate();
-  const borderCard = useColorModeValue('gray.200', '#28c900');
+  const borderCard = useColorModeValue('gray.200', 'gray.600');
+  const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
+  const bgRandomBookCardLink = useColorModeValue('gray.200', 'black');
   const outlineCard = useColorModeValue('black', 'white');
 
   function handleKeyPress(e: React.KeyboardEvent) {
@@ -22,7 +24,7 @@ export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
         w='full'
         h={{ base: 'auto', md: '245px' }}
         mx={{ base: 0, md: 2 }}
-        rounded='30'
+        rounded='xl'
         border='1px'
         borderColor={borderCard}
         boxShadow='lg'
@@ -43,12 +45,15 @@ export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
                 lineHeight='8'
                 fontWeight='800'
                 mb='2'
-                color='#1f9c00'
                 textTransform='uppercase'
               >
                 {title}
               </Box>
-              <Box textTransform='uppercase' fontSize='sm'>
+              <Box
+                textTransform='uppercase'
+                fontSize='sm'
+                color={colorAuthorCard}
+              >
                 {author}
               </Box>
             </Box>
@@ -58,14 +63,14 @@ export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
             to={`/book/${id}`}
             onClick={refetchQueries}
             w='full'
-            bg='#28c900'
+            bg={bgRandomBookCardLink}
             py='4'
             px='7'
             position={{ base: 'initial', md: 'absolute' }}
             bottom='0'
-            _hover={{ outline: 'none', bg: '#24b300' }}
+            _hover={{ outline: 'none' }}
           >
-            <Flex align='center' color='black'>
+            <Flex align='center'>
               Ver libro
               <Icon as={FiArrowRight} ml='2' />
             </Flex>

@@ -28,6 +28,7 @@ export default function Book() {
   const shareUrl = window.location.href;
   const { id } = useParams();
   const grayColor = useColorModeValue('gray.200', 'gray.600');
+  const bgGrayfeatures = useColorModeValue('gray.100', 'gray.700');
   const bgSectionCategory = useColorModeValue('white', 'gray.800');
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
   const bgButton = useColorModeValue('white', 'black');
@@ -168,11 +169,7 @@ export default function Book() {
           <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
             Caracteristicas
           </Box>
-          <Box
-            bg={useColorModeValue('gray.100', 'gray.700')}
-            p='4'
-            roundedBottom='lg'
-          >
+          <Box bg={bgGrayfeatures} p='4' roundedBottom='lg'>
             <Flex direction='column'>
               <Box>
                 <Flex>
