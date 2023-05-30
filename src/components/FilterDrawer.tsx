@@ -69,7 +69,7 @@ export function FilterDrawer({
             </Flex>
           </DrawerBody>
           <DrawerFooter justifyContent='center' borderTopWidth='1px'>
-            <Flex mb='2' gap='5'>
+            <Flex mb='1' gap='5'>
               <Button
                 onClick={onClose}
                 bg={bgButtonCancel}

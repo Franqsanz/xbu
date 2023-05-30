@@ -68,7 +68,7 @@ export function InputSearch({ onOpen }: Props) {
   return (
     <>
       <FormControl>
-        <InputGroup maxW='67%' size='lg' m='auto' mt={{ base: 5, md: 10 }}>
+        <InputGroup maxW='70%' size='lg' m='auto' mt={{ base: 5, md: 10 }}>
           <InputLeftElement w='3rem' p='2'>
             <Icon as={FiSearch} boxSize='20px' color={colorIcons} />
           </InputLeftElement>
@@ -100,8 +100,7 @@ export function InputSearch({ onOpen }: Props) {
       </FormControl>
       <Container
         display={search.query ? 'block' : 'none'}
-        w='full'
-        maxW='67%'
+        maxW='70%'
         maxH='md'
         h='full'
         m='10px auto'

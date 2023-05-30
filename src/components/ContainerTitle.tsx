@@ -29,7 +29,7 @@ export function ContainerTitle({ title, showSearch }: TitleProps) {
         >
           {title}
         </Box>
-        <Box maxW='full' w='4xl' m='auto'>
+        <Box maxW='full' w='1000px' m='auto'>
           {showSearch && <InputSearch onOpen={onOpen} />}
           <Portal containerRef={ref}>
             <ModalFilter isOpen={isOpen} onClose={onClose} />
