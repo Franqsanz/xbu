@@ -20,18 +20,16 @@ export function ContainerTitle({ title, showSearch }: TitleProps) {
   return (
     <Container maxW='full' p='0' ref={ref}>
       <Box py={{ base: 16, md: 24 }} bg={bgContainer}>
-        <Box
-          maxW='95%'
-          w='3xl'
-          m='auto'
-          textAlign='center'
-          as='h1'
-          fontSize={{ base: '4xl', md: '7xl' }}
-          color={colorTitle}
-        >
-          {title}
+        <Box maxW='full' w='5xl' m='auto' textAlign='center' color={colorTitle}>
+          <Box
+            as='h1'
+            maxW='85%'
+            m='auto'
+            fontSize={{ base: '3xl', sm: '4xl', md: '7xl' }}
+          >
+            {title}
+          </Box>
           {showSearch && <InputSearch onOpen={onOpen} />}
-
           <Portal containerRef={ref}>
             <ModalFilter isOpen={isOpen} onClose={onClose} />
           </Portal>

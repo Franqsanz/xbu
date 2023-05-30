@@ -9,7 +9,7 @@ export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
   const navigate = useNavigate();
   const borderCard = useColorModeValue('gray.200', 'gray.600');
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
-  const bgRandomBookCardLink = useColorModeValue('gray.200', 'black');
+  const bgRandomBookCardLink = useColorModeValue('gray.300', 'black');
   const outlineCard = useColorModeValue('black', 'white');
 
   function handleKeyPress(e: React.KeyboardEvent) {
@@ -68,6 +68,7 @@ export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
             px='7'
             position={{ base: 'initial', md: 'absolute' }}
             bottom='0'
+            tabIndex={-1}
             _hover={{ outline: 'none' }}
           >
             <Flex align='center'>

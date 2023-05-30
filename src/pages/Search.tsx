@@ -103,7 +103,7 @@ export default function Search() {
           fontWeight='500'
           size='md'
         >
-          <Icon as={CgOptions} boxSize='20px' mr='3' />
+          <Icon as={CgOptions} boxSize='20px' mr='2' />
           Filtrar
         </Button>
       </Flex>

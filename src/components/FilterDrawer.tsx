@@ -25,20 +25,20 @@ export function FilterDrawer({
   language,
   languagesMap,
 }: PropsDrawer) {
-  const bgDrawer = useColorModeValue('#ffffffe0', '#121212e4');
-  const bgContentCheckbox = useColorModeValue('white', 'gray.800');
+  const bgDrawer = useColorModeValue('#fffffff4', '#121212e4');
+  const bgContentCheckbox = useColorModeValue('white', 'transparent');
   const bgButtonCancel = useColorModeValue('transparent', 'black');
   const bgButtonApply = useColorModeValue('#2de000', '#24b300');
 
   return (
     <>
-      <Drawer isOpen={isOpen} placement='left' onClose={onClose} size='full'>
+      <Drawer isOpen={isOpen} placement='bottom' onClose={onClose} size='xl'>
         <DrawerOverlay bg='#1212126e' />
         <DrawerContent bg={bgDrawer} backdropFilter='auto' backdropBlur='12px'>
           <DrawerHeader>Filtrar</DrawerHeader>
           <DrawerCloseButton />
           <DrawerBody>
-            <Flex px='2' direction='column'>
+            <Flex px='2' direction='column' mb='10'>
               <Box mb='4' borderBottom='1px'>
                 Idioma
               </Box>
