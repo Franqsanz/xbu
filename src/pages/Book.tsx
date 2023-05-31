@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import {
   Box,
   Divider,
@@ -28,7 +28,8 @@ export default function Book() {
   const shareUrl = window.location.href;
   const { id } = useParams();
   const grayColor = useColorModeValue('gray.200', 'gray.600');
-  const bgGrayfeatures = useColorModeValue('gray.100', 'gray.700');
+  const bgGrayCategory = useColorModeValue('gray.100', 'gray.700');
+  const gradientColor = useColorModeValue('white', '#1A202C');
   const bgSectionCategory = useColorModeValue('white', 'gray.800');
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
   const bgButton = useColorModeValue('white', 'black');
@@ -136,7 +137,9 @@ export default function Book() {
           m='1rem auto'
         >
           <Box>
-            <MyTag name={data.category} size='lg' tabIndex={-1} />
+            <Link as={NavLink} to={`/books/search/category/${data.category}`}>
+              <MyTag name={data.category} size='lg' tabIndex={-1} />
+            </Link>
           </Box>
           <Box
             as='h1'
@@ -169,7 +172,7 @@ export default function Book() {
           <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
             Caracteristicas
           </Box>
-          <Box bg={bgGrayfeatures} p='4' roundedBottom='lg'>
+          <Box bg={bgGrayCategory} p='4' roundedBottom='lg'>
             <Flex direction='column'>
               <Box>
                 <Flex>
@@ -290,11 +293,12 @@ export default function Book() {
               h='650px'
               overflowX='hidden'
               mt='20'
-              p='0 1.25rem 1.25rem 1.25rem'
+              p='0 1.25rem 0 1.25rem'
               border='1px'
               borderColor={grayColor}
               boxShadow='xl'
               rounded='xl'
+              position='relative'
               sx={{
                 '&::-webkit-scrollbar': {
                   width: '7px',
@@ -307,11 +311,11 @@ export default function Book() {
             >
               <Box
                 p='1.25rem 2px 2px 2px'
-                mb='7'
+                h='24'
                 fontSize='2xl'
                 position='sticky'
                 top='0'
-                bg={bgSectionCategory}
+                bgGradient={`linear(360deg, #ffffff00 0%, ${gradientColor} 20%)`}
               >
                 Categorias
                 <Box mt='2' borderBottom='1px'></Box>
@@ -327,6 +331,12 @@ export default function Book() {
                   <Categories />
                 </Flex>
               </Suspense>
+              <Box
+                position='sticky'
+                h='7'
+                bottom='0'
+                bgGradient={`linear(180deg, #ffffff00 0%, ${gradientColor} 50%)`}
+              ></Box>
             </Box>
           </Box>
         </Flex>

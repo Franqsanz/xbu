@@ -149,6 +149,10 @@ const format: Array<SelectBooksprops> = [
     value: 'Electrónico',
     label: 'Electrónico',
   },
+  {
+    value: 'AudioLibro',
+    label: 'AudioLibro',
+  },
 ];
 
 export { navLink, accountLinks, categories, format };
