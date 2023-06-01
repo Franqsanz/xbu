@@ -1,71 +1,67 @@
 import { API_URL } from '../config';
+import { fetchData } from '../utils/fetchData';
 
 async function getAllBooks() {
-  const res = await fetch(API_URL);
+  const data = await fetchData(API_URL);
 
-  if (res.ok) return await res.json();
+  return data;
 }
 
 async function getAllSearchBooks() {
-  const res = await fetch(`${API_URL}/search`);
+  const data = await fetchData(`${API_URL}/search`);
 
-  if (res.ok) return await res.json();
+  return data;
 }
 
 async function getBooksPaginate(page: number | undefined) {
-  const res = await fetch(`${API_URL}?limit=10&page=${page}`);
+  const data = await fetchData(`${API_URL}?limit=10&page=${page}`);
 
-  if (res.ok) return await res.json();
+  return data;
 }
 
 async function getBook(id: string | undefined) {
-  const res = await fetch(`${API_URL}/${id}`);
+  const data = await fetchData(`${API_URL}/${id}`);
 
-  if (res.ok) return await res.json();
+  return data;
 }
 
 async function postBook(books: any) {
-  const res = await fetch(API_URL, {
+  const post = await fetchData(API_URL, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(books),
   });
 
-  if (res.ok) return await res.json();
-  throw new Error('Error al publicar el libro');
+  return post;
 }
 
 async function getBooksFilter(
   query: string | undefined,
   param: string | undefined,
 ) {
-  const res = await fetch(`${API_URL}?${query}=${param}`);
+  const data = await fetchData(`${API_URL}?${query}=${param}`);
 
-  if (res.ok) return await res.json();
+  return data;
 }
 
 async function getRelatedPost() {
-  const res = await fetch(`${API_URL}/related-post`);
+  const data = await fetchData(`${API_URL}/related-post`);
 
-  if (res.ok) return await res.json();
+  return data;
 }
 
 async function getAllFilterOptions() {
-  const res = await fetch(`${API_URL}/options`);
+  const data = await fetchData(`${API_URL}/options`);
 
-  if (res.ok) return await res.json();
+  return data;
 }
 
 async function deleteBook(id: any) {
-  const res = await fetch(`${API_URL}/${id}`, {
+  const data = await fetchData(`${API_URL}/${id}`, {
     method: 'DELETE',
   });
 
-  if (!res.ok) {
-    throw new Error('error');
-  }
-
-  return true;
+  return data;
 }
 
 export {

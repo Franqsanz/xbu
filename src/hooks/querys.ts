@@ -13,25 +13,23 @@ import {
 import { keys } from '../utils/utils';
 
 function useMutatePost() {
-  return useMutation([keys.all], postBook);
-
-  // const queryClient = useQueryClient();
-  // onSuccess: (post) => {
-  //   queryClient.setQueryData([key], (prevPosts) => prevPosts.concat(post));
-  //   queryClient.invalidateQueries([key]);
-  // },
-  // });
+  return useMutation([keys.postBook], postBook);
 }
 
 function useAllBooks() {
   return useQuery([keys.all], () => getAllBooks());
 }
+
 function useAllSearchBooks() {
-  return useQuery([keys.allSearch], () => getAllSearchBooks());
+  return useQuery([keys.allSearch], () => getAllSearchBooks(), {
+    refetchOnWindowFocus: false,
+  });
 }
 
 function useAllFilterOptions() {
-  return useQuery([keys.filtersOptions], () => getAllFilterOptions());
+  return useQuery([keys.filtersOptions], () => getAllFilterOptions(), {
+    refetchOnWindowFocus: false,
+  });
 }
 
 function useBooksPaginate() {
@@ -69,6 +67,7 @@ function useRelatedPost() {
 
 function useBook(id: string | undefined) {
   return useQuery([keys.one, id], () => getBook(id), {
+    refetchOnWindowFocus: false,
     suspense: true,
     cacheTime: 3000,
   });

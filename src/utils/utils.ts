@@ -2,11 +2,12 @@ import React from 'react';
 
 const keys = {
   all: 'Books',
+  postBook: 'PostBook',
   allSearch: 'BooksSearch',
   one: 'BookOne',
   filtersOptions: 'BookFiltersOptions',
   paginate: 'BookPaginate',
-  filter: 'booksFilter',
+  filter: 'BooksFilter',
   random: 'BooksRandom',
 };
 
