@@ -71,7 +71,7 @@ export default function Search() {
           colorScheme='green'
         >
           <Flex align='center' py='2' mb='2' fontSize='xl' fontWeight='bold'>
-            <Icon as={CgOptions} boxSize='20px' mr='3' />
+            <Icon as={CgOptions} boxSize='20px' mr='2' />
             Filtrar
           </Flex>
           <Flex direction='column-reverse' gap='3'>

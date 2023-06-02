@@ -34,8 +34,13 @@ export function FilterDrawer({
     <>
       <Drawer isOpen={isOpen} placement='bottom' onClose={onClose} size='xl'>
         <DrawerOverlay bg='#1212126e' />
-        <DrawerContent bg={bgDrawer} backdropFilter='auto' backdropBlur='12px'>
-          <DrawerHeader>Filtrar</DrawerHeader>
+        <DrawerContent
+          bg={bgDrawer}
+          backdropFilter='auto'
+          backdropBlur='12px'
+          roundedTop='2xl'
+        >
+          <DrawerHeader>Filtrar por:</DrawerHeader>
           <DrawerCloseButton />
           <DrawerBody>
             <Flex px='2' direction='column' mb='10'>
@@ -69,7 +74,7 @@ export function FilterDrawer({
             </Flex>
           </DrawerBody>
           <DrawerFooter justifyContent='center' borderTopWidth='1px'>
-            <Flex mb='1' gap='5'>
+            <Flex gap='5'>
               <Button
                 onClick={onClose}
                 bg={bgButtonCancel}
