@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, useColorModeValue } from '@chakra-ui/react';
 
-import { RelatedCard } from '../components/card/RelatedCard';
+import { RelatedCard } from '../components/cards/RelatedCard';
 import { CardProps, ReleatedBooksProps } from '../components/types';
 import { useRelatedPost } from '../hooks/querys';
 

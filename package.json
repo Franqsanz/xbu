@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "lint": "eslint --fix .",
     "test": "vitest",
-    "test:ui": "vitest --ui --api 9527",
+    "test:ui": "vitest --ui",
     "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
@@ -37,7 +37,7 @@
     "@sentry/react": "7.37.0",
     "@sentry/tracing": "7.37.0",
     "@testing-library/jest-dom": "5.16.5",
-    "@testing-library/react": "13.4.0",
+    "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
@@ -45,7 +45,7 @@
     "@typescript-eslint/eslint-plugin": "5.51.0",
     "@typescript-eslint/parser": "5.51.0",
     "@vitejs/plugin-react": "3.1.0",
-    "@vitest/ui": "0.28.4",
+    "@vitest/ui": "0.31.4",
     "eslint": "8.33.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-config-standard": "17.0.0",
@@ -54,16 +54,16 @@
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
-    "jsdom": "21.1.0",
+    "jsdom": "22.1.0",
     "prettier": "2.8.4",
     "sharp": "0.32.0",
     "svgo": "3.0.2",
     "typescript": "4.9.5",
-    "vite": "4.1.1",
+    "vite": "4.3.9",
     "vite-plugin-html": "3.2.0",
     "vite-plugin-image-optimizer": "1.1.2",
     "vite-plugin-minify": "1.5.2",
     "vite-plugin-webfont-dl": "3.6.1",
-    "vitest": "0.28.4"
+    "vitest": "0.31.4"
   }
 }

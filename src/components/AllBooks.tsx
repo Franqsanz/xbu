@@ -13,7 +13,7 @@ import { useInView } from 'react-intersection-observer';
 import { CardProps } from './types';
 import { useBooksPaginate } from '../hooks/querys';
 import { MySimpleGrid } from './MySimpleGrid';
-import { Card } from './card/Card';
+import { Card } from './cards/Card';
 import { Aside } from './Aside';
 
 export function AllBooks() {
