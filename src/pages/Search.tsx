@@ -11,7 +11,7 @@ import {
   Box,
 } from '@chakra-ui/react';
 
-import { Card } from '../components/card/Card';
+import { Card } from '../components/cards/Card';
 import { CardProps, LanguageProps } from '../components/types';
 import { useFilter } from '../hooks/querys';
 import { ContainerTitle } from '../components/ContainerTitle';
