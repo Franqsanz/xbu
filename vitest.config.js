@@ -8,7 +8,7 @@ export default defineConfig({
     reporters: ['html'],
     environment: 'jsdom',
     setupFiles: ['./src/tests/setup.ts'],
-    include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    include: ['**/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     exclude: ['node_modules', 'dist', '.idea', '.git', '.cache'],
   },
 });
