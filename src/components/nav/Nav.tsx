@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { BsSun } from 'react-icons/bs';
 import { RiMoonLine } from 'react-icons/ri';
@@ -18,6 +18,33 @@ import { MobileNav } from './MobileNav';
 
 export function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const bgNavColor = useColorModeValue('#ffffff56', '#12121244');
+
+  let user = false;
+  // const [user, setUser] = useState(null);
+  // console.log(user);
+
+  useEffect(() => {
+    fetch('http://localhost:9090/auth/login/check-user', {
+      method: 'GET',
+      // credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Credentials': true,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        throw new Error('authentication has been failed!');
+      })
+      .then((resObject) => {
+        // setUser(resObject.user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
@@ -28,7 +55,7 @@ export function Nav() {
         align='center'
         justify='space-between'
         p='2'
-        bg={useColorModeValue('#ffffff56', '#12121244')}
+        bg={bgNavColor}
         position='sticky'
         top='0'
         boxShadow='sm'
@@ -40,7 +67,7 @@ export function Nav() {
           <Flex align='center'>
             <Box
               as='span'
-              bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
+              bgGradient='linear-gradient(to-l, green.500, #e9f501)'
               bgClip='text'
               fontSize='2xl'
               fontWeight='bold'
@@ -60,9 +87,9 @@ export function Nav() {
                       fontWeight='medium'
                       _activeLink={{
                         borderBottom: '2px',
-                        borderColor: '#2de000',
+                        borderColor: 'green.500',
                       }}
-                      _hover={{ color: '#2de000' }}
+                      _hover={{ color: 'green.500' }}
                     >
                       {name}
                     </Link>
@@ -73,26 +100,42 @@ export function Nav() {
           </Flex>
           <Box as='nav'>
             <List display='flex' alignItems='center'>
-              {accountLinks.map(({ name, href }) => (
+              {user ? (
                 <Link
-                  key={name}
                   as={NavLink}
-                  to={href as string}
-                  border='1px'
-                  borderColor='#2de000'
-                  p='2'
-                  rounded='lg'
-                  mx='2'
-                  _hover={{ bg: '#28c900', outline: 'none' }}
+                  to='/profile'
+                  ml='7'
+                  fontWeight='medium'
+                  _activeLink={{
+                    borderBottom: '2px',
+                    borderColor: 'green.500',
+                  }}
+                  _hover={{ color: 'green.500' }}
                 >
-                  {name}
+                  Perfil
                 </Link>
-              ))}
+              ) : (
+                accountLinks.map(({ name, href }) => (
+                  <Link
+                    key={name}
+                    as={NavLink}
+                    to={href as string}
+                    border='1px'
+                    borderColor='green.500'
+                    p='2'
+                    rounded='lg'
+                    mx='2'
+                    _hover={{ bg: 'green.600', outline: 'none' }}
+                  >
+                    {name}
+                  </Link>
+                ))
+              )}
               <Button
                 onClick={toggleColorMode}
                 bg='none'
                 _active={{ bg: 'none', outline: '2px solid #4299E1' }}
-                _hover={{ color: '#2de000' }}
+                _hover={{ color: 'green.500' }}
               >
                 {colorMode === 'dark' ? (
                   <BsSun size='20' />
