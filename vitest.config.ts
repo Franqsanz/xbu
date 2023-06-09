@@ -1,14 +1,13 @@
 /// <reference types="vitest" />
 
-import { defineConfig } from 'vitest/config';
+import { configDefaults, defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
     globals: true,
-    // reporters: [''],
     environment: 'jsdom',
     setupFiles: ['./src/tests/setup.ts'],
     include: ['**/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    exclude: ['node_modules', 'dist', '.idea', '.git', '.cache'],
+    exclude: [...configDefaults.exclude],
   },
 });
