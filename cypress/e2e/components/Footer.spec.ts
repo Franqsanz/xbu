@@ -1,6 +1,9 @@
+/// <reference types="Cypress" />
+
 describe('Footer', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:1010/');
+    // cy.visit('http://localhost:1010/');
+    cy.visit('/');
   });
 
   it('Debería mostrar en el pie de pagina "Hecho con ❤ por Franqsanz" y el enlace Política de Privacidad', () => {
