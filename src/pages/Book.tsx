@@ -33,6 +33,8 @@ export default function Book() {
   const bgSectionCategory = useColorModeValue('white', 'gray.800');
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
   const bgButton = useColorModeValue('white', 'black');
+  const colorLinkCategory = useColorModeValue('green.800', 'green.400');
+  const colorLinkHoverCategory = useColorModeValue('green.900', 'green.700');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   let uiLink;
@@ -137,8 +139,11 @@ export default function Book() {
           m='1rem auto'
         >
           <Box>
-            <Link as={NavLink} to={`/books/search/category/${data.category}`}>
-              <MyTag name={data.category} size='lg' tabIndex={-1} />
+            <Link
+              as={NavLink}
+              to={`/books/search/category/${data.category[0]}`}
+            >
+              <MyTag name={data.category[0]} size='lg' tabIndex={-1} />
             </Link>
           </Box>
           <Box
@@ -207,12 +212,36 @@ export default function Book() {
                     <Box as='span'>{data.language}</Box>
                   </Box>
                 </Flex>
-                <Flex>
+                <Flex my='2'>
                   <Box w='160px'>
                     <Box as='span'>Formato:</Box>
                   </Box>
                   <Box>
                     <Box as='span'>{data.format}</Box>
+                  </Box>
+                </Flex>
+                <Flex>
+                  <Box w='160px'>
+                    <Box as='span'>Categoria(s):</Box>
+                  </Box>
+                  <Box>
+                    <Box as='span'>
+                      {data.category.map((category, index) => (
+                        <Link
+                          key={index}
+                          as={NavLink}
+                          to={`/books/search/category/${category}`}
+                          color={colorLinkCategory}
+                          _hover={{
+                            color: `${colorLinkHoverCategory}`,
+                            textDecoration: 'underline',
+                          }}
+                        >
+                          {category}
+                          {index !== data.category.length - 1 && ', '}
+                        </Link>
+                      ))}
+                    </Box>
                   </Box>
                 </Flex>
               </Box>
@@ -227,7 +256,7 @@ export default function Book() {
               onClick={onOpen}
               p='6'
               border='1px'
-              borderColor='#28c900'
+              borderColor='green.600'
               rounded='lg'
               textAlign='center'
               _hover={{ color: 'white', bg: 'black' }}

@@ -40,7 +40,7 @@ export function FormNewBook() {
     author: '',
     synopsis: '',
     year: '',
-    category: '',
+    category: [],
     numberPages: '',
     sourceLink: '',
     language: '',
@@ -52,9 +52,11 @@ export function FormNewBook() {
   });
 
   function allFieldsBook(book: Book): boolean {
-    return Object.entries(book)
-      .filter(([key]) => key !== 'sourceLink')
-      .every(([, value]) => value);
+    return (
+      Object.entries(book)
+        .filter(([key]) => key !== 'sourceLink')
+        .every(([, value]) => value) && book.category.length > 0
+    );
   }
 
   const disabled = !allFieldsBook(books);
@@ -76,8 +78,24 @@ export function FormNewBook() {
     });
   }
 
-  function handleCategoryChange(category) {
-    setBooks((books) => ({ ...books, category }));
+  function handleCategoryChange(selectedOptions) {
+    // Verificar si se seleccionaron opciones
+    if (selectedOptions && selectedOptions.length > 0) {
+      // Obtener los valores de las opciones seleccionadas
+      const selectedValues = selectedOptions.map((option) => option.value);
+
+      // Actualizar el estado de 'books' con los valores seleccionados
+      setBooks((prevBooks) => ({
+        ...prevBooks,
+        category: selectedValues,
+      }));
+    } else {
+      // Si no se seleccionaron opciones, establecer el estado de 'category' como un array vacío
+      setBooks((prevBooks) => ({
+        ...prevBooks,
+        category: [],
+      }));
+    }
   }
 
   function handleFormatChange(format) {
@@ -405,14 +423,15 @@ export function FormNewBook() {
               <FormControl isRequired mt={{ base: 0, md: 8 }}>
                 <FormLabel htmlFor='categoria'>Categoria del libro</FormLabel>
                 <Select
+                  isMulti
                   id='categoria'
                   name='category'
                   size='lg'
                   variant='filled'
-                  onChange={(selectedOption) =>
-                    handleCategoryChange(selectedOption?.value)
-                  }
+                  colorScheme='green'
+                  onChange={handleCategoryChange}
                   options={sortedCategories}
+                  closeMenuOnSelect={false}
                   noOptionsMessage={({ inputValue }) =>
                     `Esta opción "${inputValue}" no existe`
                   }

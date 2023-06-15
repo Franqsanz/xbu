@@ -59,7 +59,7 @@ interface Book {
   author: string;
   synopsis: string;
   year: string;
-  category: string;
+  category: string[];
   numberPages: string;
   sourceLink?: string;
   language: string;

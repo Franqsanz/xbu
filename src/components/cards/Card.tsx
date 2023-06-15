@@ -56,7 +56,7 @@ export function Card({ id, title, image, author, category }: CardProps) {
                 zIndex='1'
               >
                 <MyTag
-                  name={category}
+                  name={category[0]}
                   size='md'
                   isFocused={false}
                   tabIndex={-1}
