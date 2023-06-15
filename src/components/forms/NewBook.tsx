@@ -421,7 +421,12 @@ export function FormNewBook() {
                 />
               </FormControl>
               <FormControl isRequired mt={{ base: 0, md: 8 }}>
-                <FormLabel htmlFor='categoria'>Categoria del libro</FormLabel>
+                <FormLabel htmlFor='categoria'>
+                  Categoria(s){' '}
+                  <Box display='inline' fontSize='xs'>
+                    (Una o multiples categorias)
+                  </Box>
+                </FormLabel>
                 <Select
                   isMulti
                   id='categoria'
