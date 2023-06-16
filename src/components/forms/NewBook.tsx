@@ -19,6 +19,7 @@ import {
 import { Select } from 'chakra-react-select';
 import 'cropperjs/dist/cropper.css';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
+import { BiImageAdd } from 'react-icons/bi';
 
 import { categories, format } from '../links';
 import { Book } from '../types';
@@ -31,7 +32,7 @@ export function FormNewBook() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const bgColorBox = useColorModeValue('white', 'gray.900');
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
-  const bgColorButton = useColorModeValue('#2de000', '#24b300');
+  const bgColorButton = useColorModeValue('green.500', 'green.700');
   const { mutate, isLoading, isSuccess, error } = useMutatePost();
   const [cropData, setCropData] = useState<string | null>(null);
   const [crop, setCrop] = useState<any>('');
@@ -229,7 +230,7 @@ export function FormNewBook() {
           maxWidth='900px'
           border='1px'
           bg={bgColorBox}
-          borderColor='#2de000'
+          borderColor='green.600'
         >
           <Box mb='5' fontSize='md'>
             Los campos con el{' '}
@@ -303,11 +304,12 @@ export function FormNewBook() {
                   size='lg'
                   bg={bgColorButton}
                   color='black'
-                  _hover={{ bg: '#28c900' }}
-                  _active={{ bg: '#28c900' }}
+                  _hover={{ bg: 'green.600' }}
+                  _active={{ bg: 'green.600' }}
                 >
                   <Flex align='center' justify='center'>
-                    <Icon as={AiOutlineCloudUpload} fontSize='25' mr='2' />
+                    {/* <Icon as={AiOutlineCloudUpload} fontSize='25' mr='2' /> */}
+                    <Icon as={BiImageAdd} fontSize='25' mr='2' />
                     Seleccionar una imagen
                   </Flex>
                 </Button>
@@ -422,7 +424,7 @@ export function FormNewBook() {
               </FormControl>
               <FormControl isRequired mt={{ base: 0, md: 8 }}>
                 <FormLabel htmlFor='categoria'>
-                  Categoria(s){' '}
+                  Categoria{' '}
                   <Box display='inline' fontSize='xs'>
                     (Una o multiples categorias)
                   </Box>
@@ -468,12 +470,13 @@ export function FormNewBook() {
                   border='1px'
                   bg={bgColorButton}
                   color='black'
-                  _hover={{ bg: '#28c900' }}
-                  _active={{ bg: '#28c900' }}
+                  _hover={{ bg: 'green.600' }}
+                  _active={{ bg: 'green.600' }}
                   isDisabled={disabled}
                   loadingText='Publicando...'
                   isLoading={isLoading}
                 >
+                  <Icon as={AiOutlineCloudUpload} fontSize='25' mr='2' />
                   Publicar
                 </Button>
               </Box>
