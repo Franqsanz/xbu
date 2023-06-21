@@ -89,7 +89,14 @@ export default function Book() {
         description={data.synopsis}
         urlImage={data.image.url}
       />
-      <Box w='full' maxW='1300px' m='auto' px={{ base: 1, xl: 8 }} py='4'>
+      <Box
+        w='full'
+        maxW='1300px'
+        m='auto'
+        px={{ base: 1, xl: 8 }}
+        pt='4'
+        pb='1'
+      >
         <Button
           bg='none'
           mt={{ base: 1, md: 5 }}
@@ -162,12 +169,7 @@ export default function Book() {
             {data.author}
           </Box>
           <Box mt='5'>
-            <Box
-              p='2'
-              fontSize='xl'
-              bg={useColorModeValue('gray.200', 'gray.600')}
-              roundedTop='lg'
-            >
+            <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
               Sinopsis
             </Box>
             <Text mt='3' mb='10' fontSize='lg' whiteSpace='pre-wrap'>
