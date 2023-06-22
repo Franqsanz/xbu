@@ -141,6 +141,7 @@ export default function Search() {
               category,
               sourceLink,
               image,
+              pathUrl,
             }: CardProps) => (
               <React.Fragment key={id}>
                 <Card
@@ -150,6 +151,7 @@ export default function Search() {
                   author={author}
                   synopsis={synopsis}
                   sourceLink={sourceLink}
+                  pathUrl={pathUrl}
                   image={image}
                 />
               </React.Fragment>
