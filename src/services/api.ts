@@ -20,7 +20,7 @@ async function getBooksPaginate(page: number | undefined) {
 }
 
 async function getBook(id: string | undefined) {
-  const data = await fetchData(`${API_URL}/${id}`);
+  const data = await fetchData(`${API_URL}/path/${id}`);
 
   return data;
 }

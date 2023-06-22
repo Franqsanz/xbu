@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState, useRef } from 'react';
+import React, { Suspense, lazy, useState, useEffect, useRef } from 'react';
 import {
   FormControl,
   Button,
@@ -25,6 +25,7 @@ import { categories, format } from '../links';
 import { Book } from '../types';
 import { useMutatePost } from '../../hooks/querys';
 import { ModalCropper } from '../forms/ModalCropper';
+import { generatePathUrl } from '../../utils/utils';
 
 const Cropper = lazy(() => import('react-cropper'));
 
@@ -46,6 +47,7 @@ export function FormNewBook() {
     sourceLink: '',
     language: '',
     format: '',
+    pathUrl: '',
     image: {
       url: null,
       public_id: '',
@@ -98,6 +100,12 @@ export function FormNewBook() {
       }));
     }
   }
+
+  useEffect(() => {
+    // Genera el pathUrl basado en el título cada vez que se actualiza
+    const generatedPathUrl = generatePathUrl(books.title);
+    setBooks((books) => ({ ...books, pathUrl: generatedPathUrl }));
+  }, [books.title]);
 
   function handleFormatChange(format) {
     setBooks((books) => ({ ...books, format }));

@@ -15,7 +15,14 @@ import { CardProps } from '../types';
 import { MyTag } from '../MyTag';
 import { handleImageLoad } from '../../utils/utils';
 
-export function Card({ id, title, image, author, category }: CardProps) {
+export function Card({
+  id,
+  title,
+  image,
+  author,
+  category,
+  pathUrl,
+}: CardProps) {
   const navigate = useNavigate();
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
   const outlineCard = useColorModeValue('black', 'white');
@@ -27,7 +34,7 @@ export function Card({ id, title, image, author, category }: CardProps) {
 
   function handleKeyPress(e: React.KeyboardEvent) {
     if (e.key === 'Enter') {
-      navigate(`/book/${id}`);
+      navigate(`/book/${pathUrl}`);
     }
   }
 
@@ -36,7 +43,7 @@ export function Card({ id, title, image, author, category }: CardProps) {
       <LinkBox mx='1' my='5' pb='4'>
         <LinkOverlay
           as={NavLink}
-          to={`/book/${id}`}
+          to={`/book/${pathUrl}`}
           tabIndex={-1}
           _hover={{ outline: 'none' }}
         >

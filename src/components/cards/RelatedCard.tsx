@@ -5,7 +5,13 @@ import { FiArrowRight } from 'react-icons/fi';
 
 import { CardProps } from '../types';
 
-export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
+export function RelatedCard({
+  id,
+  title,
+  author,
+  pathUrl,
+  refetchQueries,
+}: CardProps) {
   const navigate = useNavigate();
   const borderCard = useColorModeValue('gray.200', 'gray.600');
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
@@ -14,7 +20,7 @@ export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
 
   function handleKeyPress(e: React.KeyboardEvent) {
     if (e.key === 'Enter') {
-      navigate(`/book/${id}`);
+      navigate(`/book/${pathUrl}`);
     }
   }
 
@@ -60,7 +66,7 @@ export function RelatedCard({ id, title, author, refetchQueries }: CardProps) {
           </Flex>
           <Link
             as={NavLink}
-            to={`/book/${id}`}
+            to={`/book/${pathUrl}`}
             onClick={refetchQueries}
             w='full'
             bg={bgRandomBookCardLink}

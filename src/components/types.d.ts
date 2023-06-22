@@ -27,6 +27,7 @@ interface CardProps {
   sourceLink?: string;
   numberPages?: number;
   format?: string;
+  pathUrl: string;
   refetchQueries?: () => any | unknown;
   image?: {
     url: string;
@@ -64,6 +65,7 @@ interface Book {
   sourceLink?: string;
   language: string;
   format: string;
+  pathUrl: string;
   image?: {
     url: null;
     public_id: string;

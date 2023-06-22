@@ -99,6 +99,7 @@ export function AllBooks() {
                   category,
                   sourceLink,
                   image,
+                  pathUrl,
                 }: CardProps) => (
                   <React.Fragment key={id}>
                     <Card
@@ -108,6 +109,7 @@ export function AllBooks() {
                       author={author}
                       synopsis={synopsis}
                       sourceLink={sourceLink}
+                      pathUrl={pathUrl}
                       image={image}
                     />
                   </React.Fragment>

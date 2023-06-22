@@ -1,4 +1,5 @@
 import React from 'react';
+import { nanoid } from 'nanoid';
 
 const keys = {
   all: 'Books',
@@ -16,4 +17,12 @@ function handleImageLoad(e: React.SyntheticEvent) {
   target.style.filter = 'blur(0)';
 }
 
-export { keys, handleImageLoad };
+function generatePathUrl(name) {
+  const formattedName = name.toLowerCase().replace(/\.|\//g, '');
+  const dashedName = formattedName.replace(/\s+/g, '-');
+  const randomId = nanoid(4);
+
+  return `${dashedName}-${randomId}`;
+}
+
+export { keys, handleImageLoad, generatePathUrl };

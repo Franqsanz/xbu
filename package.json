@@ -23,6 +23,7 @@
     "@tanstack/react-query-devtools": "4.24.4",
     "chakra-react-select": "4.6.0",
     "framer-motion": "9.0.2",
+    "nanoid": "4.0.2",
     "react": "18.2.0",
     "react-cropper": "2.1.8",
     "react-dom": "18.2.0",
