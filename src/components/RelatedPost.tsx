@@ -25,7 +25,7 @@ export default function RelatedPost({ currentBookId }: ReleatedBooksProps) {
     <>
       <Flex flexWrap={{ base: 'wrap', xl: 'nowrap' }} color={colorCard}>
         {relatedBooks.map(
-          ({ id, title, synopsis, author, category }: CardProps) => (
+          ({ id, title, synopsis, author, category, pathUrl }: CardProps) => (
             <React.Fragment key={id}>
               <RelatedCard
                 id={id}
@@ -33,6 +33,7 @@ export default function RelatedPost({ currentBookId }: ReleatedBooksProps) {
                 title={title}
                 author={author}
                 synopsis={synopsis}
+                pathUrl={pathUrl}
                 refetchQueries={refetch}
               />
             </React.Fragment>

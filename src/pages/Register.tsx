@@ -13,7 +13,7 @@ export function Register() {
       <ContainerTitle title='Crear cuenta' showSearch={false} />
       <Flex justify='center' py={{ base: '10vh', md: '15vh' }}>
         <Stack direction='column' spacing='5'>
-          <Button
+          {/* <Button
             w='250px'
             fontWeight='normal'
             leftIcon={<GrGoogle />}
@@ -25,12 +25,12 @@ export function Register() {
             _hover={{ bg: '#D23C2F' }}
             _active={{ bg: '#BB352A' }}
             onClick={() =>
-              // window.open('https://xb-api.vercel.app/auth/twitter', '_self')
+              // window.open('https://xb-api.vercel.app/auth/google', '_self')
               window.open('http://localhost:9090/auth/google', '_self')
             }
           >
             Google
-          </Button>
+          </Button> */}
           <Button
             fontWeight='normal'
             leftIcon={<GrTwitter />}
@@ -39,10 +39,9 @@ export function Register() {
             borderRadius='lg'
             p='7'
             fontSize='xl'
-            onClick={
-              () =>
-                window.open('https://xb-api.vercel.app/auth/twitter', '_self')
-              // window.open('http://localhost:9090/auth/twitter', '_self')
+            onClick={() =>
+              // window.open('https://xb-api.vercel.app/auth/twitter', '_self')
+              window.open('http://localhost:9090/auth/twitter', '_self')
             }
           >
             Twitter
