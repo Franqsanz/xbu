@@ -18,8 +18,12 @@ function handleImageLoad(e: React.SyntheticEvent) {
 }
 
 function generatePathUrl(name) {
-  const formattedName = name.toLowerCase().replace(/\.|\//g, '');
-  const dashedName = formattedName.replace(/\s+/g, '-');
+  const formattedName = name
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+  const withoutDotsName = formattedName.replace(/\.|\//g, '');
+  const dashedName = withoutDotsName.replace(/\s+/g, '-');
   const randomId = nanoid(4);
 
   return `${dashedName}-${randomId}`;
