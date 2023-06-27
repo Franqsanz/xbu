@@ -72,7 +72,7 @@
     "vitest": "0.31.4"
   },
   "lint-staged": {
-    "src/*": [
+    "src/*.{ts,tsx}": [
       "npm run ts-lint"
     ]
   }
