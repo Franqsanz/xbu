@@ -70,5 +70,10 @@
     "vite-plugin-minify": "1.5.2",
     "vite-plugin-webfont-dl": "3.6.1",
     "vitest": "0.31.4"
+  },
+  "lint-staged": {
+    "src/*": [
+      "npm run ts-lint"
+    ]
   }
 }

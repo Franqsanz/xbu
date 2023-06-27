@@ -1,4 +1,4 @@
-name: pre-commit
+name: type check
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  pre-commit:
+  check-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
