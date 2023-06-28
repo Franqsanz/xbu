@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "lint": "eslint --fix .",
-    "ts-lint": "tsc --noEmit --jsx react",
+    "ts-lint": "tsc --noEmit",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:watch": "npm run test -- --watch",

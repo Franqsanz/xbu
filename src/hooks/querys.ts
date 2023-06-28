@@ -65,8 +65,8 @@ function useRelatedPost() {
   });
 }
 
-function useBook(id: string | undefined) {
-  return useQuery([keys.one, id], () => getBook(id), {
+function useBook(pathUrl: string | undefined) {
+  return useQuery([keys.one, pathUrl], () => getBook(pathUrl), {
     refetchOnWindowFocus: false,
     suspense: true,
     cacheTime: 3000,

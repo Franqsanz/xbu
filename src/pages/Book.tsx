@@ -26,7 +26,7 @@ const RelatedPost = lazy(() => import('../components/RelatedPost'));
 
 export default function Book() {
   const shareUrl = window.location.href;
-  const { id } = useParams();
+  const { pathUrl } = useParams();
   const grayColor = useColorModeValue('gray.200', 'gray.600');
   const bgGrayCategory = useColorModeValue('gray.100', 'gray.700');
   const gradientColor = useColorModeValue('white', '#1A202C');
@@ -43,7 +43,7 @@ export default function Book() {
     navigate(-1);
   }
 
-  const { data } = useBook(id);
+  const { data } = useBook(pathUrl);
 
   if (data.sourceLink === '') {
     uiLink = (
@@ -296,7 +296,7 @@ export default function Book() {
               }
             >
               <Box>
-                <RelatedPost currentBookId={id} />
+                <RelatedPost currentBookId={pathUrl} />
               </Box>
             </Suspense>
           </Flex>

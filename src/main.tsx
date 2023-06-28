@@ -73,7 +73,7 @@ const html = (
                   }
                 />
                 <Route
-                  path='book/:id'
+                  path='/book/show/:pathUrl'
                   element={
                     <CatchError>
                       <Book />
