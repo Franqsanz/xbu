@@ -2,8 +2,3 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npx lint-staged
-  # "lint-staged": {
-  #   "src/tests/*.test.{ts,tsx}": [
-  #     "npm run test"
-  #   ]
-  # }
