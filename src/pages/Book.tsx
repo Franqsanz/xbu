@@ -93,7 +93,7 @@ export default function Book() {
         w='full'
         maxW='1300px'
         m='auto'
-        px={{ base: 1, xl: 8 }}
+        px={{ base: 1, xl: 7 }}
         pt='4'
         pb='1'
       >
@@ -121,10 +121,10 @@ export default function Book() {
         direction={{ base: 'column', lg: 'row' }}
       >
         <Box display={{ base: 'block', lg: 'none' }} m='auto' py='4'>
-          <LazyLoad width={200} height={290} offset={0} threshold={0.99}>
+          <LazyLoad width={300} height={430} offset={0} threshold={0.99}>
             <Image
-              w='200px'
-              h='290px'
+              w='300px'
+              h='430px'
               src={data.image.url}
               alt={`Imagen de "${data.title}"`}
               rounded='md'
@@ -304,10 +304,10 @@ export default function Book() {
         <Flex display={{ base: 'none', lg: 'block' }} w='335px' px='3'>
           <Box maxW={{ base: '920px', lg: 'auto' }} m='1rem auto'>
             <Flex justifyContent='center'>
-              <LazyLoad width={234} height={360} offset={0} threshold={0.99}>
+              <LazyLoad width={290} height={420} offset={0} threshold={0.99}>
                 <Image
-                  w='234px'
-                  h='360px'
+                  w='290px'
+                  h='420px'
                   src={data.image.url}
                   alt={`Imagen de "${data.title}"`}
                   rounded='lg'
