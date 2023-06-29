@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Box,
   useColorModeValue,
@@ -38,9 +38,17 @@ export function InputSearch({ onOpen }: Props) {
   const colorListBgHover = useColorModeValue('gray.300', 'gray.600');
   const [books, setBooks] = useState<Book[]>([]);
   const [search, setSearch] = useState({ query: '' });
+  const navigate = useNavigate();
   let alertMessage;
 
   const { data } = useAllSearchBooks();
+
+  // TODO: resolver esto a futuro
+  // function handleKeyPress(e: React.KeyboardEvent) {
+  //   if (e.key === 'Enter') {
+  //     navigate(`/book/show/${books}`);
+  //   }
+  // }
 
   useEffect(() => {
     if (data && data) setBooks(data);
@@ -122,11 +130,12 @@ export function InputSearch({ onOpen }: Props) {
                 mb='3'
                 rounded='lg'
                 bg={colorListBg}
+                // onKeyDown={handleKeyPress}
                 _hover={{ bg: `${colorListBgHover}` }}
               >
                 <Link
                   as={NavLink}
-                  to={`/book/${book.pathUrl}`}
+                  to={`/book/show/${book.pathUrl}`}
                   display='block'
                   p='3'
                   tabIndex={-1}

@@ -63,23 +63,40 @@ const html = (
                 <Route path='privacy-policies' element={<PrivacyPolicies />} />
                 <Route path='new-post' element={<NewBook />} />
                 <Route path='explore' element={<Explore />} />
-                <Route path=':user' element={<Profile />} />
-                <Route
-                  path='/books/search/:query/:param'
-                  element={
-                    <CatchError>
-                      <Search />
-                    </CatchError>
-                  }
-                />
-                <Route
+                {/* <Route path=':user' element={<Profile />} /> */}
+                <Route path='/books'>
+                  <Route path='search'>
+                    <Route
+                      path=':query/:param'
+                      element={
+                        <CatchError>
+                          <Search />
+                        </CatchError>
+                      }
+                    />
+                  </Route>
+                </Route>
+                <Route path='/book'>
+                  <Route path='show'>
+                    <Route
+                      path=':pathUrl'
+                      element={
+                        <CatchError>
+                          <Book />
+                        </CatchError>
+                      }
+                    />
+                  </Route>
+                </Route>
+
+                {/* <Route
                   path='/book/show/:pathUrl'
                   element={
                     <CatchError>
                       <Book />
                     </CatchError>
                   }
-                />
+                /> */}
                 <Route path='*' element={<ErrorPage />} />
               </Routes>
             </Suspense>

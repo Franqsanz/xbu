@@ -39,7 +39,7 @@ export function RelatedCard({
         bg='transparent'
         position='relative'
         tabIndex={0}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyPress}
         _focus={{ outline: `3px solid ${outlineCard}` }}
       >
         <Flex direction={{ base: 'column', md: 'row' }}>

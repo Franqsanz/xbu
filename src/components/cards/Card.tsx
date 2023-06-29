@@ -83,7 +83,7 @@ export function Card({
                   transition='filter 0.6s ease-in-out'
                   onLoad={handleImageLoad}
                   tabIndex={0}
-                  onKeyPress={handleKeyPress}
+                  onKeyDown={handleKeyPress}
                   _hover={{
                     borderColor: 'transparent',
                     outline: `4px solid ${outlineCard}`,

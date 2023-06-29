@@ -120,11 +120,11 @@ export default function Book() {
         align='flex-start'
         direction={{ base: 'column', lg: 'row' }}
       >
-        <Box display={{ base: 'block', lg: 'none' }} m='auto' py='4'>
-          <LazyLoad width={300} height={430} offset={0} threshold={0.99}>
+        <Box display={{ base: 'block', lg: 'none' }} m='auto' pb='4'>
+          <LazyLoad width={230} height={340} offset={0} threshold={0.99}>
             <Image
-              w='300px'
-              h='430px'
+              w='230px'
+              h='340px'
               src={data.image.url}
               alt={`Imagen de "${data.title}"`}
               rounded='md'
