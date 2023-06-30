@@ -36,14 +36,13 @@ export function ModalCropper({
             <Button
               onClick={() => {
                 getCropData();
-                onClose();
               }}
               fontWeight='500'
               border='1px'
-              bg={useColorModeValue('#2de000', '#24b300')}
+              bg={useColorModeValue('green.500', 'green.700')}
               color='black'
-              _hover={{ bg: '#28c900' }}
-              _active={{ bg: '#28c900' }}
+              _hover={{ bg: 'green.600' }}
+              _active={{ bg: 'green.600' }}
             >
               Cortar
             </Button>

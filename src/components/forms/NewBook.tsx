@@ -147,6 +147,7 @@ export function FormNewBook() {
         ...books,
         image: { url: crop.getCroppedCanvas().toDataURL(), public_id: '' },
       });
+      onClose();
     }
   }
 
@@ -316,7 +317,6 @@ export function FormNewBook() {
                   _active={{ bg: 'green.600' }}
                 >
                   <Flex align='center' justify='center'>
-                    {/* <Icon as={AiOutlineCloudUpload} fontSize='25' mr='2' /> */}
                     <Icon as={BiImageAdd} fontSize='25' mr='2' />
                     Seleccionar una imagen
                   </Flex>
