@@ -91,23 +91,20 @@ export default function Book() {
       />
       <Box
         w='full'
-        maxW='1300px'
+        maxW='1218px'
         m='auto'
-        px={{ base: 1, xl: 7 }}
+        px={{ base: 5, xl: 0 }}
         pt='4'
-        pb='1'
+        pb='5'
       >
         <Button
-          bg='none'
           mt={{ base: 1, md: 5 }}
           fontWeight='500'
           w='100px'
           onClick={handleGoBack}
-          _hover={{ bg: 'none' }}
-          _active={{ bg: 'none' }}
         >
           <Flex align='center' justify='center'>
-            <Icon as={FiArrowLeft} boxSize='5' mr='2' />
+            <Icon as={FiArrowLeft} boxSize='5' mr='1' />
             Volver
           </Flex>
         </Button>

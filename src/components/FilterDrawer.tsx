@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CheckboxGroup,
   Checkbox,
@@ -25,20 +25,22 @@ export function FilterDrawer({
   language,
   languagesMap,
 }: PropsDrawer) {
-  const bgDrawer = useColorModeValue('#fffffff4', '#121212e4');
   const bgContentCheckbox = useColorModeValue('white', 'transparent');
-  const bgButtonCancel = useColorModeValue('transparent', 'black');
-  const bgButtonApply = useColorModeValue('#2de000', '#24b300');
+  const bgButtonApply = useColorModeValue('green.500', 'green.700');
+  const [isChecked, setIsChecked] = useState(false);
+
+  function handleCheckboxChange() {
+    setIsChecked(!isChecked);
+  }
 
   return (
     <>
       <Drawer isOpen={isOpen} placement='bottom' onClose={onClose} size='xl'>
         <DrawerOverlay bg='#1212126e' />
         <DrawerContent
-          bg={bgDrawer}
           backdropFilter='auto'
           backdropBlur='12px'
-          roundedTop='2xl'
+          roundedTop='3xl'
         >
           <DrawerHeader>Filtrar por:</DrawerHeader>
           <DrawerCloseButton />
@@ -53,16 +55,19 @@ export function FilterDrawer({
                 colorScheme='green'
               >
                 <Flex
-                  mx='3'
+                  mx='2'
                   bg={bgContentCheckbox}
-                  p='3'
                   rounded='lg'
                   direction='column-reverse'
                   gap='5'
                 >
                   {language &&
                     language.map((language) => (
-                      <Checkbox key={language} value={language}>
+                      <Checkbox
+                        key={language}
+                        value={language}
+                        onChange={handleCheckboxChange}
+                      >
                         {language}
                         <Box as='span' ml='2' color='gray.500'>
                           ({languagesMap && languagesMap[language]})
@@ -74,31 +79,20 @@ export function FilterDrawer({
             </Flex>
           </DrawerBody>
           <DrawerFooter justifyContent='center' borderTopWidth='1px'>
-            <Flex gap='5'>
-              <Button
-                onClick={onClose}
-                bg={bgButtonCancel}
-                border='1px'
-                size='lg'
-                fontWeight='light'
-                borderColor='#28c900'
-                _hover={{ color: 'white', bg: 'black' }}
-              >
-                Cancelar
-              </Button>
-              <Button
-                onClick={onClose}
-                bg={bgButtonApply}
-                border='1px'
-                size='lg'
-                fontWeight='light'
-                color='black'
-                _hover={{ bg: '#28c900' }}
-                _active={{ bg: '#28c900' }}
-              >
-                Aplicar
-              </Button>
-            </Flex>
+            <Button
+              w='full'
+              onClick={onClose}
+              bg={bgButtonApply}
+              border='1px'
+              size='lg'
+              fontWeight='light'
+              color='black'
+              isDisabled={!isChecked}
+              _hover={{ bg: 'green.600' }}
+              _active={{ bg: 'green.600' }}
+            >
+              Mostrar Resultados
+            </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
