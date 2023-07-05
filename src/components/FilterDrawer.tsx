@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
-  CheckboxGroup,
-  Checkbox,
+  RadioGroup,
+  Radio,
   useColorModeValue,
   Drawer,
   DrawerOverlay,
@@ -20,17 +20,20 @@ import { PropsDrawer } from './types';
 export function FilterDrawer({
   isOpen,
   onClose,
-  languages,
   handleLanguageChange,
   language,
   languagesMap,
 }: PropsDrawer) {
   const bgContentCheckbox = useColorModeValue('white', 'transparent');
   const bgButtonApply = useColorModeValue('green.500', 'green.700');
-  const [isChecked, setIsChecked] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState('');
 
-  function handleCheckboxChange() {
-    setIsChecked(!isChecked);
+  function handleRadioChange(language) {
+    setSelectedLanguage(language);
+  }
+
+  function handleAllRadioChange() {
+    setSelectedLanguage('');
   }
 
   return (
@@ -49,8 +52,8 @@ export function FilterDrawer({
               <Box mb='4' borderBottom='1px'>
                 Idioma
               </Box>
-              <CheckboxGroup
-                value={languages}
+              <RadioGroup
+                value={selectedLanguage}
                 onChange={handleLanguageChange}
                 colorScheme='green'
               >
@@ -63,19 +66,22 @@ export function FilterDrawer({
                 >
                   {language &&
                     language.map((language) => (
-                      <Checkbox
+                      <Radio
                         key={language}
                         value={language}
-                        onChange={handleCheckboxChange}
+                        onChange={() => handleRadioChange(language)}
                       >
                         {language}
                         <Box as='span' ml='2' color='gray.500'>
                           ({languagesMap && languagesMap[language]})
                         </Box>
-                      </Checkbox>
+                      </Radio>
                     ))}
+                  <Radio value='' onChange={handleAllRadioChange}>
+                    Todos
+                  </Radio>
                 </Flex>
-              </CheckboxGroup>
+              </RadioGroup>
             </Flex>
           </DrawerBody>
           <DrawerFooter justifyContent='center' borderTopWidth='1px'>
@@ -87,7 +93,6 @@ export function FilterDrawer({
               size='lg'
               fontWeight='light'
               color='black'
-              isDisabled={!isChecked}
               _hover={{ bg: 'green.600' }}
               _active={{ bg: 'green.600' }}
             >

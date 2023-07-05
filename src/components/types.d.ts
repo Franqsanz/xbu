@@ -100,7 +100,6 @@ interface LanguageProps {
 }
 
 interface PropsDrawer extends DisclosureProps, LanguageProps {
-  languages: Array<string>;
   handleLanguageChange: (languages: any) => void;
 }
 

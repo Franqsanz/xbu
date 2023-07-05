@@ -23,7 +23,7 @@ import { CatchError } from './utils/CatchError';
 import { ScrollToTop } from './utils/ScrollToTop';
 
 import theme from '../theme';
-import router from './routes';
+// import router from './routes';
 
 const PrivacyPolicies = lazy(() => import('./pages/PrivacyPolicies'));
 const Explore = lazy(() => import('./pages/Explore'));

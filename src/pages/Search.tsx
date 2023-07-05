@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CgOptions } from 'react-icons/cg';
 import {
-  CheckboxGroup,
-  Checkbox,
   Button,
   Flex,
   Icon,
   useDisclosure,
   Box,
+  Radio,
+  RadioGroup,
 } from '@chakra-ui/react';
 
 import { Card } from '../components/cards/Card';
@@ -24,6 +24,7 @@ import { FilterDrawer } from '../components/FilterDrawer';
 export default function Search() {
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [languages, setLanguages] = useState<string[]>([]);
+  const [selectedLanguage, setSelectedLanguage] = useState('');
   const { query, param } = useParams();
   let asideFilter;
   let buttonFilter;
@@ -58,6 +59,7 @@ export default function Search() {
 
   function handleLanguageChange(languages) {
     setLanguages(languages);
+    setSelectedLanguage(languages);
   }
 
   if (languagesData) {
@@ -65,8 +67,8 @@ export default function Search() {
 
     asideFilter = (
       <Flex display={{ base: 'none', md: 'flex' }} direction='column' mt='10'>
-        <CheckboxGroup
-          value={languages}
+        <RadioGroup
+          value={selectedLanguage}
           onChange={handleLanguageChange}
           colorScheme='green'
         >
@@ -77,15 +79,16 @@ export default function Search() {
           <Flex direction='column-reverse' gap='3'>
             {language &&
               language.map((language) => (
-                <Checkbox key={language} value={language}>
+                <Radio key={language} value={language}>
                   {language}
                   <Box as='span' ml='2' color='gray.500'>
                     ({languagesMap && languagesMap[language]})
                   </Box>
-                </Checkbox>
+                </Radio>
               ))}
+            <Radio value=''>Todos</Radio>
           </Flex>
-        </CheckboxGroup>
+        </RadioGroup>
       </Flex>
     );
 
@@ -121,7 +124,6 @@ export default function Search() {
         language={languagesData?.language}
         languagesMap={languagesData?.languagesMap}
         handleLanguageChange={handleLanguageChange}
-        languages={languages}
       />
       <Flex
         direction={{ base: 'column', md: 'row' }}
