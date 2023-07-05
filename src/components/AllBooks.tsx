@@ -56,7 +56,11 @@ export function AllBooks() {
   if (isFetchingNextPage) {
     fetchingNextPageUI = (
       <Box p='10' textAlign='center'>
-        <Spinner size='xl' thickness='4px' speed='0.40s' />
+        <Spinner
+          size={{ base: 'lg', md: 'xl' }}
+          thickness='4px'
+          speed='0.40s'
+        />
       </Box>
     );
   }

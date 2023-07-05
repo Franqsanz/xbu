@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, RouterProvider } from 'react-router-dom';
 import {
   ChakraProvider,
   ColorModeScript,
@@ -10,7 +10,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import * as Sentry from '@sentry/react';
-import { BrowserTracing } from '@sentry/tracing';
+// import { Integrations } from '@sentry/tracing';
 import { HelmetProvider } from 'react-helmet-async';
 
 import { Home } from './pages/Home';
@@ -23,19 +23,20 @@ import { CatchError } from './utils/CatchError';
 import { ScrollToTop } from './utils/ScrollToTop';
 
 import theme from '../theme';
+import router from './routes';
 
 const PrivacyPolicies = lazy(() => import('./pages/PrivacyPolicies'));
 const Explore = lazy(() => import('./pages/Explore'));
 const Book = lazy(() => import('./pages/Book'));
 const Search = lazy(() => import('./pages/Search'));
 const NewBook = lazy(() => import('./pages/NewBook'));
-const Profile = lazy(() => import('./pages/profile/Profile'));
+// const Profile = lazy(() => import('./pages/profile/Profile'));
 
 const queryClient = new QueryClient();
 
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DNS,
-  integrations: [new BrowserTracing()],
+  integrations: [new Sentry.BrowserTracing()],
   tracesSampleRate: 1.0,
 });
 
@@ -45,6 +46,7 @@ const html = (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        {/* <RouterProvider router={router} /> */}
         <BrowserRouter>
           <Nav />
           <ScrollToTop>
@@ -63,7 +65,6 @@ const html = (
                 <Route path='privacy-policies' element={<PrivacyPolicies />} />
                 <Route path='new-post' element={<NewBook />} />
                 <Route path='explore' element={<Explore />} />
-                {/* <Route path=':user' element={<Profile />} /> */}
                 <Route path='/books'>
                   <Route path='search'>
                     <Route
@@ -77,7 +78,7 @@ const html = (
                   </Route>
                 </Route>
                 <Route path='/book'>
-                  <Route path='show'>
+                  <Route path='view'>
                     <Route
                       path=':pathUrl'
                       element={
@@ -88,15 +89,6 @@ const html = (
                     />
                   </Route>
                 </Route>
-
-                {/* <Route
-                  path='/book/show/:pathUrl'
-                  element={
-                    <CatchError>
-                      <Book />
-                    </CatchError>
-                  }
-                /> */}
                 <Route path='*' element={<ErrorPage />} />
               </Routes>
             </Suspense>

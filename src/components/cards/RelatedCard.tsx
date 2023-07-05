@@ -20,7 +20,7 @@ export function RelatedCard({
 
   function handleKeyPress(e: React.KeyboardEvent) {
     if (e.key === 'Enter') {
-      navigate(`/book/show/${pathUrl}`);
+      navigate(`/book/view/${pathUrl}`);
     }
   }
 
@@ -66,7 +66,7 @@ export function RelatedCard({
           </Flex>
           <Link
             as={NavLink}
-            to={`/book/show/${pathUrl}`}
+            to={`/book/view/${pathUrl}`}
             onClick={refetchQueries}
             w='full'
             bg={bgRandomBookCardLink}

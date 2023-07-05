@@ -135,7 +135,7 @@ export function InputSearch({ onOpen }: Props) {
               >
                 <Link
                   as={NavLink}
-                  to={`/book/show/${book.pathUrl}`}
+                  to={`/book/view/${book.pathUrl}`}
                   display='block'
                   p='3'
                   tabIndex={-1}

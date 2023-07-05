@@ -34,7 +34,7 @@ export function Card({
 
   function handleKeyPress(e: React.KeyboardEvent) {
     if (e.key === 'Enter') {
-      navigate(`/book/show/${pathUrl}`);
+      navigate(`/book/view/${pathUrl}`);
     }
   }
 
@@ -43,7 +43,7 @@ export function Card({
       <LinkBox mx='1' my='5' pb='4'>
         <LinkOverlay
           as={NavLink}
-          to={`/book/show/${pathUrl}`}
+          to={`/book/view/${pathUrl}`}
           tabIndex={-1}
           _hover={{ outline: 'none' }}
         >
