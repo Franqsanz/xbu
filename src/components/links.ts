@@ -55,8 +55,8 @@ const categories: Array<SelectBooksprops> = [
     label: 'Economía',
   },
   {
-    value: 'Románticos',
-    label: 'Románticos',
+    value: 'Romance',
+    label: 'Romance',
   },
   {
     value: 'Fantasía',
@@ -137,6 +137,22 @@ const categories: Array<SelectBooksprops> = [
   {
     value: 'Historia',
     label: 'Historia',
+  },
+  {
+    value: 'Misterio',
+    label: 'Misterio',
+  },
+  {
+    value: 'Thriller',
+    label: 'Thriller',
+  },
+  {
+    value: 'Adulto',
+    label: 'Adulto',
+  },
+  {
+    value: 'Ficción',
+    label: 'Ficción',
   },
 ];
 

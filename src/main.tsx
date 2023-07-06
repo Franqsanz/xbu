@@ -10,7 +10,6 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import * as Sentry from '@sentry/react';
-// import { Integrations } from '@sentry/tracing';
 import { HelmetProvider } from 'react-helmet-async';
 
 import { Home } from './pages/Home';
@@ -36,8 +35,18 @@ const queryClient = new QueryClient();
 
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DNS,
-  integrations: [new Sentry.BrowserTracing()],
+  integrations: [
+    new Sentry.BrowserTracing({
+      tracePropagationTargets: [
+        'localhost',
+        /^https:\/\/xb-api\.vercel\.app\/api/,
+      ],
+    }),
+    new Sentry.Replay(),
+  ],
   tracesSampleRate: 1.0,
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1.0,
 });
 
 const html = (

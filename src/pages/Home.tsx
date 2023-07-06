@@ -84,6 +84,23 @@ export function Home() {
             >
               <Link
                 w={{ base: '250px', md: '200px' }}
+                to='/new-post'
+                as={NavLink}
+                border='1px'
+                bg={bgButton}
+                color='black'
+                borderRadius='lg'
+                p='3'
+                fontSize='xl'
+                _hover={{
+                  outline: 'none',
+                  bg: '#28c900',
+                }}
+              >
+                Publicar
+              </Link>
+              {/* <Link
+                w={{ base: '250px', md: '200px' }}
                 to='/register'
                 as={NavLink}
                 border='1px'
@@ -98,7 +115,7 @@ export function Home() {
                 }}
               >
                 Regístrate
-              </Link>
+              </Link> */}
               <Link
                 w={{ base: '250px', md: '200px' }}
                 to='/explore'
@@ -130,7 +147,7 @@ export function Home() {
         w='full'
         justify='center'
         align='flex-start'
-        maxWidth='5xl'
+        maxW='5xl'
         m='auto'
         pt='28'
         px='10'
@@ -139,9 +156,9 @@ export function Home() {
         <LazyLoad height={height} offset={0}>
           <Image src={iconBook} w='500px' alt='' decoding='async' />
         </LazyLoad>
-        <Stack direction='column' ml={{ base: 0, md: 3 }} spacing='4'>
+        <Stack maxW='md' direction='column' ml={{ base: 0, md: 5 }} spacing='4'>
           <Heading
-            mb='10'
+            mb='5'
             mt={{ base: 14, md: 0 }}
             fontSize={{ base: '3xl', sm: '4xl' }}
             fontFamily='Poppins, sans-serif'
@@ -149,12 +166,24 @@ export function Home() {
             ¿Qué es XBuniverse?
           </Heading>
           <Text fontSize='lg'>
-            Es un sitio donde cualquiera puede compartir sus libros favoritos!
+            XBuniverse es una plataforma en línea que permite a los usuarios
+            compartir y descubrir libros de su elección. Cualquier persona puede
+            crear una cuenta y comenzar a compartir sus libros favoritos con
+            otros usuarios de la comunidad.
           </Text>
           <Text fontSize='lg'>
-            ¡Crea una cuenta y empieza a compartir y explorar!
+            Además de compartir libros, también puedes explorar una amplia
+            selección de títulos disponibles y descubrir nuevas lecturas
+            interesantes.
           </Text>
-          <Text fontSize='lg'>Es muy facil de usar!</Text>
+          <Text fontSize='lg'>
+            La plataforma es muy fácil de usar, lo que significa que puedes
+            comenzar a compartir y explorar libros en cuestión de minutos.
+          </Text>
+          <Text fontSize='lg' fontWeight='500'>
+            ¡Regístrate ahora en XBuniverse y únete a esta comunidad de amantes
+            de la lectura!
+          </Text>
         </Stack>
       </Flex>
       <Flex
@@ -168,21 +197,28 @@ export function Home() {
         direction={{ base: 'column', md: 'row' }}
       >
         <Stack
+          maxW='md'
           direction='column'
           ml={{ base: 0, md: 3 }}
           mr={{ base: 0, md: 7 }}
           mb='3'
         >
           <Heading
-            mb='10'
+            mb='5'
             mt={{ base: 10, md: 0 }}
             fontSize={{ base: '3xl', sm: '4xl' }}
             fontFamily='Poppins, sans-serif'
           >
             Explora cientos de libros
           </Heading>
-          <Text fontSize='lg' mb={{ base: 14, md: 0 }}>
-            Descubre que leer en tu proximo viaje o tiempo libre.
+          <Text fontSize='lg'>
+            XBuniverse te ofrece una amplia selección de libros para que puedas
+            sumergirte en diferentes géneros literarios y descubrir historias
+            emocionantes, conocimientos fascinantes y aventuras inolvidables.
+          </Text>
+          <Text fontSize='lg'>
+            Ya sea que estés buscando un libro para acompañarte en tu próximo
+            viaje o simplemente para disfrutar en tu tiempo libre.
           </Text>
         </Stack>
         <LazyLoad offset={0}>

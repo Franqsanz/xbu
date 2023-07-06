@@ -116,7 +116,7 @@ export function MobileNav() {
                 ))}
               </List>
             </DrawerBody>
-            <DrawerFooter justifyContent='flex-start' borderTopWidth='1px'>
+            {/* <DrawerFooter justifyContent='flex-start' borderTopWidth='1px'>
               <List w='full'>
                 {accountLinks.map(({ name, href }) => (
                   <ListItem key={name} my='2'>
@@ -139,7 +139,7 @@ export function MobileNav() {
                   </ListItem>
                 ))}
               </List>
-            </DrawerFooter>
+            </DrawerFooter> */}
           </DrawerContent>
         </Drawer>
       </Flex>

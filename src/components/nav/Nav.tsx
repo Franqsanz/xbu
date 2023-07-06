@@ -24,27 +24,27 @@ export function Nav() {
   // const [user, setUser] = useState(null);
   // console.log(user);
 
-  useEffect(() => {
-    fetch('http://localhost:9090/auth/login/check-user', {
-      method: 'GET',
-      // credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        // 'Access-Control-Allow-Credentials': true,
-      },
-    })
-      .then((response) => {
-        if (response.status === 200) return response.json();
-        throw new Error('authentication has been failed!');
-      })
-      .then((resObject) => {
-        // setUser(resObject.user);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch('http://localhost:9090/auth/login/check-user', {
+  //     method: 'GET',
+  //     // credentials: 'include',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //       // 'Access-Control-Allow-Credentials': true,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (response.status === 200) return response.json();
+  //       throw new Error('authentication has been failed!');
+  //     })
+  //     .then((resObject) => {
+  //       // setUser(resObject.user);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   return (
     <>
@@ -100,7 +100,7 @@ export function Nav() {
           </Flex>
           <Box as='nav'>
             <List display='flex' alignItems='center'>
-              {user ? (
+              {/* {user ? (
                 <Link
                   as={NavLink}
                   to='/profile'
@@ -130,7 +130,7 @@ export function Nav() {
                     {name}
                   </Link>
                 ))
-              )}
+              )} */}
               <Button
                 onClick={toggleColorMode}
                 bg='none'
