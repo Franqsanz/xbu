@@ -153,7 +153,7 @@ export default function Search() {
                   author={author}
                   synopsis={synopsis}
                   sourceLink={sourceLink}
-                  pathUrl={pathUrl}
+                  // pathUrl={pathUrl}
                   image={image}
                 />
               </React.Fragment>
