@@ -20,7 +20,7 @@ export function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
   const bgNavColor = useColorModeValue('#ffffff56', '#12121244');
 
-  let user = false;
+  // let user = false;
   // const [user, setUser] = useState(null);
   // console.log(user);
 

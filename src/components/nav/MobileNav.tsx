@@ -83,7 +83,7 @@ export function MobileNav() {
           </Button>
         </Flex>
         <Drawer isOpen={isOpen} placement='left' onClose={onClose} size='xs'>
-          <DrawerOverlay bg='#1212126e' />
+          {/* <DrawerOverlay  /> */}
           <DrawerContent
             bg={bgDrawer}
             backdropFilter='auto'
@@ -97,7 +97,7 @@ export function MobileNav() {
                     <Link
                       display='flex'
                       alignItems='center'
-                      onClick={onToggle}
+                      onClick={onClose}
                       as={NavLink}
                       to={href as string}
                       p='3'
