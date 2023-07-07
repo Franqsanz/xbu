@@ -15,7 +15,7 @@ const Categories = lazy(() => import('../components/Categories'));
 
 export default function Explore() {
   const bgArrows = useColorModeValue('white', 'black');
-  const borderArrows = useColorModeValue('gray.200', '#28c900');
+  const borderArrows = useColorModeValue('gray.200', 'green.600');
   const gradientColor = useColorModeValue('white', '#1A202C');
   const containerRef = useRef(null);
 
