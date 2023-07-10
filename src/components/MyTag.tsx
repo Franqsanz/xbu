@@ -46,8 +46,8 @@ export function MyTag({
 
   return (
     <Tag
-      bg='#abf299'
-      color='#0d4300'
+      bg='green.50'
+      color='green.900'
       size={size}
       border='1px'
       variant='subtle'

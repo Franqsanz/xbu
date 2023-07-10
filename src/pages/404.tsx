@@ -19,13 +19,13 @@ export function ErrorPage() {
           to='/'
           as={NavLink}
           border='1px'
-          borderColor='#2de000'
+          borderColor='green.500'
           borderRadius='lg'
           p='3'
           fontSize='xl'
           _hover={{
             outline: 'none',
-            bg: '#2de000',
+            bg: 'green.500',
             color: 'black',
             borderColor: 'black',
           }}

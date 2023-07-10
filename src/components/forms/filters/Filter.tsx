@@ -108,7 +108,7 @@ export default function Filter({ onClose }: Props) {
           <Button
             size='lg'
             type='submit'
-            bg='#2de000'
+            bg='green.500'
             color='black'
             p='4'
             px='8'
@@ -116,7 +116,7 @@ export default function Filter({ onClose }: Props) {
             border='1px'
             rounded='lg'
             isDisabled={!value}
-            _hover={{ outline: 'none', bg: '#28c900' }}
+            _hover={{ outline: 'none', bg: 'green.600' }}
           >
             <Flex align='center' justify='center'>
               <FiSearch style={{ marginRight: '6px' }} />

@@ -25,7 +25,7 @@ import patternWhite from '../assets/patternpadWhite.svg';
 
 export function Home() {
   const { colorMode } = useColorMode();
-  const bgButton = useColorModeValue('#2de000', '#24b300');
+  const bgButton = useColorModeValue('green.500', 'green.700');
   const bContainer = useColorModeValue('gray.50', 'none');
   const height = useBreakpointValue({
     base: '163px',
@@ -54,14 +54,14 @@ export function Home() {
             textAlign='center'
             as='h1'
             fontSize={{ base: '3.35rem', md: '9xl' }}
-            bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
+            bgGradient='linear-gradient(to-l, green.500, #e9f501)'
             bgClip='text'
           >
             XBuniverse
           </Box>
           <Box maxW='2xl' m='auto'>
             <Box
-              color='#1f9c00'
+              color='green.800'
               fontSize={{ base: '3xl', md: '5xl' }}
               fontWeight='bold'
               my='3'
@@ -94,7 +94,7 @@ export function Home() {
                 fontSize='xl'
                 _hover={{
                   outline: 'none',
-                  bg: '#28c900',
+                  bg: 'green.600',
                 }}
               >
                 Publicar
@@ -111,7 +111,7 @@ export function Home() {
                 fontSize='xl'
                 _hover={{
                   outline: 'none',
-                  bg: '#28c900',
+                  bg: 'green.600',
                 }}
               >
                 Regístrate
@@ -131,7 +131,7 @@ export function Home() {
                 fontSize='xl'
                 _hover={{
                   outline: 'none',
-                  bg: '#28c900',
+                  bg: 'green.600',
                 }}
               >
                 <Flex align='center' justify='center'>

@@ -52,14 +52,14 @@ export function MobileNav() {
             aria-label='Open Menu'
             bg='none'
             ml='4'
-            _hover={{ bg: 'none', color: '#2de000' }}
+            _hover={{ bg: 'none', color: 'green.500' }}
             _active={{ bg: 'none' }}
           >
             {isOpen ? <IoClose fontSize='18' /> : <FiMenu fontSize='18' />}
           </Button>
           <Box
             as='span'
-            bgGradient='linear-gradient(to-l, #2de000, #e9f501)'
+            bgGradient='linear-gradient(to-l, green.500, #e9f501)'
             bgClip='text'
             fontSize='xl'
             fontWeight='bold'
@@ -73,7 +73,7 @@ export function MobileNav() {
             bg='none'
             mr='4'
             _active={{ bg: 'none' }}
-            _hover={{ color: '#2de000' }}
+            _hover={{ color: 'green.500' }}
           >
             {colorMode === 'dark' ? (
               <BsSun size='18' />
@@ -106,7 +106,7 @@ export function MobileNav() {
                       _hover={{
                         bg: 'gray.700',
                         border: 'none',
-                        color: '#2de000',
+                        color: 'green.500',
                       }}
                     >
                       <Icon as={icon} boxSize='5' mr='5' />
@@ -131,7 +131,7 @@ export function MobileNav() {
                       _hover={{
                         bg: 'gray.700',
                         border: 'none',
-                        color: '#2de000',
+                        color: 'green.500',
                       }}
                     >
                       {name}

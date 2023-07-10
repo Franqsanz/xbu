@@ -161,13 +161,13 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalProps) {
                 size='lg'
                 onClick={handleCopyClick}
                 ml='2'
-                bg='#2de000'
+                bg='green.500'
                 color='black'
                 p='4'
                 fontWeight='light'
                 border='1px'
                 rounded='lg'
-                _hover={{ outline: 'none', bg: '#28c900' }}
+                _hover={{ outline: 'none', bg: 'green.600' }}
               >
                 Copiar
               </Button>
