@@ -7,7 +7,7 @@ export function Aside({ children }: { children: React.ReactNode }) {
       <Flex
         as='aside'
         display={{ base: 'none', xl: 'flex' }}
-        w='300px'
+        w='250px'
         pr='2'
         direction='column'
       >

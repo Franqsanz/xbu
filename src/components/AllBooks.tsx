@@ -69,6 +69,8 @@ export function AllBooks() {
     <>
       <Flex
         direction={{ base: 'column', md: 'row' }}
+        maxW='1900px'
+        m='0 auto'
         px={{ base: 5, md: 10, '2xl': 16 }}
       >
         <Aside>

@@ -26,7 +26,7 @@ export default function Explore() {
     function handleScroll(event) {
       if (isHovered) {
         container.scrollLeft += event.deltaY;
-        event.preventDefault(); // Evitar desplazamiento vertical de la página
+        event.preventDefault();
       }
     }
 
@@ -86,7 +86,6 @@ export default function Explore() {
           display='flex'
           w='5xl'
           overflowX={{ base: 'auto', md: 'hidden' }}
-          scrollSnapType='x mandatory'
           scrollBehavior='smooth'
           flexDirection='row'
           flexWrap='nowrap'
