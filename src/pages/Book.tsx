@@ -76,7 +76,7 @@ export default function Book() {
       >
         <Flex align='center' justify='center'>
           <FiExternalLink style={{ marginRight: '6px' }} />
-          Comprar Libro
+          Ir a librería
         </Flex>
       </Link>
     );
@@ -300,6 +300,7 @@ export default function Book() {
         </Flex>
         <Flex
           display={{ base: 'none', lg: 'block' }}
+          as='aside'
           w='335px'
           px='3'
           position='sticky'

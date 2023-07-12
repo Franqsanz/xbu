@@ -34,6 +34,7 @@ export function MobileNav() {
     <>
       <Flex
         display={{ base: 'block', md: 'none' }}
+        as='header'
         w='full'
         justify='start'
         bg={useColorModeValue('#ffffff56', '#12121244')}
