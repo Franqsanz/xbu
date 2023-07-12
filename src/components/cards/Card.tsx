@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import LazyLoad from 'react-lazy-load';
 import {
   Flex,
@@ -13,7 +13,7 @@ import {
 
 import { CardProps } from '../types';
 import { MyTag } from '../MyTag';
-import { handleImageLoad } from '../../utils/utils';
+import { handleImageLoad, useHandleEnterKey } from '../../utils/utils';
 
 export function Card({
   id,
@@ -23,7 +23,7 @@ export function Card({
   category,
   pathUrl,
 }: CardProps) {
-  const navigate = useNavigate();
+  const handleEnterKey = useHandleEnterKey(pathUrl);
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
   const outlineCard = useColorModeValue('black', 'white');
   const height = useBreakpointValue({
@@ -31,12 +31,6 @@ export function Card({
     sm: '275px',
     md: '300px',
   });
-
-  function handleKeyPress(e: React.KeyboardEvent) {
-    if (e.key === 'Enter') {
-      navigate(`/book/view/${pathUrl}`);
-    }
-  }
 
   return (
     <>
@@ -83,7 +77,7 @@ export function Card({
                   transition='filter 0.6s ease-in-out'
                   onLoad={handleImageLoad}
                   tabIndex={0}
-                  onKeyDown={handleKeyPress}
+                  onKeyDown={handleEnterKey}
                   _hover={{
                     borderColor: 'transparent',
                     outline: `4px solid ${outlineCard}`,

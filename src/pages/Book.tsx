@@ -91,7 +91,7 @@ export default function Book() {
       />
       <Box
         w='full'
-        maxW='1218px'
+        maxW='1255px'
         m='auto'
         px={{ base: 5, xl: 0 }}
         pt='4'
@@ -115,7 +115,7 @@ export default function Book() {
         m='auto'
         mb='25'
         align='flex-start'
-        direction={{ base: 'column', lg: 'row' }}
+        direction={{ base: 'column', lg: 'row-reverse' }}
       >
         <Box display={{ base: 'block', lg: 'none' }} m='auto' pb='4'>
           <LazyLoad width={230} height={340} offset={0} threshold={0.99}>
@@ -298,7 +298,13 @@ export default function Book() {
             </Suspense>
           </Flex>
         </Flex>
-        <Flex display={{ base: 'none', lg: 'block' }} w='335px' px='3'>
+        <Flex
+          display={{ base: 'none', lg: 'block' }}
+          w='335px'
+          px='3'
+          position='sticky'
+          top='65px'
+        >
           <Box maxW={{ base: '920px', lg: 'auto' }} m='1rem auto'>
             <Flex justifyContent='center'>
               <LazyLoad width={290} height={420} offset={0} threshold={0.99}>

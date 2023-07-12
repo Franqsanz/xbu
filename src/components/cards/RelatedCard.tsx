@@ -1,9 +1,10 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Flex, Box, useColorModeValue, Link, Icon } from '@chakra-ui/react';
 import { FiArrowRight } from 'react-icons/fi';
 
 import { CardProps } from '../types';
+import { useHandleEnterKey } from '../../utils/utils';
 
 export function RelatedCard({
   id,
@@ -12,17 +13,11 @@ export function RelatedCard({
   pathUrl,
   refetchQueries,
 }: CardProps) {
-  const navigate = useNavigate();
+  const handleEnterKey = useHandleEnterKey(pathUrl);
   const borderCard = useColorModeValue('gray.200', 'gray.600');
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
   const bgRandomBookCardLink = useColorModeValue('gray.300', 'black');
   const outlineCard = useColorModeValue('black', 'white');
-
-  function handleKeyPress(e: React.KeyboardEvent) {
-    if (e.key === 'Enter') {
-      navigate(`/book/view/${pathUrl}`);
-    }
-  }
 
   return (
     <>
@@ -39,7 +34,7 @@ export function RelatedCard({
         bg='transparent'
         position='relative'
         tabIndex={0}
-        onKeyDown={handleKeyPress}
+        onKeyDown={handleEnterKey}
         _focus={{ outline: `3px solid ${outlineCard}` }}
       >
         <Flex direction={{ base: 'column', md: 'row' }}>

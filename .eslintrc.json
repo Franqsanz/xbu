@@ -2,7 +2,8 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "node": true
+    "node": true,
+    "cypress/globals": true
   },
   "extends": [
     // "eslint:recommended",
@@ -10,6 +11,7 @@
     "plugin:prettier/recommended",
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:cypress/recommended",
     "prettier",
     "standard"
   ],
@@ -26,7 +28,7 @@
       "version": "detect"
     }
   },
-  "plugins": ["react", "@typescript-eslint", "import", "prettier"],
+  "plugins": ["react", "@typescript-eslint", "import", "prettier", "cypress"],
   "rules": {
     "no-console": 1,
     "semi": 0,
@@ -40,6 +42,7 @@
     "no-array-constructor": 0,
     "no-unused-expressions": 0,
     "prefer-const": 0,
+    "func-style": [1, "declaration", { "allowArrowFunctions": false }],
     "prettier/prettier": [
       2,
       {

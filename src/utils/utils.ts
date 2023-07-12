@@ -1,5 +1,6 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
+import { useNavigate } from 'react-router-dom';
 
 const keys = {
   all: 'Books',
@@ -17,6 +18,18 @@ function handleImageLoad(e: React.SyntheticEvent) {
   target.style.filter = 'blur(0)';
 }
 
+function useHandleEnterKey(pathUrl: string) {
+  const navigate = useNavigate();
+
+  function handleKeyPress(e: React.KeyboardEvent) {
+    if (e.key === 'Enter') {
+      navigate(`/book/view/${pathUrl}`);
+    }
+  }
+
+  return handleKeyPress;
+}
+
 function generatePathUrl(name) {
   const formattedName = name
     .toLowerCase()
@@ -29,4 +42,4 @@ function generatePathUrl(name) {
   return `${dashedName}-${randomId}`;
 }
 
-export { keys, handleImageLoad, generatePathUrl };
+export { keys, handleImageLoad, useHandleEnterKey, generatePathUrl };
