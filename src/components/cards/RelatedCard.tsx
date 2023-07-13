@@ -7,7 +7,6 @@ import { CardProps } from '../types';
 import { useHandleEnterKey } from '../../utils/utils';
 
 export function RelatedCard({
-  id,
   title,
   author,
   pathUrl,

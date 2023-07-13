@@ -14,11 +14,11 @@ export default function RelatedPost({ currentBookId }: ReleatedBooksProps) {
   // si no hay coincidencias no se hace una actualización.
 
   const relatedBooks = data.filter((book: any) => {
-    if (book.id === currentBookId) {
+    if (book.pathUrl === currentBookId) {
       refetch();
     }
 
-    return book.id !== currentBookId;
+    return book.pathUrl !== currentBookId;
   });
 
   return (

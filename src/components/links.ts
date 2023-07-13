@@ -87,8 +87,8 @@ const categories: Array<SelectBooksprops> = [
     label: 'Policiales',
   },
   {
-    value: 'Ciencias',
-    label: 'Ciencias',
+    value: 'Ciencia',
+    label: 'Ciencia',
   },
   {
     value: 'Programación',

@@ -36,7 +36,8 @@ function generatePathUrl(name) {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
   const withoutDotsName = formattedName.replace(/\.|\//g, '');
-  const dashedName = withoutDotsName.replace(/\s+/g, '-');
+  const withoutQuestionMarks = withoutDotsName.replace(/[?¿]/g, '');
+  const dashedName = withoutQuestionMarks.replace(/\s+/g, '-');
   const randomId = nanoid(4);
 
   return `${dashedName}-${randomId}`;
