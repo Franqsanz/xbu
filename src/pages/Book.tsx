@@ -307,7 +307,7 @@ export default function Book() {
           top='65px'
         >
           <Box maxW={{ base: '920px', lg: 'auto' }} m='1rem auto'>
-            <Flex justifyContent='center'>
+            <Flex justifyContent='center' zIndex='9999' position='relative'>
               <LazyLoad width={290} height={420} offset={0} threshold={0.99}>
                 <Image
                   w='290px'
@@ -316,7 +316,7 @@ export default function Book() {
                   alt={`Imagen de "${data.title}"`}
                   rounded='lg'
                   border='1px solid #A0AEC0'
-                  boxShadow='dark-lg'
+                  boxShadow='lg'
                   decoding='async'
                   filter='blur(10px)'
                   transition='filter 0.5s ease-in-out'
@@ -324,6 +324,18 @@ export default function Book() {
                 />
               </LazyLoad>
             </Flex>
+            <Image
+              w='290px'
+              h='420px'
+              src={data.image.url}
+              position='absolute'
+              bottom='730px'
+              left='6px'
+              opacity='70%'
+              rounded='lg'
+              decoding='async'
+              filter='blur(15px)'
+            />
             <Box
               h='650px'
               overflowX='hidden'
