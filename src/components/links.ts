@@ -111,6 +111,14 @@ const categories: Array<SelectBooksprops> = [
     label: 'Cómics',
   },
   {
+    value: 'Cocina',
+    label: 'Cocina',
+  },
+  {
+    value: 'Bebidas',
+    label: 'Bebidas',
+  },
+  {
     value: 'Literatura',
     label: 'Literatura',
   },
