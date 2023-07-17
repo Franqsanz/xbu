@@ -30,7 +30,6 @@ export default function Book() {
   const grayColor = useColorModeValue('gray.200', 'gray.600');
   const bgGrayCategory = useColorModeValue('gray.100', 'gray.700');
   const gradientColor = useColorModeValue('white', '#1A202C');
-  const bgSectionCategory = useColorModeValue('white', 'gray.800');
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
   const bgButton = useColorModeValue('white', 'black');
   const colorLinkCategory = useColorModeValue('green.800', 'green.400');
@@ -100,11 +99,12 @@ export default function Book() {
         <Button
           mt={{ base: 1, md: 5 }}
           fontWeight='500'
-          w='100px'
+          w='90px'
+          size='sm'
           onClick={handleGoBack}
         >
           <Flex align='center' justify='center'>
-            <Icon as={FiArrowLeft} boxSize='5' mr='1' />
+            <Icon as={FiArrowLeft} boxSize='4' mr='1' />
             Volver
           </Flex>
         </Button>
@@ -275,7 +275,7 @@ export default function Book() {
           <Box my='10'>
             <Divider borderColor='gray.400' />
           </Box>
-          <Flex direction='column' mb='10'>
+          <Flex direction='column'>
             <Box
               p='2'
               mb='3'
@@ -329,7 +329,7 @@ export default function Book() {
               h='420px'
               src={data.image.url}
               position='absolute'
-              bottom='730px'
+              bottom='710px'
               left='6px'
               opacity='70%'
               rounded='lg'
@@ -339,7 +339,7 @@ export default function Book() {
             <Box
               h='650px'
               overflowX='hidden'
-              mt='20'
+              mt='14'
               p='0 1.25rem 0 1.25rem'
               border='1px'
               borderColor={grayColor}
