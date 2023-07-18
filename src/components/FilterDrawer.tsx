@@ -56,6 +56,7 @@ export function FilterDrawer({
           backdropFilter='auto'
           backdropBlur='12px'
           roundedTop='3xl'
+          maxH='400px'
         >
           <DrawerHeader>Filtrar por:</DrawerHeader>
           <DrawerCloseButton />

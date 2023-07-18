@@ -162,6 +162,22 @@ const categories: Array<SelectBooksprops> = [
     value: 'Ficción',
     label: 'Ficción',
   },
+  {
+    value: 'No Ficción',
+    label: 'No Ficción',
+  },
+  {
+    value: 'Prehistoria',
+    label: 'Prehistoria',
+  },
+  {
+    value: 'Enciclopedias',
+    label: 'Enciclopedias',
+  },
+  // {
+  //   value: 'Prehistoria',
+  //   label: 'Prehistoria',
+  // },
 ];
 
 const format: Array<SelectBooksprops> = [
