@@ -94,13 +94,16 @@ interface SelectProps {
   total: number;
 }
 
-interface LanguageProps {
+interface LanguageAndYearProps {
   language: string[] | undefined;
   languagesMap: { [key: string]: number } | undefined;
+  year: string[] | undefined;
+  yearsMap: { [key: string]: number } | undefined;
 }
 
-interface PropsDrawer extends DisclosureProps, LanguageProps {
+interface PropsDrawer extends DisclosureProps, LanguageAndYearProps {
   handleLanguageChange: (languages: any) => void;
+  handleYearChange: (years: any) => void;
 }
 
 export type {
@@ -116,5 +119,5 @@ export type {
   ReleatedBooksProps,
   SelectProps,
   PropsDrawer,
-  LanguageProps,
+  LanguageAndYearProps,
 };

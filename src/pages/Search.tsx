@@ -9,10 +9,11 @@ import {
   Box,
   Radio,
   RadioGroup,
+  Image,
 } from '@chakra-ui/react';
 
 import { Card } from '../components/cards/Card';
-import { CardProps, LanguageProps } from '../components/types';
+import { CardProps, LanguageAndYearProps } from '../components/types';
 import { useFilter } from '../hooks/querys';
 import { ContainerTitle } from '../components/ContainerTitle';
 import { MySimpleGrid } from '../components/MySimpleGrid';
@@ -20,18 +21,23 @@ import { MainHead } from '../components/Head';
 import { Aside } from '../components/Aside';
 import ResultLength from '../components/ResultLength';
 import { FilterDrawer } from '../components/FilterDrawer';
+import lost from '../assets/lost.svg';
 
 export default function Search() {
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [languages, setLanguages] = useState<string[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState('');
+  const [years, setYears] = useState<string[]>([]);
+  const [selectedYear, setSelectedYear] = useState('');
   const { query, param } = useParams();
   let asideFilter;
   let buttonFilter;
 
   const { data } = useFilter(query, param);
 
-  function getLanguages(data: Array<CardProps>): LanguageProps | null {
+  function getLanguagesAndYears(
+    data: Array<CardProps>,
+  ): LanguageAndYearProps | null {
     const languagesMap = data.reduce((acc, book) => {
       const language = book.language;
 
@@ -42,19 +48,31 @@ export default function Search() {
       return acc;
     }, {});
 
+    const yearsMap = data.reduce((acc, book) => {
+      const year = book.year;
+
+      if (year) {
+        acc[year] = (acc[year] || 0) + 1;
+      }
+
+      return acc;
+    }, {});
+
     const language = Object.keys(languagesMap);
+    const year = Object.keys(yearsMap);
 
-    if (language.length === 1) {
-      return null;
-    }
+    if (language.length === 1 && year.length === 1) return null;
 
-    return { language, languagesMap };
+    return { language, languagesMap, year, yearsMap };
   }
 
-  const languagesData = getLanguages(data);
+  const languagesAndYearData = getLanguagesAndYears(data);
 
-  const filteredBooks = data.filter(({ language }) => {
-    return languages.length === 0 || languages.includes(language);
+  const filteredBooks = data.filter(({ language, year }) => {
+    return (
+      (languages.length === 0 || languages.includes(language)) &&
+      (years.length === 0 || years.includes(year))
+    );
   });
 
   function handleLanguageChange(languages) {
@@ -62,20 +80,30 @@ export default function Search() {
     setSelectedLanguage(languages);
   }
 
-  if (languagesData) {
-    const { language, languagesMap } = languagesData;
+  function handleYearChange(year) {
+    setYears(year);
+    setSelectedYear(year);
+  }
+
+  if (languagesAndYearData) {
+    const { language, languagesMap, year, yearsMap } = languagesAndYearData;
 
     asideFilter = (
-      <Flex display={{ base: 'none', md: 'flex' }} direction='column' mt='10'>
+      <Flex
+        display={{ base: 'none', md: 'flex' }}
+        direction='column'
+        mt='10'
+        pb='10'
+      >
+        <Flex align='center' py='2' mb='2' fontSize='xl' fontWeight='bold'>
+          <Icon as={CgOptions} boxSize='20px' mr='2' />
+          Filtrar por:
+        </Flex>
         <RadioGroup
           value={selectedLanguage}
           onChange={handleLanguageChange}
           colorScheme='green'
         >
-          <Flex align='center' py='2' mb='2' fontSize='xl' fontWeight='bold'>
-            <Icon as={CgOptions} boxSize='20px' mr='2' />
-            Filtrar
-          </Flex>
           <Flex direction='column-reverse' gap='3'>
             {language &&
               language.map((language) => (
@@ -86,7 +114,31 @@ export default function Search() {
                   </Box>
                 </Radio>
               ))}
-            <Radio value=''>Todos</Radio>
+            <Radio value=''>Todos los Idiomas</Radio>
+            <Box mb='2' borderBottom='1px'>
+              Idioma
+            </Box>
+          </Flex>
+        </RadioGroup>
+        <RadioGroup
+          value={selectedYear}
+          onChange={handleYearChange}
+          colorScheme='green'
+        >
+          <Flex direction='column-reverse' gap='3'>
+            {year &&
+              year.map((year) => (
+                <Radio key={year} value={year}>
+                  {year}
+                  <Box as='span' ml='2' color='gray.500'>
+                    ({yearsMap && yearsMap[year]})
+                  </Box>
+                </Radio>
+              ))}
+            <Radio value=''>Todos los Años</Radio>
+            <Box mt='4' mb='2' borderBottom='1px'>
+              Año
+            </Box>
           </Flex>
         </RadioGroup>
       </Flex>
@@ -94,14 +146,14 @@ export default function Search() {
 
     buttonFilter = (
       <Flex
-        display={{ base: 'flex', md: 'none' }}
+        display={{ base: 'flex', xl: 'none' }}
         py='3'
         px='10'
         justify='flex-end'
         borderBottom='1px solid #A0AEC0'
       >
         <Button
-          display={{ base: 'flex', md: 'none' }}
+          display={{ base: 'flex', xl: 'none' }}
           onClick={onToggle}
           fontWeight='500'
           size='md'
@@ -121,9 +173,12 @@ export default function Search() {
       <FilterDrawer
         isOpen={isOpen}
         onClose={onClose}
-        language={languagesData?.language}
-        languagesMap={languagesData?.languagesMap}
+        language={languagesAndYearData?.language}
+        languagesMap={languagesAndYearData?.languagesMap}
+        year={languagesAndYearData?.year}
+        yearsMap={languagesAndYearData?.yearsMap}
         handleLanguageChange={handleLanguageChange}
+        handleYearChange={handleYearChange}
       />
       <Flex
         direction={{ base: 'column', md: 'row' }}
@@ -135,33 +190,62 @@ export default function Search() {
           <ResultLength data={data} />
           {asideFilter}
         </Aside>
-        <MySimpleGrid>
-          {filteredBooks.map(
-            ({
-              id,
-              title,
-              synopsis,
-              author,
-              category,
-              sourceLink,
-              image,
-              pathUrl,
-            }: CardProps) => (
-              <React.Fragment key={id}>
-                <Card
-                  id={id}
-                  category={category}
-                  title={title}
-                  author={author}
-                  synopsis={synopsis}
-                  sourceLink={sourceLink}
-                  pathUrl={pathUrl}
-                  image={image}
-                />
-              </React.Fragment>
-            ),
-          )}
-        </MySimpleGrid>
+        {filteredBooks.length > 0 ? (
+          <MySimpleGrid>
+            {filteredBooks.map(
+              ({
+                id,
+                title,
+                synopsis,
+                author,
+                category,
+                sourceLink,
+                image,
+                pathUrl,
+              }: CardProps) => (
+                <React.Fragment key={id}>
+                  <Card
+                    id={id}
+                    category={category}
+                    title={title}
+                    author={author}
+                    synopsis={synopsis}
+                    sourceLink={sourceLink}
+                    pathUrl={pathUrl}
+                    image={image}
+                  />
+                </React.Fragment>
+              ),
+            )}
+          </MySimpleGrid>
+        ) : (
+          <Flex
+            w='full'
+            h={{ base: '50vh', md: 'auto' }}
+            justify='center'
+            align='center'
+            direction='column'
+          >
+            <Box fontSize={{ base: '2xl', lg: '5xl' }} mt='10'>
+              ¡Ups!
+            </Box>
+            <Image
+              src={lost}
+              maxW='full'
+              w={{ base: '200px', md: '400px' }}
+              mt='5'
+              decoding='async'
+            />
+            <Box
+              mt='7'
+              mb='10'
+              fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
+              textAlign={{ base: 'center', md: 'left' }}
+            >
+              No se encontraron libros que cumplan con los filtros seleccionados
+            </Box>
+          </Flex>
+        )}
       </Flex>
     </>
   );

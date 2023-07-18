@@ -23,17 +23,29 @@ export function FilterDrawer({
   handleLanguageChange,
   language,
   languagesMap,
+  year,
+  yearsMap,
+  handleYearChange,
 }: PropsDrawer) {
   const bgContentCheckbox = useColorModeValue('white', 'transparent');
   const bgButtonApply = useColorModeValue('green.500', 'green.700');
   const [selectedLanguage, setSelectedLanguage] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
 
-  function handleRadioChange(language) {
-    setSelectedLanguage(language);
+  function handleRadioChange(type: string, value: string) {
+    if (type === 'language') {
+      setSelectedLanguage(value);
+    } else if (type === 'year') {
+      setSelectedYear(value);
+    }
   }
 
-  function handleAllRadioChange() {
-    setSelectedLanguage('');
+  function handleAllRadioChange(type: string) {
+    if (type === 'language') {
+      setSelectedLanguage('');
+    } else if (type === 'year') {
+      setSelectedYear('');
+    }
   }
 
   return (
@@ -69,7 +81,7 @@ export function FilterDrawer({
                       <Radio
                         key={language}
                         value={language}
-                        onChange={() => handleRadioChange(language)}
+                        onChange={() => handleRadioChange('language', language)}
                       >
                         {language}
                         <Box as='span' ml='2' color='gray.500'>
@@ -77,8 +89,44 @@ export function FilterDrawer({
                         </Box>
                       </Radio>
                     ))}
-                  <Radio value='' onChange={handleAllRadioChange}>
-                    Todos
+                  <Radio
+                    value=''
+                    onChange={() => handleAllRadioChange('language')}
+                  >
+                    Todos los Idiomas
+                  </Radio>
+                </Flex>
+              </RadioGroup>
+              <Box mt='5' mb='4' borderBottom='1px'>
+                Año
+              </Box>
+              <RadioGroup
+                value={selectedYear}
+                onChange={handleYearChange}
+                colorScheme='green'
+              >
+                <Flex
+                  mx='2'
+                  bg={bgContentCheckbox}
+                  rounded='lg'
+                  direction='column-reverse'
+                  gap='5'
+                >
+                  {year &&
+                    year.map((year) => (
+                      <Radio
+                        key={year}
+                        value={year}
+                        onChange={() => handleRadioChange('year', year)}
+                      >
+                        {year}
+                        <Box as='span' ml='2' color='gray.500'>
+                          ({yearsMap && yearsMap[year]})
+                        </Box>
+                      </Radio>
+                    ))}
+                  <Radio value='' onChange={() => handleAllRadioChange('year')}>
+                    Todos los Años
                   </Radio>
                 </Flex>
               </RadioGroup>

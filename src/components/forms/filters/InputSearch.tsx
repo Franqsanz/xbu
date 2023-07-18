@@ -86,7 +86,7 @@ export function InputSearch({ onOpen }: Props) {
             bg={bgInput}
             border='1px solid black'
             color={colorInput}
-            placeholder='Por titulo o autor'
+            placeholder='Titulo / Autor'
             _focus={{ bg: `${focusInput}` }}
             _hover={{ outline: 'none' }}
             onChange={handleSearch}
