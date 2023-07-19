@@ -19,7 +19,7 @@ export function ContainerTitle({ title, showSearch }: TitleProps) {
 
   return (
     <Container maxW='full' p='0' ref={ref}>
-      <Box py={{ base: 10, md: 16 }} bg={bgContainer}>
+      <Box py={{ base: 7, md: 10 }} bg={bgContainer}>
         <Box
           as='h1'
           m='auto'

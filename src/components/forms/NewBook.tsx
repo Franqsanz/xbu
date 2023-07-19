@@ -228,8 +228,8 @@ export function FormNewBook() {
         align='center'
         justify='center'
         direction='column'
-        my='8'
-        p={{ base: 3, md: 20 }}
+        my='5'
+        p={{ base: 3, md: 0 }}
       >
         <Box
           w='full'

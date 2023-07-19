@@ -14,7 +14,7 @@ export function Layout() {
         <Suspense
           fallback={
             <Stack spacing='4'>
-              <Skeleton py={{ base: 20, md: 36 }} />
+              <Skeleton py={{ base: 16, md: 20 }} />
               <Skeleton h='100vh' />
             </Stack>
           }
