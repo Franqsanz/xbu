@@ -19,8 +19,9 @@ import { ContainerTitle } from '../components/ContainerTitle';
 import { MySimpleGrid } from '../components/MySimpleGrid';
 import { MainHead } from '../components/Head';
 import { Aside } from '../components/Aside';
-import ResultLength from '../components/ResultLength';
+import { MySliderCategories } from '../components/MySliderCategories';
 import { FilterDrawer } from '../components/FilterDrawer';
+import ResultLength from '../components/ResultLength';
 import lost from '../assets/lost.svg';
 
 export default function Search() {
@@ -147,7 +148,8 @@ export default function Search() {
     buttonFilter = (
       <Flex
         display={{ base: 'flex', xl: 'none' }}
-        py='3'
+        pt='5'
+        pb='3'
         px='10'
         justify='flex-end'
         borderBottom='1px solid #A0AEC0'
@@ -167,8 +169,9 @@ export default function Search() {
 
   return (
     <>
-      <MainHead title={`Libros de ${param} | XBuniverse`} />
-      <ContainerTitle title={`Libros de ${param}`} showSearch={true} />
+      <MainHead title={`${param} | XBuniverse`} />
+      <ContainerTitle title={`${param}`} showSearch={true} />
+      <MySliderCategories />
       {buttonFilter}
       <FilterDrawer
         isOpen={isOpen}
