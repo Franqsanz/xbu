@@ -162,7 +162,7 @@ export function InputSearch({
                   tabIndex={-1}
                   _hover={{ outline: 'none' }}
                 >
-                  <Box fontSize={{ base: 'sm', sm: 'lg' }} mb='1'>
+                  <Box fontSize={{ base: 'sm', sm: 'md' }} mb='1'>
                     {book.title}
                   </Box>
                   <Box fontSize='xs'>{book.author}</Box>

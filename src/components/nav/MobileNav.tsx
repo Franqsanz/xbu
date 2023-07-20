@@ -26,10 +26,20 @@ import {
 
 import { navLink, accountLinks } from '../links';
 import { InputSearch } from '../forms/filters/InputSearch';
+import { ModalFilter } from '../forms/filters/ModalFilter';
 
 export function MobileNav() {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenMenu,
+    onOpen: onOpenMenu,
+    onClose: onCloseMenu,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenDFilter,
+    onOpen: onOpenDFilter,
+    onClose: onCloseDFilter,
+  } = useDisclosure();
   const bgDrawer = useColorModeValue('#ffffffe0', '#121212e4');
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
   const [isBoxVisible, setBoxVisible] = useState(false);
@@ -57,14 +67,18 @@ export function MobileNav() {
         <Flex as='nav' w='100%' justify='space-between' align='center'>
           <Flex align='center'>
             <Button
-              onClick={onOpen}
+              onClick={onOpenMenu}
               aria-label='Open Menu'
               bg='none'
               ml='2'
               _hover={{ bg: 'none', color: 'green.500' }}
               _active={{ bg: 'none' }}
             >
-              {isOpen ? <IoClose fontSize='18' /> : <FiMenu fontSize='18' />}
+              {isOpenMenu ? (
+                <IoClose fontSize='18' />
+              ) : (
+                <FiMenu fontSize='18' />
+              )}
             </Button>
             <Box
               as='span'
@@ -113,11 +127,17 @@ export function MobileNav() {
           <InputSearch
             width='90%'
             top='120px'
-            onOpen={onOpen}
+            onOpen={onOpenDFilter}
             onResultClick={handleClick}
           />
+          <ModalFilter isOpen={isOpenDFilter} onClose={onCloseDFilter} />
         </Box>
-        <Drawer isOpen={isOpen} placement='left' onClose={onClose} size='xs'>
+        <Drawer
+          isOpen={isOpenMenu}
+          placement='left'
+          onClose={onCloseMenu}
+          size='xs'
+        >
           {/* <DrawerOverlay  /> */}
           <DrawerContent
             bg={bgDrawer}
@@ -132,7 +152,7 @@ export function MobileNav() {
                     <Link
                       display='flex'
                       alignItems='center'
-                      onClick={onClose}
+                      onClick={onCloseMenu}
                       as={NavLink}
                       to={href as string}
                       p='3'
