@@ -170,7 +170,7 @@ export default function Search() {
   return (
     <>
       <MainHead title={`${param} | XBuniverse`} />
-      <ContainerTitle title={`${param}`} showSearch={true} />
+      <ContainerTitle title={`${param}`} />
       <MySliderCategories />
       {buttonFilter}
       <FilterDrawer

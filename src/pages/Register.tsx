@@ -10,7 +10,7 @@ export function Register() {
   return (
     <>
       <MainHead title='Crear cuenta | XBuniverse' />
-      <ContainerTitle title='Crear cuenta' showSearch={false} />
+      <ContainerTitle title='Crear cuenta' />
       <Flex justify='center' py={{ base: '10vh', md: '15vh' }}>
         <Stack direction='column' spacing='5'>
           {/* <Button

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FiMenu } from 'react-icons/fi';
+import { FiMenu, FiSearch } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 import { BsSun } from 'react-icons/bs';
 import { RiMoonLine } from 'react-icons/ri';
@@ -21,23 +21,30 @@ import {
   DrawerCloseButton,
   DrawerBody,
   DrawerFooter,
+  Input,
 } from '@chakra-ui/react';
 
 import { navLink, accountLinks } from '../links';
+import { InputSearch } from '../forms/filters/InputSearch';
 
 export function MobileNav() {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onToggle, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const bgDrawer = useColorModeValue('#ffffffe0', '#121212e4');
+  const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
+  const [isBoxVisible, setBoxVisible] = useState(false);
+
+  function handleClick() {
+    setBoxVisible(!isBoxVisible);
+  }
 
   return (
     <>
       <Flex
-        display={{ base: 'block', md: 'none' }}
         as='header'
         w='full'
         justify='start'
-        bg={useColorModeValue('#ffffff56', '#12121244')}
+        bg={bgNavColor}
         boxShadow='sm'
         backdropFilter='auto'
         backdropBlur='12px'
@@ -47,42 +54,69 @@ export function MobileNav() {
         p='2'
         zIndex='999'
       >
-        <Flex w='100%' justify='space-between' align='center'>
-          <Button
-            onClick={onToggle}
-            aria-label='Open Menu'
-            bg='none'
-            ml='4'
-            _hover={{ bg: 'none', color: 'green.500' }}
-            _active={{ bg: 'none' }}
-          >
-            {isOpen ? <IoClose fontSize='18' /> : <FiMenu fontSize='18' />}
-          </Button>
-          <Box
-            as='span'
-            bgGradient='linear-gradient(to-l, green.500, #e9f501)'
-            bgClip='text'
-            fontSize='xl'
-            fontWeight='bold'
-          >
-            <Link as={NavLink} to='/'>
-              XB
-            </Link>
-          </Box>
-          <Button
-            onClick={toggleColorMode}
-            bg='none'
-            mr='4'
-            _active={{ bg: 'none' }}
-            _hover={{ color: 'green.500' }}
-          >
-            {colorMode === 'dark' ? (
-              <BsSun size='18' />
-            ) : (
-              <RiMoonLine size='18' />
-            )}
-          </Button>
+        <Flex as='nav' w='100%' justify='space-between' align='center'>
+          <Flex align='center'>
+            <Button
+              onClick={onOpen}
+              aria-label='Open Menu'
+              bg='none'
+              ml='2'
+              _hover={{ bg: 'none', color: 'green.500' }}
+              _active={{ bg: 'none' }}
+            >
+              {isOpen ? <IoClose fontSize='18' /> : <FiMenu fontSize='18' />}
+            </Button>
+            <Box
+              as='span'
+              bgGradient='linear-gradient(to-l, green.500, #e9f501)'
+              bgClip='text'
+              fontSize='lg'
+              ml='1'
+              fontWeight='bold'
+            >
+              <Link as={NavLink} to='/'>
+                XBuniverse
+              </Link>
+            </Box>
+          </Flex>
+          <Flex align='center'>
+            <Button
+              onClick={handleClick}
+              bg='none'
+              _active={{ bg: 'none' }}
+              _hover={{ color: 'green.500' }}
+            >
+              <FiSearch size='18' />
+            </Button>
+            <Button
+              onClick={toggleColorMode}
+              bg='none'
+              mr='2'
+              _active={{ bg: 'none' }}
+              _hover={{ color: 'green.500' }}
+            >
+              {colorMode === 'dark' ? (
+                <BsSun size='18' />
+              ) : (
+                <RiMoonLine size='18' />
+              )}
+            </Button>
+          </Flex>
         </Flex>
+        <Box
+          display={isBoxVisible ? 'flex' : 'none'}
+          p='2'
+          justifyContent='center'
+          mx='3'
+          mt='3'
+        >
+          <InputSearch
+            width='90%'
+            top='120px'
+            onOpen={onOpen}
+            onResultClick={handleClick}
+          />
+        </Box>
         <Drawer isOpen={isOpen} placement='left' onClose={onClose} size='xs'>
           {/* <DrawerOverlay  /> */}
           <DrawerContent

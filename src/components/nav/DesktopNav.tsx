@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { BsSun } from 'react-icons/bs';
 import { RiMoonLine } from 'react-icons/ri';
@@ -11,13 +11,17 @@ import {
   Button,
   useColorMode,
   useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react';
 
 import { navLink, accountLinks } from '../links';
+import { InputSearch } from '../forms/filters/InputSearch';
+import { ModalFilter } from '../forms/filters/ModalFilter';
 
 export function DesktopNav() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-  const bgNavColor = useColorModeValue('#ffffff56', '#12121244');
+  const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
 
   // let user = false;
   // const [user, setUser] = useState(null);
@@ -48,7 +52,6 @@ export function DesktopNav() {
   return (
     <>
       <Flex
-        display={{ base: 'none', md: 'block' }}
         as='header'
         w='100%'
         align='center'
@@ -99,6 +102,8 @@ export function DesktopNav() {
           </Flex>
           <Box>
             <List display='flex' alignItems='center'>
+              <InputSearch width='450px' top='50px' onOpen={onOpen} />
+              <ModalFilter isOpen={isOpen} onClose={onClose} />
               {/* {user ? (
                 <Link
                   as={NavLink}

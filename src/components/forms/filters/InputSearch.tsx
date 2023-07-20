@@ -21,16 +21,18 @@ import { FiSearch } from 'react-icons/fi';
 
 import { Book } from '../../types';
 import { useAllSearchBooks } from '../../../hooks/querys';
+import { BookSearchResultsProps } from '../../../components/types';
 
-interface Props {
-  onOpen: () => void;
-}
-
-export function InputSearch({ onOpen }: Props) {
+export function InputSearch({
+  onOpen,
+  width,
+  top,
+  onResultClick,
+}: BookSearchResultsProps) {
   const colorIcons = useColorModeValue('gray.700', 'gray.300');
-  const bgInput = useColorModeValue('gray.50', 'gray.800');
+  const bgInput = useColorModeValue('gray.50', 'black');
   const colorInput = useColorModeValue('gray.900', 'gray.100');
-  const focusInput = useColorModeValue('white', 'gray.900');
+  const focusInput = useColorModeValue('white', 'black');
   const hoverButton = useColorModeValue('gray.300', 'black');
   const colorContainerBg = useColorModeValue('white', 'gray.800');
   const colorContainer = useColorModeValue('black', 'gray.50');
@@ -69,48 +71,61 @@ export function InputSearch({ onOpen }: Props) {
     alertMessage = <Box fontSize='md'>No se encontraron resultados.</Box>;
   }
 
+  function handleResultClick(book) {
+    if (onResultClick) {
+      onResultClick(book);
+    }
+  }
+
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearch({ ...search, query: e.target.value });
   }
 
   return (
     <>
-      <FormControl>
-        <InputGroup maxW='70%' size='lg' m='auto' mt={{ base: 5, md: 10 }}>
-          <InputLeftElement w='3rem' p='2'>
+      <FormControl w={width} mr={{ base: 0, lg: 2 }}>
+        <InputGroup>
+          <InputLeftElement>
             <Icon as={FiSearch} boxSize='20px' color={colorIcons} />
           </InputLeftElement>
           <Input
             type='text'
-            fontSize='md'
+            fontSize='sm'
+            size='md'
             bg={bgInput}
             border='1px solid black'
+            rounded='md'
             color={colorInput}
-            placeholder='Titulo / Autor'
+            placeholder='Buscar por Titulo o Autor'
+            _placeholder={{ color: `${colorInput}` }}
             _focus={{ bg: `${focusInput}` }}
             _hover={{ outline: 'none' }}
+            value={search.query}
             onChange={handleSearch}
           />
-          <InputRightElement justifyContent='flex-end' w='4.5rem' p='2'>
+          <InputRightElement justifyContent='flex-end' w='4.5rem'>
             <Button
               px='0'
               onClick={onOpen}
               bg='none'
               title='Opciones de búsqueda'
-              _hover={{
-                bg: `${hoverButton}`,
-              }}
+              _hover={{ bg: 'none' }}
+              _active={{ bg: 'none' }}
             >
-              <Icon as={CgOptions} boxSize='20px' color={colorIcons} />
+              <Icon
+                as={CgOptions}
+                boxSize='20px'
+                color={colorIcons}
+                _hover={{ color: 'green.500' }}
+              />
             </Button>
           </InputRightElement>
         </InputGroup>
       </FormControl>
       <Container
         display={search.query ? 'block' : 'none'}
-        maxW='70%'
-        maxH='md'
-        h='full'
+        w={width}
+        maxH='300px'
         m='10px auto'
         rounded='lg'
         overflow='auto'
@@ -119,6 +134,8 @@ export function InputSearch({ onOpen }: Props) {
         bg={colorContainerBg}
         color={colorContainer}
         fontWeight='500'
+        position='absolute'
+        top={top}
       >
         <List fontSize='md'>
           {filteredBooks.map((book) => (
@@ -138,6 +155,10 @@ export function InputSearch({ onOpen }: Props) {
                   to={`/book/view/${book.pathUrl}`}
                   display='block'
                   p='3'
+                  onClick={() => {
+                    setSearch({ ...search, query: '' });
+                    handleResultClick(book);
+                  }}
                   tabIndex={-1}
                   _hover={{ outline: 'none' }}
                 >

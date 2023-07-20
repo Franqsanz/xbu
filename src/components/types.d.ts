@@ -36,7 +36,6 @@ interface CardProps {
 
 interface TitleProps {
   title: string | undefined;
-  showSearch: boolean;
 }
 
 interface HeadProps {
@@ -106,6 +105,13 @@ interface PropsDrawer extends DisclosureProps, LanguageAndYearProps {
   handleYearChange: (years: any) => void;
 }
 
+interface BookSearchResultsProps {
+  onOpen: () => void;
+  width: string;
+  top: string;
+  onResultClick?: (book: string) => void | undefined;
+}
+
 export type {
   LinkProps,
   SelectBooksprops,
@@ -120,4 +126,5 @@ export type {
   SelectProps,
   PropsDrawer,
   LanguageAndYearProps,
+  BookSearchResultsProps,
 };

@@ -8,7 +8,7 @@ export default function NewBook() {
   return (
     <>
       <MainHead title='Nueva Publicación' />
-      <ContainerTitle title='¡Publicar!' showSearch={false} />
+      <ContainerTitle title='¡Publicar!' />
       <FormNewBook />
     </>
   );

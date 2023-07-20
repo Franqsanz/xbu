@@ -12,7 +12,7 @@ export default function Explore() {
         title='Explorar | XBuniverse'
         description='¡Explora cientos de libros!'
       />
-      <ContainerTitle title='Explorar' showSearch={true} />
+      <ContainerTitle title='Explorar' />
       <MySliderCategories />
       <AllBooks />
     </>

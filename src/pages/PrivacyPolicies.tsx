@@ -8,7 +8,7 @@ export default function PrivacyPolicies() {
   return (
     <>
       <MainHead title='Políticas de Privacidad | XBuniverse' />
-      <ContainerTitle title='Políticas de Privacidad' showSearch={false} />
+      <ContainerTitle title='Políticas de Privacidad' />
       <Flex as='section' maxW='1000px' p='5' m='auto' direction='column'>
         <Box as='h2' fontSize='xl' py='5'>
           Política de Privacidad de XBuniverse
