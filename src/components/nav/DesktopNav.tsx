@@ -102,7 +102,7 @@ export function DesktopNav() {
           </Flex>
           <Box>
             <List display='flex' alignItems='center'>
-              <InputSearch width='450px' top='50px' onOpen={onOpen} />
+              <InputSearch width='350px' top='50px' onOpen={onOpen} />
               <ModalFilter isOpen={isOpen} onClose={onClose} />
               {/* {user ? (
                 <Link

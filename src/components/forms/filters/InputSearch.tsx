@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -14,6 +14,7 @@ import {
   List,
   ListItem,
   Link,
+  useOutsideClick,
 } from '@chakra-ui/react';
 
 import { CgOptions } from 'react-icons/cg';
@@ -29,12 +30,13 @@ export function InputSearch({
   top,
   onResultClick,
 }: BookSearchResultsProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const colorIcons = useColorModeValue('gray.700', 'gray.300');
   const bgInput = useColorModeValue('gray.50', 'black');
   const colorInput = useColorModeValue('gray.900', 'gray.100');
   const focusInput = useColorModeValue('white', 'black');
-  const hoverButton = useColorModeValue('gray.300', 'black');
-  const colorContainerBg = useColorModeValue('white', 'gray.800');
+  // const hoverButton = useColorModeValue('gray.300', 'black');
+  const colorContainerBg = useColorModeValue('white', 'black');
   const colorContainer = useColorModeValue('black', 'gray.50');
   const colorListBg = useColorModeValue('gray.200', 'gray.700');
   const colorListBgHover = useColorModeValue('gray.300', 'gray.600');
@@ -51,9 +53,29 @@ export function InputSearch({
   //     navigate(`/book/show/${books}`);
   //   }
   // }
+  useOutsideClick({
+    ref: containerRef,
+    handler: () => {
+      if (search.query) {
+        setSearch({ ...search, query: '' });
+      }
+    },
+  });
 
   useEffect(() => {
     if (data && data) setBooks(data);
+
+    function handleKeyPress(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setSearch({ ...search, query: '' });
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
   }, [data]);
 
   const filteredBooks = useMemo(() => {
@@ -129,10 +151,11 @@ export function InputSearch({
         m='10px auto'
         rounded='lg'
         overflow='auto'
-        boxShadow='2xl'
+        boxShadow='dark-lg'
         p='4'
         bg={colorContainerBg}
         color={colorContainer}
+        ref={containerRef}
         fontWeight='500'
         position='absolute'
         top={top}
