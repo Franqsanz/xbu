@@ -53,6 +53,7 @@ export function InputSearch({
   //     navigate(`/book/show/${books}`);
   //   }
   // }
+
   useOutsideClick({
     ref: containerRef,
     handler: () => {

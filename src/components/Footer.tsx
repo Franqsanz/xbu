@@ -10,14 +10,21 @@ export function Footer() {
       <Flex
         as='footer'
         bg={bgFooter}
-        py='10'
+        py='5'
         justify='center'
         direction='column'
         align='center'
+        fontSize='sm'
       >
         Hecho con ❤ por Franqsanz
-        <Link as={NavLink} to='/privacy-policies' mt='3'>
-          Política de Privacidad
+        <Link
+          as={NavLink}
+          to='/privacy-policies'
+          mt='2'
+          textDecoration='underline'
+          _hover={{ textDecoration: 'none' }}
+        >
+          Políticas de Privacidad
         </Link>
       </Flex>
     </>
