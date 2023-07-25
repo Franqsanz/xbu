@@ -10,6 +10,7 @@ import {
   Radio,
   RadioGroup,
   Image,
+  useColorModeValue,
 } from '@chakra-ui/react';
 
 import { Card } from '../components/cards/Card';
@@ -26,6 +27,7 @@ import lost from '../assets/lost.svg';
 
 export default function Search() {
   const { isOpen, onToggle, onClose } = useDisclosure();
+  const grayColor = useColorModeValue('#E2E8F0', '#2D3748');
   const [languages, setLanguages] = useState<string[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [years, setYears] = useState<string[]>([]);
@@ -148,19 +150,20 @@ export default function Search() {
     buttonFilter = (
       <Flex
         display={{ base: 'flex', xl: 'none' }}
-        pt='5'
+        mt='4'
+        pt='3'
         pb='3'
         px='10'
         justify='flex-end'
-        borderBottom='1px solid #A0AEC0'
+        borderY={`1px solid ${grayColor}`}
       >
         <Button
           display={{ base: 'flex', xl: 'none' }}
           onClick={onToggle}
           fontWeight='500'
-          size='md'
+          size='sm'
         >
-          <Icon as={CgOptions} boxSize='20px' mr='2' />
+          <Icon as={CgOptions} boxSize='4' mr='2' />
           Filtrar
         </Button>
       </Flex>

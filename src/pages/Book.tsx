@@ -42,6 +42,10 @@ export default function Book() {
     navigate(-1);
   }
 
+  function aboutAuthor(authorName: string) {
+    return `https://www.google.com/search?q=${authorName}+escritor`;
+  }
+
   const { data } = useBook(pathUrl);
 
   if (data.sourceLink === '') {
@@ -140,7 +144,9 @@ export default function Book() {
           direction='column'
           justify='center'
           px='5'
-          m='1rem auto'
+          m='auto'
+          mt='1rem'
+          mb='2'
         >
           <Box>
             <Link
@@ -160,20 +166,30 @@ export default function Book() {
           </Box>
           <Box
             my='1'
-            fontSize={{ base: 'lg', md: '2xl' }}
+            fontSize={{ base: 'lg', md: 'xl' }}
             textTransform='uppercase'
           >
-            {data.author}
+            <Link
+              as={NavLink}
+              isExternal
+              to={aboutAuthor(data.author)}
+              textDecoration='underline'
+              _hover={{
+                textDecoration: 'none',
+              }}
+            >
+              {data.author}
+            </Link>
           </Box>
           <Box mt='5'>
-            <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
+            <Box p='2' fontSize='lg' bg={grayColor} roundedTop='lg'>
               Sinopsis
             </Box>
-            <Text mt='3' mb='10' fontSize='lg' whiteSpace='pre-wrap'>
+            <Text mt='3' mb='10' fontSize='md' whiteSpace='pre-wrap'>
               {data.synopsis}
             </Text>
           </Box>
-          <Box p='2' fontSize='xl' bg={grayColor} roundedTop='lg'>
+          <Box p='2' fontSize='lg' bg={grayColor} roundedTop='lg'>
             Caracteristicas
           </Box>
           <Box bg={bgGrayCategory} p='4' roundedBottom='lg'>
@@ -184,7 +200,20 @@ export default function Book() {
                     <Box as='span'>Autor:</Box>
                   </Box>
                   <Box>
-                    <Box as='span'>{data.author}</Box>
+                    <Box as='span'>
+                      <Link
+                        as={NavLink}
+                        isExternal
+                        to={aboutAuthor(data.author)}
+                        color={colorLinkCategory}
+                        _hover={{
+                          color: `${colorLinkHoverCategory}`,
+                          textDecoration: 'underline',
+                        }}
+                      >
+                        {data.author}
+                      </Link>
+                    </Box>
                   </Box>
                 </Flex>
                 <Flex my='2'>
