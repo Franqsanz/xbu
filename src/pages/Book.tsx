@@ -166,7 +166,7 @@ export default function Book() {
           </Box>
           <Box
             my='1'
-            fontSize={{ base: 'lg', md: 'xl' }}
+            fontSize={{ base: 'md', md: 'xl' }}
             textTransform='uppercase'
           >
             <Link
