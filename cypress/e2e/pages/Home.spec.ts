@@ -3,7 +3,6 @@
 describe('HomePage', () => {
   beforeEach(() => {
     cy.visit('/');
-    // cy.viewport('macbook-13');
   });
 
   it('Debería mostrar el título "XBuniverse"', () => {
