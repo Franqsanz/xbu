@@ -205,6 +205,7 @@ export default function Search() {
                 synopsis,
                 author,
                 category,
+                language,
                 sourceLink,
                 image,
                 pathUrl,
@@ -213,6 +214,7 @@ export default function Search() {
                   <Card
                     id={id}
                     category={category}
+                    language={language}
                     title={title}
                     author={author}
                     synopsis={synopsis}

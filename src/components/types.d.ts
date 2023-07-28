@@ -23,7 +23,7 @@ interface CardProps {
   author: string;
   category: string;
   year?: number;
-  language?: number;
+  language?: string | number | boolean;
   sourceLink?: string;
   numberPages?: number;
   format?: string;

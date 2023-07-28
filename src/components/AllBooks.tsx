@@ -100,6 +100,7 @@ export function AllBooks() {
                 ({
                   id,
                   title,
+                  language,
                   synopsis,
                   author,
                   category,
@@ -111,6 +112,7 @@ export function AllBooks() {
                     <Card
                       id={id}
                       category={category}
+                      language={language}
                       title={title}
                       author={author}
                       synopsis={synopsis}

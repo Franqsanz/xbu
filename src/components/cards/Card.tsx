@@ -4,20 +4,24 @@ import LazyLoad from 'react-lazy-load';
 import {
   Flex,
   Box,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
   useColorModeValue,
   Image,
   LinkBox,
   LinkOverlay,
   useBreakpointValue,
 } from '@chakra-ui/react';
+import { HiFlag } from 'react-icons/hi2';
 
 import { CardProps } from '../types';
 import { MyTag } from '../MyTag';
 import { handleImageLoad, useHandleEnterKey } from '../../utils/utils';
 
 export function Card({
-  id,
   title,
+  language,
   image,
   author,
   category,
@@ -31,6 +35,14 @@ export function Card({
     sm: '275px',
     md: '300px',
   });
+
+  function isSpanish(language) {
+    const spanishLanguage = ['Español', 'español'];
+    // Convertimos el idioma a minúsculas para hacer una comparación insensible a mayúsculas y minúsculas
+    const lowerCaseLanguage = language.toLowerCase();
+
+    return spanishLanguage.includes(lowerCaseLanguage);
+  }
 
   return (
     <>
@@ -85,6 +97,39 @@ export function Card({
                   _focus={{ outline: `4px solid ${outlineCard}` }}
                 />
               </LazyLoad>
+              {!isSpanish(language) && (
+                <Box
+                  // display={{ base: 'none', md: 'block' }}
+                  position='absolute'
+                  bottom='-2'
+                  right='-2'
+                  zIndex='1'
+                >
+                  <Tag
+                    bg='yellow'
+                    color='black'
+                    // size={size}
+                    border='1px'
+                    // variant='subtle'
+                    boxShadow='2xl'
+                    // m={margin}
+                    // tabIndex={tabIndex}
+                    // _focus={isFocused === true ? { outline: `2px solid ${outlineCard}` } : {}}
+                    outline='none'
+                  >
+                    <TagLeftIcon boxSize='16px' as={HiFlag} />
+                    <TagLabel
+                      display='flex'
+                      alignItems='center'
+                      alignSelf='center'
+                      whiteSpace='nowrap'
+                      overflow='initial'
+                    >
+                      {language}
+                    </TagLabel>
+                  </Tag>
+                </Box>
+              )}
             </Flex>
             <Flex direction='column' alignItems='center' textAlign='center'>
               <Box
