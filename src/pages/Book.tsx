@@ -17,7 +17,7 @@ import { FiArrowLeft, FiExternalLink, FiShare2 } from 'react-icons/fi';
 import LazyLoad from 'react-lazy-load';
 
 import { useBook } from '../hooks/querys';
-import { handleImageLoad } from '../utils/utils';
+import { handleImageLoad, aboutAuthor } from '../utils/utils';
 import { MainHead } from '../components/Head';
 import { MyTag } from '../components/MyTag';
 import { ModalShare } from '../components/ModalShare';
@@ -34,19 +34,15 @@ export default function Book() {
   const bgButton = useColorModeValue('white', 'black');
   const colorLinkCategory = useColorModeValue('green.800', 'green.400');
   const colorLinkHoverCategory = useColorModeValue('green.900', 'green.700');
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   let uiLink;
+
+  const { data } = useBook(pathUrl);
 
   function handleGoBack() {
     navigate(-1);
   }
-
-  function aboutAuthor(authorName: string) {
-    return `https://www.google.com/search?q=${authorName}+escritor`;
-  }
-
-  const { data } = useBook(pathUrl);
 
   if (data.sourceLink === '') {
     uiLink = (

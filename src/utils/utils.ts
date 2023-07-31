@@ -43,4 +43,22 @@ function generatePathUrl(name) {
   return `${dashedName}-${randomId}`;
 }
 
-export { keys, handleImageLoad, useHandleEnterKey, generatePathUrl };
+function aboutAuthor(authorName: string) {
+  return `https://www.google.com/search?q=${authorName}+autor`;
+}
+
+// Funcion para verificar si se encuentra en otro idioma que no sea español
+function isSpanish(language) {
+  const spanishLanguage = ['Español', 'español'];
+  const lowerCaseLanguage = language.toLowerCase();
+  return spanishLanguage.includes(lowerCaseLanguage);
+}
+
+export {
+  keys,
+  handleImageLoad,
+  useHandleEnterKey,
+  generatePathUrl,
+  aboutAuthor,
+  isSpanish,
+};

@@ -17,7 +17,11 @@ import { HiFlag } from 'react-icons/hi2';
 
 import { CardProps } from '../types';
 import { MyTag } from '../MyTag';
-import { handleImageLoad, useHandleEnterKey } from '../../utils/utils';
+import {
+  handleImageLoad,
+  useHandleEnterKey,
+  isSpanish,
+} from '../../utils/utils';
 
 export function Card({
   title,
@@ -35,14 +39,6 @@ export function Card({
     sm: '275px',
     md: '300px',
   });
-
-  function isSpanish(language) {
-    const spanishLanguage = ['Español', 'español'];
-    // Convertimos el idioma a minúsculas para hacer una comparación insensible a mayúsculas y minúsculas
-    const lowerCaseLanguage = language.toLowerCase();
-
-    return spanishLanguage.includes(lowerCaseLanguage);
-  }
 
   return (
     <>
@@ -98,23 +94,12 @@ export function Card({
                 />
               </LazyLoad>
               {!isSpanish(language) && (
-                <Box
-                  // display={{ base: 'none', md: 'block' }}
-                  position='absolute'
-                  bottom='-2'
-                  right='-2'
-                  zIndex='1'
-                >
+                <Box position='absolute' bottom='-2' right='-2' zIndex='1'>
                   <Tag
                     bg='yellow'
                     color='black'
-                    // size={size}
                     border='1px'
-                    // variant='subtle'
                     boxShadow='2xl'
-                    // m={margin}
-                    // tabIndex={tabIndex}
-                    // _focus={isFocused === true ? { outline: `2px solid ${outlineCard}` } : {}}
                     outline='none'
                   >
                     <TagLeftIcon boxSize='16px' as={HiFlag} />
