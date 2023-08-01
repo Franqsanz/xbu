@@ -9,6 +9,7 @@ export function MySimpleGrid({ children }: { children: React.ReactNode }) {
       <SimpleGrid
         as='section'
         maxW='full'
+        minH='100vh'
         w='8xl'
         columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }}
         justifyItems='center'

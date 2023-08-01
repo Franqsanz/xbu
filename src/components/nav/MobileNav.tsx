@@ -138,11 +138,13 @@ export function MobileNav() {
           onClose={onCloseMenu}
           size='xs'
         >
-          {/* <DrawerOverlay  /> */}
+          <DrawerOverlay />
           <DrawerContent
             bg={bgDrawer}
+            maxW='290px'
             backdropFilter='auto'
             backdropBlur='12px'
+            roundedRight='2xl'
           >
             <DrawerCloseButton />
             <DrawerBody>
