@@ -18,10 +18,12 @@ import {
 } from '@chakra-ui/react';
 
 import { MainHead } from '../components/Head';
-import iconBook from '../assets/imgBook.svg';
-import iconBookReading from '../assets/iconBookReading.svg';
-import patternBlack from '../assets/patternpadBlack.svg';
-import patternWhite from '../assets/patternpadWhite.svg';
+import {
+  PatternPadWhite,
+  PatternPadBlack,
+  ImgBook,
+  BookReading,
+} from '../assets/assets';
 
 export function Home() {
   const { colorMode } = useColorMode();
@@ -46,7 +48,9 @@ export function Home() {
         bg={bContainer}
         backgroundSize='cover'
         backgroundPosition='center center'
-        backgroundImage={colorMode === 'dark' ? patternBlack : patternWhite}
+        backgroundImage={
+          colorMode === 'dark' ? PatternPadBlack : PatternPadWhite
+        }
         backgroundAttachment='fixed'
       >
         <Box py={{ base: 10, md: '20vh' }} pt={{ base: 24, lg: 28 }}>
@@ -154,7 +158,7 @@ export function Home() {
         direction={{ base: 'column', md: 'row' }}
       >
         <LazyLoad height={height} offset={0}>
-          <Image src={iconBook} w='500px' alt='' decoding='async' />
+          <Image src={ImgBook} w='500px' alt='' decoding='async' />
         </LazyLoad>
         <Stack maxW='md' direction='column' ml={{ base: 0, md: 5 }} spacing='4'>
           <Heading
@@ -222,7 +226,7 @@ export function Home() {
           </Text>
         </Stack>
         <LazyLoad offset={0}>
-          <Image src={iconBookReading} w='500px' alt='' decoding='async' />
+          <Image src={BookReading} w='500px' alt='' decoding='async' />
         </LazyLoad>
       </Flex>
     </>

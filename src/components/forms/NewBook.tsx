@@ -265,7 +265,6 @@ export function FormNewBook() {
                   mb='5'
                   bg={bgColorInput}
                   size='lg'
-                  placeholder='Titulo'
                   name='title'
                   value={books.title}
                   onChange={handleChange}
@@ -280,7 +279,6 @@ export function FormNewBook() {
                   mb='5'
                   bg={bgColorInput}
                   size='lg'
-                  placeholder='Autor'
                   name='author'
                   value={books.author}
                   onChange={handleChange}
@@ -296,7 +294,6 @@ export function FormNewBook() {
                   bg={bgColorInput}
                   size='lg'
                   name='synopsis'
-                  placeholder='Sinopsis'
                   value={books.synopsis}
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
@@ -366,7 +363,7 @@ export function FormNewBook() {
             <Box w='full' ml={{ base: 0, md: 5 }}>
               <FormControl>
                 <FormLabel htmlFor='link'>
-                  Adquirir libro{' '}
+                  Enlace de la librería{' '}
                   <Box display='inline' fontSize='xs'>
                     (Opcional)
                   </Box>
@@ -392,7 +389,6 @@ export function FormNewBook() {
                   mb='5'
                   bg={bgColorInput}
                   size='lg'
-                  placeholder='Idioma'
                   name='language'
                   value={books.language}
                   onChange={handleChange}
@@ -407,7 +403,6 @@ export function FormNewBook() {
                   mb='5'
                   bg={bgColorInput}
                   size='lg'
-                  placeholder='Número de páginas'
                   name='numberPages'
                   value={books.numberPages}
                   onChange={handleChange}
@@ -425,7 +420,6 @@ export function FormNewBook() {
                   bg={bgColorInput}
                   size='lg'
                   name='year'
-                  placeholder='Ingresar año'
                   value={books.year}
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}

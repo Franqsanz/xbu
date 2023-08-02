@@ -23,7 +23,7 @@ import { Aside } from '../components/Aside';
 import { MySliderCategories } from '../components/MySliderCategories';
 import { FilterDrawer } from '../components/FilterDrawer';
 import ResultLength from '../components/ResultLength';
-import lost from '../assets/lost.svg';
+import { Lost } from '../assets/assets';
 
 export default function Search() {
   const { isOpen, onToggle, onClose } = useDisclosure();
@@ -238,7 +238,7 @@ export default function Search() {
               ¡Ups!
             </Box>
             <Image
-              src={lost}
+              src={Lost}
               maxW='full'
               w={{ base: '200px', md: '400px' }}
               mt='5'

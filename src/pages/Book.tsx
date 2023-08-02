@@ -356,10 +356,10 @@ export default function Book() {
               position='absolute'
               bottom='710px'
               left='6px'
-              opacity='70%'
+              opacity='50%'
               rounded='lg'
               decoding='async'
-              filter='blur(15px)'
+              filter='blur(10px)'
             />
             <Box
               h='650px'
