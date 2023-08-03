@@ -24,7 +24,7 @@ import {
   Input,
 } from '@chakra-ui/react';
 
-import { navLink, accountLinks } from '../links';
+import { navLink, accountLinks } from '../../data/links';
 import { InputSearch } from '../forms/filters/InputSearch';
 import { ModalFilter } from '../forms/filters/ModalFilter';
 

@@ -2,7 +2,7 @@ import { FiHome } from 'react-icons/fi';
 import { MdOutlineExplore } from 'react-icons/md';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 
-import { LinkProps, SelectBooksprops } from './types';
+import { LinkProps, SelectBooksprops } from '../components/types';
 
 const navLink: Array<LinkProps> = [
   {

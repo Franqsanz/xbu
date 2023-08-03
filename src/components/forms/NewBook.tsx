@@ -21,7 +21,7 @@ import 'cropperjs/dist/cropper.css';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 
-import { categories, format } from '../links';
+import { categories, format } from '../../data/links';
 import { Book } from '../types';
 import { useMutatePost } from '../../hooks/querys';
 import { ModalCropper } from '../forms/ModalCropper';
@@ -264,7 +264,7 @@ export function FormNewBook() {
                   type='text'
                   mb='5'
                   bg={bgColorInput}
-                  size='lg'
+                  size={{ base: 'md', md: 'lg' }}
                   name='title'
                   value={books.title}
                   onChange={handleChange}
@@ -278,7 +278,7 @@ export function FormNewBook() {
                   type='text'
                   mb='5'
                   bg={bgColorInput}
-                  size='lg'
+                  size={{ base: 'md', md: 'lg' }}
                   name='author'
                   value={books.author}
                   onChange={handleChange}
@@ -292,7 +292,6 @@ export function FormNewBook() {
                   rows={6}
                   mb='5'
                   bg={bgColorInput}
-                  size='lg'
                   name='synopsis'
                   value={books.synopsis}
                   onChange={handleChange}
@@ -373,7 +372,7 @@ export function FormNewBook() {
                   type='text'
                   mb='5'
                   bg={bgColorInput}
-                  size='lg'
+                  size={{ base: 'md', md: 'lg' }}
                   name='sourceLink'
                   placeholder='https://ejemplo.com/'
                   value={books.sourceLink}
@@ -388,7 +387,7 @@ export function FormNewBook() {
                   type='text'
                   mb='5'
                   bg={bgColorInput}
-                  size='lg'
+                  size={{ base: 'md', md: 'lg' }}
                   name='language'
                   value={books.language}
                   onChange={handleChange}
@@ -402,7 +401,7 @@ export function FormNewBook() {
                   type='number'
                   mb='5'
                   bg={bgColorInput}
-                  size='lg'
+                  size={{ base: 'md', md: 'lg' }}
                   name='numberPages'
                   value={books.numberPages}
                   onChange={handleChange}
@@ -418,7 +417,7 @@ export function FormNewBook() {
                   type='number'
                   mb={{ base: 5, md: 0 }}
                   bg={bgColorInput}
-                  size='lg'
+                  size={{ base: 'md', md: 'lg' }}
                   name='year'
                   value={books.year}
                   onChange={handleChange}
@@ -436,7 +435,7 @@ export function FormNewBook() {
                   isMulti
                   id='categoria'
                   name='category'
-                  size='lg'
+                  size={{ base: 'md', md: 'lg' }}
                   variant='filled'
                   colorScheme='green'
                   onChange={handleCategoryChange}
@@ -453,7 +452,7 @@ export function FormNewBook() {
                 <Select
                   id='formato'
                   name='format'
-                  size='lg'
+                  size={{ base: 'md', md: 'lg' }}
                   variant='filled'
                   onChange={(selectedOption) =>
                     handleFormatChange(selectedOption?.value)
