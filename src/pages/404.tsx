@@ -1,18 +1,24 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Link, Text, VStack, Box } from '@chakra-ui/react';
+import { Link, Text, VStack, Box, Image, Flex, Icon } from '@chakra-ui/react';
+import { FiArrowLeft } from 'react-icons/fi';
 
 import { MainHead } from '../components/Head';
+import { PageNotFound } from '../assets/assets';
 
 export function ErrorPage() {
   return (
     <>
       <MainHead title='Page not found' />
-      <VStack fontSize='2xl' py='44' h='90vh'>
-        <Box as='h1' fontSize='9xl' fontWeight='bold' color='#2de000'>
-          404
+      <VStack fontSize={{ base: 'lg', md: '2xl' }} py='44' h='90vh'>
+        <Box>
+          <Image
+            src={PageNotFound}
+            w={{ base: '200px', md: '400px' }}
+            decoding='async'
+          />
         </Box>
-        <Text pt='1.5' pb='10'>
+        <Text mt='5' pb='5'>
           ¡Está pagina no existe!
         </Text>
         <Link
@@ -30,7 +36,10 @@ export function ErrorPage() {
             borderColor: 'black',
           }}
         >
-          ← Volver al inicio
+          <Flex align='center'>
+            <Icon as={FiArrowLeft} mr='2' />
+            Volver al inicio
+          </Flex>
         </Link>
       </VStack>
     </>

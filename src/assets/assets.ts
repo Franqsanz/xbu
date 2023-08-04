@@ -8,7 +8,15 @@ const images = {
     'https://res.cloudinary.com/xbu/image/upload/v1690907900/xbu_assets/patternpadBlack_bdmcla.svg',
   PatternPadWhite:
     'https://res.cloudinary.com/xbu/image/upload/v1690907908/xbu_assets/patternpadWhite_cwhqna.svg',
+  PageNotFound:
+    'https://res.cloudinary.com/xbu/image/upload/v1691162478/xbu_assets/page_not_found_foafmr.svg',
 };
 
-export const { BookReading, ImgBook, Lost, PatternPadBlack, PatternPadWhite } =
-  images;
+export const {
+  BookReading,
+  ImgBook,
+  Lost,
+  PatternPadBlack,
+  PatternPadWhite,
+  PageNotFound,
+} = images;
