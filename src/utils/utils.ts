@@ -30,7 +30,7 @@ function useHandleEnterKey(pathUrl: string) {
   return handleKeyPress;
 }
 
-function generatePathUrl(name) {
+function generatePathUrl(name: string) {
   const formattedName = name
     .toLowerCase()
     .normalize('NFD')
@@ -44,7 +44,7 @@ function generatePathUrl(name) {
 }
 
 function aboutAuthor(authorName: string) {
-  return `https://www.google.com/search?q=${authorName}+autor`;
+  return `https://www.google.com/search?q=${authorName}+escritor`;
 }
 
 // Funcion para verificar si se encuentra en otro idioma que no sea español

@@ -14,6 +14,8 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { HiFlag } from 'react-icons/hi2';
+import { IoLanguageOutline } from 'react-icons/io5';
+import { BsTranslate } from 'react-icons/bs';
 
 import { CardProps } from '../types';
 import { MyTag } from '../MyTag';
@@ -102,7 +104,9 @@ export function Card({
                     boxShadow='2xl'
                     outline='none'
                   >
-                    <TagLeftIcon boxSize='16px' as={HiFlag} />
+                    {/* <TagLeftIcon boxSize='16px' as={HiFlag} /> */}
+                    <TagLeftIcon boxSize='16px' as={IoLanguageOutline} />
+                    {/* <TagLeftIcon boxSize='16px' as={BsTranslate} /> */}
                     <TagLabel
                       display='flex'
                       alignItems='center'

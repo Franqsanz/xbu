@@ -289,7 +289,7 @@ export function FormNewBook() {
                 <FormLabel htmlFor='sinopsis'>Sinopsis</FormLabel>
                 <Textarea
                   id='sinopsis'
-                  rows={6}
+                  rows={12}
                   mb='5'
                   bg={bgColorInput}
                   name='synopsis'
@@ -299,7 +299,7 @@ export function FormNewBook() {
                 />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel htmlFor='sinopsis' mt='3'>
+                <FormLabel htmlFor='sinopsis' mt='2'>
                   Subir Imagen
                 </FormLabel>
                 <Button
@@ -464,7 +464,7 @@ export function FormNewBook() {
                   placeholder='Seleccione un Formato'
                 />
               </FormControl>
-              <Box mt={{ base: 10, md: 60 }}>
+              <Box mt={{ base: 10, md: '22rem' }}>
                 <Button
                   type='submit'
                   w='full'
