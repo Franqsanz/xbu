@@ -41,7 +41,7 @@ export function RelatedCard({
             <Box p='4'>
               <Box
                 as='h1'
-                fontSize='xl'
+                fontSize='lg'
                 lineHeight='8'
                 fontWeight='800'
                 mb='2'
