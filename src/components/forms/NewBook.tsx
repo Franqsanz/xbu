@@ -34,6 +34,7 @@ export function FormNewBook() {
   const bgColorBox = useColorModeValue('white', 'gray.900');
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
+  let alertMessage;
   const { mutate, isLoading, isSuccess, error } = useMutatePost();
   const [cropData, setCropData] = useState<string | null>(null);
   const [crop, setCrop] = useState<any>('');
@@ -198,8 +199,6 @@ export function FormNewBook() {
     }
   }
 
-  let alertMessage;
-
   if (isSuccess) {
     alertMessage = (
       <Alert status='success' variant='solid' rounded='xl'>
@@ -319,7 +318,7 @@ export function FormNewBook() {
                   </Flex>
                 </Button>
                 <Input
-                  accept='image/png, image/jpeg, image/webp'
+                  accept='image/png, image/jpeg, image/jpg, image/webp'
                   display='none'
                   ref={fileInputRef}
                   type='file'

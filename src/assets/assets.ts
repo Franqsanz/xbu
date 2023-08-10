@@ -9,7 +9,7 @@ const images = {
   PatternPadWhite:
     'https://res.cloudinary.com/xbu/image/upload/v1690907908/xbu_assets/patternpadWhite_cwhqna.svg',
   PageNotFound:
-    'https://res.cloudinary.com/xbu/image/upload/v1691162478/xbu_assets/page_not_found_foafmr.svg',
+    'https://res.cloudinary.com/xbu/image/upload/v1691664467/xbu_assets/page_not_found_rl8gve.svg',
 };
 
 export const {
