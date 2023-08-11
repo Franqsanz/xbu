@@ -119,7 +119,7 @@ export function InputSearch({
             border='1px solid black'
             rounded='md'
             color={colorInput}
-            placeholder='Buscar por Titulo o Autor'
+            placeholder='Buscar Titulo o Autor'
             _placeholder={{ color: `${colorInput}` }}
             _focus={{ bg: `${focusInput}` }}
             _hover={{ outline: 'none' }}
@@ -131,7 +131,7 @@ export function InputSearch({
               px='0'
               onClick={onOpen}
               bg='none'
-              title='Opciones de búsqueda'
+              title='Más Opciones de búsqueda'
               _hover={{ bg: 'none' }}
               _active={{ bg: 'none' }}
             >

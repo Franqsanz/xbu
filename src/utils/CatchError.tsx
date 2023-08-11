@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
+import { NavLink } from 'react-router-dom';
 import {
-  Box,
   Button,
   Flex,
   VStack,
@@ -10,13 +10,44 @@ import {
   Spinner,
   useColorModeValue,
   Icon,
+  Image,
+  Text,
 } from '@chakra-ui/react';
-import { NavLink } from 'react-router-dom';
+
 import { GrPowerReset } from 'react-icons/gr';
 import { FiArrowLeft } from 'react-icons/fi';
 
+import { PageNotFound, Lost } from '../assets/assets';
+// import { noConnection } from '../utils/fetchData';
+
 export function CatchError({ children }: { children: React.ReactNode }) {
   const bgColorBtn = useColorModeValue('green.500', 'green.700');
+  // let notConnection;
+  // let notFound;
+
+  // if (noConnection) {
+  //   notConnection = (
+  //     <>
+  //       <Image src={Lost} w={{ base: '200px', md: '400px' }} decoding='async' />
+  //       <Text mt='5' pb='5' fontSize={{ base: 'lg', md: '2xl' }}>
+  //         ¡Se ha perdido la conexión con el servidor!
+  //       </Text>
+  //     </>
+  //   );
+  // } else {
+  //   notFound = (
+  //     <>
+  //       <Image
+  //         src={PageNotFound}
+  //         w={{ base: '200px', md: '400px' }}
+  //         decoding='async'
+  //       />
+  //       <Text mt='5' pb='5' fontSize={{ base: 'lg', md: '2xl' }}>
+  //         ¡Este libro no existe!
+  //       </Text>
+  //     </>
+  //   );
+  // }
 
   return (
     <QueryErrorResetBoundary>
@@ -24,17 +55,24 @@ export function CatchError({ children }: { children: React.ReactNode }) {
         <ErrorBoundary
           onReset={reset}
           fallbackRender={({ resetErrorBoundary }) => (
-            <VStack fontSize='2xl' py='44' h='85vh' textAlign='center'>
+            <VStack py='24' h='85vh' textAlign='center'>
               <Flex direction='column' p='5' align='center'>
-                <Box
-                  as='h1'
-                  fontSize={{ base: '3xl', md: '5xl' }}
-                  fontWeight='bold'
-                  color='green.500'
-                  mb='10'
+                <Flex
+                  w={{ base: '280px', md: '450px' }}
+                  align='center'
+                  direction='column'
+                  mb='5'
                 >
-                  ¡Ups ha ocurrido un Error!
-                </Box>
+                  <Image
+                    src={PageNotFound}
+                    w={{ base: '200px', md: '300px' }}
+                    decoding='async'
+                  />
+                  <Text mt='5' pb='5' fontSize={{ base: 'lg', md: '2xl' }}>
+                    ¡Este libro no existe o se ha perdido la conexión con el
+                    servidor!
+                  </Text>
+                </Flex>
                 <Flex direction={{ base: 'column', md: 'row' }}>
                   <Link
                     as={NavLink}

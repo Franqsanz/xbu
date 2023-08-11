@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { HeadProps } from './types';
-
+// million-ignore
 export function MainHead({ title, description, urlImage }: HeadProps) {
   return (
     <Helmet prioritizeSeoTags>

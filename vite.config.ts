@@ -3,6 +3,7 @@
 
 import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
+import million from 'million/compiler';
 import compression from 'vite-plugin-compression';
 import webfontDownload from 'vite-plugin-webfont-dl';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
@@ -11,6 +12,7 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 export default defineConfig({
   plugins: [
     splitVendorChunkPlugin(),
+    million.vite({ auto: true }),
     react(),
     webfontDownload(),
     createHtmlPlugin({ minify: true }),
