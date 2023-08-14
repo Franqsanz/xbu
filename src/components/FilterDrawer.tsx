@@ -28,6 +28,7 @@ export function FilterDrawer({
   handleYearChange,
 }: PropsDrawer) {
   const bgContentCheckbox = useColorModeValue('white', 'transparent');
+  const bgDrawer = useColorModeValue('white', '#121212e4');
   const bgButtonApply = useColorModeValue('green.500', 'green.700');
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
@@ -53,6 +54,7 @@ export function FilterDrawer({
       <Drawer isOpen={isOpen} placement='bottom' onClose={onClose} size='xl'>
         <DrawerOverlay bg='#1212126e' />
         <DrawerContent
+          bg={bgDrawer}
           backdropFilter='auto'
           backdropBlur='12px'
           roundedTop='3xl'

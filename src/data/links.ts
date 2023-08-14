@@ -35,6 +35,10 @@ const accountLinks: Array<LinkProps> = [
 
 const categories: Array<SelectBooksprops> = [
   {
+    value: 'Aventura',
+    label: 'Aventura',
+  },
+  {
     value: 'Ciencia Ficción',
     label: 'Ciencia Ficción',
   },
@@ -185,6 +189,10 @@ const categories: Array<SelectBooksprops> = [
   {
     value: 'Humor',
     label: 'Humor',
+  },
+  {
+    value: 'Horror',
+    label: 'Horror',
   },
 ];
 
