@@ -32,9 +32,9 @@ export function InputSearch({
 }: BookSearchResultsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const colorIcons = useColorModeValue('gray.700', 'gray.300');
-  const bgInput = useColorModeValue('gray.50', 'black');
+  const bgInput = useColorModeValue('white', 'black');
   const colorInput = useColorModeValue('gray.900', 'gray.100');
-  const focusInput = useColorModeValue('white', 'black');
+  // const focusInput = useColorModeValue('white', 'black');
   // const hoverButton = useColorModeValue('gray.300', 'black');
   const colorContainerBg = useColorModeValue('white', 'black');
   const colorContainer = useColorModeValue('black', 'gray.50');
@@ -121,7 +121,7 @@ export function InputSearch({
             color={colorInput}
             placeholder='Buscar Titulo o Autor'
             _placeholder={{ color: `${colorInput}` }}
-            _focus={{ bg: `${focusInput}` }}
+            // _focus={{ bg: `${focusInput}` }}
             _hover={{ outline: 'none' }}
             value={search.query}
             onChange={handleSearch}

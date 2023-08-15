@@ -233,7 +233,19 @@ export default function Book() {
                     <Box as='span'>Idioma:</Box>
                   </Box>
                   <Box>
-                    <Box as='span'>{data.language}</Box>
+                    <Box as='span'>
+                      <Link
+                        as={NavLink}
+                        to={`/books/search/language/${data.language}`}
+                        color={colorLinkCategory}
+                        _hover={{
+                          color: `${colorLinkHoverCategory}`,
+                          textDecoration: 'underline',
+                        }}
+                      >
+                        {data.language}
+                      </Link>
+                    </Box>
                   </Box>
                 </Flex>
                 <Flex my='2'>
