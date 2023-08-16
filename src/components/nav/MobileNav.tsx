@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FiMenu, FiSearch } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
@@ -22,6 +22,7 @@ import {
   DrawerBody,
   DrawerFooter,
   Input,
+  useOutsideClick,
 } from '@chakra-ui/react';
 
 import { navLink, accountLinks } from '../../data/links';
@@ -29,6 +30,7 @@ import { InputSearch } from '../forms/filters/InputSearch';
 import { ModalFilter } from '../forms/filters/ModalFilter';
 
 export function MobileNav() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const { colorMode, toggleColorMode } = useColorMode();
   const {
     isOpen: isOpenMenu,
@@ -47,6 +49,13 @@ export function MobileNav() {
   function handleClick() {
     setBoxVisible(!isBoxVisible);
   }
+
+  useOutsideClick({
+    ref: containerRef,
+    handler: () => {
+      setBoxVisible(false);
+    },
+  });
 
   return (
     <>
@@ -123,6 +132,7 @@ export function MobileNav() {
           justifyContent='center'
           mx='3'
           mt='3'
+          ref={containerRef}
         >
           <InputSearch
             width='90%'

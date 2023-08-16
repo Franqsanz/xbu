@@ -15,10 +15,13 @@ import {
   useDisclosure,
   Icon,
   Skeleton,
+  Tooltip,
+  // InputGroup,
+  // InputLeftAddon,
 } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
 import 'cropperjs/dist/cropper.css';
-import { AiOutlineCloudUpload } from 'react-icons/ai';
+import { AiOutlineCloudUpload, AiOutlineQuestionCircle } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 
 import { categories, format } from '../../data/links';
@@ -35,6 +38,7 @@ export function FormNewBook() {
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
   let alertMessage;
+  let previewImgUI;
   const { mutate, isLoading, isSuccess, error } = useMutatePost();
   const [cropData, setCropData] = useState<string | null>(null);
   const [crop, setCrop] = useState<any>('');
@@ -156,8 +160,6 @@ export function FormNewBook() {
     e.preventDefault();
     mutate(books);
   }
-
-  let previewImgUI;
 
   if (books.image) {
     if (books.image.url === null) {
@@ -360,12 +362,31 @@ export function FormNewBook() {
             </Box>
             <Box w='full' ml={{ base: 0, md: 5 }}>
               <FormControl>
-                <FormLabel htmlFor='link'>
-                  Enlace de la librería{' '}
-                  <Box display='inline' fontSize='xs'>
-                    (Opcional)
-                  </Box>
-                </FormLabel>
+                <Flex align='center' justify='space-between'>
+                  <FormLabel htmlFor='link'>
+                    Enlace de la librería{' '}
+                    <Box display='inline' fontSize='xs'>
+                      (Opcional)
+                    </Box>
+                  </FormLabel>
+                  <Tooltip
+                    label='Aquí puedes añadir un enlace para la compra del libro, por ejemplo: https://www.buscalibre.com.ar/'
+                    fontSize='sm'
+                    bg='black'
+                    color='white'
+                    textAlign='center'
+                  >
+                    <Box
+                      display={{ base: 'none', md: 'block' }}
+                      as='span'
+                      mr='5'
+                    >
+                      <Icon as={AiOutlineQuestionCircle} fontSize='20' />
+                    </Box>
+                  </Tooltip>
+                </Flex>
+                {/* <InputGroup size='lg'> */}
+                {/* <InputLeftAddon children='https://' /> */}
                 <Input
                   id='link'
                   type='text'
@@ -378,6 +399,7 @@ export function FormNewBook() {
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
                 />
+                {/* </InputGroup> */}
               </FormControl>
               <FormControl isRequired>
                 <FormLabel htmlFor='language'>Idioma</FormLabel>
@@ -424,12 +446,28 @@ export function FormNewBook() {
                 />
               </FormControl>
               <FormControl isRequired mt={{ base: 0, md: 8 }}>
-                <FormLabel htmlFor='categoria'>
-                  Categoria{' '}
-                  <Box display='inline' fontSize='xs'>
-                    (Una o multiples categorias)
-                  </Box>
-                </FormLabel>
+                <Flex align='center' justify='space-between'>
+                  <FormLabel htmlFor='categoria'>
+                    Categoria{' '}
+                    <Box display='inline' fontSize='xs'>
+                      (Una o multiples categorias)
+                    </Box>
+                  </FormLabel>
+                  <Tooltip
+                    label='Puedes añadir una categoria o varias'
+                    fontSize='sm'
+                    bg='black'
+                    color='white'
+                  >
+                    <Box
+                      display={{ base: 'none', md: 'block' }}
+                      as='span'
+                      mr='5'
+                    >
+                      <Icon as={AiOutlineQuestionCircle} fontSize='20' />
+                    </Box>
+                  </Tooltip>
+                </Flex>
                 <Select
                   isMulti
                   id='categoria'

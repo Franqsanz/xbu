@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 /// <reference types="vite/client" />
 
 import { defineConfig, splitVendorChunkPlugin } from 'vite';
@@ -11,8 +10,8 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 
 export default defineConfig({
   plugins: [
-    splitVendorChunkPlugin(),
     million.vite({ auto: true }),
+    splitVendorChunkPlugin(),
     react(),
     webfontDownload(),
     createHtmlPlugin({ minify: true }),

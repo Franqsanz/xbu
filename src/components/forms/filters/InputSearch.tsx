@@ -14,6 +14,7 @@ import {
   List,
   ListItem,
   Link,
+  Tooltip,
   useOutsideClick,
 } from '@chakra-ui/react';
 
@@ -34,8 +35,6 @@ export function InputSearch({
   const colorIcons = useColorModeValue('gray.700', 'gray.300');
   const bgInput = useColorModeValue('white', 'black');
   const colorInput = useColorModeValue('gray.900', 'gray.100');
-  // const focusInput = useColorModeValue('white', 'black');
-  // const hoverButton = useColorModeValue('gray.300', 'black');
   const colorContainerBg = useColorModeValue('white', 'black');
   const colorContainer = useColorModeValue('black', 'gray.50');
   const colorListBg = useColorModeValue('gray.200', 'gray.700');
@@ -121,27 +120,32 @@ export function InputSearch({
             color={colorInput}
             placeholder='Buscar Titulo o Autor'
             _placeholder={{ color: `${colorInput}` }}
-            // _focus={{ bg: `${focusInput}` }}
             _hover={{ outline: 'none' }}
             value={search.query}
             onChange={handleSearch}
           />
           <InputRightElement justifyContent='flex-end' w='4.5rem'>
-            <Button
-              px='0'
-              onClick={onOpen}
-              bg='none'
-              title='Más Opciones de búsqueda'
-              _hover={{ bg: 'none' }}
-              _active={{ bg: 'none' }}
+            <Tooltip
+              label='Más Opciones de búsqueda'
+              fontSize='sm'
+              bg='black'
+              color='white'
             >
-              <Icon
-                as={CgOptions}
-                boxSize='20px'
-                color={colorIcons}
-                _hover={{ color: 'green.500' }}
-              />
-            </Button>
+              <Button
+                px='0'
+                onClick={onOpen}
+                bg='none'
+                _hover={{ bg: 'none' }}
+                _active={{ bg: 'none' }}
+              >
+                <Icon
+                  as={CgOptions}
+                  boxSize='20px'
+                  color={colorIcons}
+                  _hover={{ color: 'green.500' }}
+                />
+              </Button>
+            </Tooltip>
           </InputRightElement>
         </InputGroup>
       </FormControl>
