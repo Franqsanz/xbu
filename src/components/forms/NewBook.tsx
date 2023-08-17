@@ -15,13 +15,12 @@ import {
   useDisclosure,
   Icon,
   Skeleton,
-  Tooltip,
   // InputGroup,
   // InputLeftAddon,
 } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
 import 'cropperjs/dist/cropper.css';
-import { AiOutlineCloudUpload, AiOutlineQuestionCircle } from 'react-icons/ai';
+import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 
 import { categories, format } from '../../data/links';
@@ -29,16 +28,17 @@ import { Book } from '../types';
 import { useMutatePost } from '../../hooks/querys';
 import { ModalCropper } from '../forms/ModalCropper';
 import { generatePathUrl } from '../../utils/utils';
+import { MyPopover } from '../MyPopover';
 
 const Cropper = lazy(() => import('react-cropper'));
 
 export function FormNewBook() {
+  let alertMessage;
+  let previewImgUI;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const bgColorBox = useColorModeValue('white', 'gray.900');
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
-  let alertMessage;
-  let previewImgUI;
   const { mutate, isLoading, isSuccess, error } = useMutatePost();
   const [cropData, setCropData] = useState<string | null>(null);
   const [crop, setCrop] = useState<any>('');
@@ -362,28 +362,17 @@ export function FormNewBook() {
             </Box>
             <Box w='full' ml={{ base: 0, md: 5 }}>
               <FormControl>
-                <Flex align='center' justify='space-between'>
-                  <FormLabel htmlFor='link'>
+                <Flex align='center' justify='space-between' mb='7px'>
+                  <FormLabel htmlFor='link' m='0'>
                     Enlace de la librería{' '}
                     <Box display='inline' fontSize='xs'>
                       (Opcional)
                     </Box>
                   </FormLabel>
-                  <Tooltip
-                    label='Aquí puedes añadir un enlace para la compra del libro, por ejemplo: https://www.buscalibre.com.ar/'
-                    fontSize='sm'
-                    bg='black'
-                    color='white'
-                    textAlign='center'
-                  >
-                    <Box
-                      display={{ base: 'none', md: 'block' }}
-                      as='span'
-                      mr='5'
-                    >
-                      <Icon as={AiOutlineQuestionCircle} fontSize='20' />
-                    </Box>
-                  </Tooltip>
+                  <MyPopover
+                    textBody='Aquí puedes añadir un enlace para la compra del libro, por ejemplo:'
+                    textFooter='https://www.buscalibre.com.ar/'
+                  />
                 </Flex>
                 {/* <InputGroup size='lg'> */}
                 {/* <InputLeftAddon children='https://' /> */}
@@ -446,27 +435,11 @@ export function FormNewBook() {
                 />
               </FormControl>
               <FormControl isRequired mt={{ base: 0, md: 8 }}>
-                <Flex align='center' justify='space-between'>
-                  <FormLabel htmlFor='categoria'>
-                    Categoria{' '}
-                    <Box display='inline' fontSize='xs'>
-                      (Una o multiples categorias)
-                    </Box>
+                <Flex align='center' justify='space-between' mb='9px'>
+                  <FormLabel htmlFor='categoria' m='0'>
+                    Categoria
                   </FormLabel>
-                  <Tooltip
-                    label='Puedes añadir una categoria o varias'
-                    fontSize='sm'
-                    bg='black'
-                    color='white'
-                  >
-                    <Box
-                      display={{ base: 'none', md: 'block' }}
-                      as='span'
-                      mr='5'
-                    >
-                      <Icon as={AiOutlineQuestionCircle} fontSize='20' />
-                    </Box>
-                  </Tooltip>
+                  <MyPopover textBody='Puedes añadir una categoria o varias' />
                 </Flex>
                 <Select
                   isMulti
