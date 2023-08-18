@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FiMenu, FiSearch } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
@@ -20,8 +20,6 @@ import {
   DrawerContent,
   DrawerCloseButton,
   DrawerBody,
-  DrawerFooter,
-  Input,
   useOutsideClick,
 } from '@chakra-ui/react';
 
@@ -42,18 +40,19 @@ export function MobileNav() {
     onOpen: onOpenDFilter,
     onClose: onCloseDFilter,
   } = useDisclosure();
+  const {
+    isOpen: isOpenSearch,
+    onOpen: onOpenSearch,
+    onClose: onCloseSearch,
+  } = useDisclosure();
   const bgDrawer = useColorModeValue('#ffffffe0', '#121212e4');
+  // const bgDrawerSearch = useColorModeValue('#ffffff', '#000000e3');
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
-  const [isBoxVisible, setBoxVisible] = useState(false);
-
-  function handleClick() {
-    setBoxVisible(!isBoxVisible);
-  }
 
   useOutsideClick({
     ref: containerRef,
     handler: () => {
-      setBoxVisible(false);
+      onCloseSearch();
     },
   });
 
@@ -104,7 +103,7 @@ export function MobileNav() {
           </Flex>
           <Flex align='center'>
             <Button
-              onClick={handleClick}
+              onClick={onOpenSearch}
               bg='none'
               _active={{ bg: 'none' }}
               _hover={{ color: 'green.500' }}
@@ -126,32 +125,30 @@ export function MobileNav() {
             </Button>
           </Flex>
         </Flex>
-        <Box
-          display={isBoxVisible ? 'flex' : 'none'}
-          p='2'
-          justifyContent='center'
-          mx='3'
-          mt='3'
-          ref={containerRef}
-        >
-          <InputSearch
-            width='90%'
-            top='120px'
-            onOpen={onOpenDFilter}
-            onResultClick={handleClick}
-          />
-          <ModalFilter isOpen={isOpenDFilter} onClose={onCloseDFilter} />
-        </Box>
+        <Drawer placement='top' isOpen={isOpenSearch} onClose={onCloseSearch}>
+          <DrawerOverlay backdropFilter='blur(7px)' />
+          <DrawerContent bg='none' boxShadow='none' ref={containerRef}>
+            <DrawerBody overflow='inherit'>
+              <InputSearch
+                width='full'
+                top='47px'
+                onOpen={onOpenDFilter}
+                onResultClick={onCloseSearch}
+              />
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+        <ModalFilter isOpen={isOpenDFilter} onClose={onCloseDFilter} />
         <Drawer
           isOpen={isOpenMenu}
           placement='left'
           onClose={onCloseMenu}
           size='xs'
         >
-          <DrawerOverlay />
+          <DrawerOverlay backdropFilter='blur(5px)' />
           <DrawerContent
             bg={bgDrawer}
-            maxW='290px'
+            maxW='294px'
             backdropFilter='auto'
             backdropBlur='12px'
             roundedRight='2xl'

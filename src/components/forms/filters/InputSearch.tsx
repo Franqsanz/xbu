@@ -162,7 +162,7 @@ export function InputSearch({
         color={colorContainer}
         ref={containerRef}
         fontWeight='500'
-        position='absolute'
+        position={{ base: 'inherit', md: 'absolute' }}
         top={top}
       >
         <List fontSize='md'>
