@@ -28,7 +28,7 @@ export function AllBooks() {
 
   if (isLoading) {
     return (
-      <Flex justify='center' py={{ base: '25vh', md: '40vh' }}>
+      <Flex justify='center' pt='64' minH='70vh'>
         <Spinner size='xl' thickness='4px' speed='0.40s' />
       </Flex>
     );
@@ -43,7 +43,7 @@ export function AllBooks() {
         alignItems='center'
         justifyContent='center'
         textAlign='center'
-        height='500px'
+        minH='70vh'
       >
         <AlertIcon boxSize='50px' />
         <AlertTitle mt='5' fontSize='xl'>

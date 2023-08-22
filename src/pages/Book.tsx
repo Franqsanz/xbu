@@ -192,7 +192,7 @@ export default function Book() {
             <Flex direction='column'>
               <Box>
                 <Flex>
-                  <Box w='160px'>
+                  <Box minW='160px'>
                     <Box as='span'>Autor:</Box>
                   </Box>
                   <Box>
@@ -213,7 +213,7 @@ export default function Book() {
                   </Box>
                 </Flex>
                 <Flex my='2'>
-                  <Box w='160px'>
+                  <Box minW='160px'>
                     <Box as='span'>Año:</Box>
                   </Box>
                   <Box>
@@ -221,7 +221,7 @@ export default function Book() {
                   </Box>
                 </Flex>
                 <Flex>
-                  <Box w='160px'>
+                  <Box minW='160px'>
                     <Box as='span'>N° paginas:</Box>
                   </Box>
                   <Box>
@@ -229,7 +229,7 @@ export default function Book() {
                   </Box>
                 </Flex>
                 <Flex my='2'>
-                  <Box w='160px'>
+                  <Box minW='160px'>
                     <Box as='span'>Idioma:</Box>
                   </Box>
                   <Box>
@@ -249,7 +249,7 @@ export default function Book() {
                   </Box>
                 </Flex>
                 <Flex my='2'>
-                  <Box w='160px'>
+                  <Box minW='160px'>
                     <Box as='span'>Formato:</Box>
                   </Box>
                   <Box>
@@ -257,7 +257,7 @@ export default function Book() {
                   </Box>
                 </Flex>
                 <Flex>
-                  <Box w='160px'>
+                  <Box minW='160px'>
                     <Box as='span'>Categoria(s):</Box>
                   </Box>
                   <Box>

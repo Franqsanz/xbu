@@ -55,7 +55,7 @@ export function CatchError({ children }: { children: React.ReactNode }) {
         <ErrorBoundary
           onReset={reset}
           fallbackRender={({ resetErrorBoundary }) => (
-            <VStack py='24' h='85vh' textAlign='center'>
+            <VStack py='24' minH='85vh' textAlign='center'>
               <Flex direction='column' p='5' align='center'>
                 <Flex
                   w={{ base: '280px', md: '450px' }}
