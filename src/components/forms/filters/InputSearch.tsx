@@ -25,6 +25,15 @@ import { Book } from '../../types';
 import { useAllSearchBooks } from '../../../hooks/querys';
 import { BookSearchResultsProps } from '../../../components/types';
 
+// function highlightText(text, query) {
+//   const regex = new RegExp(`(${query})`, 'gi');
+//   return text
+//     .split(regex)
+//     .map((part, index) =>
+//       regex.test(part) ? <mark key={index}>{part}</mark> : part,
+//     );
+// }
+
 export function InputSearch({
   onOpen,
   width,
@@ -39,12 +48,14 @@ export function InputSearch({
   const colorContainer = useColorModeValue('black', 'gray.50');
   const colorListBg = useColorModeValue('gray.200', 'gray.700');
   const colorListBgHover = useColorModeValue('gray.300', 'gray.600');
+  const colorInputNotResult = useColorModeValue('gray.600', 'gray.400');
   const [books, setBooks] = useState<Book[]>([]);
   const [search, setSearch] = useState({ query: '' });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   let alertMessage;
 
   const { data } = useAllSearchBooks();
+  const { query } = search;
 
   // TODO: resolver esto a futuro
   // function handleKeyPress(e: React.KeyboardEvent) {
@@ -80,7 +91,6 @@ export function InputSearch({
 
   const filteredBooks = useMemo(() => {
     if (!data) return [];
-    const { query } = search;
 
     return books.filter(
       (book) =>
@@ -90,7 +100,14 @@ export function InputSearch({
   }, [books, search, data]);
 
   if (filteredBooks.length === 0) {
-    alertMessage = <Box fontSize='md'>No se encontraron resultados.</Box>;
+    alertMessage = (
+      <Box fontSize='md'>
+        No se encontraron resultados para:{' '}
+        <Box as='span' fontStyle='italic' color={colorInputNotResult}>
+          "{query}"
+        </Box>
+      </Box>
+    );
   }
 
   function handleResultClick(book) {
@@ -100,7 +117,7 @@ export function InputSearch({
   }
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearch({ ...search, query: e.target.value });
+    setSearch({ ...search, query: e.target.value.trim() });
   }
 
   return (
@@ -167,36 +184,38 @@ export function InputSearch({
       >
         <List fontSize='md'>
           {filteredBooks.map((book) => (
-            <>
-              <ListItem
-                key={book.id}
-                tabIndex={0}
-                textAlign='left'
-                mb='3'
-                rounded='lg'
-                bg={colorListBg}
-                // onKeyDown={handleKeyPress}
-                _hover={{ bg: `${colorListBgHover}` }}
+            <ListItem
+              key={book.id}
+              tabIndex={0}
+              textAlign='left'
+              mb='3'
+              rounded='lg'
+              bg={colorListBg}
+              // onKeyDown={handleKeyPress}
+              _hover={{ bg: `${colorListBgHover}` }}
+            >
+              <Link
+                as={NavLink}
+                to={`/book/view/${book.pathUrl}`}
+                display='block'
+                p='3'
+                onClick={() => {
+                  setSearch({ ...search, query: '' });
+                  handleResultClick(book);
+                }}
+                tabIndex={-1}
+                _hover={{ outline: 'none' }}
               >
-                <Link
-                  as={NavLink}
-                  to={`/book/view/${book.pathUrl}`}
-                  display='block'
-                  p='3'
-                  onClick={() => {
-                    setSearch({ ...search, query: '' });
-                    handleResultClick(book);
-                  }}
-                  tabIndex={-1}
-                  _hover={{ outline: 'none' }}
-                >
-                  <Box fontSize={{ base: 'sm', sm: 'md' }} mb='1'>
-                    {book.title}
-                  </Box>
-                  <Box fontSize='xs'>{book.author}</Box>
-                </Link>
-              </ListItem>
-            </>
+                <Box fontSize={{ base: 'sm', sm: 'md' }} mb='1'>
+                  {book.title}
+                  {/* {highlightText(book.title, search.query)} */}
+                </Box>
+                <Box fontSize='xs'>
+                  {book.author}
+                  {/* {highlightText(book.author, search.query)} */}
+                </Box>
+              </Link>
+            </ListItem>
           ))}
         </List>
         {alertMessage}
