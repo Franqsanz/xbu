@@ -75,7 +75,7 @@ export function Home() {
             </Box>
             <Text
               px={{ base: 5, md: 0 }}
-              fontSize='lg'
+              fontSize={{ base: 'md', md: 'lg' }}
               textAlign={{ base: 'center', md: 'left' }}
             >
               Comparte tus libros favoritos con la comunidad.
