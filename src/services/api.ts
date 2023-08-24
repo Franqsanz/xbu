@@ -7,8 +7,8 @@ async function getAllBooks() {
   return data;
 }
 
-async function getAllSearchBooks() {
-  const data = await fetchData(`${API_URL}/search`);
+async function getAllSearchBooks(book: string) {
+  const data = await fetchData(`${API_URL}/search?q=${book}`);
 
   return data;
 }

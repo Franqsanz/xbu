@@ -20,9 +20,10 @@ function useAllBooks() {
   return useQuery([keys.all], () => getAllBooks());
 }
 
-function useAllSearchBooks() {
-  return useQuery([keys.allSearch], () => getAllSearchBooks(), {
+function useAllSearchBooks(book: string) {
+  return useQuery([keys.allSearch, book], () => getAllSearchBooks(book), {
     refetchOnWindowFocus: false,
+    enabled: false,
   });
 }
 
