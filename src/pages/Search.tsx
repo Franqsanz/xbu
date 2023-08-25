@@ -153,10 +153,12 @@ export default function Search() {
         mt='4'
         pt='3'
         pb='3'
-        px='10'
-        justify='flex-end'
+        px={{ base: '7', md: '20', sm: '10' }}
+        justify={{ base: 'space-around', sm: 'space-between' }}
+        align='center'
         borderY={`1px solid ${grayColor}`}
       >
+        <ResultLength data={data} />
         <Button
           display={{ base: 'flex', xl: 'none' }}
           onClick={onToggle}
