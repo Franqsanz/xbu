@@ -11,7 +11,7 @@ interface LinkProps {
   icon?: React.ReactComponentElement;
 }
 
-interface SelectBooksprops {
+interface SelectBooksProps {
   value: string;
   label: string;
 }
@@ -114,7 +114,7 @@ interface BookSearchResultsProps {
 
 export type {
   LinkProps,
-  SelectBooksprops,
+  SelectBooksProps,
   CardProps,
   TitleProps,
   HeadProps,

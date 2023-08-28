@@ -117,7 +117,12 @@ export default function Book() {
         align='flex-start'
         direction={{ base: 'column', lg: 'row-reverse' }}
       >
-        <Box display={{ base: 'block', lg: 'none' }} m='auto' pb='4'>
+        <Box
+          as='figure'
+          display={{ base: 'block', lg: 'none' }}
+          m='auto'
+          pb='4'
+        >
           <LazyLoad width={230} height={340} offset={0} threshold={0.99}>
             <Image
               w='230px'
@@ -217,7 +222,19 @@ export default function Book() {
                     <Box as='span'>Año:</Box>
                   </Box>
                   <Box>
-                    <Box as='span'>{data.year}</Box>
+                    <Box as='span'>
+                      <Link
+                        as={NavLink}
+                        to={`/books/search/year/${data.year}`}
+                        color={colorLinkCategory}
+                        _hover={{
+                          color: `${colorLinkHoverCategory}`,
+                          textDecoration: 'underline',
+                        }}
+                      >
+                        {data.year}
+                      </Link>
+                    </Box>
                   </Box>
                 </Flex>
                 <Flex>
@@ -344,7 +361,12 @@ export default function Book() {
           top='65px'
         >
           <Box maxW={{ base: '920px', lg: 'auto' }} m='1rem auto'>
-            <Flex justifyContent='center' zIndex='9999' position='relative'>
+            <Flex
+              as='figure'
+              justifyContent='center'
+              zIndex='9999'
+              position='relative'
+            >
               <LazyLoad width={290} height={420} offset={0} threshold={0.99}>
                 <Image
                   w='290px'

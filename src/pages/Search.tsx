@@ -155,7 +155,7 @@ export default function Search() {
         pb='3'
         px={{ base: '7', md: '20', sm: '10' }}
         justify={{ base: 'space-around', sm: 'space-between' }}
-        align='center'
+        align='stretch'
         borderY={`1px solid ${grayColor}`}
       >
         <ResultLength data={data} />

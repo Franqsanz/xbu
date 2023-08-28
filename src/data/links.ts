@@ -2,7 +2,7 @@ import { FiHome } from 'react-icons/fi';
 import { MdOutlineExplore } from 'react-icons/md';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 
-import { LinkProps, SelectBooksprops } from '../components/types';
+import { LinkProps, SelectBooksProps } from '../components/types';
 
 const navLink: Array<LinkProps> = [
   {
@@ -33,7 +33,7 @@ const accountLinks: Array<LinkProps> = [
   },
 ];
 
-const categories: Array<SelectBooksprops> = [
+const categories: Array<SelectBooksProps> = [
   {
     value: 'Aventura',
     label: 'Aventura',
@@ -196,7 +196,7 @@ const categories: Array<SelectBooksprops> = [
   },
 ];
 
-const format: Array<SelectBooksprops> = [
+const format: Array<SelectBooksProps> = [
   {
     value: 'Físico',
     label: 'Físico',
