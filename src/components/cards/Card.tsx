@@ -4,15 +4,13 @@ import LazyLoad from 'react-lazy-load';
 import {
   Flex,
   Box,
-  Tag,
-  TagLabel,
-  TagLeftIcon,
   useColorModeValue,
   Image,
   LinkBox,
   LinkOverlay,
   useBreakpointValue,
 } from '@chakra-ui/react';
+import { BsTag } from 'react-icons/bs';
 import { IoLanguageOutline } from 'react-icons/io5';
 
 import { CardProps } from '../types';
@@ -65,6 +63,9 @@ export function Card({
                 zIndex='1'
               >
                 <MyTag
+                  bg='green.50'
+                  color='green.900'
+                  icon={BsTag}
                   name={category[0]}
                   size='md'
                   isFocused={false}
@@ -95,24 +96,15 @@ export function Card({
               </LazyLoad>
               {!isSpanish(language) && (
                 <Box position='absolute' bottom='-2' right='-2' zIndex='1'>
-                  <Tag
+                  <MyTag
                     bg='yellow'
                     color='black'
-                    border='1px'
-                    boxShadow='2xl'
-                    outline='none'
-                  >
-                    <TagLeftIcon boxSize='16px' as={IoLanguageOutline} />
-                    <TagLabel
-                      display='flex'
-                      alignItems='center'
-                      alignSelf='center'
-                      whiteSpace='nowrap'
-                      overflow='initial'
-                    >
-                      {language}
-                    </TagLabel>
-                  </Tag>
+                    icon={IoLanguageOutline}
+                    name={language}
+                    size='md'
+                    isFocused={false}
+                    tabIndex={-1}
+                  />
                 </Box>
               )}
             </Flex>

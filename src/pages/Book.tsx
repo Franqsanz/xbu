@@ -14,6 +14,7 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import { FiArrowLeft, FiExternalLink, FiShare2 } from 'react-icons/fi';
+import { BsTag } from 'react-icons/bs';
 import LazyLoad from 'react-lazy-load';
 
 import { useBook } from '../hooks/querys';
@@ -21,6 +22,7 @@ import { handleImageLoad, aboutAuthor } from '../utils/utils';
 import { MainHead } from '../components/Head';
 import { MyTag } from '../components/MyTag';
 import { ModalShare } from '../components/ModalShare';
+import { MyLink } from '../components/MyLink';
 const Categories = lazy(() => import('../components/Categories'));
 const RelatedPost = lazy(() => import('../components/RelatedPost'));
 
@@ -32,8 +34,6 @@ export default function Book() {
   const gradientColor = useColorModeValue('white', '#1A202C');
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
   const bgButton = useColorModeValue('white', 'black');
-  const colorLinkCategory = useColorModeValue('green.800', 'green.400');
-  const colorLinkHoverCategory = useColorModeValue('green.900', 'green.700');
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   let uiLink;
@@ -154,7 +154,14 @@ export default function Book() {
               as={NavLink}
               to={`/books/search/category/${data.category[0]}`}
             >
-              <MyTag name={data.category[0]} size='lg' tabIndex={-1} />
+              <MyTag
+                bg='green.50'
+                color='green.900'
+                icon={BsTag}
+                name={data.category[0]}
+                size='lg'
+                tabIndex={-1}
+              />
             </Link>
           </Box>
           <Box
@@ -202,18 +209,11 @@ export default function Book() {
                   </Box>
                   <Box>
                     <Box as='span'>
-                      <Link
-                        as={NavLink}
-                        isExternal
-                        to={aboutAuthor(data.author)}
-                        color={colorLinkCategory}
-                        _hover={{
-                          color: `${colorLinkHoverCategory}`,
-                          textDecoration: 'underline',
-                        }}
-                      >
-                        {data.author}
-                      </Link>
+                      <MyLink
+                        external={true}
+                        href={aboutAuthor(data.author)}
+                        data={data.author}
+                      />
                     </Box>
                   </Box>
                 </Flex>
@@ -223,17 +223,11 @@ export default function Book() {
                   </Box>
                   <Box>
                     <Box as='span'>
-                      <Link
-                        as={NavLink}
-                        to={`/books/search/year/${data.year}`}
-                        color={colorLinkCategory}
-                        _hover={{
-                          color: `${colorLinkHoverCategory}`,
-                          textDecoration: 'underline',
-                        }}
-                      >
-                        {data.year}
-                      </Link>
+                      <MyLink
+                        external={false}
+                        href={`/books/search/year/${data.year}`}
+                        data={data.year}
+                      />
                     </Box>
                   </Box>
                 </Flex>
@@ -251,17 +245,11 @@ export default function Book() {
                   </Box>
                   <Box>
                     <Box as='span'>
-                      <Link
-                        as={NavLink}
-                        to={`/books/search/language/${data.language}`}
-                        color={colorLinkCategory}
-                        _hover={{
-                          color: `${colorLinkHoverCategory}`,
-                          textDecoration: 'underline',
-                        }}
-                      >
-                        {data.language}
-                      </Link>
+                      <MyLink
+                        external={false}
+                        href={`/books/search/language/${data.language}`}
+                        data={data.language}
+                      />
                     </Box>
                   </Box>
                 </Flex>
@@ -280,19 +268,13 @@ export default function Book() {
                   <Box>
                     <Box as='span'>
                       {data.category.map((category, index) => (
-                        <Link
+                        <MyLink
+                          external={false}
                           key={index}
-                          as={NavLink}
-                          to={`/books/search/category/${category}`}
-                          color={colorLinkCategory}
-                          _hover={{
-                            color: `${colorLinkHoverCategory}`,
-                            textDecoration: 'underline',
-                          }}
-                        >
-                          {category}
-                          {index !== data.category.length - 1 && ', '}
-                        </Link>
+                          href={`/books/search/category/${category}`}
+                          data={category}
+                          index={index !== data.category.length - 1 && ', '}
+                        />
                       ))}
                     </Box>
                   </Box>

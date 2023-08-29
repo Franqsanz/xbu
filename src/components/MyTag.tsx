@@ -6,11 +6,13 @@ import {
   Box,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { BsTag } from 'react-icons/bs';
 
 import { PropsTag } from './types';
 
 export function MyTag({
+  bg,
+  color,
+  icon,
   name,
   size,
   margin,
@@ -46,8 +48,8 @@ export function MyTag({
 
   return (
     <Tag
-      bg='green.50'
-      color='green.900'
+      bg={bg}
+      color={color}
       size={size}
       border='1px'
       variant='subtle'
@@ -56,7 +58,7 @@ export function MyTag({
       outline='none'
       _focus={isFocused === true ? { outline: `2px solid ${outlineCard}` } : {}}
     >
-      <TagLeftIcon boxSize='16px' as={BsTag} />
+      <TagLeftIcon boxSize='16px' as={icon} />
       <TagLabel
         display='flex'
         alignItems='center'
@@ -65,7 +67,7 @@ export function MyTag({
         overflow='initial'
       >
         {name}
-        {countUI}
+        {countUI || null}
       </TagLabel>
     </Tag>
   );

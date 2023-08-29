@@ -1,4 +1,5 @@
 import React from 'react';
+import type { IconType } from 'react-icons';
 
 interface DisclosureProps {
   isOpen: boolean;
@@ -45,12 +46,15 @@ interface HeadProps {
 }
 
 interface PropsTag {
+  bg: string;
+  color: string;
   name: string | any;
   size: string;
   count?: number;
   margin?: string;
   isFocused?: boolean;
   tabIndex?: number;
+  icon: IconType;
 }
 
 interface Book {
