@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 
 import { Card } from '../components/cards/Card';
-import { CardProps, LanguageAndYearProps } from '../components/types';
+import { CardType, LanguageAndYearType } from '../components/types';
 import { useFilter } from '../hooks/querys';
 import { ContainerTitle } from '../components/ContainerTitle';
 import { MySimpleGrid } from '../components/MySimpleGrid';
@@ -39,8 +39,8 @@ export default function Search() {
   const { data } = useFilter(query, param);
 
   function getLanguagesAndYears(
-    data: Array<CardProps>,
-  ): LanguageAndYearProps | null {
+    data: Array<CardType>,
+  ): LanguageAndYearType | null {
     const languagesMap = data.reduce((acc, book) => {
       const language = book.language;
 
@@ -211,7 +211,7 @@ export default function Search() {
                 sourceLink,
                 image,
                 pathUrl,
-              }: CardProps) => (
+              }: CardType) => (
                 <React.Fragment key={id}>
                   <Card
                     id={id}

@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
 
-import { CardProps } from './types';
+import { CardType } from './types';
 import { useBooksPaginate } from '../hooks/querys';
 import { MySimpleGrid } from './MySimpleGrid';
 import { Card } from './cards/Card';
@@ -107,7 +107,7 @@ export function AllBooks() {
                   sourceLink,
                   image,
                   pathUrl,
-                }: CardProps) => (
+                }: CardType) => (
                   <React.Fragment key={id}>
                     <Card
                       id={id}

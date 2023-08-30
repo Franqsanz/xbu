@@ -9,9 +9,9 @@ import {
 } from '@chakra-ui/react';
 
 import Filter from './Filter';
-import { ModalProps } from '../../types';
+import { ModalType } from '../../types';
 
-export function ModalFilter({ isOpen, onClose }: ModalProps) {
+export function ModalFilter({ isOpen, onClose }: ModalType) {
   return (
     <>
       <Modal

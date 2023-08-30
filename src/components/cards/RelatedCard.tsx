@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Flex, Box, useColorModeValue, Link, Icon } from '@chakra-ui/react';
 import { FiArrowRight } from 'react-icons/fi';
 
-import { CardProps } from '../types';
+import { CardType } from '../types';
 import { useHandleEnterKey } from '../../utils/utils';
 
 export function RelatedCard({
@@ -11,7 +11,7 @@ export function RelatedCard({
   author,
   pathUrl,
   refetchQueries,
-}: CardProps) {
+}: CardType) {
   const handleEnterKey = useHandleEnterKey(pathUrl);
   const borderCard = useColorModeValue('gray.200', 'gray.600');
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');

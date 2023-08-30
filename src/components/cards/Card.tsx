@@ -13,7 +13,7 @@ import {
 import { BsTag } from 'react-icons/bs';
 import { IoLanguageOutline } from 'react-icons/io5';
 
-import { CardProps } from '../types';
+import { CardType } from '../types';
 import { MyTag } from '../MyTag';
 import {
   handleImageLoad,
@@ -28,7 +28,7 @@ export function Card({
   author,
   category,
   pathUrl,
-}: CardProps) {
+}: CardType) {
   const handleEnterKey = useHandleEnterKey(pathUrl);
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
   const outlineCard = useColorModeValue('black', 'white');

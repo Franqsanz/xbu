@@ -23,10 +23,10 @@ import {
 import { CgOptions } from 'react-icons/cg';
 import { FiSearch } from 'react-icons/fi';
 
-import { Book } from '../../types';
+// import { BookType } from '../../types';
 import { useAllSearchBooks } from '../../../hooks/querys';
 import { useDebounce } from '../../../hooks/useDebounce';
-import { BookSearchResultsProps } from '../../../components/types';
+import { BookSearchResultsType } from '../../../components/types';
 
 function highlightText(text, query) {
   const regex = new RegExp(`(${query})`, 'gi');
@@ -42,7 +42,7 @@ export function InputSearch({
   width,
   top,
   onResultClick,
-}: BookSearchResultsProps) {
+}: BookSearchResultsType) {
   const containerRef = useRef<HTMLDivElement>(null);
   const colorIcons = useColorModeValue('gray.700', 'gray.300');
   const bgInput = useColorModeValue('white', 'black');

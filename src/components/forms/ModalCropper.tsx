@@ -11,14 +11,14 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-import { ModalCropperProps } from '../types';
+import { ModalCroppType } from '../types';
 
 export function ModalCropper({
   children,
   getCropData,
   isOpen,
   onClose,
-}: ModalCropperProps) {
+}: ModalCroppType) {
   return (
     <>
       <Modal

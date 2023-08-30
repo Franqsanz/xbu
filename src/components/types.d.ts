@@ -1,23 +1,23 @@
 import React from 'react';
 import type { IconType } from 'react-icons';
 
-interface DisclosureProps {
+interface DisclosureType {
   isOpen: boolean;
   onClose: () => void;
 }
 
-interface LinkProps {
+interface LinkType {
   name: string;
   href?: string;
   icon?: React.ReactComponentElement;
 }
 
-interface SelectBooksProps {
+interface SelectBooksType {
   value: string;
   label: string;
 }
 
-interface CardProps {
+interface CardType {
   id?: string;
   title: string;
   synopsis?: string;
@@ -35,17 +35,17 @@ interface CardProps {
   };
 }
 
-interface TitleProps {
+interface TitleType {
   title: string | undefined;
 }
 
-interface HeadProps {
+interface HeadType {
   title: string;
   description?: string;
   urlImage?: string;
 }
 
-interface PropsTag {
+interface TagType {
   bg: string;
   color: string;
   name: string | any;
@@ -57,7 +57,7 @@ interface PropsTag {
   icon: IconType;
 }
 
-interface Book {
+interface BookType {
   id?: string;
   title: string;
   author: string;
@@ -75,60 +75,68 @@ interface Book {
   };
 }
 
-interface ModalCropperType extends DisclosureProps {
+interface ModalCropperType extends DisclosureType {
   getCropData: () => any;
 }
 
-type ModalCropperProps = ModalCropperType & {
+type ModalCroppType = ModalCropperType & {
   children: React.ReactNode;
 };
 
-interface ModalProps extends DisclosureProps {
+interface ModalType extends DisclosureType {
   shareUrl?: string;
   data?: string;
 }
 
-interface ReleatedBooksProps {
+interface ReleatedBooksType {
   currentBookId: string | undefined;
 }
 
-interface SelectProps {
+interface SelectType {
   value: string;
   total: number;
 }
 
-interface LanguageAndYearProps {
+interface LanguageAndYearType {
   language: string[] | undefined;
   languagesMap: { [key: string]: number } | undefined;
   year: string[] | undefined;
   yearsMap: { [key: string]: number } | undefined;
 }
 
-interface PropsDrawer extends DisclosureProps, LanguageAndYearProps {
+interface DrawerType extends DisclosureType, LanguageAndYearType {
   handleLanguageChange: (languages: any) => void;
   handleYearChange: (years: any) => void;
 }
 
-interface BookSearchResultsProps {
+interface BookSearchResultsType {
   onOpen: () => void;
   width: string;
   top: string;
   onResultClick?: (book: string) => void | undefined;
 }
 
+interface MyLinkType extends Omit<LinkType, 'name'> {
+  external: boolean;
+  data?: string;
+  index?: any;
+}
+
 export type {
-  LinkProps,
-  SelectBooksProps,
-  CardProps,
-  TitleProps,
-  HeadProps,
-  PropsTag,
-  Book,
-  ModalCropperProps,
-  ModalProps,
-  ReleatedBooksProps,
-  SelectProps,
-  PropsDrawer,
-  LanguageAndYearProps,
-  BookSearchResultsProps,
+  LinkType,
+  SelectBooksType,
+  CardType,
+  TitleType,
+  HeadType,
+  TagType,
+  BookType,
+  ModalCroppType,
+  ModalCropperType,
+  ModalType,
+  ReleatedBooksType,
+  SelectType,
+  DrawerType,
+  LanguageAndYearType,
+  BookSearchResultsType,
+  MyLinkType,
 };

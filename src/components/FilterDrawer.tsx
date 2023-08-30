@@ -15,7 +15,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 
-import { PropsDrawer } from './types';
+import { DrawerType } from './types';
 
 export function FilterDrawer({
   isOpen,
@@ -26,7 +26,7 @@ export function FilterDrawer({
   year,
   yearsMap,
   handleYearChange,
-}: PropsDrawer) {
+}: DrawerType) {
   const bgContentCheckbox = useColorModeValue('white', 'transparent');
   const bgDrawer = useColorModeValue('white', '#121212e4');
   const bgButtonApply = useColorModeValue('green.500', 'green.700');

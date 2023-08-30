@@ -1,9 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { HeadProps } from './types';
+import { HeadType } from './types';
 // million-ignore
-export function MainHead({ title, description, urlImage }: HeadProps) {
+export function MainHead({ title, description, urlImage }: HeadType) {
   return (
     <Helmet prioritizeSeoTags>
       <title>{title}</title>

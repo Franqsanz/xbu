@@ -24,7 +24,7 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 
 import { categories, format } from '../../data/links';
-import { Book } from '../types';
+import { BookType } from '../types';
 import { useMutatePost } from '../../hooks/querys';
 import { ModalCropper } from '../forms/ModalCropper';
 import { generatePathUrl } from '../../utils/utils';
@@ -42,7 +42,7 @@ export function FormNewBook() {
   const { mutate, isLoading, isSuccess, error } = useMutatePost();
   const [cropData, setCropData] = useState<string | null>(null);
   const [crop, setCrop] = useState<any>('');
-  const [books, setBooks] = useState<Book>({
+  const [books, setBooks] = useState<BookType>({
     title: '',
     author: '',
     synopsis: '',
@@ -59,7 +59,7 @@ export function FormNewBook() {
     },
   });
 
-  function allFieldsBook(book: Book): boolean {
+  function allFieldsBook(book: BookType): boolean {
     return (
       Object.entries(book)
         .filter(([key]) => key !== 'sourceLink')

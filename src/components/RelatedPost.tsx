@@ -2,10 +2,10 @@ import React from 'react';
 import { Flex, useColorModeValue } from '@chakra-ui/react';
 
 import { RelatedCard } from '../components/cards/RelatedCard';
-import { CardProps, ReleatedBooksProps } from '../components/types';
+import { CardType, ReleatedBooksType } from '../components/types';
 import { useRelatedPost } from '../hooks/querys';
 
-export default function RelatedPost({ currentBookId }: ReleatedBooksProps) {
+export default function RelatedPost({ currentBookId }: ReleatedBooksType) {
   const colorCard = useColorModeValue('gray.900', 'gray.100');
   const { data, refetch } = useRelatedPost();
 
@@ -25,7 +25,7 @@ export default function RelatedPost({ currentBookId }: ReleatedBooksProps) {
     <>
       <Flex flexWrap={{ base: 'wrap', xl: 'nowrap' }} color={colorCard}>
         {relatedBooks.map(
-          ({ id, title, synopsis, author, category, pathUrl }: CardProps) => (
+          ({ id, title, synopsis, author, category, pathUrl }: CardType) => (
             <React.Fragment key={id}>
               <RelatedCard
                 id={id}

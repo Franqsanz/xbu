@@ -28,9 +28,9 @@ import {
 } from 'react-share';
 import { FaCheckCircle } from 'react-icons/fa';
 
-import { ModalProps } from './types';
+import { ModalType } from './types';
 
-export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalProps) {
+export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalType) {
   const bgInput = useColorModeValue('gray.200', 'gray.900');
   const bgToast = useColorModeValue('black', 'white');
   const colorToast = useColorModeValue('white', 'black');

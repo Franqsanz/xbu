@@ -7,7 +7,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-import { PropsTag } from './types';
+import { TagType } from './types';
 
 export function MyTag({
   bg,
@@ -19,7 +19,7 @@ export function MyTag({
   count,
   isFocused,
   tabIndex,
-}: PropsTag) {
+}: TagType) {
   const outlineCard = useColorModeValue('black', 'white');
   let countUI;
 

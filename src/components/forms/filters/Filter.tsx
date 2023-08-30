@@ -10,7 +10,7 @@ import {
 import { FiSearch } from 'react-icons/fi';
 
 import { useAllFilterOptions } from '../../../hooks/querys';
-import { SelectProps } from '../../../components/types';
+import { SelectType } from '../../../components/types';
 
 interface Props {
   onClose: () => void;
@@ -98,7 +98,7 @@ export default function Filter({ onClose }: Props) {
               isDisabled={!query}
               _focus={{ bg: 'transparent' }}
             >
-              {values.map(({ value, total }: SelectProps) => (
+              {values.map(({ value, total }: SelectType) => (
                 <option key={value} value={value}>
                   {value} ({total})
                 </option>

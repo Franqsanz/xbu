@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Box, useColorModeValue } from '@chakra-ui/react';
 
-import { TitleProps } from './types';
+import { TitleType } from './types';
 
-export function ContainerTitle({ title }: TitleProps) {
+export function ContainerTitle({ title }: TitleType) {
   const bgContainer = useColorModeValue('#abf299', '#0d4300');
   const colorTitle = useColorModeValue('#0d4300', '#abf299');
 
