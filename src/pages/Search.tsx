@@ -148,6 +148,23 @@ export default function Search() {
     );
 
     buttonFilter = (
+      <Button
+        display={{ base: 'flex', xl: 'none' }}
+        onClick={onToggle}
+        fontWeight='500'
+        size='sm'
+      >
+        <Icon as={CgOptions} boxSize='4' mr='2' />
+        Filtrar
+      </Button>
+    );
+  }
+
+  return (
+    <>
+      <MainHead title={`${param} | XBuniverse`} />
+      <ContainerTitle title={`${param}`} />
+      <MySliderCategories />
       <Flex
         display={{ base: 'flex', xl: 'none' }}
         mt='4'
@@ -159,25 +176,8 @@ export default function Search() {
         borderY={`1px solid ${grayColor}`}
       >
         <ResultLength data={data} />
-        <Button
-          display={{ base: 'flex', xl: 'none' }}
-          onClick={onToggle}
-          fontWeight='500'
-          size='sm'
-        >
-          <Icon as={CgOptions} boxSize='4' mr='2' />
-          Filtrar
-        </Button>
+        {buttonFilter}
       </Flex>
-    );
-  }
-
-  return (
-    <>
-      <MainHead title={`${param} | XBuniverse`} />
-      <ContainerTitle title={`${param}`} />
-      <MySliderCategories />
-      {buttonFilter}
       <FilterDrawer
         isOpen={isOpen}
         onClose={onClose}
