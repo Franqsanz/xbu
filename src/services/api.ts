@@ -8,25 +8,25 @@ async function getAllBooks() {
 }
 
 async function getAllSearchBooks(book: string) {
-  const data = await fetchData(`${API_URL}/search?q=${book}`);
+  const data = await fetchData(`${API_URL}/books/search?q=${book}`);
 
   return data;
 }
 
 async function getBooksPaginate(page: number | undefined) {
-  const data = await fetchData(`${API_URL}?limit=10&page=${page}`);
+  const data = await fetchData(`${API_URL}/books?limit=10&page=${page}`);
 
   return data;
 }
 
 async function getBook(pathUrl: string | undefined) {
-  const data = await fetchData(`${API_URL}/path/${pathUrl}`);
+  const data = await fetchData(`${API_URL}/book/path/${pathUrl}`);
 
   return data;
 }
 
 async function postBook(books: any) {
-  const post = await fetchData(API_URL, {
+  const post = await fetchData(`${API_URL}/books`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(books),
@@ -39,7 +39,7 @@ async function getBooksFilter(
   query: string | undefined,
   param: string | undefined,
 ) {
-  const data = await fetchData(`${API_URL}?${query}=${param}`);
+  const data = await fetchData(`${API_URL}/books?${query}=${param}`);
 
   return data;
 }
@@ -57,7 +57,7 @@ async function getAllFilterOptions() {
 }
 
 async function deleteBook(id: any) {
-  const data = await fetchData(`${API_URL}/${id}`, {
+  const data = await fetchData(`${API_URL}/book/${id}`, {
     method: 'DELETE',
   });
 
