@@ -1,13 +1,8 @@
 import React, { useEffect, useRef, Suspense, lazy } from 'react';
-import {
-  Box,
-  Button,
-  Flex,
-  Spinner,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, useColorModeValue } from '@chakra-ui/react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
+import { SkeletonTags } from './skeletons/SkeletonTags';
 const Categories = lazy(() => import('../components/Categories'));
 
 export function MySliderCategories() {
@@ -92,13 +87,7 @@ export function MySliderCategories() {
             left='-1px'
             bgGradient={`linear(270deg, #ffffff00 0%, ${gradientColor} 60%)`}
           ></Box>
-          <Suspense
-            fallback={
-              <Box m='auto'>
-                <Spinner />
-              </Box>
-            }
-          >
+          <Suspense fallback={<SkeletonTags />}>
             <Categories />
           </Suspense>
           <Box

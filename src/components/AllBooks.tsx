@@ -15,6 +15,7 @@ import { useBooksPaginate } from '../hooks/querys';
 import { MySimpleGrid } from './MySimpleGrid';
 import { Card } from './cards/Card';
 import { Aside } from './Aside';
+import { SkeletonAllBooks } from './skeletons/SkeletonABooks';
 
 export function AllBooks() {
   const { ref, inView } = useInView();
@@ -27,11 +28,7 @@ export function AllBooks() {
   }, [inView]);
 
   if (isLoading) {
-    return (
-      <Flex justify='center' pt='64' minH='70vh'>
-        <Spinner size='xl' thickness='4px' speed='0.40s' />
-      </Flex>
-    );
+    return <SkeletonAllBooks showTags={false} />;
   }
 
   if (error) {

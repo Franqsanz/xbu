@@ -7,7 +7,6 @@ import {
   Flex,
   VStack,
   Link,
-  Spinner,
   useColorModeValue,
   Icon,
   Image,
@@ -18,9 +17,17 @@ import { GrPowerReset } from 'react-icons/gr';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import { PageNotFound, Lost } from '../assets/assets';
+import { SkeletonAllBooks } from '../components/skeletons/SkeletonABooks';
 // import { noConnection } from '../utils/fetchData';
 
-export function CatchError({ children }: { children: React.ReactNode }) {
+type RNode = React.ReactNode;
+
+interface CatchErrorType {
+  children: RNode;
+  skeletonLoad: RNode;
+}
+
+export function CatchError({ children, skeletonLoad }: CatchErrorType) {
   const bgColorBtn = useColorModeValue('green.500', 'green.700');
   // let notConnection;
   // let notFound;
@@ -113,15 +120,7 @@ export function CatchError({ children }: { children: React.ReactNode }) {
             </VStack>
           )}
         >
-          <Suspense
-            fallback={
-              <Flex justify='center' my='40vh'>
-                <Spinner size='xl' thickness='4px' speed='0.40s' />
-              </Flex>
-            }
-          >
-            {children}
-          </Suspense>
+          <Suspense fallback={skeletonLoad}>{children}</Suspense>
         </ErrorBoundary>
       )}
     </QueryErrorResetBoundary>

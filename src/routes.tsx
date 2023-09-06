@@ -7,6 +7,8 @@ import { Login } from './pages/Login';
 import { CatchError } from './utils/CatchError';
 import { ErrorPage } from './pages/404';
 import { Layout } from './pages/layout/Layout';
+import { SkeletonAllBooks } from './components/skeletons/SkeletonABooks';
+import { SkeletonDetailsBook } from './components/skeletons/SkeletonDBook';
 
 const PrivacyPolicies = lazy(() => import('./pages/PrivacyPolicies'));
 const Explore = lazy(() => import('./pages/Explore'));
@@ -52,7 +54,7 @@ const routes = createBrowserRouter([
               {
                 path: ':query/:param',
                 element: (
-                  <CatchError>
+                  <CatchError skeletonLoad={<SkeletonAllBooks />}>
                     <Search />
                   </CatchError>
                 ),
@@ -70,7 +72,7 @@ const routes = createBrowserRouter([
               {
                 path: ':pathUrl',
                 element: (
-                  <CatchError>
+                  <CatchError skeletonLoad={<SkeletonDetailsBook />}>
                     <Book />
                   </CatchError>
                 ),
