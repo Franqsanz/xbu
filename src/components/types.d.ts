@@ -95,7 +95,6 @@ interface ReleatedBooksType {
 }
 
 interface SelectType extends Omit<SelectBooksType, 'label'> {
-  value: string;
   total: number;
 }
 
