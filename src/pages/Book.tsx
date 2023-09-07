@@ -193,7 +193,13 @@ export default function Book() {
             <Box p='2' fontSize='lg' bg={grayColor} roundedTop='lg'>
               Sinopsis
             </Box>
-            <Text mt='3' mb='10' fontSize='md' whiteSpace='pre-wrap'>
+            <Text
+              mt='3'
+              mb='10'
+              fontSize='md'
+              whiteSpace='pre-wrap'
+              textAlign='justify'
+            >
               {data.synopsis}
             </Text>
           </Box>

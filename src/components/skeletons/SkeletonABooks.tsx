@@ -4,10 +4,7 @@ import { Skeleton, SkeletonText, Flex, Box, Stack } from '@chakra-ui/react';
 import { MySimpleGrid } from '../MySimpleGrid';
 import { Aside } from '../Aside';
 import { SkeletonTags } from './SkeletonTags';
-
-interface SkeletonType {
-  showTags?: boolean;
-}
+import { SkeletonType } from '../types';
 
 export function SkeletonAllBooks({ showTags = true }: SkeletonType) {
   const Cards = Array.from({ length: 12 }, (_, index) => (
@@ -27,6 +24,9 @@ export function SkeletonAllBooks({ showTags = true }: SkeletonType) {
         <>
           <Skeleton py={{ base: 16, md: 20 }} />
           <SkeletonTags />
+          <Flex display={{ base: 'flex', xl: 'none' }}>
+            <Skeleton w='full' h='50px' />
+          </Flex>
         </>
       )}
       <Flex

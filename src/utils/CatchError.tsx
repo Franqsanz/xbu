@@ -17,15 +17,8 @@ import { GrPowerReset } from 'react-icons/gr';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import { PageNotFound, Lost } from '../assets/assets';
-import { SkeletonAllBooks } from '../components/skeletons/SkeletonABooks';
+import { CatchErrorType } from '../components/types';
 // import { noConnection } from '../utils/fetchData';
-
-type RNode = React.ReactNode;
-
-interface CatchErrorType {
-  children: RNode;
-  skeletonLoad: RNode;
-}
 
 export function CatchError({ children, skeletonLoad }: CatchErrorType) {
   const bgColorBtn = useColorModeValue('green.500', 'green.700');

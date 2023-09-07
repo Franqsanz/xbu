@@ -1,6 +1,8 @@
 import React from 'react';
 import type { IconType } from 'react-icons';
 
+type RNode = React.ReactNode;
+
 interface DisclosureType {
   isOpen: boolean;
   onClose: () => void;
@@ -80,7 +82,7 @@ interface ModalCropperType extends DisclosureType {
 }
 
 type ModalCroppType = ModalCropperType & {
-  children: React.ReactNode;
+  children: RNode;
 };
 
 interface ModalType extends DisclosureType {
@@ -92,16 +94,14 @@ interface ReleatedBooksType {
   currentBookId: string | undefined;
 }
 
-interface SelectType {
-  value: string;
-  total: number;
-}
+type languageYType = string[] | undefined;
+type languagesYMapType = { [key: string]: number } | undefined;
 
 interface LanguageAndYearType {
-  language: string[] | undefined;
-  languagesMap: { [key: string]: number } | undefined;
-  year: string[] | undefined;
-  yearsMap: { [key: string]: number } | undefined;
+  language: languageYType;
+  languagesMap: languagesYMapType;
+  year: languageYType;
+  yearsMap: languagesYMapType;
 }
 
 interface DrawerType extends DisclosureType, LanguageAndYearType {
@@ -122,6 +122,15 @@ interface MyLinkType extends Omit<LinkType, 'name'> {
   index?: any;
 }
 
+interface CatchErrorType {
+  children: RNode;
+  skeletonLoad: RNode;
+}
+
+interface SkeletonType {
+  showTags?: boolean;
+}
+
 export type {
   LinkType,
   SelectBooksType,
@@ -134,9 +143,10 @@ export type {
   ModalCropperType,
   ModalType,
   ReleatedBooksType,
-  SelectType,
   DrawerType,
   LanguageAndYearType,
   BookSearchResultsType,
   MyLinkType,
+  CatchErrorType,
+  SkeletonType,
 };
