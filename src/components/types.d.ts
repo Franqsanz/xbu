@@ -94,6 +94,11 @@ interface ReleatedBooksType {
   currentBookId: string | undefined;
 }
 
+interface SelectType extends Omit<SelectBooksType, 'label'> {
+  value: string;
+  total: number;
+}
+
 type languageYType = string[] | undefined;
 type languagesYMapType = { [key: string]: number } | undefined;
 
@@ -134,6 +139,7 @@ interface SkeletonType {
 export type {
   LinkType,
   SelectBooksType,
+  SelectType,
   CardType,
   TitleType,
   HeadType,
