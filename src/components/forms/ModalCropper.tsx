@@ -9,7 +9,10 @@ import {
   ModalBody,
   ModalCloseButton,
   useColorModeValue,
+  Flex,
+  Icon,
 } from '@chakra-ui/react';
+import { RiScissorsCutFill } from 'react-icons/ri';
 
 import { ModalCroppType } from '../types';
 
@@ -34,6 +37,7 @@ export function ModalCropper({
           <ModalBody>{children}</ModalBody>
           <ModalFooter>
             <Button
+              w={{ base: 'full', md: 'auto' }}
               onClick={() => {
                 getCropData();
               }}
@@ -44,7 +48,10 @@ export function ModalCropper({
               _hover={{ bg: 'green.600' }}
               _active={{ bg: 'green.600' }}
             >
-              Cortar
+              <Flex align='center' justify='center'>
+                <Icon as={RiScissorsCutFill} fontSize='20' mr='2' />
+                Cortar Imagen
+              </Flex>
             </Button>
           </ModalFooter>
         </ModalContent>

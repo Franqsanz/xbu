@@ -13,52 +13,55 @@ import {
 import { keys } from '../utils/utils';
 
 function useMutatePost() {
-  return useMutation([keys.postBook], postBook);
+  return useMutation({ mutationKey: [keys.postBook], mutationFn: postBook });
 }
 
 function useAllBooks() {
-  return useQuery([keys.all], () => getAllBooks());
+  return useQuery({ queryKey: [keys.all], queryFn: getAllBooks });
 }
 
 function useAllSearchBooks(book: string) {
-  return useQuery([keys.allSearch, book], () => getAllSearchBooks(book), {
+  return useQuery({
+    queryKey: [keys.allSearch, book],
+    queryFn: () => getAllSearchBooks(book),
     refetchOnWindowFocus: false,
     enabled: false,
   });
 }
 
 function useAllFilterOptions() {
-  return useQuery([keys.filtersOptions], () => getAllFilterOptions(), {
+  return useQuery({
+    queryKey: [keys.filtersOptions],
+    queryFn: getAllFilterOptions,
     refetchOnWindowFocus: false,
   });
 }
 
 function useBooksPaginate() {
-  return useInfiniteQuery(
-    [keys.paginate],
-    ({ pageParam = 0 }) => getBooksPaginate(pageParam),
-    {
-      getNextPageParam: (lastPage) => {
-        if (lastPage.info.nextPage === null) return;
-        return lastPage.info.nextPage;
-      },
+  return useInfiniteQuery({
+    queryKey: [keys.paginate],
+    queryFn: ({ pageParam = 0 }) => getBooksPaginate(pageParam),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.info.nextPage === null) return;
+
+      return lastPage.info.nextPage;
     },
-  );
+  });
 }
 
 function useFilter(query: string | undefined, param: string | undefined) {
-  return useQuery(
-    [keys.filter, query, param],
-    () => getBooksFilter(query, param),
-    {
-      suspense: true,
-      cacheTime: 3000,
-    },
-  );
+  return useQuery({
+    queryKey: [keys.filter, query, param],
+    queryFn: () => getBooksFilter(query, param),
+    suspense: true,
+    cacheTime: 3000,
+  });
 }
 
 function useRelatedPost() {
-  return useQuery([keys.random], () => getRelatedPost(), {
+  return useQuery({
+    queryKey: [keys.random],
+    queryFn: getRelatedPost,
     suspense: true,
     refetchOnWindowFocus: false,
     cacheTime: 3000,
@@ -67,7 +70,9 @@ function useRelatedPost() {
 }
 
 function useBook(pathUrl: string | undefined) {
-  return useQuery([keys.one, pathUrl], () => getBook(pathUrl), {
+  return useQuery({
+    queryKey: [keys.one, pathUrl],
+    queryFn: () => getBook(pathUrl),
     refetchOnWindowFocus: false,
     suspense: true,
     cacheTime: 3000,

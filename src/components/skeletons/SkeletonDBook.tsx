@@ -46,7 +46,7 @@ export function SkeletonDetailsBook() {
           mt='1rem'
           mb='2'
         >
-          <Skeleton w='100px' h='40px' rounded='lg' mb='4'></Skeleton>
+          <Skeleton w='140px' h='30px' rounded='lg' mb='4'></Skeleton>
           <SkeletonText
             w={{ base: '200px', lg: '400px' }}
             mb='5'

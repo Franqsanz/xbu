@@ -22,7 +22,7 @@ export function SkeletonAllBooks({ showTags = true }: SkeletonType) {
     <>
       {showTags && (
         <>
-          <Skeleton py={{ base: 16, md: 20 }} />
+          <Skeleton py={{ base: 14, md: 20 }} />
           <SkeletonTags />
           <Flex display={{ base: 'flex', xl: 'none' }}>
             <Skeleton w='full' h='50px' />
