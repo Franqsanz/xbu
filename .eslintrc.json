@@ -43,6 +43,7 @@
     "no-unused-expressions": 0,
     "prefer-const": 0,
     "func-style": [1, "declaration", { "allowArrowFunctions": false }],
+    "n/handle-callback-err": 0,
     "prettier/prettier": [
       2,
       {

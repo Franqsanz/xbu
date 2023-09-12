@@ -1,4 +1,9 @@
-import { useQuery, useMutation, useInfiniteQuery } from '@tanstack/react-query';
+import {
+  useQuery,
+  useMutation,
+  useInfiniteQuery,
+  QueryClient,
+} from '@tanstack/react-query';
 
 import {
   getAllBooks,
@@ -11,9 +16,48 @@ import {
   postBook,
 } from '../services/api';
 import { keys } from '../utils/utils';
+import { BookType } from '../components/types';
+
+const queryClient = new QueryClient();
 
 function useMutatePost() {
-  return useMutation({ mutationKey: [keys.postBook], mutationFn: postBook });
+  return useMutation({
+    mutationKey: [keys.postBook],
+    mutationFn: postBook,
+    // Mutación optimista
+    onMutate: async (newPost) => {
+      // Cancelar consultas pendientes para la misma clave de consulta
+      await queryClient.cancelQueries([keys.postBook]);
+
+      // Obtener los datos de la consulta anterior
+      const previousPost = await queryClient.getQueryData([keys.postBook]);
+
+      // Actualizar los datos en caché con el nuevo post
+      await queryClient.setQueryData(
+        [keys.postBook],
+        (oldData?: BookType[] | undefined) => {
+          if (oldData === null) return [newPost];
+          // oldData debe ser iterable por eso el (oldData || []).
+          return [...(oldData || []), newPost];
+        },
+      );
+
+      return { previousPost }; // <--- Contexto
+    },
+    onError: (err, variables, context) => {
+      console.log(err);
+      // Revertir los datos en caché si la mutación falla
+      if (context?.previousPost !== null) {
+        queryClient.setQueryData([keys.postBook], context?.previousPost);
+      }
+    },
+    onSettled: async () => {
+      // Invalidar la consulta en caché para que se refresque
+      await queryClient.invalidateQueries({
+        queryKey: [keys.postBook],
+      });
+    },
+  });
 }
 
 function useAllBooks() {

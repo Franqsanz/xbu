@@ -55,7 +55,9 @@ export function SkeletonDetailsBook() {
             skeletonHeight='6'
           />
           <Skeleton h='40px' rounded='lg' mb='3'></Skeleton>
-          <SkeletonText mt='1' noOfLines={15} spacing='2' skeletonHeight='3' />
+          <SkeletonText mt='1' noOfLines={7} spacing='2' skeletonHeight='3' />
+          <SkeletonText mt='8' noOfLines={5} spacing='2' skeletonHeight='3' />
+          <SkeletonText mt='8' noOfLines={3} spacing='2' skeletonHeight='3' />
           <Skeleton h='300px' rounded='lg' mt='10'></Skeleton>
           <Flex direction={{ base: 'column', md: 'row' }} mt='10' gap='3'>
             <Skeleton
