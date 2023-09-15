@@ -48,12 +48,13 @@ export function SkeletonDetailsBook() {
         >
           <Skeleton w='140px' h='30px' rounded='lg' mb='4'></Skeleton>
           <SkeletonText
-            w={{ base: '200px', lg: '400px' }}
+            w={{ base: '200px', lg: '600px' }}
             mb='5'
             noOfLines={2}
             spacing='3'
-            skeletonHeight='6'
+            skeletonHeight='10'
           />
+          <Skeleton w='290px' h='20px' mb='5'></Skeleton>
           <Skeleton h='40px' rounded='lg' mb='3'></Skeleton>
           <SkeletonText mt='1' noOfLines={7} spacing='2' skeletonHeight='3' />
           <SkeletonText mt='8' noOfLines={5} spacing='2' skeletonHeight='3' />

@@ -24,7 +24,7 @@ interface CardType {
   title: string;
   synopsis?: string;
   author: string;
-  category: string;
+  category: string[];
   year?: number;
   language?: number;
   sourceLink?: string;
@@ -34,6 +34,7 @@ interface CardType {
   refetchQueries?: () => any | unknown;
   image?: {
     url: string;
+    public_id: string;
   };
 }
 

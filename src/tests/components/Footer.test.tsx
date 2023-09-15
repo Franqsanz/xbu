@@ -14,7 +14,7 @@ test('Render Footer', () => {
 
   expect(screen.getByText('Hecho con ❤ por Franqsanz'));
 
-  const privacyLink = screen.getByText(/política de privacidad/i);
+  const privacyLink = screen.getByText(/políticas de privacidad/i);
   expect(privacyLink);
 
   // Simular el click en el enlace

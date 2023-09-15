@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 html/*
+cypress/screenshots
+cypress/downloads
 
 # Editor directories and files
 .idea

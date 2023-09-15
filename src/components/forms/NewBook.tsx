@@ -15,9 +15,9 @@ import {
   useDisclosure,
   Icon,
   Skeleton,
-  // InputGroup,
-  // InputLeftAddon,
+  FormErrorMessage,
 } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
 import { Select } from 'chakra-react-select';
 import 'cropperjs/dist/cropper.css';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
@@ -33,6 +33,11 @@ import { MyPopover } from '../MyPopover';
 const Cropper = lazy(() => import('react-cropper'));
 
 export function FormNewBook() {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<BookType>();
   let alertMessage;
   let previewImgUI;
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -156,8 +161,9 @@ export function FormNewBook() {
     }
   }
 
-  function handleSubmit(e: React.ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
+  // function onSubmit(e: React.ChangeEvent<HTMLInputElement>) {
+  function onSubmit() {
+    // e.preventDefault();
     mutate(books);
   }
 
@@ -252,43 +258,73 @@ export function FormNewBook() {
           </Box>
           <Flex
             as='form'
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             justify='center'
             align='stretch'
             flexDirection={{ base: 'column', md: 'row' }}
           >
             <Box w='full' mr='5'>
-              <FormControl isRequired>
-                <FormLabel htmlFor='titulo'>Titulo</FormLabel>
+              <FormControl isInvalid={!!errors.title}>
+                <FormLabel htmlFor='titulo'>
+                  Titulo{' '}
+                  <Box display='inline' fontSize='sx' color='red.400'>
+                    *
+                  </Box>
+                </FormLabel>
                 <Input
+                  {...register('title', {
+                    required: 'Titulo es obligatorio',
+                  })}
                   id='titulo'
                   type='text'
                   mb='5'
                   bg={bgColorInput}
                   size={{ base: 'md', md: 'lg' }}
-                  name='title'
                   value={books.title}
+                  name='title'
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
                 />
+                {errors.title && (
+                  <FormErrorMessage>{errors.title.message}</FormErrorMessage>
+                )}
               </FormControl>
-              <FormControl isRequired>
-                <FormLabel htmlFor='autor'>Autor</FormLabel>
+              <FormControl isInvalid={!!errors.author}>
+                <FormLabel htmlFor='autor'>
+                  Autor{' '}
+                  <Box display='inline' fontSize='sx' color='red.400'>
+                    *
+                  </Box>
+                </FormLabel>
                 <Input
+                  {...register('author', {
+                    required: 'Autor es obligatorio',
+                  })}
                   id='autor'
                   type='text'
                   mb='5'
                   bg={bgColorInput}
                   size={{ base: 'md', md: 'lg' }}
-                  name='author'
                   value={books.author}
+                  name='author'
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
                 />
+                {errors.author && (
+                  <FormErrorMessage>{errors.author.message}</FormErrorMessage>
+                )}
               </FormControl>
-              <FormControl isRequired>
-                <FormLabel htmlFor='sinopsis'>Sinopsis</FormLabel>
+              <FormControl isInvalid={!!errors.synopsis}>
+                <FormLabel htmlFor='sinopsis'>
+                  Sinopsis{' '}
+                  <Box display='inline' fontSize='sx' color='red.400'>
+                    *
+                  </Box>
+                </FormLabel>
                 <Textarea
+                  {...register('synopsis', {
+                    required: 'Sinopsis es obligatorio',
+                  })}
                   id='sinopsis'
                   rows={12}
                   mb='5'
@@ -298,10 +334,16 @@ export function FormNewBook() {
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
                 />
+                {errors.synopsis && (
+                  <FormErrorMessage>{errors.synopsis.message}</FormErrorMessage>
+                )}
               </FormControl>
-              <FormControl isRequired>
+              <FormControl>
                 <FormLabel htmlFor='sinopsis' mt='2'>
-                  Subir Imagen
+                  Subir Imagen{' '}
+                  <Box display='inline' fontSize='sx' color='red.400'>
+                    *
+                  </Box>
                 </FormLabel>
                 <Button
                   w='100%'
@@ -361,7 +403,7 @@ export function FormNewBook() {
               </Box>
             </Box>
             <Box w='full' ml={{ base: 0, md: 5 }}>
-              <FormControl>
+              <FormControl isInvalid={!!errors.sourceLink}>
                 <Flex align='center' justify='space-between' mb='7px'>
                   <FormLabel htmlFor='link' m='0'>
                     Enlace de la librería{' '}
@@ -374,9 +416,13 @@ export function FormNewBook() {
                     textFooter='https://www.buscalibre.com.ar/'
                   />
                 </Flex>
-                {/* <InputGroup size='lg'> */}
-                {/* <InputLeftAddon children='https://' /> */}
                 <Input
+                  {...register('sourceLink', {
+                    pattern: {
+                      value: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i,
+                      message: 'El enlace de la librería no es una URL válida',
+                    },
+                  })}
                   id='link'
                   type='text'
                   mb='5'
@@ -388,11 +434,23 @@ export function FormNewBook() {
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
                 />
-                {/* </InputGroup> */}
+                {errors.sourceLink && (
+                  <FormErrorMessage>
+                    {errors.sourceLink.message}
+                  </FormErrorMessage>
+                )}
               </FormControl>
-              <FormControl isRequired>
-                <FormLabel htmlFor='language'>Idioma</FormLabel>
+              <FormControl isInvalid={!!errors.language}>
+                <FormLabel htmlFor='language'>
+                  Idioma{' '}
+                  <Box display='inline' fontSize='sx' color='red.400'>
+                    *
+                  </Box>
+                </FormLabel>
                 <Input
+                  {...register('language', {
+                    required: 'Idioma es obligatorio',
+                  })}
                   id='language'
                   type='text'
                   mb='5'
@@ -403,10 +461,25 @@ export function FormNewBook() {
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
                 />
+                {errors.language && (
+                  <FormErrorMessage>{errors.language.message}</FormErrorMessage>
+                )}
               </FormControl>
-              <FormControl isRequired>
-                <FormLabel htmlFor='numeroPaginas'>Número de páginas</FormLabel>
+              <FormControl isInvalid={!!errors.numberPages}>
+                <FormLabel htmlFor='numeroPaginas'>
+                  Número de páginas{' '}
+                  <Box display='inline' fontSize='sx' color='red.400'>
+                    *
+                  </Box>
+                </FormLabel>
                 <Input
+                  {...register('numberPages', {
+                    required: 'Número de páginas es obligatorio',
+                    min: {
+                      value: 49,
+                      message: 'Número de páginas debe tener un  minimo de 49',
+                    },
+                  })}
                   id='numeroPaginas'
                   type='number'
                   mb='5'
@@ -417,12 +490,30 @@ export function FormNewBook() {
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
                 />
+                {errors.numberPages && (
+                  <FormErrorMessage>
+                    {errors.numberPages.message}
+                  </FormErrorMessage>
+                )}
               </FormControl>
-              <FormControl isRequired>
+              <FormControl isInvalid={!!errors.year}>
                 <FormLabel htmlFor='año' mt={{ base: 0, md: '17.5' }}>
-                  Año
+                  Año{' '}
+                  <Box display='inline' fontSize='sx' color='red.400'>
+                    *
+                  </Box>
                 </FormLabel>
                 <Input
+                  {...register('year', {
+                    required: 'Año es obligatorio',
+                    validate: {
+                      value: (value) => {
+                        return (
+                          value.length === 4 || 'Año debe tener 4 caracteres'
+                        );
+                      },
+                    },
+                  })}
                   id='año'
                   type='number'
                   mb={{ base: 5, md: 0 }}
@@ -433,11 +524,17 @@ export function FormNewBook() {
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
                 />
+                {errors.year && (
+                  <FormErrorMessage>{errors.year.message}</FormErrorMessage>
+                )}
               </FormControl>
-              <FormControl isRequired mt={{ base: 0, md: 8 }}>
+              <FormControl mt={{ base: 0, md: 8 }}>
                 <Flex align='center' justify='space-between' mb='9px'>
                   <FormLabel htmlFor='categoria' m='0'>
-                    Categoria
+                    Categoria{' '}
+                    <Box display='inline' fontSize='sx' color='red.400'>
+                      *
+                    </Box>
                   </FormLabel>
                   <MyPopover textBody='Puedes añadir una categoria o varias' />
                 </Flex>
@@ -457,8 +554,13 @@ export function FormNewBook() {
                   placeholder='Seleccione una categoria'
                 />
               </FormControl>
-              <FormControl isRequired mt={{ base: 5, md: 8 }}>
-                <FormLabel htmlFor='formato'>Formato</FormLabel>
+              <FormControl isInvalid={!!errors.format} mt={{ base: 5, md: 8 }}>
+                <FormLabel htmlFor='formato'>
+                  Formato{' '}
+                  <Box display='inline' fontSize='sx' color='red.400'>
+                    *
+                  </Box>
+                </FormLabel>
                 <Select
                   id='formato'
                   name='format'
