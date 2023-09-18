@@ -23,7 +23,7 @@ import 'cropperjs/dist/cropper.css';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 
-import { categories, format } from '../../data/links';
+import { categories, format, languages } from '../../data/links';
 import { BookType } from '../types';
 import { useMutatePost } from '../../hooks/querys';
 import { ModalCropper } from '../forms/ModalCropper';
@@ -31,6 +31,10 @@ import { generatePathUrl } from '../../utils/utils';
 import { MyPopover } from '../MyPopover';
 
 const Cropper = lazy(() => import('react-cropper'));
+
+function sortArrayByLabel<T extends { label: string }>(array: T[]): T[] {
+  return array.slice().sort((a, b) => a.label.localeCompare(b.label));
+}
 
 export function FormNewBook() {
   const {
@@ -74,11 +78,9 @@ export function FormNewBook() {
 
   const disabled = !allFieldsBook(books);
 
-  const sortedCategories = categories.sort((a, b) => {
-    if (a.label < b.label) return -1;
-    if (a.label > b.label) return 1;
-    return 0;
-  });
+  const sortedCategories = sortArrayByLabel(categories);
+  const sortedLanguage = sortArrayByLabel(languages);
+  const sortedFormat = sortArrayByLabel(format);
 
   function handleChange(
     e: React.ChangeEvent<
@@ -121,6 +123,10 @@ export function FormNewBook() {
     setBooks((books) => ({ ...books, format }));
   }
 
+  function handleLanguageChange(language) {
+    setBooks((books) => ({ ...books, language }));
+  }
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   function handleButtonClick() {
@@ -161,9 +167,7 @@ export function FormNewBook() {
     }
   }
 
-  // function onSubmit(e: React.ChangeEvent<HTMLInputElement>) {
   function onSubmit() {
-    // e.preventDefault();
     mutate(books);
   }
 
@@ -338,12 +342,9 @@ export function FormNewBook() {
                   <FormErrorMessage>{errors.synopsis.message}</FormErrorMessage>
                 )}
               </FormControl>
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel htmlFor='sinopsis' mt='2'>
-                  Subir Imagen{' '}
-                  <Box display='inline' fontSize='sx' color='red.400'>
-                    *
-                  </Box>
+                  Subir Imagen
                 </FormLabel>
                 <Button
                   w='100%'
@@ -425,7 +426,7 @@ export function FormNewBook() {
                   })}
                   id='link'
                   type='text'
-                  mb='5'
+                  mb={{ base: 0, md: 5 }}
                   bg={bgColorInput}
                   size={{ base: 'md', md: 'lg' }}
                   name='sourceLink'
@@ -435,37 +436,34 @@ export function FormNewBook() {
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.sourceLink && (
-                  <FormErrorMessage>
+                  <FormErrorMessage mb={{ base: 5, md: 0 }}>
                     {errors.sourceLink.message}
                   </FormErrorMessage>
                 )}
               </FormControl>
-              <FormControl isInvalid={!!errors.language}>
-                <FormLabel htmlFor='language'>
+              <FormControl>
+                <FormLabel htmlFor='language' mt={{ base: 5, md: 0 }}>
                   Idioma{' '}
                   <Box display='inline' fontSize='sx' color='red.400'>
                     *
                   </Box>
                 </FormLabel>
-                <Input
-                  {...register('language', {
-                    required: 'Idioma es obligatorio',
-                  })}
-                  id='language'
-                  type='text'
-                  mb='5'
-                  bg={bgColorInput}
-                  size={{ base: 'md', md: 'lg' }}
+                <Select
+                  id='lenguaje'
                   name='language'
-                  value={books.language}
-                  onChange={handleChange}
-                  _focus={{ bg: 'transparent' }}
+                  size={{ base: 'md', md: 'lg' }}
+                  variant='filled'
+                  onChange={(selectedOption) =>
+                    handleLanguageChange(selectedOption?.value)
+                  }
+                  options={sortedLanguage}
+                  noOptionsMessage={({ inputValue }) =>
+                    `Esta opción "${inputValue}" no existe`
+                  }
+                  placeholder='Seleccione un Idioma'
                 />
-                {errors.language && (
-                  <FormErrorMessage>{errors.language.message}</FormErrorMessage>
-                )}
               </FormControl>
-              <FormControl isInvalid={!!errors.numberPages}>
+              <FormControl isInvalid={!!errors.numberPages} mt='5'>
                 <FormLabel htmlFor='numeroPaginas'>
                   Número de páginas{' '}
                   <Box display='inline' fontSize='sx' color='red.400'>
@@ -482,7 +480,7 @@ export function FormNewBook() {
                   })}
                   id='numeroPaginas'
                   type='number'
-                  mb='5'
+                  mb={{ base: 0, md: 5 }}
                   bg={bgColorInput}
                   size={{ base: 'md', md: 'lg' }}
                   name='numberPages'
@@ -491,13 +489,13 @@ export function FormNewBook() {
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.numberPages && (
-                  <FormErrorMessage>
+                  <FormErrorMessage mb={{ base: 5, md: 0 }}>
                     {errors.numberPages.message}
                   </FormErrorMessage>
                 )}
               </FormControl>
               <FormControl isInvalid={!!errors.year}>
-                <FormLabel htmlFor='año' mt={{ base: 0, md: '17.5' }}>
+                <FormLabel htmlFor='año' mt={{ base: 5, md: 0 }}>
                   Año{' '}
                   <Box display='inline' fontSize='sx' color='red.400'>
                     *
@@ -516,7 +514,7 @@ export function FormNewBook() {
                   })}
                   id='año'
                   type='number'
-                  mb={{ base: 5, md: 0 }}
+                  mb={{ base: 0, md: 5 }}
                   bg={bgColorInput}
                   size={{ base: 'md', md: 'lg' }}
                   name='year'
@@ -525,10 +523,12 @@ export function FormNewBook() {
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.year && (
-                  <FormErrorMessage>{errors.year.message}</FormErrorMessage>
+                  <FormErrorMessage mb={{ base: 5, md: 0 }}>
+                    {errors.year.message}
+                  </FormErrorMessage>
                 )}
               </FormControl>
-              <FormControl mt={{ base: 0, md: 8 }}>
+              <FormControl mt={{ base: 5, md: 8 }}>
                 <Flex align='center' justify='space-between' mb='9px'>
                   <FormLabel htmlFor='categoria' m='0'>
                     Categoria{' '}
@@ -536,7 +536,7 @@ export function FormNewBook() {
                       *
                     </Box>
                   </FormLabel>
-                  <MyPopover textBody='Puedes añadir una categoria o varias' />
+                  <MyPopover textBody='Puedes añadir una categoría o varias' />
                 </Flex>
                 <Select
                   isMulti
@@ -551,7 +551,7 @@ export function FormNewBook() {
                   noOptionsMessage={({ inputValue }) =>
                     `Esta opción "${inputValue}" no existe`
                   }
-                  placeholder='Seleccione una categoria'
+                  placeholder='Seleccione una categoría'
                 />
               </FormControl>
               <FormControl isInvalid={!!errors.format} mt={{ base: 5, md: 8 }}>
@@ -569,7 +569,7 @@ export function FormNewBook() {
                   onChange={(selectedOption) =>
                     handleFormatChange(selectedOption?.value)
                   }
-                  options={format}
+                  options={sortedFormat}
                   noOptionsMessage={({ inputValue }) =>
                     `Esta opción "${inputValue}" no existe`
                   }

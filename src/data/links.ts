@@ -33,6 +33,59 @@ const accountLinks: Array<LinkType> = [
   },
 ];
 
+const languages: Array<SelectBooksType> = [
+  { value: 'Español', label: 'Español' },
+  { value: 'Inglés', label: 'Inglés' },
+  { value: 'Francés', label: 'Francés' },
+  { value: 'Alemán', label: 'Alemán' },
+  { value: 'Italiano', label: 'Italiano' },
+  { value: 'Portugués', label: 'Portugués' },
+  { value: 'Holandés', label: 'Holandés' },
+  { value: 'Sueco', label: 'Sueco' },
+  { value: 'Noruego', label: 'Noruego' },
+  { value: 'Danés', label: 'Danés' },
+  { value: 'Finés', label: 'Finés' },
+  { value: 'Ruso', label: 'Ruso' },
+  { value: 'Polaco', label: 'Polaco' },
+  { value: 'Checo', label: 'Checo' },
+  { value: 'Húngaro', label: 'Húngaro' },
+  { value: 'Griego', label: 'Griego' },
+  { value: 'Turco', label: 'Turco' },
+  { value: 'Árabe', label: 'Árabe' },
+  { value: 'Hebreo', label: 'Hebreo' },
+  { value: 'Hindi', label: 'Hindi' },
+  { value: 'Chino (Mandarín)', label: 'Chino (Mandarín)' },
+  { value: 'Japonés', label: 'Japonés' },
+  { value: 'Coreano', label: 'Coreano' },
+  { value: 'Vietnamita', label: 'Vietnamita' },
+  { value: 'Tailandés', label: 'Tailandés' },
+  { value: 'Malayo', label: 'Malayo' },
+  { value: 'Indonesio', label: 'Indonesio' },
+  { value: 'Tagalo', label: 'Tagalo' },
+  { value: 'Swahili', label: 'Swahili' },
+  { value: 'Amárico', label: 'Amárico' },
+  { value: 'Bengalí', label: 'Bengalí' },
+  { value: 'Punjabi', label: 'Punjabi' },
+  { value: 'Tamil', label: 'Tamil' },
+  { value: 'Telugu', label: 'Telugu' },
+  { value: 'Kannada', label: 'Kannada' },
+  { value: 'Marathi', label: 'Marathi' },
+  { value: 'Gujarati', label: 'Gujarati' },
+  { value: 'Urdu', label: 'Urdu' },
+  { value: 'Persa (Farsi)', label: 'Persa (Farsi)' },
+  { value: 'Ucraniano', label: 'Ucraniano' },
+  { value: 'Rumano', label: 'Rumano' },
+  { value: 'Búlgaro', label: 'Búlgaro' },
+  { value: 'Serbio', label: 'Serbio' },
+  { value: 'Croata', label: 'Croata' },
+  { value: 'Esloveno', label: 'Esloveno' },
+  { value: 'Eslovaco', label: 'Eslovaco' },
+  { value: 'Lituano', label: 'Lituano' },
+  { value: 'Letón', label: 'Letón' },
+  { value: 'Estonio', label: 'Estonio' },
+  { value: 'Islandés', label: 'Islandés' },
+];
+
 const categories: Array<SelectBooksType> = [
   {
     value: 'Aventura',
@@ -211,4 +264,4 @@ const format: Array<SelectBooksType> = [
   },
 ];
 
-export { navLink, accountLinks, categories, format };
+export { navLink, accountLinks, languages, categories, format };
