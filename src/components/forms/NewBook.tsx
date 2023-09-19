@@ -113,19 +113,18 @@ export function FormNewBook() {
     }
   }
 
+  function handleFieldChange(fieldName, newValue) {
+    setBooks((books) => ({
+      ...books,
+      [fieldName]: newValue,
+    }));
+  }
+
   useEffect(() => {
     // Genera el pathUrl basado en el título cada vez que se actualiza
     const generatedPathUrl = generatePathUrl(books.title);
     setBooks((books) => ({ ...books, pathUrl: generatedPathUrl }));
   }, [books.title]);
-
-  function handleFormatChange(format) {
-    setBooks((books) => ({ ...books, format }));
-  }
-
-  function handleLanguageChange(language) {
-    setBooks((books) => ({ ...books, language }));
-  }
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -363,6 +362,9 @@ export function FormNewBook() {
                   </Flex>
                 </Button>
                 <Input
+                  // {...register('image.url', {
+                  //   required: 'imagen',
+                  // })}
                   accept='image/png, image/jpeg, image/jpg, image/webp'
                   display='none'
                   ref={fileInputRef}
@@ -370,6 +372,11 @@ export function FormNewBook() {
                   size='lg'
                   onChange={handleImageChange}
                 />
+                {/* {errors.image?.url && (
+                  <FormErrorMessage>
+                    {errors.image?.url.message}
+                  </FormErrorMessage>
+                )} */}
               </FormControl>
               <Box my='5' mb='5'>
                 <ModalCropper
@@ -449,12 +456,12 @@ export function FormNewBook() {
                   </Box>
                 </FormLabel>
                 <Select
-                  id='lenguaje'
+                  id='languaje'
                   name='language'
                   size={{ base: 'md', md: 'lg' }}
                   variant='filled'
                   onChange={(selectedOption) =>
-                    handleLanguageChange(selectedOption?.value)
+                    handleFieldChange('language', selectedOption?.value)
                   }
                   options={sortedLanguage}
                   noOptionsMessage={({ inputValue }) =>
@@ -504,12 +511,13 @@ export function FormNewBook() {
                 <Input
                   {...register('year', {
                     required: 'Año es obligatorio',
-                    validate: {
-                      value: (value) => {
-                        return (
-                          value.length === 4 || 'Año debe tener 4 caracteres'
-                        );
-                      },
+                    min: {
+                      value: 1800,
+                      message: 'Año no valido',
+                    },
+                    max: {
+                      value: 2050,
+                      message: 'Año no valido',
                     },
                   })}
                   id='año'
@@ -567,7 +575,7 @@ export function FormNewBook() {
                   size={{ base: 'md', md: 'lg' }}
                   variant='filled'
                   onChange={(selectedOption) =>
-                    handleFormatChange(selectedOption?.value)
+                    handleFieldChange('format', selectedOption?.value)
                   }
                   options={sortedFormat}
                   noOptionsMessage={({ inputValue }) =>
