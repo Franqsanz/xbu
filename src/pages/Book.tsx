@@ -405,7 +405,7 @@ export default function Book() {
                 top='0'
                 bgGradient={`linear(360deg, #ffffff00 0%, ${gradientColor} 20%)`}
               >
-                Categorias
+                Categorías
                 <Box mt='2' borderBottom='1px'></Box>
               </Box>
               <Suspense

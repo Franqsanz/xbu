@@ -362,9 +362,6 @@ export function FormNewBook() {
                   </Flex>
                 </Button>
                 <Input
-                  // {...register('image.url', {
-                  //   required: 'imagen',
-                  // })}
                   accept='image/png, image/jpeg, image/jpg, image/webp'
                   display='none'
                   ref={fileInputRef}
@@ -372,11 +369,6 @@ export function FormNewBook() {
                   size='lg'
                   onChange={handleImageChange}
                 />
-                {/* {errors.image?.url && (
-                  <FormErrorMessage>
-                    {errors.image?.url.message}
-                  </FormErrorMessage>
-                )} */}
               </FormControl>
               <Box my='5' mb='5'>
                 <ModalCropper
