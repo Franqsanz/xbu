@@ -8,7 +8,7 @@ import { useHandleEnterKey } from '../../utils/utils';
 
 export function RelatedCard({
   title,
-  author,
+  authors,
   pathUrl,
   refetchQueries,
 }: CardType) {
@@ -49,13 +49,17 @@ export function RelatedCard({
               >
                 {title}
               </Box>
-              <Box
-                textTransform='uppercase'
-                fontSize='sm'
-                color={colorAuthorCard}
-              >
-                {author}
-              </Box>
+              {authors.map((author, index) => (
+                <Box
+                  key={index}
+                  textTransform='uppercase'
+                  fontSize='sm'
+                  color={colorAuthorCard}
+                >
+                  {author}
+                  {index < authors.length - 1 && ', '}
+                </Box>
+              ))}
             </Box>
           </Flex>
           <Link

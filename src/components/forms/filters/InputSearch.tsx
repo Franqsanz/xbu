@@ -219,7 +219,12 @@ export function InputSearch({
                     {highlightText(book.title, search.query)}
                   </Box>
                   <Box fontSize='xs'>
-                    {highlightText(book.author, search.query)}
+                    {book.authors.map((author, index) => (
+                      <span key={index}>
+                        {highlightText(author, search.query)}
+                        {index < book.authors.length - 1 && ', '}
+                      </span>
+                    ))}
                   </Box>
                 </Link>
               </ListItem>

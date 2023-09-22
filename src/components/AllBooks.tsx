@@ -99,7 +99,7 @@ export function AllBooks() {
                   title,
                   language,
                   synopsis,
-                  author,
+                  authors,
                   category,
                   sourceLink,
                   image,
@@ -111,7 +111,7 @@ export function AllBooks() {
                       category={category}
                       language={language}
                       title={title}
-                      author={author}
+                      authors={authors}
                       synopsis={synopsis}
                       sourceLink={sourceLink}
                       pathUrl={pathUrl}

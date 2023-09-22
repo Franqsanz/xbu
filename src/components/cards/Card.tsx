@@ -25,7 +25,7 @@ export function Card({
   title,
   language,
   image,
-  author,
+  authors,
   category,
   pathUrl,
 }: CardType) {
@@ -125,14 +125,18 @@ export function Card({
               >
                 {title}
               </Box>
-              <Box
-                px='7'
-                fontSize={{ base: '0.55rem', sm: 'xs' }}
-                textTransform='uppercase'
-                color={colorAuthorCard}
-              >
-                {author}
-              </Box>
+              {authors.map((author, index) => (
+                <Box
+                  key={index}
+                  px='7'
+                  fontSize={{ base: '0.55rem', sm: 'xs' }}
+                  textTransform='uppercase'
+                  color={colorAuthorCard}
+                >
+                  {author}
+                  {index < authors.length - 1 && ', '}
+                </Box>
+              ))}
             </Flex>
           </Flex>
         </LinkOverlay>

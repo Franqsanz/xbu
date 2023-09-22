@@ -53,7 +53,7 @@ export function FormNewBook() {
   const [crop, setCrop] = useState<any>('');
   const [books, setBooks] = useState<BookType>({
     title: '',
-    author: '',
+    authors: [],
     synopsis: '',
     year: '',
     category: [],
@@ -87,10 +87,21 @@ export function FormNewBook() {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >,
   ) {
-    setBooks({
-      ...books,
-      [e.target.name]: e.currentTarget.value,
-    });
+    const { name, value } = e.target;
+
+    // Si el campo es 'author', dividimos los nombres por comas en un array
+    if (name === 'authors') {
+      const authorNames = value.split(',');
+      setBooks({
+        ...books,
+        [name]: authorNames, // Guardamos un array de nombres de autores
+      });
+    } else {
+      setBooks({
+        ...books,
+        [name]: value,
+      });
+    }
   }
 
   function handleCategoryChange(selectedOptions) {
@@ -292,15 +303,21 @@ export function FormNewBook() {
                   <FormErrorMessage>{errors.title.message}</FormErrorMessage>
                 )}
               </FormControl>
-              <FormControl isInvalid={!!errors.author}>
-                <FormLabel htmlFor='autor'>
-                  Autor{' '}
-                  <Box display='inline' fontSize='sx' color='red.400'>
-                    *
-                  </Box>
-                </FormLabel>
+              <FormControl isInvalid={!!errors.authors}>
+                <Flex align='center' justify='space-between' mb='7px'>
+                  <FormLabel htmlFor='autor'>
+                    Autor(s){' '}
+                    <Box display='inline' fontSize='sx' color='red.400'>
+                      *
+                    </Box>
+                  </FormLabel>
+                  <MyPopover
+                    textBody='Aquí puedes ingresar el nombre de un autor/a o varios autores/as para un libro. Si son varios, asegúrate de separarlos por comas.'
+                    textFooter='Por ejemplo: (ROSWITHA STARK,PETRA NEUMAYER)'
+                  />
+                </Flex>
                 <Input
-                  {...register('author', {
+                  {...register('authors', {
                     required: 'Autor es obligatorio',
                   })}
                   id='autor'
@@ -308,13 +325,13 @@ export function FormNewBook() {
                   mb='5'
                   bg={bgColorInput}
                   size={{ base: 'md', md: 'lg' }}
-                  value={books.author}
+                  value={books.authors}
                   name='author'
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
                 />
-                {errors.author && (
-                  <FormErrorMessage>{errors.author.message}</FormErrorMessage>
+                {errors.authors && (
+                  <FormErrorMessage>{errors.authors.message}</FormErrorMessage>
                 )}
               </FormControl>
               <FormControl isInvalid={!!errors.synopsis}>

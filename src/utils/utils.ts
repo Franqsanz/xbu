@@ -43,9 +43,14 @@ function generatePathUrl(name: string) {
   return `${dashedName}-${randomId}`;
 }
 
-function aboutAuthor(authorName: string) {
-  return `https://www.google.com/search?q=${authorName}+escritor`;
-}
+// function aboutAuthors(authorNames: string[]) {
+//   const authorLinks = authorNames.map((authorName) => {
+//     const encodedAuthorName = encodeURIComponent(authorName);
+//     return `https://www.google.com/search?q=${encodedAuthorName}+escritor`;
+//   });
+
+//   return authorLinks;
+// }
 
 // Funcion para verificar si se encuentra en otro idioma que no sea español
 function isSpanish(language) {
@@ -54,11 +59,4 @@ function isSpanish(language) {
   return spanishLanguage.includes(lowerCaseLanguage);
 }
 
-export {
-  keys,
-  handleImageLoad,
-  useHandleEnterKey,
-  generatePathUrl,
-  aboutAuthor,
-  isSpanish,
-};
+export { keys, handleImageLoad, useHandleEnterKey, generatePathUrl, isSpanish };

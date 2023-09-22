@@ -18,7 +18,7 @@ import { BsTag } from 'react-icons/bs';
 import LazyLoad from 'react-lazy-load';
 
 import { useBook } from '../hooks/querys';
-import { handleImageLoad, aboutAuthor } from '../utils/utils';
+import { handleImageLoad } from '../utils/utils';
 import { MainHead } from '../components/Head';
 import { MyTag } from '../components/MyTag';
 import { ModalShare } from '../components/ModalShare';
@@ -39,6 +39,8 @@ export default function Book() {
   let uiLink;
 
   const { data } = useBook(pathUrl);
+
+  console.log(data.authors);
 
   function handleGoBack() {
     navigate(-1);
@@ -177,17 +179,15 @@ export default function Book() {
             fontSize={{ base: 'md', md: 'xl' }}
             textTransform='uppercase'
           >
-            <Link
-              as={NavLink}
-              isExternal
-              to={aboutAuthor(data.author)}
-              textDecoration='underline'
-              _hover={{
-                textDecoration: 'none',
-              }}
-            >
-              {data.author}
-            </Link>
+            {data.authors.map((author, index) => (
+              <MyLink
+                external={true}
+                key={index}
+                href={`https://www.google.com/search?q=${author}+escritor`}
+                data={author}
+                index={index !== data.authors.length - 1 && ' & '}
+              />
+            ))}
           </Box>
           <Box mt='5'>
             <Box p='2' fontSize='lg' bg={grayColor} roundedTop='lg'>
@@ -205,15 +205,19 @@ export default function Book() {
               <Box>
                 <Flex>
                   <Box minW='160px'>
-                    <Box as='span'>Autor:</Box>
+                    <Box as='span'>Autor(s):</Box>
                   </Box>
                   <Box>
                     <Box as='span'>
-                      <MyLink
-                        external={true}
-                        href={aboutAuthor(data.author)}
-                        data={data.author}
-                      />
+                      {data.authors.map((author, index) => (
+                        <MyLink
+                          external={true}
+                          key={index}
+                          href={`https://www.google.com/search?q=${author}+escritor`}
+                          data={author}
+                          index={index !== data.authors.length - 1 && ' & '}
+                        />
+                      ))}
                     </Box>
                   </Box>
                 </Flex>

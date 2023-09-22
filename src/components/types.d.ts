@@ -23,7 +23,7 @@ interface CardType {
   id?: string;
   title: string;
   synopsis?: string;
-  author: string;
+  authors: string[];
   category: string[];
   year?: number;
   language?: number;
@@ -63,7 +63,7 @@ interface TagType {
 interface BookType {
   id?: string;
   title: string;
-  author: string;
+  authors: string[];
   synopsis: string;
   year: string;
   category: string[];

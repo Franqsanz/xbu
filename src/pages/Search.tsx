@@ -205,7 +205,7 @@ export default function Search() {
                 id,
                 title,
                 synopsis,
-                author,
+                authors,
                 category,
                 language,
                 sourceLink,
@@ -218,7 +218,7 @@ export default function Search() {
                     category={category}
                     language={language}
                     title={title}
-                    author={author}
+                    authors={authors}
                     synopsis={synopsis}
                     sourceLink={sourceLink}
                     pathUrl={pathUrl}
