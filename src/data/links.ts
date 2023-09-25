@@ -111,6 +111,16 @@ const categories: Array<SelectBooksType> = [
   { value: 'Histórico', label: 'Histórico' },
   { value: 'Humor', label: 'Humor' },
   { value: 'Horror', label: 'Horror' },
+  { value: 'Novela Romantica', label: 'Novela Romantica' },
+  { value: 'Cuento', label: 'Cuento' },
+  { value: 'Ensayo', label: 'Ensayo' },
+  { value: 'Autobiografía', label: 'Autobiografía' },
+  { value: 'Cyberpunk', label: 'Cyberpunk' },
+  { value: 'Postapocalíptica', label: 'Postapocalíptica' },
+  { value: 'Espacial', label: 'Espacial' },
+  { value: 'Espionaje', label: 'Espionaje' },
+  { value: 'Psicológica', label: 'Psicológica' },
+  { value: 'Guerra', label: 'Guerra' },
 ];
 
 const format: Array<SelectBooksType> = [
