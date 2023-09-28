@@ -1,4 +1,4 @@
 {
   "**/*.(json|yml|html)": ["prettier --write"],
-  "*.{ts,tsx,html}": ["prettier --write", "eslint --fix"]
+  "*.{ts,tsx}": ["prettier --write", "eslint --fix"]
 }

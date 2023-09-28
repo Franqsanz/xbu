@@ -23,6 +23,7 @@ import { MainHead } from '../components/Head';
 import { MyTag } from '../components/MyTag';
 import { ModalShare } from '../components/ModalShare';
 import { MyLink } from '../components/MyLink';
+
 const Categories = lazy(() => import('../components/Categories'));
 const RelatedPost = lazy(() => import('../components/RelatedPost'));
 
@@ -39,8 +40,6 @@ export default function Book() {
   let uiLink;
 
   const { data } = useBook(pathUrl);
-
-  console.log(data.authors);
 
   function handleGoBack() {
     navigate(-1);

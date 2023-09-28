@@ -326,7 +326,7 @@ export function FormNewBook() {
                   bg={bgColorInput}
                   size={{ base: 'md', md: 'lg' }}
                   value={books.authors}
-                  name='author'
+                  name='authors'
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
                 />
