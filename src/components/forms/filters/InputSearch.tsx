@@ -43,7 +43,8 @@ export function InputSearch({
   top,
   onResultClick,
 }: BookSearchResultsType) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  // const containerRef = useRef<HTMLDivElement | HTMLInputElement>(null);
+  const containerRef = useRef(null);
   const colorIcons = useColorModeValue('gray.700', 'gray.300');
   const bgInput = useColorModeValue('white', 'black');
   const colorInput = useColorModeValue('gray.900', 'gray.100');
@@ -70,11 +71,11 @@ export function InputSearch({
 
   useOutsideClick({
     ref: containerRef,
-    handler: () => {
-      if (search.query) {
-        setSearch({ ...search, query: '' });
-      }
-    },
+    // handler: () => {
+    //   if (search.query) {
+    //     setSearch({ ...search, query: '' });
+    //   }
+    // },
   });
 
   useEffect(() => {
@@ -129,7 +130,7 @@ export function InputSearch({
 
   return (
     <>
-      <FormControl w={width} mr={{ base: 0, lg: 2 }}>
+      <FormControl w={width} mr={{ base: 0, lg: 2 }} ref={containerRef}>
         <InputGroup>
           <InputLeftElement>
             <Icon as={FiSearch} boxSize='20px' color={colorIcons} />
@@ -184,7 +185,6 @@ export function InputSearch({
         p='4'
         bg={colorContainerBg}
         color={colorContainer}
-        ref={containerRef}
         fontWeight='500'
         position={{ base: 'inherit', md: 'absolute' }}
         top={top}
