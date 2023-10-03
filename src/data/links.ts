@@ -72,10 +72,19 @@ const categories: Array<SelectBooksType> = [
   { value: 'Acción', label: 'Acción' },
   { value: 'Autoayuda', label: 'Autoayuda' },
   { value: 'Aventura', label: 'Aventura' },
+  { value: 'Arqueología', label: 'Arqueología' },
+  { value: 'Arquitectura', label: 'Arquitectura' },
+  { value: 'Artes Plásticas', label: 'Artes Plásticas' },
+  { value: 'Automotriz', label: 'Automotriz' },
+  { value: 'Aventuras gráficas', label: 'Aventuras gráficas' },
+  { value: 'Belleza', label: 'Belleza' },
+  { value: 'Biología', label: 'Biología' },
+  { value: 'Botánica', label: 'Botánica' },
   { value: 'Ciencia Ficción', label: 'Ciencia Ficción' },
   { value: 'Clásicos', label: 'Clásicos' },
   { value: 'Cuidado Del Bebé', label: 'Cuidado Del Bebé' },
   { value: 'Comedia', label: 'Comedia' },
+  { value: 'Cine', label: 'Cine' },
   { value: 'Drama', label: 'Drama' },
   { value: 'Terror', label: 'Terror' },
   { value: 'Suspenso', label: 'Suspenso' },
@@ -137,6 +146,7 @@ const categories: Array<SelectBooksType> = [
   { value: 'Espionaje', label: 'Espionaje' },
   { value: 'Psicológica', label: 'Psicológica' },
   { value: 'Guerra', label: 'Guerra' },
+  { value: 'LGBTQ+', label: 'LGBTQ+' },
 ];
 
 const format: Array<SelectBooksType> = [
