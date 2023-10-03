@@ -29,7 +29,7 @@ import { useDebounce } from '../../../hooks/useDebounce';
 import { BookSearchResultsType } from '../../../components/types';
 
 function highlightText(text, query) {
-  const regex = new RegExp(`(${query})`, 'gi');
+  const regex = new RegExp(`(${query.trim()})`, 'gi');
   return text
     .split(regex)
     .map((part, index) =>
@@ -71,11 +71,11 @@ export function InputSearch({
 
   useOutsideClick({
     ref: containerRef,
-    // handler: () => {
-    //   if (search.query) {
-    //     setSearch({ ...search, query: '' });
-    //   }
-    // },
+    handler: () => {
+      if (search.query) {
+        setSearch({ ...search, query: '' });
+      }
+    },
   });
 
   useEffect(() => {
