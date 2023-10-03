@@ -76,7 +76,7 @@ const categories: Array<SelectBooksType> = [
   { value: 'Arquitectura', label: 'Arquitectura },
   { value: 'Artes Plásticas', label: 'Artes Plásticas' },
   { value: 'Automotriz', label: 'Automotriz' },
-  { value: 'Aventuras gráficas', label: "Aventuras gráficas' },
+  { value: 'Aventuras gráficas', label: 'Aventuras gráficas' },
   { value: 'Belleza', label: 'Belleza' },
   { value: 'Biología', label: 'Biología' },
   { value: 'Botánica', label: 'Botánica' },
