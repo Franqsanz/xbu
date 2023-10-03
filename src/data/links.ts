@@ -73,7 +73,7 @@ const categories: Array<SelectBooksType> = [
   { value: 'Autoayuda', label: 'Autoayuda' },
   { value: 'Aventura', label: 'Aventura' },
   { value: 'Arqueología', label: 'Arqueología' },
-  { value: 'Arquitectura', label: 'Arquitectura },
+  { value: 'Arquitectura', label: 'Arquitectura' },
   { value: 'Artes Plásticas', label: 'Artes Plásticas' },
   { value: 'Automotriz', label: 'Automotriz' },
   { value: 'Aventuras gráficas', label: 'Aventuras gráficas' },
