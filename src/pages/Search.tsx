@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 import { CgOptions } from 'react-icons/cg';
 import {
   Button,
@@ -26,6 +26,7 @@ import ResultLength from '../components/ResultLength';
 import { Lost } from '../assets/assets';
 
 export default function Search() {
+  const location = useLocation();
   const { isOpen, onToggle, onClose } = useDisclosure();
   const grayColor = useColorModeValue('#E2E8F0', '#2D3748');
   const [languages, setLanguages] = useState<string[]>([]);
@@ -87,6 +88,14 @@ export default function Search() {
     setYears(year);
     setSelectedYear(year);
   }
+
+  // Restablecer los valores de los radios cuando cambie la ruta
+  useEffect(() => {
+    setSelectedLanguage('');
+    setLanguages([]);
+    setSelectedYear('');
+    setYears([]);
+  }, [location.pathname]);
 
   if (languagesAndYearData) {
     const { language, languagesMap, year, yearsMap } = languagesAndYearData;
