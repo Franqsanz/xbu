@@ -89,7 +89,7 @@ export default function Search() {
     setSelectedYear(year);
   }
 
-  // Restablecer los valores de los radios cuando cambie la ruta
+  // Restablecer los valores de los radios(filtros) cuando cambie la ruta
   useEffect(() => {
     setSelectedLanguage('');
     setLanguages([]);

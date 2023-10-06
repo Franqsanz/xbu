@@ -143,8 +143,8 @@ export function InputSearch({
             border='1px solid black'
             rounded='md'
             color={colorInput}
-            placeholder='Buscar Titulo o Autor'
-            _placeholder={{ color: `${colorInput}` }}
+            placeholder='Titulo / Autor (Minimo 3 caracteres)'
+            _placeholder={{ color: `${colorInput}`, fontSize: 'xs' }}
             _hover={{ outline: 'none' }}
             value={search.query}
             onChange={handleSearch}
