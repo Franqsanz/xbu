@@ -458,7 +458,7 @@ export function FormNewBook() {
                 )}
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor='language' mt={{ base: 5, md: 0 }}>
+                <FormLabel htmlFor='language' mt={{ base: 5, md: 0 }} mb='15px'>
                   Idioma{' '}
                   <Box display='inline' fontSize='sx' color='red.400'>
                     *
@@ -476,7 +476,7 @@ export function FormNewBook() {
                   noOptionsMessage={({ inputValue }) =>
                     `Esta opción "${inputValue}" no existe`
                   }
-                  placeholder='Seleccione un Idioma'
+                  placeholder='Elija un Idioma'
                 />
               </FormControl>
               <FormControl isInvalid={!!errors.numberPages} mt='5'>
@@ -568,7 +568,7 @@ export function FormNewBook() {
                   noOptionsMessage={({ inputValue }) =>
                     `Esta opción "${inputValue}" no existe`
                   }
-                  placeholder='Seleccione una categoría'
+                  placeholder='Elija una categoría'
                 />
               </FormControl>
               <FormControl isInvalid={!!errors.format} mt={{ base: 5, md: 8 }}>
@@ -590,7 +590,7 @@ export function FormNewBook() {
                   noOptionsMessage={({ inputValue }) =>
                     `Esta opción "${inputValue}" no existe`
                   }
-                  placeholder='Seleccione un Formato'
+                  placeholder='Elija un Formato'
                 />
               </FormControl>
               <Box mt={{ base: 10, md: '22rem' }}>
