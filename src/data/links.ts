@@ -124,7 +124,6 @@ const categories: Array<SelectBooksType> = [
   { value: 'Memoria', label: 'Memoria' },
   { value: 'Misterio', label: 'Misterio' },
   { value: 'Misterio De Asesinato', label: 'Misterio De Asesinato' },
-  { value: 'Thriller', label: 'Thriller' },
   { value: 'Adulto', label: 'Adulto' },
   { value: 'Ficción', label: 'Ficción' },
   { value: 'No Ficción', label: 'No Ficción' },
@@ -135,6 +134,7 @@ const categories: Array<SelectBooksType> = [
   { value: 'Histórico', label: 'Histórico' },
   { value: 'Humor', label: 'Humor' },
   { value: 'Horror', label: 'Horror' },
+  { value: 'Historia Universal', label: 'Historia Universal' },
   { value: 'Viajar', label: 'Viajar' },
   { value: 'Novela Romantica', label: 'Novela Romantica' },
   { value: 'Cuento', label: 'Cuento' },
@@ -147,6 +147,7 @@ const categories: Array<SelectBooksType> = [
   { value: 'Psicológica', label: 'Psicológica' },
   { value: 'Guerra', label: 'Guerra' },
   { value: 'LGBTQ+', label: 'LGBTQ+' },
+  { value: 'Thriller', label: 'Thriller' },
 ];
 
 const format: Array<SelectBooksType> = [
