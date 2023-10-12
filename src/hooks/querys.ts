@@ -12,7 +12,7 @@ import {
   getBooksPaginate,
   getBook,
   getBooksFilter,
-  getRelatedPost,
+  getMoreBooks,
   postBook,
 } from '../services/api';
 import { keys } from '../utils/utils';
@@ -102,10 +102,10 @@ function useFilter(query: string | undefined, param: string | undefined) {
   });
 }
 
-function useRelatedPost() {
+function useMoreBooks() {
   return useQuery({
     queryKey: [keys.random],
-    queryFn: getRelatedPost,
+    queryFn: getMoreBooks,
     suspense: true,
     refetchOnWindowFocus: false,
     cacheTime: 3000,
@@ -131,5 +131,5 @@ export {
   useBooksPaginate,
   useBook,
   useFilter,
-  useRelatedPost,
+  useMoreBooks,
 };

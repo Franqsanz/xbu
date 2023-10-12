@@ -3,11 +3,11 @@ import { Flex, useColorModeValue } from '@chakra-ui/react';
 
 import { RelatedCard } from '../components/cards/RelatedCard';
 import { CardType, ReleatedBooksType } from '../components/types';
-import { useRelatedPost } from '../hooks/querys';
+import { useMoreBooks } from '../hooks/querys';
 
 export default function RelatedPost({ currentBookId }: ReleatedBooksType) {
   const colorCard = useColorModeValue('gray.900', 'gray.100');
-  const { data, refetch } = useRelatedPost();
+  const { data, refetch } = useMoreBooks();
 
   // Filtrar el ID que coincide con el libro que se esta viendo para evitar ver el mismo en los relacionados,
   // si eso pasa se hace un refetch() a la api para mostrar otros libros,
