@@ -23,7 +23,6 @@ import {
 import { CgOptions } from 'react-icons/cg';
 import { FiSearch } from 'react-icons/fi';
 
-// import { BookType } from '../../types';
 import { useAllSearchBooks } from '../../../hooks/querys';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { BookSearchResultsType } from '../../../components/types';
@@ -43,7 +42,6 @@ export function InputSearch({
   top,
   onResultClick,
 }: BookSearchResultsType) {
-  const containerScrollRef = useRef<HTMLUListElement>(null);
   const containerRef = useRef(null);
   const colorIcons = useColorModeValue('gray.700', 'gray.300');
   const bgInput = useColorModeValue('white', 'black');
@@ -54,7 +52,6 @@ export function InputSearch({
   const colorListBgHover = useColorModeValue('gray.300', 'gray.600');
   const colorInputNotResult = useColorModeValue('gray.600', 'gray.400');
   const [search, setSearch] = useState({ query: '' });
-  const [focusedIndex, setFocusedIndex] = useState(0);
   const { query } = search;
   const debouncedQuery = useDebounce(query, 500);
   const navigate = useNavigate();
@@ -62,38 +59,6 @@ export function InputSearch({
   let loading;
 
   const { data, error, isLoading, refetch } = useAllSearchBooks(debouncedQuery);
-
-  // TODO: resolver esto a futuro
-  // function handleKeyPress(e: React.KeyboardEvent) {
-  //   if (e.key === 'Enter') {
-  //     navigate(`/book/show/${books}`);
-  //   }
-  // }
-
-  function handleKeyDown(e) {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setFocusedIndex((prevIndex) =>
-        prevIndex < data.length - 1 ? prevIndex + 1 : prevIndex,
-      );
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setFocusedIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : prevIndex,
-      );
-    } else if (e.key === 'Enter') {
-      if (
-        focusedIndex !== undefined &&
-        focusedIndex >= 0 &&
-        focusedIndex < data.length
-      ) {
-        // Realizar alguna acción con el elemento seleccionado
-        const selectedItem = data[focusedIndex];
-        console.log(selectedItem.pathUrl);
-        navigate(`/book/view/${selectedItem.pathUrl}`);
-      }
-    }
-  }
 
   useOutsideClick({
     ref: containerRef,
@@ -115,24 +80,12 @@ export function InputSearch({
       }
     }
 
-    if (containerScrollRef.current) {
-      const focusedElement = containerScrollRef.current.children[focusedIndex];
-      if (focusedElement) {
-        focusedElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'nearest',
-        });
-      }
-    }
-
     document.addEventListener('keydown', handleKeyPress);
-    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
-      document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [debouncedQuery, refetch, focusedIndex]);
+  }, [debouncedQuery, refetch]);
 
   if (isLoading) {
     loading = (
@@ -228,9 +181,9 @@ export function InputSearch({
         top={top}
       >
         {loading}
-        <List fontSize='md' ref={containerScrollRef}>
+        <List fontSize='md'>
           {data &&
-            data.map((book, index) => (
+            data.map((book) => (
               <ListItem
                 key={book.id}
                 tabIndex={0}
@@ -238,8 +191,11 @@ export function InputSearch({
                 mb='3'
                 rounded='lg'
                 bg={colorListBg}
-                // outline={index === focusedIndex ? 'green.700' : 'black'}
-                // onClick={data && data[index]}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    navigate(`/book/view/${book.pathUrl}`);
+                  }
+                }}
                 _hover={{ bg: `${colorListBgHover}` }}
               >
                 <Link
