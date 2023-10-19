@@ -43,7 +43,7 @@ export function InputSearch({
   top,
   onResultClick,
 }: BookSearchResultsType) {
-  // const containerRef = useRef<HTMLDivElement | HTMLInputElement>(null);
+  const containerScrollRef = useRef<HTMLUListElement>(null);
   const containerRef = useRef(null);
   const colorIcons = useColorModeValue('gray.700', 'gray.300');
   const bgInput = useColorModeValue('white', 'black');
@@ -54,9 +54,10 @@ export function InputSearch({
   const colorListBgHover = useColorModeValue('gray.300', 'gray.600');
   const colorInputNotResult = useColorModeValue('gray.600', 'gray.400');
   const [search, setSearch] = useState({ query: '' });
+  const [focusedIndex, setFocusedIndex] = useState(0);
   const { query } = search;
   const debouncedQuery = useDebounce(query, 500);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   let alertMessage;
   let loading;
 
@@ -68,6 +69,31 @@ export function InputSearch({
   //     navigate(`/book/show/${books}`);
   //   }
   // }
+
+  function handleKeyDown(e) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setFocusedIndex((prevIndex) =>
+        prevIndex < data.length - 1 ? prevIndex + 1 : prevIndex,
+      );
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setFocusedIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : prevIndex,
+      );
+    } else if (e.key === 'Enter') {
+      if (
+        focusedIndex !== undefined &&
+        focusedIndex >= 0 &&
+        focusedIndex < data.length
+      ) {
+        // Realizar alguna acción con el elemento seleccionado
+        const selectedItem = data[focusedIndex];
+        console.log(selectedItem.pathUrl);
+        navigate(`/book/view/${selectedItem.pathUrl}`);
+      }
+    }
+  }
 
   useOutsideClick({
     ref: containerRef,
@@ -89,12 +115,24 @@ export function InputSearch({
       }
     }
 
+    if (containerScrollRef.current) {
+      const focusedElement = containerScrollRef.current.children[focusedIndex];
+      if (focusedElement) {
+        focusedElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        });
+      }
+    }
+
     document.addEventListener('keydown', handleKeyPress);
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
+      document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [debouncedQuery, refetch]);
+  }, [debouncedQuery, refetch, focusedIndex]);
 
   if (isLoading) {
     loading = (
@@ -190,9 +228,9 @@ export function InputSearch({
         top={top}
       >
         {loading}
-        <List fontSize='md'>
+        <List fontSize='md' ref={containerScrollRef}>
           {data &&
-            data.map((book) => (
+            data.map((book, index) => (
               <ListItem
                 key={book.id}
                 tabIndex={0}
@@ -200,7 +238,8 @@ export function InputSearch({
                 mb='3'
                 rounded='lg'
                 bg={colorListBg}
-                // onKeyDown={handleKeyPress}
+                // outline={index === focusedIndex ? 'green.700' : 'black'}
+                // onClick={data && data[index]}
                 _hover={{ bg: `${colorListBgHover}` }}
               >
                 <Link
