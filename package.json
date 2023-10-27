@@ -25,6 +25,7 @@
     "@emotion/styled": "11.11.0",
     "@tanstack/react-query": "4.29.19",
     "@tanstack/react-query-devtools": "4.29.19",
+    "browser-image-compression": "2.0.2",
     "chakra-react-select": "4.6.0",
     "firebase": "10.1.0",
     "framer-motion": "10.12.17",

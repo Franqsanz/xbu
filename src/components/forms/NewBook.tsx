@@ -17,6 +17,7 @@ import {
   Skeleton,
   FormErrorMessage,
 } from '@chakra-ui/react';
+// import compressImage from 'browser-image-compression';
 import { useForm } from 'react-hook-form';
 import { Select } from 'chakra-react-select';
 import 'cropperjs/dist/cropper.css';
@@ -50,6 +51,7 @@ export function FormNewBook() {
   const bgColorButton = useColorModeValue('green.500', 'green.700');
   const { mutate, isLoading, isSuccess, error } = useMutatePost();
   const [cropData, setCropData] = useState<string | null>(null);
+  const [previewImg, setPreviewImg] = useState<Blob | MediaSource | null>(null);
   const [crop, setCrop] = useState<any>('');
   const [books, setBooks] = useState<BookType>({
     title: '',
@@ -63,7 +65,7 @@ export function FormNewBook() {
     format: '',
     pathUrl: '',
     image: {
-      url: null,
+      url: [],
       public_id: '',
     },
   });
@@ -145,7 +147,7 @@ export function FormNewBook() {
     }
   }
 
-  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -157,23 +159,38 @@ export function FormNewBook() {
       return;
     }
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = function () {
-      const base64Image = reader.result as string;
-      setCropData(base64Image);
-    };
+    const blobImage = new Blob([file], { type: 'image/webp' });
+    setCropData(URL.createObjectURL(blobImage));
+
     onOpen();
-    // setCropData(null);
   }
 
-  function getCropData() {
+  async function getCropData() {
     if (typeof crop !== 'undefined') {
-      setBooks({
-        ...books,
-        image: { url: crop.getCroppedCanvas().toDataURL(), public_id: '' },
+      const croppedCanvas = crop.getCroppedCanvas();
+      croppedCanvas.toBlob((blob) => {
+        setPreviewImg(blob);
+
+        if (blob) {
+          const reader = new FileReader();
+          reader.onload = function () {
+            const arrayBuffer = reader.result as ArrayBuffer;
+            const uint8Array = new Uint8Array(arrayBuffer);
+            const byteArray = [...uint8Array];
+
+            setBooks((prevBooks) => ({
+              ...prevBooks,
+              image: {
+                url: byteArray,
+                public_id: '',
+              },
+            }));
+          };
+          reader.readAsArrayBuffer(blob);
+
+          onClose();
+        }
       });
-      onClose();
     }
   }
 
@@ -181,44 +198,42 @@ export function FormNewBook() {
     mutate(books);
   }
 
-  if (books.image) {
-    if (books.image.url === null) {
-      previewImgUI = (
-        <Flex
-          py='3'
-          h='379px'
-          m='auto'
-          outline='1px dashed gray'
-          rounded='lg'
-          fontSize='sm'
-          align='center'
-          justify='center'
-        >
-          <Box px='3' textAlign='center'>
+  if (previewImg === null) {
+    previewImgUI = (
+      <Flex
+        py='3'
+        h='379px'
+        m='auto'
+        outline='1px dashed gray'
+        rounded='lg'
+        fontSize='sm'
+        align='center'
+        justify='center'
+      >
+        <Box px='3' textAlign='center'>
+          <Box as='span'>
+            Aquí verás una vista previa de la imagen recortada.
+          </Box>
+          <Box mt='1' fontSize='13px'>
             <Box as='span'>
-              Aquí verás una vista previa de la imagen recortada.
-            </Box>
-            <Box mt='1' fontSize='13px'>
-              <Box as='span'>
-                Solo se aceptan formatos PNG, JPG y WebP con un máximo de 5 MB.
-              </Box>
+              Solo se aceptan formatos PNG, JPG y WebP con un máximo de 5 MB.
             </Box>
           </Box>
-        </Flex>
-      );
-    } else {
-      previewImgUI = (
-        <Box py='3' h='379px' outline='1px dashed gray' rounded='lg'>
-          <Image
-            h='360px'
-            m='auto'
-            rounded='lg'
-            src={books.image.url || ''}
-            alt='Preview'
-          />
         </Box>
-      );
-    }
+      </Flex>
+    );
+  } else {
+    previewImgUI = (
+      <Box py='3' h='379px' outline='1px dashed gray' rounded='lg'>
+        <Image
+          h='360px'
+          m='auto'
+          rounded='lg'
+          src={previewImg ? URL.createObjectURL(previewImg) : ''}
+          alt='Preview'
+        />
+      </Box>
+    );
   }
 
   if (isSuccess) {

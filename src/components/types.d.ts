@@ -73,7 +73,7 @@ interface BookType {
   format: string;
   pathUrl: string;
   image?: {
-    url: null;
+    url: number[];
     public_id: string;
   };
 }
