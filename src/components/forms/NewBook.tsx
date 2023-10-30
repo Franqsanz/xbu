@@ -176,14 +176,9 @@ export function FormNewBook() {
           reader.onload = function () {
             const arrayBuffer = reader.result as ArrayBuffer;
             const uint8Array = new Uint8Array(arrayBuffer);
-            const byteArray = [...uint8Array];
-            // const compressedArrayBuffer = pako.deflate(
-            //   new Uint8Array(arrayBuffer),
-            // );
-            // const byteArray = [...new Uint8Array(compressedArrayBuffer)];
-            // console.log(arrayBuffer);
-            // console.log(uint8Array);
-            // console.log(byteArray);
+            const compressedArrayBuffer = pako.deflate(uint8Array);
+            const byteArray = [...new Uint8Array(compressedArrayBuffer)];
+
             setBooks((prevBooks) => ({
               ...prevBooks,
               image: {
