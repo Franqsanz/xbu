@@ -17,7 +17,7 @@ import {
   Skeleton,
   FormErrorMessage,
 } from '@chakra-ui/react';
-// import compressImage from 'browser-image-compression';
+import pako from 'pako';
 import { useForm } from 'react-hook-form';
 import { Select } from 'chakra-react-select';
 import 'cropperjs/dist/cropper.css';
@@ -177,7 +177,13 @@ export function FormNewBook() {
             const arrayBuffer = reader.result as ArrayBuffer;
             const uint8Array = new Uint8Array(arrayBuffer);
             const byteArray = [...uint8Array];
-
+            // const compressedArrayBuffer = pako.deflate(
+            //   new Uint8Array(arrayBuffer),
+            // );
+            // const byteArray = [...new Uint8Array(compressedArrayBuffer)];
+            // console.log(arrayBuffer);
+            // console.log(uint8Array);
+            // console.log(byteArray);
             setBooks((prevBooks) => ({
               ...prevBooks,
               image: {
@@ -190,7 +196,7 @@ export function FormNewBook() {
 
           onClose();
         }
-      });
+      }, 'image/webp');
     }
   }
 
