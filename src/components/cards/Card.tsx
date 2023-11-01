@@ -66,7 +66,7 @@ export function Card({
                   bg='green.50'
                   color='green.900'
                   icon={BsTag}
-                  name={category[0]}
+                  name={category && category[0]}
                   size='md'
                   isFocused={false}
                   tabIndex={-1}

@@ -24,7 +24,7 @@ interface CardType {
   title: string;
   synopsis?: string;
   authors: string[];
-  category: string[];
+  category?: string[];
   year?: number;
   language?: number;
   sourceLink?: string;
@@ -92,7 +92,8 @@ interface ModalType extends DisclosureType {
 }
 
 interface ReleatedBooksType {
-  currentBookId: string | undefined;
+  id?: string;
+  currentBookId?: string | undefined;
 }
 
 interface SelectType extends Omit<SelectBooksType, 'label'> {

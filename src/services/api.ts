@@ -50,6 +50,12 @@ async function getMoreBooks() {
   return data;
 }
 
+async function getRelatedBooks(id: string | undefined) {
+  const data = await fetchData(`${API_URL}/books/related-books/${id}`);
+
+  return data;
+}
+
 async function getAllFilterOptions() {
   const data = await fetchData(`${API_URL}/books/options`);
 
@@ -72,6 +78,7 @@ export {
   getBooksFilter,
   getAllFilterOptions,
   getMoreBooks,
+  getRelatedBooks,
   postBook,
   deleteBook,
 };

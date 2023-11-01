@@ -11,6 +11,7 @@ const keys = {
   paginate: 'BookPaginate',
   filter: 'BooksFilter',
   random: 'BooksRandom',
+  relatedBooks: 'RelatedBooks',
 };
 
 function handleImageLoad(e: React.SyntheticEvent) {

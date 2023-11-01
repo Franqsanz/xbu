@@ -25,7 +25,8 @@ import { ModalShare } from '../components/ModalShare';
 import { MyLink } from '../components/MyLink';
 
 const Categories = lazy(() => import('../components/Categories'));
-const RelatedPost = lazy(() => import('../components/RelatedPost'));
+const RelatedBooks = lazy(() => import('../components/cards/RelatedBooks'));
+const MoreBooks = lazy(() => import('../components/cards/MoreBooks'));
 
 export default function Book() {
   const shareUrl = window.location.href;
@@ -114,7 +115,7 @@ export default function Book() {
         w='full'
         maxW='1300px'
         m='auto'
-        mb='25'
+        mb={{ base: 25, md: 32 }}
         align='flex-start'
         direction={{ base: 'column', lg: 'row-reverse' }}
       >
@@ -322,6 +323,34 @@ export default function Book() {
               textAlign={{ base: 'center', lg: 'left' }}
               ml={{ base: 0, lg: 2 }}
             >
+              Libros relacionados con{' '}
+              <Box as='span' fontWeight='semibold'>
+                {data.category[0]}
+              </Box>
+            </Box>
+            <Suspense
+              fallback={
+                <Box p='3'>
+                  <Spinner size='lg' />
+                </Box>
+              }
+            >
+              <Box>
+                <RelatedBooks id={data.id} currentBookId={pathUrl} />
+              </Box>
+            </Suspense>
+          </Flex>
+          <Box my='10'>
+            <Divider borderColor='gray.400' />
+          </Box>
+          <Flex direction='column'>
+            <Box
+              p='2'
+              mb='3'
+              fontSize={{ base: 'xl', md: '2xl' }}
+              textAlign={{ base: 'center', lg: 'left' }}
+              ml={{ base: 0, lg: 2 }}
+            >
               Más libros en XBuniverse
             </Box>
             <Suspense
@@ -332,7 +361,7 @@ export default function Book() {
               }
             >
               <Box>
-                <RelatedPost currentBookId={pathUrl} />
+                <MoreBooks currentBookId={pathUrl} />
               </Box>
             </Suspense>
           </Flex>
