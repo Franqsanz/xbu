@@ -3,7 +3,8 @@ import { useLocation } from 'react-router-dom';
 
 export function useRefetchLocation(currentBookId, data, refetch) {
   const location = useLocation();
-  const [previousPathname, setPreviousPathname] = useState(location.pathname);
+  const pathname = location.pathname;
+  const [previousPathname, setPreviousPathname] = useState(pathname);
   const [relatedBooks, setRelatedBooks] = useState([]);
 
   useEffect(() => {
@@ -13,11 +14,10 @@ export function useRefetchLocation(currentBookId, data, refetch) {
 
     setRelatedBooks(filteredBooks);
 
-    if (location.pathname !== previousPathname) {
+    if (pathname !== previousPathname) {
       refetch();
-      setPreviousPathname(location.pathname);
+      setPreviousPathname(pathname);
     }
-  }, [data, currentBookId, location.pathname, refetch, previousPathname]);
-
+  }, [data, currentBookId, pathname, refetch, previousPathname]);
   return relatedBooks;
 }

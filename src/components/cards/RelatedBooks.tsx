@@ -16,7 +16,6 @@ export default function RelatedBooks({ currentBookId, id }: ReleatedBooksType) {
         {relatedBooks.map(({ id, title, authors, pathUrl }: CardType) => (
           <React.Fragment key={id}>
             <RelatedCard
-              id={id}
               title={title}
               authors={authors}
               pathUrl={pathUrl}

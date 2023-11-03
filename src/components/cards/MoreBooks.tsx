@@ -10,21 +10,12 @@ export default function MoreBooks({ currentBookId }: ReleatedBooksType) {
   const { data, refetch } = useMoreBooks();
   const moreBooks = useRefetchLocation(currentBookId, data, refetch);
 
-  // const moreBooks = data.filter((book: any) => {
-  //   if (book.pathUrl === currentBookId) {
-  //     refetch();
-  //   }
-
-  //   return book.pathUrl !== currentBookId;
-  // });
-
   return (
     <>
       <ContainerRCard>
         {moreBooks.map(({ id, title, authors, pathUrl }: CardType) => (
           <React.Fragment key={id}>
             <RelatedCard
-              id={id}
               title={title}
               authors={authors}
               pathUrl={pathUrl}
