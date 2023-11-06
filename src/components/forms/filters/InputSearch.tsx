@@ -59,7 +59,7 @@ export function InputSearch({
   let alertMessage;
   let loading;
 
-  const { data, error, isLoading, refetch } = useAllSearchBooks(debouncedQuery);
+  const { data, error, isPending, refetch } = useAllSearchBooks(debouncedQuery);
 
   useOutsideClick({
     ref: containerRef,
@@ -93,7 +93,7 @@ export function InputSearch({
     };
   }, [debouncedQuery, refetch]);
 
-  if (isLoading) {
+  if (isPending) {
     loading = (
       <Flex justify='center' direction='column' align='center' gap='2'>
         <Spinner size='md' thickness='2px' speed='0.40s' />

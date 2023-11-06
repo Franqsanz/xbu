@@ -19,7 +19,7 @@ import { SkeletonAllBooks } from './skeletons/SkeletonABooks';
 
 export function AllBooks() {
   const { ref, inView } = useInView();
-  const { data, isLoading, error, fetchNextPage, isFetchingNextPage } =
+  const { data, isPending, error, fetchNextPage, isFetchingNextPage } =
     useBooksPaginate();
   let fetchingNextPageUI;
 
@@ -27,7 +27,7 @@ export function AllBooks() {
     if (inView) fetchNextPage();
   }, [inView]);
 
-  if (isLoading) {
+  if (isPending) {
     return <SkeletonAllBooks showTags={false} />;
   }
 

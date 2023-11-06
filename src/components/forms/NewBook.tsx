@@ -49,7 +49,7 @@ export function FormNewBook() {
   const bgColorBox = useColorModeValue('white', 'gray.900');
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
-  const { mutate, isLoading, isSuccess, error } = useMutatePost();
+  const { mutate, isPending, isSuccess, error } = useMutatePost();
   const [cropData, setCropData] = useState<string | null>(null);
   const [previewImg, setPreviewImg] = useState<Blob | MediaSource | null>(null);
   const [crop, setCrop] = useState<any>('');
@@ -621,7 +621,7 @@ export function FormNewBook() {
                   _active={{ bg: 'green.600' }}
                   isDisabled={disabled}
                   loadingText='Publicando...'
-                  isLoading={isLoading}
+                  isLoading={isPending}
                 >
                   <Icon as={AiOutlineCloudUpload} fontSize='25' mr='2' />
                   Publicar

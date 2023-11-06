@@ -1,5 +1,6 @@
 import {
   useQuery,
+  useSuspenseQuery,
   useMutation,
   useInfiniteQuery,
   QueryClient,
@@ -28,7 +29,7 @@ function useMutatePost() {
     // Mutación optimista
     onMutate: async (newPost) => {
       // Cancelar consultas pendientes para la misma clave de consulta
-      await queryClient.cancelQueries([keys.postBook]);
+      await queryClient.cancelQueries({ queryKey: [keys.postBook] });
 
       // Obtener los datos de la consulta anterior
       const previousPost = await queryClient.getQueryData([keys.postBook]);
@@ -85,7 +86,8 @@ function useAllFilterOptions() {
 function useBooksPaginate() {
   return useInfiniteQuery({
     queryKey: [keys.paginate],
-    queryFn: ({ pageParam = 0 }) => getBooksPaginate(pageParam),
+    queryFn: ({ pageParam }) => getBooksPaginate(pageParam),
+    initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       if (lastPage.info.nextPage === null) return;
 
@@ -95,43 +97,39 @@ function useBooksPaginate() {
 }
 
 function useFilter(query: string | undefined, param: string | undefined) {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: [keys.filter, query, param],
     queryFn: () => getBooksFilter(query, param),
-    suspense: true,
-    cacheTime: 3000,
+    gcTime: 3000,
   });
 }
 
 function useMoreBooks() {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: [keys.random],
     queryFn: getMoreBooks,
-    suspense: true,
     refetchOnWindowFocus: false,
-    cacheTime: 3000,
-    staleTime: 60000,
+    gcTime: 3000,
+    staleTime: 50000,
   });
 }
 
 function useRelatedBooks(id: string | undefined) {
-  return useQuery({
-    queryKey: [keys.relatedBooks],
+  return useSuspenseQuery({
+    queryKey: [keys.relatedBooks, id],
     queryFn: () => getRelatedBooks(id),
-    suspense: true,
     refetchOnWindowFocus: false,
-    cacheTime: 3000,
-    staleTime: 60000,
+    gcTime: 3000,
+    staleTime: 50000,
   });
 }
 
 function useBook(pathUrl: string | undefined) {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: [keys.one, pathUrl],
     queryFn: () => getBook(pathUrl),
     refetchOnWindowFocus: false,
-    suspense: true,
-    cacheTime: 3000,
+    gcTime: 3000,
   });
 }
 
