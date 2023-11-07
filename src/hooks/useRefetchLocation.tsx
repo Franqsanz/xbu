@@ -1,23 +1,42 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-export function useRefetchLocation(currentBookId, data, refetch) {
+import { RelatedBooksType } from '../components/types';
+
+type Book = {
+  pathUrl: string;
+};
+
+export function useRefetchLocation({
+  currentBookId,
+  data,
+  refetch,
+}: RelatedBooksType) {
   const location = useLocation();
   const pathname = location.pathname;
   const [previousPathname, setPreviousPathname] = useState(pathname);
-  const [relatedBooks, setRelatedBooks] = useState([]);
+  const [relatedBooks, setRelatedBooks] = useState<any[]>([]);
 
   useEffect(() => {
-    const filteredBooks = data.filter((book) => {
+    const filteredBooks = data.filter((book: Book) => {
+      if (book.pathUrl === currentBookId) {
+        if (refetch !== undefined) {
+          refetch();
+        }
+      }
+
       return book.pathUrl !== currentBookId;
     });
 
     setRelatedBooks(filteredBooks);
 
     if (pathname !== previousPathname) {
-      refetch();
+      if (refetch !== undefined) {
+        refetch();
+      }
       setPreviousPathname(pathname);
     }
   }, [data, currentBookId, pathname, refetch, previousPathname]);
+
   return relatedBooks;
 }

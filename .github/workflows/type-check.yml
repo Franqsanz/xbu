@@ -1,4 +1,4 @@
-name: type check
+name: Type Check
 
 on:
   pull_request:
@@ -24,3 +24,5 @@ jobs:
         run: npm ci
       - name: Run TypeScript type check
         run: npm run ts-lint
+      - name: Typecheck
+        uses: andoshin11/typescript-error-reporter-action@v1.0.2

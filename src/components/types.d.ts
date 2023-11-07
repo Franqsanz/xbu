@@ -91,9 +91,11 @@ interface ModalType extends DisclosureType {
   data?: string;
 }
 
-interface ReleatedBooksType {
-  id?: string;
+interface RelatedBooksType
+  extends Omit<CardType, 'title' | 'authors' | 'pathUrl'> {
+  data?: any;
   currentBookId?: string | undefined;
+  refetch?: () => void;
 }
 
 interface SelectType extends Omit<SelectBooksType, 'label'> {
@@ -149,7 +151,7 @@ export type {
   ModalCroppType,
   ModalCropperType,
   ModalType,
-  ReleatedBooksType,
+  RelatedBooksType,
   DrawerType,
   LanguageAndYearType,
   BookSearchResultsType,
