@@ -27,6 +27,7 @@ import {
   EmailIcon,
 } from 'react-share';
 import { FaCheckCircle } from 'react-icons/fa';
+import { MdCopyAll } from 'react-icons/md';
 
 import { ModalType } from './types';
 
@@ -114,7 +115,7 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalType) {
                     rounded='3xl'
                   />
                   <Box as='span' fontSize='sm' mt='3'>
-                    Twitter
+                    X
                   </Box>
                 </Flex>
               </TwitterShareButton>
@@ -158,18 +159,22 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalType) {
                 readOnly
               />
               <Button
+                w='145px'
                 size='lg'
                 onClick={handleCopyClick}
                 ml='2'
                 bg='green.500'
                 color='black'
-                p='4'
-                fontWeight='light'
+                p='5'
+                fontWeight='normal'
                 border='1px'
                 rounded='lg'
                 _hover={{ outline: 'none', bg: 'green.600' }}
               >
-                Copiar
+                <Flex align='center'>
+                  <Icon as={MdCopyAll} boxSize='5' mr='1' />
+                  Copiar
+                </Flex>
               </Button>
             </Flex>
           </ModalBody>
