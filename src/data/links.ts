@@ -82,6 +82,8 @@ const categories: Array<SelectBooksType> = [
   { value: 'Botánica', label: 'Botánica' },
   { value: 'Biografía', label: 'Biografía' },
   { value: 'Ciencia Ficción', label: 'Ciencia Ficción' },
+  { value: 'Crimen', label: 'Crimen' },
+  { value: 'Contemporáneo', label: 'Contemporáneo' },
   { value: 'Clásicos', label: 'Clásicos' },
   { value: 'Cuidado Del Bebé', label: 'Cuidado Del Bebé' },
   { value: 'Comedia', label: 'Comedia' },
@@ -157,6 +159,7 @@ const categories: Array<SelectBooksType> = [
   { value: 'Humor Grafico', label: 'Humor Grafico' },
   { value: 'Thriller', label: 'Thriller' },
   { value: 'Thriller de Detectives', label: 'Thriller de Detectives' },
+  { value: 'Thriller de Espías', label: 'Thriller de Espías' },
 ];
 
 const format: Array<SelectBooksType> = [

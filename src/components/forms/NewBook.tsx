@@ -151,11 +151,12 @@ export function FormNewBook() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 5000000) {
-      // 5 MB
+    // 1 MB
+    if (file.size > 1000000) {
       alert(
         `El tamaño de la imagen es demasiado grande. Por favor, seleccione una imagen de menor tamaño.`,
       );
+
       return;
     }
 
@@ -217,7 +218,7 @@ export function FormNewBook() {
           </Box>
           <Box mt='1' fontSize='13px'>
             <Box as='span'>
-              Solo se aceptan formatos PNG, JPG y WebP con un máximo de 5 MB.
+              Solo se aceptan formatos PNG, JPG y WebP con un máximo de 1 MB.
             </Box>
           </Box>
         </Box>
