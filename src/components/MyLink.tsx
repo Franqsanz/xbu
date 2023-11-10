@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Link, useColorModeValue } from '@chakra-ui/react';
+import { Box, Flex, Link, useColorModeValue } from '@chakra-ui/react';
 
 import { MyLinkType } from './types';
 
@@ -9,18 +9,20 @@ export function MyLink({ data, href, external, index }: MyLinkType) {
   const colorLinkHoverCategory = useColorModeValue('green.900', 'green.700');
 
   return (
-    <Link
-      as={NavLink}
-      to={href}
-      color={colorLinkCategory}
-      isExternal={external}
-      _hover={{
-        color: `${colorLinkHoverCategory}`,
-        textDecoration: 'underline',
-      }}
-    >
-      {data}
-      {index || null}
-    </Link>
+    <>
+      <Link
+        as={NavLink}
+        to={href}
+        color={colorLinkCategory}
+        isExternal={external}
+        _hover={{
+          color: `${colorLinkHoverCategory}`,
+          textDecoration: 'underline',
+        }}
+      >
+        {data}
+      </Link>
+      <Box mx='2'>{index || null}</Box>
+    </>
   );
 }

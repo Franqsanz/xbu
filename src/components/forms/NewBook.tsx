@@ -154,7 +154,7 @@ export function FormNewBook() {
     // 1 MB
     if (file.size > 1000000) {
       alert(
-        `El tamaño de la imagen es demasiado grande. Por favor, seleccione una imagen de menor tamaño.`,
+        `El tamaño de la imagen es mayor a 1 MB. Por favor, seleccione una imagen de menor tamaño.`,
       );
 
       return;

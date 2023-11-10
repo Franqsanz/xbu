@@ -174,7 +174,7 @@ export default function Book() {
           >
             {data.title}
           </Box>
-          <Box
+          <Flex
             my='1'
             fontSize={{ base: 'md', md: 'xl' }}
             textTransform='uppercase'
@@ -188,7 +188,7 @@ export default function Book() {
                 index={index !== data.authors.length - 1 && ' & '}
               />
             ))}
-          </Box>
+          </Flex>
           <Box mt='5'>
             <Box p='2' fontSize='lg' bg={grayColor} roundedTop='lg'>
               Sinopsis
@@ -208,7 +208,7 @@ export default function Book() {
                     <Box as='span'>Autor(s):</Box>
                   </Box>
                   <Box>
-                    <Box as='span'>
+                    <Flex as='span'>
                       {data.authors.map((author, index) => (
                         <MyLink
                           external={true}
@@ -218,7 +218,7 @@ export default function Book() {
                           index={index !== data.authors.length - 1 && ' & '}
                         />
                       ))}
-                    </Box>
+                    </Flex>
                   </Box>
                 </Flex>
                 <Flex my='2'>
