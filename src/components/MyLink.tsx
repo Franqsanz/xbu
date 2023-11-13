@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Box, Flex, Link, useColorModeValue } from '@chakra-ui/react';
+import { Box, Link, useColorModeValue } from '@chakra-ui/react';
 
 import { MyLinkType } from './types';
 
@@ -22,7 +22,7 @@ export function MyLink({ data, href, external, index }: MyLinkType) {
       >
         {data}
       </Link>
-      <Box mx='2'>{index || null}</Box>
+      {index !== null && index !== undefined && <Box mr='1'>{index}</Box>}
     </>
   );
 }

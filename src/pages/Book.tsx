@@ -178,6 +178,7 @@ export default function Book() {
             my='1'
             fontSize={{ base: 'md', md: 'xl' }}
             textTransform='uppercase'
+            flexWrap='wrap'
           >
             {data.authors.map((author, index) => (
               <MyLink
@@ -185,7 +186,7 @@ export default function Book() {
                 key={index}
                 href={`https://www.google.com/search?q=${author}+escritor`}
                 data={author}
-                index={index !== data.authors.length - 1 && ' & '}
+                index={index !== data.authors.length - 1 && ','}
               />
             ))}
           </Flex>
@@ -203,25 +204,7 @@ export default function Book() {
           <Box bg={bgGrayCategory} p='4' roundedBottom='lg'>
             <Flex direction='column'>
               <Box>
-                <Flex>
-                  <Box minW='160px'>
-                    <Box as='span'>Autor(s):</Box>
-                  </Box>
-                  <Box>
-                    <Flex as='span'>
-                      {data.authors.map((author, index) => (
-                        <MyLink
-                          external={true}
-                          key={index}
-                          href={`https://www.google.com/search?q=${author}+escritor`}
-                          data={author}
-                          index={index !== data.authors.length - 1 && ' & '}
-                        />
-                      ))}
-                    </Flex>
-                  </Box>
-                </Flex>
-                <Flex my='2'>
+                <Flex mt='0' mb='2'>
                   <Box minW='160px'>
                     <Box as='span'>Año:</Box>
                   </Box>
@@ -270,17 +253,17 @@ export default function Book() {
                     <Box as='span'>Categoria(s):</Box>
                   </Box>
                   <Box>
-                    <Box as='span'>
+                    <Flex flexWrap='wrap' as='span'>
                       {data.category.map((category, index) => (
                         <MyLink
                           external={false}
                           key={index}
                           href={`/books/search/category/${category}`}
                           data={category}
-                          index={index !== data.category.length - 1 && ', '}
+                          index={index !== data.category.length - 1 && ','}
                         />
                       ))}
-                    </Box>
+                    </Flex>
                   </Box>
                 </Flex>
               </Box>
