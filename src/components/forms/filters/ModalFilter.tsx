@@ -20,7 +20,7 @@ export function ModalFilter({ isOpen, onClose }: ModalType) {
         size={{ base: 'xs', md: 'sm' }}
         isCentered
       >
-        <ModalOverlay backdropFilter='blur(5px)' />
+        <ModalOverlay backdropFilter='blur(7px)' />
         <ModalContent>
           <ModalHeader>Opciones de Búsqueda</ModalHeader>
           <ModalCloseButton />

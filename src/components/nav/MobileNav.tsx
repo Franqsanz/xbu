@@ -126,7 +126,7 @@ export function MobileNav() {
           </Flex>
         </Flex>
         <Drawer placement='top' isOpen={isOpenSearch} onClose={onCloseSearch}>
-          <DrawerOverlay backdropFilter='blur(7px)' />
+          <DrawerOverlay bg='none' backdropFilter='blur(7px)' />
           <DrawerContent bg='none' boxShadow='none' ref={containerRef}>
             <DrawerBody overflow='inherit'>
               <InputSearch
