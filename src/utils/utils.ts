@@ -12,6 +12,7 @@ const keys = {
   filter: 'BooksFilter',
   random: 'BooksRandom',
   relatedBooks: 'RelatedBooks',
+  moreBooksAuthors: 'MoreBooksAuthors',
 };
 
 function handleImageLoad(e: React.SyntheticEvent) {

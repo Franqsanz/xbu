@@ -25,6 +25,9 @@ import { ModalShare } from '../components/ModalShare';
 import { MyLink } from '../components/MyLink';
 
 const Categories = lazy(() => import('../components/Categories'));
+const MoreBooksAuthors = lazy(
+  () => import('../components/cards/MoreBooksAuthors'),
+);
 const RelatedBooks = lazy(() => import('../components/cards/RelatedBooks'));
 const MoreBooks = lazy(() => import('../components/cards/MoreBooks'));
 
@@ -295,6 +298,34 @@ export default function Book() {
             shareUrl={shareUrl}
             data={data.title}
           />
+          <Box my='10'>
+            <Divider borderColor='gray.400' />
+          </Box>
+          <Flex direction='column'>
+            <Box
+              p='2'
+              mb='3'
+              fontSize={{ base: 'xl', md: '2xl' }}
+              textAlign={{ base: 'center', lg: 'left' }}
+              ml={{ base: 0, lg: 2 }}
+            >
+              Más libros del autor{' '}
+              <Box as='span' fontWeight='semibold'>
+                {data.authors[0]}
+              </Box>
+            </Box>
+            <Suspense
+              fallback={
+                <Box p='3'>
+                  <Spinner size='lg' />
+                </Box>
+              }
+            >
+              <Box>
+                <MoreBooksAuthors id={data.id} currentBookId={pathUrl} />
+              </Box>
+            </Suspense>
+          </Flex>
           <Box my='10'>
             <Divider borderColor='gray.400' />
           </Box>

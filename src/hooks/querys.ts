@@ -15,6 +15,7 @@ import {
   getBooksFilter,
   getMoreBooks,
   getRelatedBooks,
+  getMoreBooksAuthors,
   postBook,
 } from '../services/api';
 import { keys } from '../utils/utils';
@@ -124,6 +125,16 @@ function useRelatedBooks(id: string | undefined) {
   });
 }
 
+function useMoreBooksAuthors(id: string | undefined) {
+  return useSuspenseQuery({
+    queryKey: [keys.moreBooksAuthors, id],
+    queryFn: () => getMoreBooksAuthors(id),
+    refetchOnWindowFocus: false,
+    gcTime: 3000,
+    staleTime: 50000,
+  });
+}
+
 function useBook(pathUrl: string | undefined) {
   return useSuspenseQuery({
     queryKey: [keys.one, pathUrl],
@@ -143,4 +154,5 @@ export {
   useFilter,
   useMoreBooks,
   useRelatedBooks,
+  useMoreBooksAuthors,
 };
