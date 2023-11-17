@@ -23,6 +23,7 @@ import { MainHead } from '../components/Head';
 import { MyTag } from '../components/MyTag';
 import { ModalShare } from '../components/ModalShare';
 import { MyLink } from '../components/MyLink';
+import { BooksSection } from '../components/BooksSection';
 
 const Categories = lazy(() => import('../components/Categories'));
 const MoreBooksAuthors = lazy(
@@ -298,87 +299,24 @@ export default function Book() {
             shareUrl={shareUrl}
             data={data.title}
           />
-          <Box my='10'>
-            <Divider borderColor='gray.400' />
-          </Box>
-          <Flex direction='column'>
-            <Box
-              p='2'
-              mb='3'
-              fontSize={{ base: 'xl', md: '2xl' }}
-              textAlign={{ base: 'center', lg: 'left' }}
-              ml={{ base: 0, lg: 2 }}
-            >
-              Más libros del autor{' '}
-              <Box as='span' fontWeight='semibold'>
-                {data.authors[0]}
-              </Box>
-            </Box>
-            <Suspense
-              fallback={
-                <Box p='3'>
-                  <Spinner size='lg' />
-                </Box>
-              }
-            >
-              <Box>
-                <MoreBooksAuthors id={data.id} currentBookId={pathUrl} />
-              </Box>
-            </Suspense>
-          </Flex>
-          <Box my='10'>
-            <Divider borderColor='gray.400' />
-          </Box>
-          <Flex direction='column'>
-            <Box
-              p='2'
-              mb='3'
-              fontSize={{ base: 'xl', md: '2xl' }}
-              textAlign={{ base: 'center', lg: 'left' }}
-              ml={{ base: 0, lg: 2 }}
-            >
-              Libros relacionados con{' '}
-              <Box as='span' fontWeight='semibold'>
-                {data.category[0]}
-              </Box>
-            </Box>
-            <Suspense
-              fallback={
-                <Box p='3'>
-                  <Spinner size='lg' />
-                </Box>
-              }
-            >
-              <Box>
-                <RelatedBooks id={data.id} currentBookId={pathUrl} />
-              </Box>
-            </Suspense>
-          </Flex>
-          <Box my='10'>
-            <Divider borderColor='gray.400' />
-          </Box>
-          <Flex direction='column'>
-            <Box
-              p='2'
-              mb='3'
-              fontSize={{ base: 'xl', md: '2xl' }}
-              textAlign={{ base: 'center', lg: 'left' }}
-              ml={{ base: 0, lg: 2 }}
-            >
-              Más libros en XBuniverse
-            </Box>
-            <Suspense
-              fallback={
-                <Box p='3'>
-                  <Spinner size='lg' />
-                </Box>
-              }
-            >
-              <Box>
-                <MoreBooks currentBookId={pathUrl} />
-              </Box>
-            </Suspense>
-          </Flex>
+          <BooksSection
+            title='Más libros del autor'
+            data={data.authors[0]}
+            booksComponent={
+              <MoreBooksAuthors id={data.id} currentBookId={pathUrl} />
+            }
+          />
+          <BooksSection
+            title='Libros relacionados con'
+            data={data.category[0]}
+            booksComponent={
+              <RelatedBooks id={data.id} currentBookId={pathUrl} />
+            }
+          />
+          <BooksSection
+            title='Más libros en XBuniverse'
+            booksComponent={<MoreBooks currentBookId={pathUrl} />}
+          />
         </Flex>
         <Flex
           display={{ base: 'none', lg: 'block' }}

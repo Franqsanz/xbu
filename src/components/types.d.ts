@@ -139,6 +139,12 @@ interface SkeletonType {
   showTags?: boolean;
 }
 
+interface BooksSectionType {
+  title: string;
+  data?: string;
+  booksComponent: RNode;
+}
+
 export type {
   LinkType,
   SelectBooksType,
@@ -148,6 +154,7 @@ export type {
   HeadType,
   TagType,
   BookType,
+  BooksSectionType,
   ModalCroppType,
   ModalCropperType,
   ModalType,
