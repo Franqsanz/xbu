@@ -34,7 +34,7 @@ export default function MoreBooksAuthors({
         <Box as='span' fontStyle='normal'>
           🔍 📚
         </Box>{' '}
-        No se encontraron más libros del mismo autor.
+        No se encontraron más libros de este autor.
       </Text>
     );
   }
