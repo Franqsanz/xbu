@@ -10,7 +10,7 @@ export function BooksSection({
 }: BooksSectionType) {
   return (
     <>
-      <Box my='10'>
+      <Box mt='10' mb='5'>
         <Divider borderColor='gray.400' />
       </Box>
       <Flex direction='column'>

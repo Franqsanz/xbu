@@ -13,7 +13,18 @@ export default defineConfig({
     million.vite({ auto: true }),
     splitVendorChunkPlugin(),
     react(),
-    webfontDownload(),
+    webfontDownload(
+      [
+        'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap',
+      ],
+      {
+        injectAsStyleTag: true,
+        minifyCss: true,
+        async: true,
+        cache: true,
+        proxy: false,
+      },
+    ),
     createHtmlPlugin({ minify: true }),
     compression({
       algorithm: 'brotliCompress',
