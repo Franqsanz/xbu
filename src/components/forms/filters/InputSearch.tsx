@@ -127,7 +127,13 @@ export function InputSearch({
 
   return (
     <>
-      <FormControl w={width} mr={{ base: 0, lg: 2 }} ref={inputRef}>
+      <FormControl
+        as='search'
+        role='search'
+        w={width}
+        mr={{ base: 0, lg: 2 }}
+        ref={inputRef}
+      >
         <InputGroup>
           <InputLeftElement>
             <Icon as={FiSearch} boxSize='20px' color={colorIcons} />
