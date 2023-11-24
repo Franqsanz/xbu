@@ -1,11 +1,11 @@
-import { FiHome } from 'react-icons/fi';
+import { GrHome } from 'react-icons/gr';
 import { MdOutlineExplore } from 'react-icons/md';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 
 import { LinkType, SelectBooksType } from '../components/types';
 
 const navLink: Array<LinkType> = [
-  { name: 'Inicio', href: '/', icon: FiHome },
+  { name: 'Inicio', href: '/', icon: GrHome },
   { name: 'Explorar', href: 'explore', icon: MdOutlineExplore },
   { name: 'Publicar', href: 'new-post', icon: AiOutlineCloudUpload },
 ];
@@ -104,12 +104,16 @@ const categories: Array<SelectBooksType> = [
   { value: 'Poesía', label: 'Poesía' },
   { value: 'Psicoterapia', label: 'Psicoterapia' },
   { value: 'Psicología', label: 'Psicología' },
+  { value: 'Productividad', label: 'Productividad' },
+  { value: 'Liderazgo', label: 'Liderazgo' },
+  { value: 'Negocio', label: 'Negocio' },
   { value: 'Medicina', label: 'Medicina' },
   { value: 'Policiales', label: 'Policiales' },
   { value: 'Ciencia', label: 'Ciencia' },
   { value: 'Programación', label: 'Programación' },
   { value: 'Informática', label: 'Informática' },
   { value: 'Desarrollo De Software', label: 'Desarrollo De Software' },
+  { value: 'Desarrollo Personal', label: 'Desarrollo Personal' },
   { value: 'Tecnología', label: 'Tecnología' },
   { value: 'Fabricación De Joyas', label: 'Fabricación De Joyas' },
   { value: 'Finanzas', label: 'Finanzas' },

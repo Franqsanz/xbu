@@ -1,7 +1,7 @@
 import React from 'react';
-import { Flex, Button, Stack, useColorModeValue } from '@chakra-ui/react';
-import { GrGoogle, GrTwitter } from 'react-icons/gr';
-import { BsFacebook } from 'react-icons/bs';
+import { Box, Flex, Button, Stack, useColorModeValue } from '@chakra-ui/react';
+import { GrGoogle } from 'react-icons/gr';
+import { BsFacebook, BsTwitterX } from 'react-icons/bs';
 
 import { ContainerTitle } from '../components/ContainerTitle';
 import { MainHead } from '../components/Head';
@@ -13,7 +13,7 @@ export function Register() {
       <ContainerTitle title='Crear cuenta' />
       <Flex justify='center' py={{ base: '10vh', md: '15vh' }}>
         <Stack direction='column' spacing='5'>
-          {/* <Button
+          <Button
             w='250px'
             fontWeight='normal'
             leftIcon={<GrGoogle />}
@@ -24,27 +24,22 @@ export function Register() {
             fontSize='xl'
             _hover={{ bg: '#D23C2F' }}
             _active={{ bg: '#BB352A' }}
-            onClick={() =>
-              // window.open('https://xb-api.vercel.app/auth/google', '_self')
-              window.open('http://localhost:9090/auth/google', '_self')
-            }
           >
             Google
-          </Button> */}
+          </Button>
           <Button
             fontWeight='normal'
-            leftIcon={<GrTwitter />}
-            colorScheme='twitter'
+            leftIcon={<BsTwitterX />}
+            color='white'
+            bg='black'
             border='1px'
             borderRadius='lg'
             p='7'
             fontSize='xl'
-            onClick={() =>
-              // window.open('https://xb-api.vercel.app/auth/twitter', '_self')
-              window.open('http://localhost:9090/auth/twitter', '_self')
-            }
+            _hover={{ bg: '#242424' }}
+            _active={{ bg: 'black' }}
           >
-            Twitter
+            <Box fontSize='md'>(ex Twitter)</Box>
           </Button>
           <Button
             fontWeight='normal'
@@ -54,10 +49,8 @@ export function Register() {
             borderRadius='lg'
             p='7'
             fontSize='xl'
-            onClick={
-              () =>
-                window.open('https://xb-api.vercel.app/auth/facebook', '_self')
-              // window.open('http://localhost:9090/auth/facebook', '_self')
+            onClick={() =>
+              window.open('https://xb-api.vercel.app/auth/facebook', '_self')
             }
           >
             Facebook

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Flex, Button, Stack, useColorModeValue } from '@chakra-ui/react';
-import { GrGoogle, GrTwitter } from 'react-icons/gr';
-import { BsFacebook } from 'react-icons/bs';
+import { Box, Flex, Button, Stack, useColorModeValue } from '@chakra-ui/react';
+import { GrGoogle } from 'react-icons/gr';
+import { BsFacebook, BsTwitterX } from 'react-icons/bs';
 
 import { ContainerTitle } from '../components/ContainerTitle';
 import { MainHead } from '../components/Head';
@@ -29,14 +29,17 @@ export function Login() {
           </Button>
           <Button
             fontWeight='normal'
-            leftIcon={<GrTwitter />}
-            colorScheme='twitter'
+            leftIcon={<BsTwitterX />}
+            color='white'
+            bg='black'
             border='1px'
             borderRadius='lg'
             p='7'
             fontSize='xl'
+            _hover={{ bg: '#242424' }}
+            _active={{ bg: 'black' }}
           >
-            Twitter
+            <Box fontSize='md'>(ex Twitter)</Box>
           </Button>
           <Button
             fontWeight='normal'
