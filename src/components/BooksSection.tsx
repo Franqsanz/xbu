@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Box, Flex, Divider, Spinner } from '@chakra-ui/react';
+import { Box, Center, Flex, Divider, Spinner } from '@chakra-ui/react';
 
 import { BooksSectionType } from './types';
 
@@ -28,9 +28,9 @@ export function BooksSection({
         </Box>
         <Suspense
           fallback={
-            <Box p='3'>
+            <Center p='3'>
               <Spinner size='lg' />
-            </Box>
+            </Center>
           }
         >
           <Box>{booksComponent}</Box>
