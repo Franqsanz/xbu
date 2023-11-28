@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import {
   Box,
-  Divider,
+  Center,
   Flex,
   Link,
   Text,
@@ -392,17 +392,19 @@ export default function Book() {
                 Categorías
                 <Box mt='2' borderBottom='1px'></Box>
               </Box>
-              <Suspense
-                fallback={
-                  <Box display='flex' justifyContent='center'>
-                    <Spinner size='lg' />
-                  </Box>
-                }
-              >
-                <Flex direction='column' flexWrap='wrap'>
-                  <Categories />
-                </Flex>
-              </Suspense>
+              <Center h='80%'>
+                <Suspense
+                  fallback={
+                    <Center>
+                      <Spinner size='lg' />
+                    </Center>
+                  }
+                >
+                  <Flex direction='column' flexWrap='wrap'>
+                    <Categories />
+                  </Flex>
+                </Suspense>
+              </Center>
               <Box
                 position='sticky'
                 h='7'
