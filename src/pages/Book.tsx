@@ -24,6 +24,7 @@ import { MyTag } from '../components/MyTag';
 import { ModalShare } from '../components/ModalShare';
 import { MyLink } from '../components/MyLink';
 import { BooksSection } from '../components/BooksSection';
+import { ImageZoom } from '../components/ImageZoom';
 
 const Categories = lazy(() => import('../components/Categories'));
 const MoreBooksAuthors = lazy(
@@ -130,7 +131,7 @@ export default function Book() {
           pb='4'
         >
           <LazyLoad width={230} height={340} offset={0} threshold={0.99}>
-            <Image
+            <ImageZoom
               w='230px'
               h='340px'
               src={data.image.url}
@@ -334,7 +335,7 @@ export default function Book() {
               position='relative'
             >
               <LazyLoad width={290} height={420} offset={0} threshold={0.99}>
-                <Image
+                <ImageZoom
                   w='290px'
                   h='420px'
                   src={data.image.url}
@@ -346,6 +347,7 @@ export default function Book() {
                   filter='blur(10px)'
                   transition='filter 0.5s ease-in-out'
                   onLoad={handleImageLoad}
+                  zIndex='9999'
                 />
               </LazyLoad>
             </Flex>
@@ -382,6 +384,7 @@ export default function Book() {
               }}
             >
               <Box
+                w='270px'
                 p='1.25rem 2px 2px 2px'
                 h='24'
                 fontSize='2xl'
@@ -392,20 +395,19 @@ export default function Book() {
                 Categorías
                 <Box mt='2' borderBottom='1px'></Box>
               </Box>
-              <Center h='80%'>
-                <Suspense
-                  fallback={
-                    <Center>
-                      <Spinner size='lg' />
-                    </Center>
-                  }
-                >
-                  <Flex direction='column' flexWrap='wrap'>
-                    <Categories />
-                  </Flex>
-                </Suspense>
-              </Center>
+              <Suspense
+                fallback={
+                  <Center h='500px'>
+                    <Spinner size='lg' />
+                  </Center>
+                }
+              >
+                <Flex direction='column' flexWrap='wrap'>
+                  <Categories />
+                </Flex>
+              </Suspense>
               <Box
+                w='270px'
                 position='sticky'
                 h='7'
                 bottom='0'

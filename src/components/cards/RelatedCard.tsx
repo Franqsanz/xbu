@@ -22,7 +22,7 @@ export function RelatedCard({
     <>
       <Box
         w='full'
-        h={{ base: 'auto', md: '245px' }}
+        h={{ base: 'auto', md: '270px' }}
         mx={{ base: 0, md: 2 }}
         rounded='xl'
         border='1px'
