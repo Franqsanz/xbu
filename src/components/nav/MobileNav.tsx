@@ -62,14 +62,14 @@ export function MobileNav() {
         as='header'
         w='full'
         justify='start'
+        p='2'
         bg={bgNavColor}
+        position='sticky'
+        top='0'
         boxShadow='sm'
         backdropFilter='auto'
         backdropBlur='12px'
         direction='column'
-        position='sticky'
-        top='0'
-        p='2'
         zIndex='1'
       >
         <Flex as='nav' w='100%' justify='space-between' align='center'>

@@ -129,6 +129,7 @@ export default function Book() {
           display={{ base: 'block', lg: 'none' }}
           m='auto'
           pb='4'
+          zIndex='0'
         >
           <LazyLoad width={230} height={340} offset={0} threshold={0.99}>
             <ImageZoom
