@@ -40,7 +40,7 @@ export function Card({
 
   return (
     <>
-      <LinkBox mx='1' my='5' pb='4'>
+      <LinkBox mx='1' my='5' pb='4' zIndex='0'>
         <LinkOverlay
           as={NavLink}
           to={`/book/view/${pathUrl}`}
