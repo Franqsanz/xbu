@@ -13,7 +13,7 @@ export function ImageZoom({ options, ...props }: ImageZoomProps) {
     if (zoomRef.current === null) {
       zoomRef.current = mediumZoom({
         background: '#000000d6',
-        margin: 70,
+        margin: 24,
       });
     }
 
@@ -30,5 +30,5 @@ export function ImageZoom({ options, ...props }: ImageZoomProps) {
     }
   }
 
-  return <Image {...props} ref={attachZoom} />;
+  return <Image {...props} ref={attachZoom} position='relative' zIndex='2' />;
 }

@@ -33,6 +33,9 @@ export default extendTheme({
           borderRadius: '30px',
           border: '4px solid #f2f2f2',
         },
+        '.medium-zoom-overlay, .medium-zoom--opened': {
+          zIndex: 2,
+        },
       },
       h1: {
         fontWeight: 'extrabold',

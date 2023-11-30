@@ -70,7 +70,7 @@ export function MobileNav() {
         position='sticky'
         top='0'
         p='2'
-        zIndex='999'
+        zIndex='1'
       >
         <Flex as='nav' w='100%' justify='space-between' align='center'>
           <Flex align='center'>

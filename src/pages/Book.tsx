@@ -331,8 +331,8 @@ export default function Book() {
             <Flex
               as='figure'
               justifyContent='center'
-              zIndex='9999'
               position='relative'
+              zIndex='1'
             >
               <LazyLoad width={290} height={420} offset={0} threshold={0.99}>
                 <ImageZoom
@@ -347,7 +347,6 @@ export default function Book() {
                   filter='blur(10px)'
                   transition='filter 0.5s ease-in-out'
                   onLoad={handleImageLoad}
-                  zIndex='9999'
                 />
               </LazyLoad>
             </Flex>

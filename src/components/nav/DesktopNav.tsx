@@ -63,7 +63,7 @@ export function DesktopNav() {
         boxShadow='sm'
         backdropFilter='auto'
         backdropBlur='12px'
-        zIndex='999'
+        zIndex='1'
       >
         <Flex as='nav' w='100%' justify='space-around' align='center'>
           <Flex align='center'>
