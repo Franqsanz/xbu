@@ -4,8 +4,8 @@ import { Container, Box, useColorModeValue } from '@chakra-ui/react';
 import { TitleType } from './types';
 
 export function ContainerTitle({ title }: TitleType) {
-  const bgContainer = useColorModeValue('#abf299', '#0d4300');
-  const colorTitle = useColorModeValue('#0d4300', '#abf299');
+  const bgContainer = useColorModeValue('green.50', 'green.900');
+  const colorTitle = useColorModeValue('green.900', 'green.50');
 
   return (
     <Container maxW='full' p='0'>
