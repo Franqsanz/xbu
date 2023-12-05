@@ -2,7 +2,7 @@ import { GrHome } from 'react-icons/gr';
 import { MdOutlineExplore } from 'react-icons/md';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 
-import { LinkType, SelectBooksType } from '../components/types';
+import { AboutType, LinkType, SelectBooksType } from '../components/types';
 
 const navLink: Array<LinkType> = [
   { name: 'Inicio', href: '/', icon: GrHome },
@@ -181,4 +181,54 @@ const format: Array<SelectBooksType> = [
   { value: 'AudioLibro', label: 'AudioLibro' },
 ];
 
-export { navLink, accountLinks, languages, categories, format };
+const aboutCategories: Array<AboutType> = [
+  {
+    category: 'Adulto',
+    description: '',
+    wiki: '',
+  },
+  {
+    category: 'Arquitectura',
+    description:
+      'La arquitectura (del latín architectūra, architectūrae, y este a su vez del griego antiguo ἀρχιτέκτων, architéctōn, ‘arquitecto’ o ‘constructor jefe’, compuesto de ἀρχός, archós ‘jefe’, ‘guía’, y τέκτων, téctōn, ‘constructor’) es el arte y la técnica de proyectar, diseñar y construir, modificando el hábitat humano, estudiando la estética, el buen uso y la función de los espacios, ya sean arquitectónicos, urbanos o de paisaje.',
+    wiki: 'https://es.wikipedia.org/wiki/Arquitectura',
+  },
+  {
+    category: 'Aventura',
+    description: '',
+    wiki: '',
+  },
+  {
+    category: 'Bebidas',
+    description: '',
+    wiki: '',
+  },
+  {
+    category: 'Ciencia',
+    description:
+      'La ciencia (del latín scientĭa, "conocimiento") es un conjunto de conocimientos sistemáticos comprobables que estudian, explican y predicen los fenómenos sociales, artificiales y naturales. El conocimiento científico se obtiene de manera metodológica mediante observación y experimentación en campos de estudio específicos. Dicho conocimiento se organiza y se clasifica sobre la base de principios explicativos, ya sean de forma teórica o práctica. A partir del razonamiento lógico y el análisis objetivo de la evidencia científica se formulan preguntas de investigación e hipótesis, se deducen principios y leyes, y se construyen modelos, teorías y sistemas de conocimientos por medio del método científico.',
+    wiki: 'https://es.wikipedia.org/wiki/Ciencia',
+  },
+  {
+    category: 'Ciencia Ficción',
+    description:
+      'Es la denominación de uno de los géneros derivados de la literatura de ficción, junto con la literatura fantástica y la narrativa de terror. Algunos autores estiman que el término es una mala traducción del inglés science fiction y que la correcta es ficción científica. Nacida como género en la década de 1920 (aunque hay obras reconocibles muy anteriores) y exportada posteriormente a otros medios, como el cinematográfico, historietístico y televisivo, tiene un gran auge desde la segunda mitad del siglo xx debido al interés popular acerca del futuro que despertó el espectacular avance tanto científico como tecnológico alcanzado durante todos estos años.',
+    wiki: 'https://es.wikipedia.org/wiki/Ciencia_ficci%C3%B3n',
+  },
+
+  {
+    category: 'Misterio',
+    description:
+      'El término novela de misterio a menudo es utilizado como sinónimo de novela de detective o novela de crimen, es decir, una novela o cuento en la cual un detective (profesional o aficionado) investiga y resuelve un misterio criminal. A veces los libros de misterio tratan sobre crímenes que realmente acontecieron.',
+    wiki: 'https://es.wikipedia.org/wiki/Misterio_(literatura)',
+  },
+];
+
+export {
+  navLink,
+  accountLinks,
+  languages,
+  categories,
+  aboutCategories,
+  format,
+};

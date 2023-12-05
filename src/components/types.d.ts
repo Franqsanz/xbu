@@ -145,7 +145,14 @@ interface BooksSectionType {
   booksComponent: RNode;
 }
 
+interface AboutType {
+  category: string;
+  description: string;
+  wiki: string;
+}
+
 export type {
+  AboutType,
   LinkType,
   SelectBooksType,
   SelectType,

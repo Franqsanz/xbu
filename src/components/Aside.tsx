@@ -7,8 +7,8 @@ export function Aside({ children }: { children: React.ReactNode }) {
       <Flex
         as='aside'
         display={{ base: 'none', xl: 'flex' }}
-        w='250px'
-        pr='2'
+        w={{ base: '250px', lg: '300px' }}
+        mr='8'
         direction='column'
       >
         {children}

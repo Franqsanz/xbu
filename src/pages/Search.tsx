@@ -23,6 +23,7 @@ import { Aside } from '../components/Aside';
 import { MySliderCategories } from '../components/MySliderCategories';
 import { FilterDrawer } from '../components/FilterDrawer';
 import ResultLength from '../components/ResultLength';
+import { AboutCategories } from '../components/AboutCategories';
 import { Lost } from '../assets/assets';
 
 export default function Search() {
@@ -205,6 +206,7 @@ export default function Search() {
       >
         <Aside>
           <ResultLength data={data} />
+          <AboutCategories category={param} />
           {asideFilter}
         </Aside>
         {filteredBooks.length > 0 ? (
