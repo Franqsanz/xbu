@@ -4,9 +4,9 @@ import { Box, Text, Link } from '@chakra-ui/react';
 import { aboutCategories } from '../data/links';
 
 export function AboutCategories({ category }: any) {
-  const filteredAboutCategories = aboutCategories.filter(
-    (item) => item.category === category,
-  );
+  const filteredAboutCategories = aboutCategories.filter((item) => {
+    return item.category === category;
+  });
 
   return (
     <>
@@ -18,8 +18,8 @@ export function AboutCategories({ category }: any) {
           <Text mt='2' fontSize='sm'>
             {description}
           </Text>
-          <Box display='inline' mt='2'>
-            Fuente:{' '}
+          <Box display='inline' mt='4'>
+            Más Info:{' '}
             <Link href={wiki} isExternal color='green.600'>
               Wikipedia.
             </Link>

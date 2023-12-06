@@ -25,6 +25,7 @@ import { FilterDrawer } from '../components/FilterDrawer';
 import ResultLength from '../components/ResultLength';
 import { AboutCategories } from '../components/AboutCategories';
 import { Lost } from '../assets/assets';
+import { aboutCategories } from '../data/links';
 
 export default function Search() {
   const location = useLocation();
@@ -36,6 +37,7 @@ export default function Search() {
   const [selectedYear, setSelectedYear] = useState('');
   const { query, param } = useParams();
   let asideFilter;
+  let aboutCategoriesUI;
   let buttonFilter;
 
   const { data } = useFilter(query, param);
@@ -170,6 +172,22 @@ export default function Search() {
     );
   }
 
+  // Verifica si los 3 campos de aboutCategories esten con info o no
+  const categoryCheck = aboutCategories.find((item) => {
+    return item.category === param;
+  });
+
+  if (categoryCheck) {
+    const isValid =
+      categoryCheck.category && categoryCheck.description && categoryCheck.wiki;
+
+    if (isValid) {
+      aboutCategoriesUI = <AboutCategories category={param} />;
+    } else {
+      aboutCategoriesUI = null;
+    }
+  }
+
   return (
     <>
       <MainHead title={`${param} | XBuniverse`} />
@@ -206,7 +224,7 @@ export default function Search() {
       >
         <Aside>
           <ResultLength data={data} />
-          <AboutCategories category={param} />
+          {aboutCategoriesUI}
           {asideFilter}
         </Aside>
         {filteredBooks.length > 0 ? (

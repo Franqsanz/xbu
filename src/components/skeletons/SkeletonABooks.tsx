@@ -44,6 +44,13 @@ export function SkeletonAllBooks({ showTags = true }: SkeletonType) {
               skeletonHeight='5'
               mb='10'
             />
+            <SkeletonText
+              mt='1'
+              noOfLines={14}
+              spacing='2'
+              skeletonHeight='3'
+              mb='10'
+            />
             <SkeletonText mt='1' noOfLines={4} spacing='2' skeletonHeight='3' />
           </Box>
         </Aside>
