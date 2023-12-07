@@ -565,7 +565,7 @@ export function FormNewBook() {
               <FormControl mt={{ base: 5, md: 8 }}>
                 <Flex align='center' justify='space-between' mb='9px'>
                   <FormLabel htmlFor='categoria' m='0'>
-                    Categoria{' '}
+                    Categoria/Género{' '}
                     <Box display='inline' fontSize='sx' color='red.400'>
                       *
                     </Box>

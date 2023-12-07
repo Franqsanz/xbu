@@ -183,9 +183,16 @@ const format: Array<SelectBooksType> = [
 
 const aboutCategories: Array<AboutType> = [
   {
+    category: 'Acción',
+    description:
+      'En literatura, cine o comic, acción hace referencia al conjunto de sucesos o actos que, encadenados uno tras otro, conforman el argumento de una obra.',
+    wiki: 'https://www.significados.com/accion/#:~:text=En%20literatura%2C%20cine%20o%20comic,un%20modelo%20para%20ser%20pintado.',
+  },
+  {
     category: 'Adulto',
-    description: '',
-    wiki: '',
+    description:
+      'El término adulto se refiere a un organismo, especialmente un ser humano, que ya ha dejado la infancia y adolescencia.',
+    wiki: 'https://es.wiktionary.org/wiki/adulto#:~:text=El%20t%C3%A9rmino%20adulto%20se%20refiere,los%2060%20a%C3%B1os%20de%20edad.',
   },
   {
     category: 'Arquitectura',
@@ -195,13 +202,15 @@ const aboutCategories: Array<AboutType> = [
   },
   {
     category: 'Aventura',
-    description: '',
-    wiki: '',
+    description:
+      'La novela de aventuras es un género narrativo literario que narra los viajes, el misterio y el riesgo donde un personaje principal se enfrenta a un desafío a lo largo del viaje.',
+    wiki: 'https://es.wikipedia.org/wiki/Novela_de_aventuras',
   },
   {
     category: 'Bebidas',
-    description: '',
-    wiki: '',
+    description:
+      'Es cualquier líquido que se ingiere. La bebida más consumida es el agua. Otros ejemplos son las bebidas alcohólicas, bebidas gaseosas, infusiones o zumos.',
+    wiki: 'https://es.wikipedia.org/wiki/Bebida',
   },
   {
     category: 'Ciencia',
@@ -215,7 +224,30 @@ const aboutCategories: Array<AboutType> = [
       'Es la denominación de uno de los géneros derivados de la literatura de ficción, junto con la literatura fantástica y la narrativa de terror. Algunos autores estiman que el término es una mala traducción del inglés science fiction y que la correcta es ficción científica. Nacida como género en la década de 1920 (aunque hay obras reconocibles muy anteriores) y exportada posteriormente a otros medios, como el cinematográfico, historietístico y televisivo, tiene un gran auge desde la segunda mitad del siglo xx debido al interés popular acerca del futuro que despertó el espectacular avance tanto científico como tecnológico alcanzado durante todos estos años.',
     wiki: 'https://es.wikipedia.org/wiki/Ciencia_ficci%C3%B3n',
   },
-
+  {
+    category: 'Ciencias Naturales',
+    description:
+      'Las ciencias naturales, ciencias de la naturaleza, ciencias físico-naturales o ciencias experimentales (históricamente denominadas filosofía natural o historia natural) son aquellas ciencias que tienen por objeto el estudio de la naturaleza, siguiendo la modalidad del método científico conocida como método empírico-analítico.',
+    wiki: 'https://es.wikipedia.org/wiki/Ciencias_naturales',
+  },
+  {
+    category: 'Clásicos',
+    description:
+      'La literatura clásica hoy en día se considera aquella escrita en griego antiguo o en latín y que forma parte del canon occidental. No debe confundirse con los clásicos nacionales, aquellas obras consideradas modélicas para cada país, ni con aquellos libros que sobreviven al paso del tiempo o que se escribieron en el periodo del Neoclasicismo. El concepto engloba, por tanto la literatura griega y la literatura latina, excluyendo las obras de la Grecia moderna.',
+    wiki: 'https://es.wikipedia.org/wiki/Literatura_cl%C3%A1sica',
+  },
+  {
+    category: 'Ficción',
+    description:
+      'Se denomina ficción a la simulación de la realidad que realizan las obras como literarias, cinematográficas, historietíscas, de animación o de otro tipo, cuando presentan un mundo imaginario al receptor. Estos mundos tienen sus propios personajes y reglas de verosimilitud, con un grado variable de realismo, sea porque toman algunos elementos de referencia de la realidad, sea porque la contradicen o transforman.',
+    wiki: 'https://es.wikipedia.org/wiki/Ficci%C3%B3n',
+  },
+  {
+    category: 'Novela Histórica',
+    description:
+      'La novela histórica es un subgénero narrativo que se configuró en el Romanticismo del siglo xix y que ha continuado desarrollándose con bastante éxito en los siglos xx y xxi. Utilizando un argumento de ficción, como cualquier novela, tiene la característica de que este se sitúa en un momento histórico concreto y los acontecimientos históricos reales suelen tener cierta relevancia en el desarrollo del argumento.',
+    wiki: 'https://es.wikipedia.org/wiki/Novela_hist%C3%B3rica',
+  },
   {
     category: 'Misterio',
     description:
