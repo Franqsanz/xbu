@@ -186,73 +186,100 @@ const aboutCategories: Array<AboutType> = [
     category: 'Acción',
     description:
       'En literatura, cine o comic, acción hace referencia al conjunto de sucesos o actos que, encadenados uno tras otro, conforman el argumento de una obra.',
-    wiki: 'https://www.significados.com/accion/#:~:text=En%20literatura%2C%20cine%20o%20comic,un%20modelo%20para%20ser%20pintado.',
   },
   {
     category: 'Adulto',
     description:
-      'El término adulto se refiere a un organismo, especialmente un ser humano, que ya ha dejado la infancia y adolescencia.',
-    wiki: 'https://es.wiktionary.org/wiki/adulto#:~:text=El%20t%C3%A9rmino%20adulto%20se%20refiere,los%2060%20a%C3%B1os%20de%20edad.',
+      'Los libros para adultos suelen centrarse en las experiencias de vida adulta, como el trabajo, las relaciones románticas, la familia, las responsabilidades y otros aspectos de la vida que son más relevantes para adultos.',
   },
   {
     category: 'Arquitectura',
     description:
       'La arquitectura (del latín architectūra, architectūrae, y este a su vez del griego antiguo ἀρχιτέκτων, architéctōn, ‘arquitecto’ o ‘constructor jefe’, compuesto de ἀρχός, archós ‘jefe’, ‘guía’, y τέκτων, téctōn, ‘constructor’) es el arte y la técnica de proyectar, diseñar y construir, modificando el hábitat humano, estudiando la estética, el buen uso y la función de los espacios, ya sean arquitectónicos, urbanos o de paisaje.',
-    wiki: 'https://es.wikipedia.org/wiki/Arquitectura',
   },
   {
     category: 'Aventura',
     description:
       'La novela de aventuras es un género narrativo literario que narra los viajes, el misterio y el riesgo donde un personaje principal se enfrenta a un desafío a lo largo del viaje.',
-    wiki: 'https://es.wikipedia.org/wiki/Novela_de_aventuras',
   },
   {
     category: 'Bebidas',
     description:
-      'Es cualquier líquido que se ingiere. La bebida más consumida es el agua. Otros ejemplos son las bebidas alcohólicas, bebidas gaseosas, infusiones o zumos.',
-    wiki: 'https://es.wikipedia.org/wiki/Bebida',
+      'Es una exploración completa del fascinante mundo de las bebidas. Desde cócteles creativos hasta las complejidades de los vinos y la rica historia del café, abarca todas las facetas de las bebidas que han deleitado a la humanidad a lo largo de los siglos',
   },
   {
     category: 'Ciencia',
     description:
       'La ciencia (del latín scientĭa, "conocimiento") es un conjunto de conocimientos sistemáticos comprobables que estudian, explican y predicen los fenómenos sociales, artificiales y naturales. El conocimiento científico se obtiene de manera metodológica mediante observación y experimentación en campos de estudio específicos. Dicho conocimiento se organiza y se clasifica sobre la base de principios explicativos, ya sean de forma teórica o práctica. A partir del razonamiento lógico y el análisis objetivo de la evidencia científica se formulan preguntas de investigación e hipótesis, se deducen principios y leyes, y se construyen modelos, teorías y sistemas de conocimientos por medio del método científico.',
-    wiki: 'https://es.wikipedia.org/wiki/Ciencia',
+  },
+  {
+    category: 'Crimen',
+    description:
+      'Los libros de crimen no solo ofrecen emoción y suspense, sino que también exploran temas más profundos como la moralidad, la justicia y la naturaleza humana. Desde los clásicos del género hasta las nuevas voces que reinventan las convenciones, este género literario te invita a resolver enigmas, enfrentarte al lado oscuro de la sociedad y experimentar la adrenalina de la caza de criminales.',
+  },
+  {
+    category: 'Cómics',
+    description:
+      'Género literario narrativo que, con precedente en la Antigüedad grecolatina, se desarrolla a partir de la Edad Moderna.',
   },
   {
     category: 'Ciencia Ficción',
     description:
       'Es la denominación de uno de los géneros derivados de la literatura de ficción, junto con la literatura fantástica y la narrativa de terror. Algunos autores estiman que el término es una mala traducción del inglés science fiction y que la correcta es ficción científica. Nacida como género en la década de 1920 (aunque hay obras reconocibles muy anteriores) y exportada posteriormente a otros medios, como el cinematográfico, historietístico y televisivo, tiene un gran auge desde la segunda mitad del siglo xx debido al interés popular acerca del futuro que despertó el espectacular avance tanto científico como tecnológico alcanzado durante todos estos años.',
-    wiki: 'https://es.wikipedia.org/wiki/Ciencia_ficci%C3%B3n',
   },
   {
     category: 'Ciencias Naturales',
     description:
       'Las ciencias naturales, ciencias de la naturaleza, ciencias físico-naturales o ciencias experimentales (históricamente denominadas filosofía natural o historia natural) son aquellas ciencias que tienen por objeto el estudio de la naturaleza, siguiendo la modalidad del método científico conocida como método empírico-analítico.',
-    wiki: 'https://es.wikipedia.org/wiki/Ciencias_naturales',
   },
   {
     category: 'Clásicos',
     description:
       'La literatura clásica hoy en día se considera aquella escrita en griego antiguo o en latín y que forma parte del canon occidental. No debe confundirse con los clásicos nacionales, aquellas obras consideradas modélicas para cada país, ni con aquellos libros que sobreviven al paso del tiempo o que se escribieron en el periodo del Neoclasicismo. El concepto engloba, por tanto la literatura griega y la literatura latina, excluyendo las obras de la Grecia moderna.',
-    wiki: 'https://es.wikipedia.org/wiki/Literatura_cl%C3%A1sica',
+  },
+  {
+    category: 'Drama',
+    description: '',
+  },
+  {
+    category: 'Desarrollo De Software',
+    description: '',
+  },
+  {
+    category: 'Distópico',
+    description: '',
   },
   {
     category: 'Ficción',
     description:
       'Se denomina ficción a la simulación de la realidad que realizan las obras como literarias, cinematográficas, historietíscas, de animación o de otro tipo, cuando presentan un mundo imaginario al receptor. Estos mundos tienen sus propios personajes y reglas de verosimilitud, con un grado variable de realismo, sea porque toman algunos elementos de referencia de la realidad, sea porque la contradicen o transforman.',
-    wiki: 'https://es.wikipedia.org/wiki/Ficci%C3%B3n',
+  },
+  {
+    category: 'Fantasía',
+    description:
+      'Se conoce como literatura fantástica a cualquier relato en que participan fenómenos sobrenaturales y extraordinarios, como la magia o la intervención de criaturas inexistentes. Esta definición resulta ineficaz, debido a que los elementos sobrenaturales están presentes en todos los relatos mitológicos y religiosos y su presencia tiene un carácter muy distinto del que posee en la civilización actual.',
+  },
+  {
+    category: 'Historia',
+    description: '',
+  },
+  {
+    category: 'Histórico',
+    description: '',
+  },
+  {
+    category: 'Horror',
+    description: '',
   },
   {
     category: 'Novela Histórica',
     description:
       'La novela histórica es un subgénero narrativo que se configuró en el Romanticismo del siglo xix y que ha continuado desarrollándose con bastante éxito en los siglos xx y xxi. Utilizando un argumento de ficción, como cualquier novela, tiene la característica de que este se sitúa en un momento histórico concreto y los acontecimientos históricos reales suelen tener cierta relevancia en el desarrollo del argumento.',
-    wiki: 'https://es.wikipedia.org/wiki/Novela_hist%C3%B3rica',
   },
   {
     category: 'Misterio',
     description:
       'El término novela de misterio a menudo es utilizado como sinónimo de novela de detective o novela de crimen, es decir, una novela o cuento en la cual un detective (profesional o aficionado) investiga y resuelve un misterio criminal. A veces los libros de misterio tratan sobre crímenes que realmente acontecieron.',
-    wiki: 'https://es.wikipedia.org/wiki/Misterio_(literatura)',
   },
 ];
 

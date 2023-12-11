@@ -31,7 +31,7 @@ export function SkeletonAllBooks({ showTags = true }: SkeletonType) {
       )}
       <Flex
         direction={{ base: 'column', md: 'row' }}
-        maxW='1900px'
+        maxW='1800px'
         m='0 auto'
         px={{ base: 5, md: 10, '2xl': 16 }}
       >

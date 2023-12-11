@@ -10,7 +10,7 @@ export function AboutCategories({ category }: any) {
 
   return (
     <>
-      {filteredAboutCategories.map(({ category, description, wiki }) => (
+      {filteredAboutCategories.map(({ category, description }) => (
         <React.Fragment key={category}>
           <Box fontSize='2xl' mt='5' fontWeight='bold'>
             Sobre {category}
@@ -18,12 +18,6 @@ export function AboutCategories({ category }: any) {
           <Text mt='2' fontSize='sm'>
             {description}
           </Text>
-          <Box display='inline' mt='4'>
-            Más Info:{' '}
-            <Link href={wiki} isExternal color='green.600'>
-              Wikipedia.
-            </Link>
-          </Box>
         </React.Fragment>
       ))}
     </>

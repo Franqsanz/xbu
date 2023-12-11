@@ -178,8 +178,7 @@ export default function Search() {
   });
 
   if (categoryCheck) {
-    const isValid =
-      categoryCheck.category && categoryCheck.description && categoryCheck.wiki;
+    const isValid = categoryCheck.category && categoryCheck.description;
 
     if (isValid) {
       aboutCategoriesUI = <AboutCategories category={param} />;
