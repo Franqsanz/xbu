@@ -239,7 +239,8 @@ const aboutCategories: Array<AboutType> = [
   },
   {
     category: 'Drama',
-    description: '',
+    description:
+      'Suele llamarse drama a aquella obra que incluye temáticas, pasajes o elementos serios o graves, especialmente cuando tiene un "final trágico".',
   },
   {
     category: 'Desarrollo De Software',
@@ -247,7 +248,8 @@ const aboutCategories: Array<AboutType> = [
   },
   {
     category: 'Distópico',
-    description: '',
+    description:
+      'Es una representación ficticia de un mundo futuro desalentador e indeseable para la humanidad, en el que es frecuente que nos encontremos a personajes valientes atrapados en sociedades oprimidas donde la mayoría de las personas viven en la clandestinidad sin ser en muchos casos conscientes de ello.',
   },
   {
     category: 'Ficción',
@@ -261,11 +263,13 @@ const aboutCategories: Array<AboutType> = [
   },
   {
     category: 'Historia',
-    description: '',
+    description:
+      'Son obras que exploran y explican los acontecimientos pasados, proporcionando a los lectores una comprensión más profunda de la evolución de la humanidad. Desde civilizaciones antiguas hasta eventos contemporáneos, estos libros ofrecen narrativas detalladas respaldadas por una investigación rigurosa.',
   },
   {
     category: 'Histórico',
-    description: '',
+    description:
+      'Aquella que, siendo una obra de ficción, recrea un periodo histórico preferentemente lejano y en la que forman parte de la acción personajes y eventos no ficticios.',
   },
   {
     category: 'Horror',
