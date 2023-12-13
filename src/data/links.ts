@@ -244,7 +244,8 @@ const aboutCategories: Array<AboutType> = [
   },
   {
     category: 'Desarrollo De Software',
-    description: '',
+    description:
+      'Estos libros proporcionan conocimientos fundamentales y avanzados para desarrolladores de software y profesionales en tecnología. Exploran desde los principios básicos de la programación hasta enfoques más avanzados en arquitectura de software, metodologías de desarrollo, y temas especializados como seguridad informática, inteligencia artificial y desarrollo web.',
   },
   {
     category: 'Distópico',
@@ -273,7 +274,21 @@ const aboutCategories: Array<AboutType> = [
   },
   {
     category: 'Horror',
+    description:
+      'La literatura de terror, muchas veces llamada literatura de horror o gótica, se caracteriza por ser un género popular que busca provocar en los lectores efectos relacionados con el miedo o, como su nombre lo indica, el terror, en grados diversos.',
+  },
+  {
+    category: 'Horror',
     description: '',
+  },
+  {
+    category: 'Horror',
+    description: '',
+  },
+  {
+    category: 'Literatura',
+    description:
+      '“Literatura” proviene del latín, y originalmente significaba “el uso de letras” o “escritura.” Pero cuando la palabra entró las lenguas romances derivadas del latín, obtuvo el significado adicional de “conocimiento obtenido al leer o estudiar libros.”',
   },
   {
     category: 'Novela Histórica',
