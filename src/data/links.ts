@@ -282,13 +282,14 @@ const aboutCategories: Array<AboutType> = [
     description: '',
   },
   {
-    category: 'Horror',
-    description: '',
-  },
-  {
     category: 'Literatura',
     description:
       '“Literatura” proviene del latín, y originalmente significaba “el uso de letras” o “escritura.” Pero cuando la palabra entró las lenguas romances derivadas del latín, obtuvo el significado adicional de “conocimiento obtenido al leer o estudiar libros.”',
+  },
+  {
+    category: 'Misterio',
+    description:
+      'El término novela de misterio a menudo es utilizado como sinónimo de novela de detective o novela de crimen, es decir, una novela o cuento en la cual un detective (profesional o aficionado) investiga y resuelve un misterio criminal. A veces los libros de misterio tratan sobre crímenes que realmente acontecieron.',
   },
   {
     category: 'Novela Histórica',
@@ -296,9 +297,19 @@ const aboutCategories: Array<AboutType> = [
       'La novela histórica es un subgénero narrativo que se configuró en el Romanticismo del siglo xix y que ha continuado desarrollándose con bastante éxito en los siglos xx y xxi. Utilizando un argumento de ficción, como cualquier novela, tiene la característica de que este se sitúa en un momento histórico concreto y los acontecimientos históricos reales suelen tener cierta relevancia en el desarrollo del argumento.',
   },
   {
-    category: 'Misterio',
+    category: 'Novela Romantica',
     description:
-      'El término novela de misterio a menudo es utilizado como sinónimo de novela de detective o novela de crimen, es decir, una novela o cuento en la cual un detective (profesional o aficionado) investiga y resuelve un misterio criminal. A veces los libros de misterio tratan sobre crímenes que realmente acontecieron.',
+      'Una novela romántica es una obra en prosa que narra una historia centrada en el amor y que tiene un final emocionalmente satisfactorio y optimista.',
+  },
+  {
+    category: 'Romance',
+    description:
+      'El romance es un tipo de poema característico de la tradición literaria española, ibérica e hispanoamericana compuesto usando la combinación métrica homónima.',
+  },
+  {
+    category: 'Thriller',
+    description:
+      'La principal característica de este género es tener una trama que haga que el espectador esté en constante suspenso, que le genere la necesidad de finalizar la historia y que mantenga la ansiedad, la emoción y la incertidumbre hasta la resolución del tema.',
   },
 ];
 
