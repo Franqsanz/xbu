@@ -253,6 +253,11 @@ const aboutCategories: Array<AboutType> = [
       'Es una representación ficticia de un mundo futuro desalentador e indeseable para la humanidad, en el que es frecuente que nos encontremos a personajes valientes atrapados en sociedades oprimidas donde la mayoría de las personas viven en la clandestinidad sin ser en muchos casos conscientes de ello.',
   },
   {
+    category: 'Economía',
+    description:
+      'La literatura económica se refiere al cuerpo de obras escritas que abordan temas relacionados con la teoría, la práctica y el análisis de la economía.Esta disciplina abarca una amplia gama de temas, desde la teoría macroeconómica y microeconómica hasta cuestiones específicas como el comercio internacional, las finanzas, el desarrollo económico y la economía del comportamiento.',
+  },
+  {
     category: 'Ficción',
     description:
       'Se denomina ficción a la simulación de la realidad que realizan las obras como literarias, cinematográficas, historietíscas, de animación o de otro tipo, cuando presentan un mundo imaginario al receptor. Estos mundos tienen sus propios personajes y reglas de verosimilitud, con un grado variable de realismo, sea porque toman algunos elementos de referencia de la realidad, sea porque la contradicen o transforman.',
@@ -278,10 +283,6 @@ const aboutCategories: Array<AboutType> = [
       'La literatura de terror, muchas veces llamada literatura de horror o gótica, se caracteriza por ser un género popular que busca provocar en los lectores efectos relacionados con el miedo o, como su nombre lo indica, el terror, en grados diversos.',
   },
   {
-    category: 'Horror',
-    description: '',
-  },
-  {
     category: 'Literatura',
     description:
       '“Literatura” proviene del latín, y originalmente significaba “el uso de letras” o “escritura.” Pero cuando la palabra entró las lenguas romances derivadas del latín, obtuvo el significado adicional de “conocimiento obtenido al leer o estudiar libros.”',
@@ -292,6 +293,11 @@ const aboutCategories: Array<AboutType> = [
       'El término novela de misterio a menudo es utilizado como sinónimo de novela de detective o novela de crimen, es decir, una novela o cuento en la cual un detective (profesional o aficionado) investiga y resuelve un misterio criminal. A veces los libros de misterio tratan sobre crímenes que realmente acontecieron.',
   },
   {
+    category: 'Novela',
+    description:
+      'La novela (del italiano novella) es una obra literaria en la que se narra una acción fingida en todo o en parte y cuyo fin es causar placer estético a los lectores con la descripción, pintura de sucesos o lances interesantes así como de personajes, pasiones y costumbres.',
+  },
+  {
     category: 'Novela Histórica',
     description:
       'La novela histórica es un subgénero narrativo que se configuró en el Romanticismo del siglo xix y que ha continuado desarrollándose con bastante éxito en los siglos xx y xxi. Utilizando un argumento de ficción, como cualquier novela, tiene la característica de que este se sitúa en un momento histórico concreto y los acontecimientos históricos reales suelen tener cierta relevancia en el desarrollo del argumento.',
@@ -300,6 +306,16 @@ const aboutCategories: Array<AboutType> = [
     category: 'Novela Romantica',
     description:
       'Una novela romántica es una obra en prosa que narra una historia centrada en el amor y que tiene un final emocionalmente satisfactorio y optimista.',
+  },
+  {
+    category: 'Novela Policiaca',
+    description:
+      'La novela policiaca se caracteriza por contar historias sobre crímenes y delitos, protagonizados generalmente por el detective o el policía encargado de resolverlos.',
+  },
+  {
+    category: 'No Ficción',
+    description:
+      'La no ficción es un género literario caracterizado por el empleo de la exposición, descripción, narración o argumentación de un contenido verídico o basado en hechos reales. Trata de ser fiel a la realidad con el objetivo de divulgar, informar o educar sobre un tema concreto.',
   },
   {
     category: 'Romance',
