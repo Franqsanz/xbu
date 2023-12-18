@@ -318,6 +318,21 @@ const aboutCategories: Array<AboutType> = [
       'La no ficción es un género literario caracterizado por el empleo de la exposición, descripción, narración o argumentación de un contenido verídico o basado en hechos reales. Trata de ser fiel a la realidad con el objetivo de divulgar, informar o educar sobre un tema concreto.',
   },
   {
+    category: 'Poesía',
+    description:
+      'La poesía es un género literario considerado como una manifestación de la belleza o del sentimiento estético por medio de la palabra, en verso o en prosa.​',
+  },
+  {
+    category: 'Postapocalíptica',
+    description:
+      'Aunque el término «post-apocalíptico» es relativamente moderno, la idea de historias ambientadas después de una gran catástrofe tiene raíces antiguas. Pueden encontrarse ejemplos en textos religiosos y mitológicos, como el Génesis bíblico o el mito del diluvio universal.',
+  },
+  {
+    category: 'Psicológica',
+    description:
+      'La novela psicológica o novela de análisis psicológico, también conocida como realismo psicológico es una obra de ficción en prosa que enfatiza la caracterización interior de sus personajes, sus motivos, circunstancias y acciones internas que nacen y se desarrollan a partir de las acciones externas. La novela psicológica "pospone la narración a la descripción de los estados de ánimo, pasiones y conflictos psicológicos".',
+  },
+  {
     category: 'Romance',
     description:
       'El romance es un tipo de poema característico de la tradición literaria española, ibérica e hispanoamericana compuesto usando la combinación métrica homónima.',
