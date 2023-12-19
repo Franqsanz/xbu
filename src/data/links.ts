@@ -268,6 +268,11 @@ const aboutCategories: Array<AboutType> = [
       'Se conoce como literatura fantástica a cualquier relato en que participan fenómenos sobrenaturales y extraordinarios, como la magia o la intervención de criaturas inexistentes. Esta definición resulta ineficaz, debido a que los elementos sobrenaturales están presentes en todos los relatos mitológicos y religiosos y su presencia tiene un carácter muy distinto del que posee en la civilización actual.',
   },
   {
+    category: 'Filosofía',
+    description:
+      'Esta forma particular de literatura busca no solo presentar argumentos lógicos y razonamientos críticos, sino también invitar a la reflexión profunda sobre la naturaleza de la realidad y la existencia. A lo largo de las épocas, la literatura filosófica ha adoptado diversas formas y estilos, desde los diálogos socráticos de Platón hasta las reflexiones densas y abstractas de Immanuel Kant o Friedrich Nietzsche.',
+  },
+  {
     category: 'Historia',
     description:
       'Son obras que exploran y explican los acontecimientos pasados, proporcionando a los lectores una comprensión más profunda de la evolución de la humanidad. Desde civilizaciones antiguas hasta eventos contemporáneos, estos libros ofrecen narrativas detalladas respaldadas por una investigación rigurosa.',
@@ -316,6 +321,16 @@ const aboutCategories: Array<AboutType> = [
     category: 'No Ficción',
     description:
       'La no ficción es un género literario caracterizado por el empleo de la exposición, descripción, narración o argumentación de un contenido verídico o basado en hechos reales. Trata de ser fiel a la realidad con el objetivo de divulgar, informar o educar sobre un tema concreto.',
+  },
+  {
+    category: 'Política',
+    description:
+      'La literatura política no se limita a un enfoque ideológico único; más bien, refleja una amplia gama de perspectivas, desde las visiones liberales y conservadoras hasta las teorías socialistas, feministas, anarquistas y muchas otras.',
+  },
+  {
+    category: 'Prehistoria',
+    description:
+      'La literatura sobre la prehistoria aborda temas que van desde la evolución humana y la aparición de las primeras herramientas hasta el surgimiento de las civilizaciones y las sociedades complejas. Los escritos en este campo pueden abarcar desde enfoques académicos especializados hasta divulgación accesible para el público general.',
   },
   {
     category: 'Poesía',
