@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Flex, Image } from '@chakra-ui/react';
+import { Box, Flex, Image, useColorModeValue } from '@chakra-ui/react';
 
 import { MySimpleGrid } from '../../components/MySimpleGrid';
 import { Card } from '../../components/cards/Card';
@@ -14,6 +14,7 @@ export default function Profile() {
   const { userId } = useParams();
   const { data } = useProfile(userId);
   const { currentUser } = useAuth();
+  const bgCover = useColorModeValue('gray.100', 'gray.700');
 
   return (
     <>
@@ -21,10 +22,19 @@ export default function Profile() {
         title={`${currentUser?.displayName as string} | XBuniverse`}
         urlImage={currentUser?.photoURL as string}
       />
-      <Flex justify='center' align='center' direction='column' h='300px'>
+      <Flex
+        justify='center'
+        align='center'
+        direction='column'
+        h='300px'
+        bg={bgCover}
+      >
         <Image src={currentUser?.photoURL as string} borderRadius='10' />
         <Box as='h1' fontSize='3xl' mt='3' textAlign='center'>
           {currentUser?.displayName}
+        </Box>
+        <Box as='span' fontSize='sm' textAlign='center'>
+          {currentUser?.email}
         </Box>
       </Flex>
       <Flex

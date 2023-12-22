@@ -4,7 +4,7 @@ import { Button, useColorModeValue } from '@chakra-ui/react';
 import { GrGoogle } from 'react-icons/gr';
 import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 
-import { logIn, logOut } from './config';
+import { logIn } from './config';
 
 const provider = new GoogleAuthProvider();
 
@@ -63,8 +63,12 @@ function SignIn() {
 //   }
 // }
 
-function handleSignOut() {
-  logOut();
+async function logOut() {
+  try {
+    await signOut(logIn);
+  } catch (error) {
+    console.error('Error al cerrar sesión:', error);
+  }
 }
 
-export { SignIn, handleSignOut };
+export { SignIn, logOut };

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { BsSun } from 'react-icons/bs';
 import { RiMoonLine } from 'react-icons/ri';
 import {
@@ -12,26 +12,16 @@ import {
   useColorMode,
   useColorModeValue,
   useDisclosure,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuGroup,
-  MenuDivider,
-  Image,
 } from '@chakra-ui/react';
-import { FaRegUserCircle } from 'react-icons/fa';
-import { FaPowerOff } from 'react-icons/fa6';
 
 import { navLink, accountLinks } from '../../data/links';
+import { MenuProfile } from '../../components/nav/menu/MenuProfile';
 import { InputSearch } from '../forms/filters/InputSearch';
 import { ModalFilter } from '../forms/filters/ModalFilter';
 import { useAuth } from '../../store/AuthContext';
-import { handleSignOut } from '../../services/firebase/auth';
 
 export function DesktopNav() {
   const { currentUser } = useAuth();
-  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
@@ -39,56 +29,11 @@ export function DesktopNav() {
 
   if (currentUser) {
     profileMenu = (
-      <Menu isLazy>
-        <Button background='none' p='0' _hover={{ background: 'none' }} ml='2'>
-          <MenuButton
-            as={Box}
-            borderRadius='full'
-            _hover={{ border: '2px solid white' }}
-          >
-            <Image
-              src={currentUser?.photoURL as string}
-              w='35px'
-              h='35px'
-              borderRadius='full'
-            />
-          </MenuButton>
-        </Button>
-        <MenuList>
-          <MenuGroup
-            title={currentUser?.displayName as string}
-            fontSize='md'
-            textAlign='center'
-          >
-            <MenuItem
-              as={NavLink}
-              to={`/profile/${currentUser?.uid}`}
-              icon={<FaRegUserCircle size='17' />}
-              _hover={{ textDecoration: 'none' }}
-            >
-              Perfil
-            </MenuItem>
-          </MenuGroup>
-          <MenuDivider />
-          <MenuGroup>
-            <MenuItem
-              as={Button}
-              fontSize='md'
-              m='0'
-              fontWeight='normal'
-              borderRadius='0'
-              justifyContent='left'
-              icon={<FaPowerOff size='15px' />}
-              onClick={() => {
-                handleSignOut();
-                navigate('/');
-              }}
-            >
-              Cerrar Sessión
-            </MenuItem>
-          </MenuGroup>
-        </MenuList>
-      </Menu>
+      <MenuProfile
+        displayName={currentUser.displayName}
+        photoURL={currentUser.photoURL}
+        uid={currentUser.uid}
+      />
     );
   }
 
@@ -178,10 +123,11 @@ export function DesktopNav() {
                   </Link>
                 ))
               )} */}
+              {profileMenu}
               <Button
                 onClick={toggleColorMode}
                 bg='none'
-                ml='1'
+                ml='3'
                 _active={{ bg: 'none', outline: '2px solid #4299E1' }}
                 _hover={{ color: 'green.500' }}
               >
@@ -191,7 +137,6 @@ export function DesktopNav() {
                   <RiMoonLine size='20' />
                 )}
               </Button>
-              {profileMenu}
             </List>
           </Box>
         </Flex>
