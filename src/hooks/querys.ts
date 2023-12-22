@@ -16,6 +16,7 @@ import {
   getMoreBooks,
   getRelatedBooks,
   getMoreBooksAuthors,
+  getUserAndBooks,
   postBook,
 } from '../services/api';
 import { keys } from '../utils/utils';
@@ -144,6 +145,14 @@ function useBook(pathUrl: string | undefined) {
   });
 }
 
+function useProfile(id: string | undefined) {
+  return useSuspenseQuery({
+    queryKey: ['profile', id],
+    queryFn: () => getUserAndBooks(id),
+    gcTime: 3000,
+  });
+}
+
 export {
   useMutatePost,
   useAllFilterOptions,
@@ -155,4 +164,5 @@ export {
   useMoreBooks,
   useRelatedBooks,
   useMoreBooksAuthors,
+  useProfile,
 };

@@ -1,109 +1,72 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Container, Flex } from '@chakra-ui/react';
+import { Box, Flex, Image } from '@chakra-ui/react';
+
+import { MySimpleGrid } from '../../components/MySimpleGrid';
+import { Card } from '../../components/cards/Card';
+import { Aside } from '../../components/Aside';
+import { MainHead } from '../../components/Head';
+import ResultLength from '../../components/ResultLength';
+import { useAuth } from '../../store/AuthContext';
+import { useProfile } from '../../hooks/querys';
 
 export default function Profile() {
-  const { user } = useParams();
+  const { userId } = useParams();
+  const { data } = useProfile(userId);
+  const { currentUser } = useAuth();
 
   return (
     <>
-      <Flex justify='center' align='center' h='300px' border='1px'>
-        <Box as='h1' fontSize='3xl' textAlign='center'>
-          {user}
+      <MainHead
+        title={`${currentUser?.displayName as string} | XBuniverse`}
+        urlImage={currentUser?.photoURL as string}
+      />
+      <Flex justify='center' align='center' direction='column' h='300px'>
+        <Image src={currentUser?.photoURL as string} borderRadius='10' />
+        <Box as='h1' fontSize='3xl' mt='3' textAlign='center'>
+          {currentUser?.displayName}
         </Box>
       </Flex>
-      <Flex gap='3' p='7' justify='center'>
-        <Flex
-          flex='1'
-          bg='gray.50'
-          justify='center'
-          rounded='lg'
-          boxShadow='xl'
-          border='1px'
-        >
-          <Box p='5' textAlign='center'>
-            Opciones
-          </Box>
-        </Flex>
-        <Flex flex='3' gap='5' justify='end' flexWrap='wrap'>
-          <Box
-            boxShadow='xl'
-            rounded='lg'
-            w='270px'
-            h='270px'
-            border='1px'
-          ></Box>
-          <Box
-            boxShadow='xl'
-            rounded='lg'
-            w='270px'
-            h='270px'
-            border='1px'
-          ></Box>
-          <Box
-            boxShadow='xl'
-            rounded='lg'
-            w='270px'
-            h='270px'
-            border='1px'
-          ></Box>
-          <Box
-            boxShadow='xl'
-            rounded='lg'
-            w='270px'
-            h='270px'
-            border='1px'
-          ></Box>
-          <Box
-            boxShadow='xl'
-            rounded='lg'
-            w='270px'
-            h='270px'
-            border='1px'
-          ></Box>
-          <Box
-            boxShadow='xl'
-            rounded='lg'
-            w='270px'
-            h='270px'
-            border='1px'
-          ></Box>
-          <Box
-            boxShadow='xl'
-            rounded='lg'
-            w='270px'
-            h='270px'
-            border='1px'
-          ></Box>
-          <Box
-            boxShadow='xl'
-            rounded='lg'
-            w='270px'
-            h='270px'
-            border='1px'
-          ></Box>
-          <Box
-            boxShadow='xl'
-            rounded='lg'
-            w='270px'
-            h='270px'
-            border='1px'
-          ></Box>
-          <Box
-            boxShadow='xl'
-            rounded='lg'
-            w='270px'
-            h='270px'
-            border='1px'
-          ></Box>
-          <Box
-            boxShadow='xl'
-            rounded='lg'
-            w='270px'
-            h='270px'
-            border='1px'
-          ></Box>
-        </Flex>
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        maxW='1700px'
+        m='0 auto'
+        px={{ base: 5, md: 10, '2xl': 16 }}
+      >
+        <Aside>
+          <ResultLength data={data.books} />
+          {/* {aboutCategoriesUI}
+          {asideFilter}  */}
+        </Aside>
+        <MySimpleGrid>
+          {data.books.map(
+            ({
+              id,
+              category,
+              language,
+              title,
+              authors,
+              synopsis,
+              sourceLink,
+              pathUrl,
+              image,
+            }) => (
+              <React.Fragment key={id}>
+                <Card
+                  id={id}
+                  category={category}
+                  language={language}
+                  title={title}
+                  authors={authors}
+                  synopsis={synopsis}
+                  sourceLink={sourceLink}
+                  pathUrl={pathUrl}
+                  image={image}
+                />
+              </React.Fragment>
+            ),
+          )}
+        </MySimpleGrid>
       </Flex>
     </>
   );

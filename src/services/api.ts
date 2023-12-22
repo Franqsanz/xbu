@@ -68,10 +68,18 @@ async function getAllFilterOptions() {
   return data;
 }
 
-async function deleteBook(id: any) {
+async function deleteBook(id: string | undefined) {
   const data = await fetchData(`${API_URL}/book/delete/${id}`, {
     method: 'DELETE',
   });
+
+  return data;
+}
+
+// Usuarios
+
+async function getUserAndBooks(id: string | undefined) {
+  const data = await fetchData(`${API_URL}/my-books/${id}`);
 
   return data;
 }
@@ -88,4 +96,5 @@ export {
   getMoreBooksAuthors,
   postBook,
   deleteBook,
+  getUserAndBooks,
 };
