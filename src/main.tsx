@@ -9,6 +9,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 import theme from '../theme';
 import routes from './routes';
+import { AuthProvider } from './store/AuthContext';
 
 const queryClient = new QueryClient();
 
@@ -33,7 +34,9 @@ const html = (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <RouterProvider router={routes} />
+        <AuthProvider>
+          <RouterProvider router={routes} />
+        </AuthProvider>
       </ChakraProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>
