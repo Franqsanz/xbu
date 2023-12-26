@@ -202,7 +202,7 @@ export default function Search() {
         align='stretch'
         borderY={`1px solid ${grayColor}`}
       >
-        <ResultLength data={data} />
+        <ResultLength data={data.length} />
         {buttonFilter}
       </Flex>
       <FilterDrawer
@@ -222,7 +222,7 @@ export default function Search() {
         px={{ base: 5, md: 10, '2xl': 16 }}
       >
         <Aside>
-          <ResultLength data={data} />
+          <ResultLength data={data.length} />
           {aboutCategoriesUI}
           {asideFilter}
         </Aside>

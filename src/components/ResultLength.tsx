@@ -18,7 +18,7 @@ export default function ResultLength({ data }: any) {
         >
           Libros
         </Box>
-        {data.length} Resultados
+        {data} Resultados
       </Flex>
     </Box>
   );

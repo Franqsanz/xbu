@@ -29,7 +29,11 @@ export default function Profile() {
         h='300px'
         bg={bgCover}
       >
-        <Image src={currentUser?.photoURL as string} borderRadius='10' />
+        <Image
+          src={currentUser?.photoURL as string}
+          alt={`Imagen de perfil de ${currentUser?.displayName}`}
+          borderRadius='10'
+        />
         <Box as='h1' fontSize='3xl' mt='3' textAlign='center'>
           {currentUser?.displayName}
         </Box>
@@ -44,7 +48,7 @@ export default function Profile() {
         px={{ base: 5, md: 10, '2xl': 16 }}
       >
         <Aside>
-          <ResultLength data={data.books} />
+          <ResultLength data={data.books.length} />
           {/* {aboutCategoriesUI}
           {asideFilter}  */}
         </Aside>

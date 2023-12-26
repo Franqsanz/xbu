@@ -16,6 +16,7 @@ import { MySimpleGrid } from './MySimpleGrid';
 import { Card } from './cards/Card';
 import { Aside } from './Aside';
 import { SkeletonAllBooks } from './skeletons/SkeletonABooks';
+import ResultLength from './ResultLength';
 
 export function AllBooks() {
   const { ref, inView } = useInView();
@@ -62,6 +63,8 @@ export function AllBooks() {
     );
   }
 
+  // console.log(data.pages[0].info.totalBooks);
+
   return (
     <>
       <Flex
@@ -71,12 +74,10 @@ export function AllBooks() {
         px={{ base: 5, md: 10, '2xl': 16 }}
       >
         <Aside>
-          <Box mt={{ base: '7', md: '97px' }}>
+          <ResultLength data={data.pages[0].info.totalBooks} />
+          <Box mt='5'>
             <Flex textAlign={{ base: 'center', lg: 'left' }} direction='column'>
-              <Box as='span' fontSize='2xl' fontWeight='bold'>
-                Catálogo de Libros
-              </Box>
-              <Text mt='2'>
+              <Text>
                 Explora todos los libros publicados y encuentra tu próxima
                 lectura favorita.
               </Text>
