@@ -12,15 +12,9 @@ import {
   MenuDivider,
   Image,
 } from '@chakra-ui/react';
-import { FaRegUserCircle } from 'react-icons/fa';
-import { FaPowerOff } from 'react-icons/fa6';
-import { logOut } from '../../../services/firebase/auth';
 
-interface MenuType {
-  displayName: string | null;
-  photoURL: string | null;
-  uid: string;
-}
+import { logOut } from '../../../services/firebase/auth';
+import { MenuType } from '../../../components/types';
 
 export function MenuProfile({ displayName, photoURL, uid }: MenuType) {
   const navigate = useNavigate();
@@ -28,7 +22,13 @@ export function MenuProfile({ displayName, photoURL, uid }: MenuType) {
 
   return (
     <Menu isLazy>
-      <Button background='none' p='0' _hover={{ background: 'none' }} ml='4'>
+      <Button
+        background='none'
+        p='0'
+        _hover={{ background: 'none' }}
+        ml={{ base: '2px', md: 4 }}
+        mr={{ base: 2, md: 0 }}
+      >
         <MenuButton
           as={Box}
           borderRadius='full'
@@ -36,25 +36,32 @@ export function MenuProfile({ displayName, photoURL, uid }: MenuType) {
         >
           <Image
             src={photoURL as string}
-            w='35px'
-            h='35px'
+            w={{ base: '25px', md: '35px' }}
+            h={{ base: '25px', md: '35px' }}
             borderRadius='full'
           />
         </MenuButton>
       </Button>
-      <MenuList>
+      <MenuList w='250px'>
         <MenuGroup
           title={displayName as string}
           fontSize='md'
           textAlign='center'
         >
+          <MenuDivider />
           <MenuItem
             as={NavLink}
             to={`/profile/${uid}`}
-            icon={<FaRegUserCircle size='15px' />}
             _hover={{ textDecoration: 'none' }}
           >
             Perfil
+          </MenuItem>
+          <MenuItem
+            as={NavLink}
+            to='/new-post'
+            _hover={{ textDecoration: 'none' }}
+          >
+            Crear Publicación
           </MenuItem>
         </MenuGroup>
         <MenuDivider />
@@ -66,7 +73,6 @@ export function MenuProfile({ displayName, photoURL, uid }: MenuType) {
             fontWeight='normal'
             borderRadius='0'
             justifyContent='left'
-            icon={<FaPowerOff size='15px' />}
             onClick={() => {
               logOut();
               navigate('/', { replace: true });

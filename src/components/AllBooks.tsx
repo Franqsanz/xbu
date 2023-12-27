@@ -63,8 +63,6 @@ export function AllBooks() {
     );
   }
 
-  // console.log(data.pages[0].info.totalBooks);
-
   return (
     <>
       <Flex

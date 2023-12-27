@@ -21,13 +21,17 @@ import {
   DrawerCloseButton,
   DrawerBody,
   useOutsideClick,
+  DrawerFooter,
 } from '@chakra-ui/react';
 
 import { navLink, accountLinks } from '../../data/links';
 import { InputSearch } from '../forms/filters/InputSearch';
 import { ModalFilter } from '../forms/filters/ModalFilter';
+import { MenuProfile } from '../../components/nav/menu/MenuProfile';
+import { useAuth } from '../../store/AuthContext';
 
 export function MobileNav() {
+  const { currentUser } = useAuth();
   const containerRef = useRef<HTMLDivElement>(null);
   const { colorMode, toggleColorMode } = useColorMode();
   const {
@@ -48,6 +52,7 @@ export function MobileNav() {
   const bgDrawer = useColorModeValue('#ffffffe0', '#121212e4');
   // const bgDrawerSearch = useColorModeValue('#ffffff', '#000000e3');
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
+  let profileMenu;
 
   useOutsideClick({
     ref: containerRef,
@@ -55,6 +60,16 @@ export function MobileNav() {
       onCloseSearch();
     },
   });
+
+  if (currentUser) {
+    profileMenu = (
+      <MenuProfile
+        displayName={currentUser.displayName}
+        photoURL={currentUser.photoURL}
+        uid={currentUser.uid}
+      />
+    );
+  }
 
   return (
     <>
@@ -78,7 +93,6 @@ export function MobileNav() {
               onClick={onOpenMenu}
               aria-label='Open Menu'
               bg='none'
-              ml='2'
               _hover={{ bg: 'none', color: 'green.500' }}
               _active={{ bg: 'none' }}
             >
@@ -113,7 +127,6 @@ export function MobileNav() {
             <Button
               onClick={toggleColorMode}
               bg='none'
-              mr='2'
               _active={{ bg: 'none' }}
               _hover={{ color: 'green.500' }}
             >
@@ -123,6 +136,7 @@ export function MobileNav() {
                 <RiMoonLine size='18' />
               )}
             </Button>
+            {profileMenu}
           </Flex>
         </Flex>
         <Drawer placement='top' isOpen={isOpenSearch} onClose={onCloseSearch}>
@@ -180,13 +194,18 @@ export function MobileNav() {
                 ))}
               </List>
             </DrawerBody>
-            {/* <DrawerFooter justifyContent='flex-start' borderTopWidth='1px'>
+            <DrawerFooter
+              justifyContent='flex-start'
+              flexDirection='column'
+              borderTopWidth='1px'
+            >
               <List w='full'>
-                {accountLinks.map(({ name, href }) => (
+                {accountLinks.map(({ icon, name, href }) => (
                   <ListItem key={name} my='2'>
                     <Link
-                      display='block'
-                      onClick={onToggle}
+                      display='flex'
+                      alignItems='center'
+                      onClick={onCloseMenu}
                       as={NavLink}
                       to={href as string}
                       p='3'
@@ -198,12 +217,16 @@ export function MobileNav() {
                         color: 'green.500',
                       }}
                     >
+                      <Icon as={icon} boxSize='5' mr='5' />
                       {name}
                     </Link>
                   </ListItem>
                 ))}
               </List>
-            </DrawerFooter> */}
+              <Box fontSize='xs' my='1'>
+                XBuniverse 2023
+              </Box>
+            </DrawerFooter>
           </DrawerContent>
         </Drawer>
       </Flex>

@@ -35,6 +35,22 @@ export function DesktopNav() {
         uid={currentUser.uid}
       />
     );
+  } else {
+    profileMenu = accountLinks.map(({ name, href }) => (
+      <Link
+        key={name}
+        as={NavLink}
+        to={href as string}
+        border='1px'
+        borderColor='green.500'
+        p='7px'
+        rounded='md'
+        ml='3'
+        _hover={{ bg: 'green.600', outline: 'none' }}
+      >
+        {name}
+      </Link>
+    ));
   }
 
   return (
@@ -92,37 +108,6 @@ export function DesktopNav() {
             <List display='flex' alignItems='center'>
               <InputSearch width='300px' top='47px' onOpen={onOpen} />
               <ModalFilter isOpen={isOpen} onClose={onClose} />
-              {/* {user ? (
-                <Link
-                  as={NavLink}
-                  to='/profile'
-                  ml='7'
-                  fontWeight='medium'
-                  _activeLink={{
-                    borderBottom: '2px',
-                    borderColor: 'green.500',
-                  }}
-                  _hover={{ color: 'green.500' }}
-                >
-                  Perfil
-                </Link>
-              ) : (
-                accountLinks.map(({ name, href }) => (
-                  <Link
-                    key={name}
-                    as={NavLink}
-                    to={href as string}
-                    border='1px'
-                    borderColor='green.500'
-                    p='2'
-                    rounded='lg'
-                    mx='2'
-                    _hover={{ bg: 'green.600', outline: 'none' }}
-                  >
-                    {name}
-                  </Link>
-                ))
-              )} */}
               {profileMenu}
               <Button
                 onClick={toggleColorMode}

@@ -1,18 +1,17 @@
 import { GrHome } from 'react-icons/gr';
 import { MdOutlineExplore } from 'react-icons/md';
-import { AiOutlineCloudUpload } from 'react-icons/ai';
+import { RiAccountCircleLine } from 'react-icons/ri';
 
 import { AboutType, LinkType, SelectBooksType } from '../components/types';
 
 const navLink: Array<LinkType> = [
   { name: 'Inicio', href: '/', icon: GrHome },
   { name: 'Explorar', href: 'explore', icon: MdOutlineExplore },
-  { name: 'Publicar', href: 'new-post', icon: AiOutlineCloudUpload },
 ];
 
 const accountLinks: Array<LinkType> = [
-  { name: 'Ingresar', href: 'login' },
-  { name: 'Crear cuenta', href: 'register' },
+  // { name: 'Ingresar', href: 'login' },
+  { name: 'Crear cuenta', href: 'register', icon: RiAccountCircleLine },
 ];
 
 const languages: Array<SelectBooksType> = [

@@ -150,6 +150,12 @@ interface AboutType {
   description: string;
 }
 
+interface MenuType {
+  displayName: string | null;
+  photoURL: string | null;
+  uid: string;
+}
+
 export type {
   AboutType,
   LinkType,
@@ -171,4 +177,5 @@ export type {
   MyLinkType,
   CatchErrorType,
   SkeletonType,
+  MenuType,
 };
