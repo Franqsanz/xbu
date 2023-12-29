@@ -61,4 +61,25 @@ function isSpanish(language) {
   return spanishLanguage.includes(lowerCaseLanguage);
 }
 
-export { keys, handleImageLoad, useHandleEnterKey, generatePathUrl, isSpanish };
+function parseDate(fechaISO: string) {
+  const fecha = new Date(fechaISO);
+
+  const opciones: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+
+  const formatoFecha = new Intl.DateTimeFormat('es-ES', opciones);
+
+  return formatoFecha.format(fecha);
+}
+
+export {
+  keys,
+  handleImageLoad,
+  useHandleEnterKey,
+  generatePathUrl,
+  isSpanish,
+  parseDate,
+};

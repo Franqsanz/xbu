@@ -53,6 +53,7 @@ export function MobileNav() {
   // const bgDrawerSearch = useColorModeValue('#ffffff', '#000000e3');
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
   let profileMenu;
+  let linkRegister;
 
   useOutsideClick({
     ref: containerRef,
@@ -68,6 +69,35 @@ export function MobileNav() {
         photoURL={currentUser.photoURL}
         uid={currentUser.uid}
       />
+    );
+
+    linkRegister = null;
+  } else {
+    linkRegister = (
+      <List w='full'>
+        {accountLinks.map(({ icon, name, href }) => (
+          <ListItem key={name} my='2'>
+            <Link
+              display='flex'
+              alignItems='center'
+              onClick={onCloseMenu}
+              as={NavLink}
+              to={href as string}
+              p='3'
+              rounded='xl'
+              fontWeight='medium'
+              _hover={{
+                bg: 'gray.700',
+                border: 'none',
+                color: 'green.500',
+              }}
+            >
+              <Icon as={icon} boxSize='5' mr='5' />
+              {name}
+            </Link>
+          </ListItem>
+        ))}
+      </List>
     );
   }
 
@@ -199,7 +229,7 @@ export function MobileNav() {
               flexDirection='column'
               borderTopWidth='1px'
             >
-              <List w='full'>
+              {/* <List w='full'>
                 {accountLinks.map(({ icon, name, href }) => (
                   <ListItem key={name} my='2'>
                     <Link
@@ -222,7 +252,8 @@ export function MobileNav() {
                     </Link>
                   </ListItem>
                 ))}
-              </List>
+              </List> */}
+              {linkRegister}
               <Box fontSize='xs' my='1'>
                 XBuniverse 2023
               </Box>

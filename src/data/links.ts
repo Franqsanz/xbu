@@ -1,6 +1,6 @@
 import { GrHome } from 'react-icons/gr';
 import { MdOutlineExplore } from 'react-icons/md';
-import { RiAccountCircleLine } from 'react-icons/ri';
+import { RiAccountCircleLine, RiLoginCircleLine } from 'react-icons/ri';
 
 import { AboutType, LinkType, SelectBooksType } from '../components/types';
 
@@ -10,7 +10,7 @@ const navLink: Array<LinkType> = [
 ];
 
 const accountLinks: Array<LinkType> = [
-  // { name: 'Ingresar', href: 'login' },
+  { name: 'Ingresar', href: 'login', icon: RiLoginCircleLine },
   { name: 'Crear cuenta', href: 'register', icon: RiAccountCircleLine },
 ];
 

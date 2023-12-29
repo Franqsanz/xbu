@@ -9,12 +9,14 @@ import { ErrorPage } from './pages/404';
 import { Layout } from './pages/layout/Layout';
 import { SkeletonAllBooks } from './components/skeletons/SkeletonABooks';
 import { SkeletonDetailsBook } from './components/skeletons/SkeletonDBook';
+import { PrivateRoute } from './components/PrivateRoute';
 
 const PrivacyPolicies = lazy(() => import('./pages/PrivacyPolicies'));
 const Explore = lazy(() => import('./pages/Explore'));
 const Book = lazy(() => import('./pages/Book'));
 const Search = lazy(() => import('./pages/Search'));
 const NewBook = lazy(() => import('./pages/NewBook'));
+const Profile = lazy(() => import('./pages/profile/Profile'));
 
 const routes = createBrowserRouter([
   {
@@ -31,7 +33,11 @@ const routes = createBrowserRouter([
       },
       {
         path: '/new-post',
-        element: <NewBook />,
+        element: (
+          <PrivateRoute>
+            <NewBook />
+          </PrivateRoute>
+        ),
       },
       {
         path: '/privacy-policies',
@@ -78,6 +84,20 @@ const routes = createBrowserRouter([
                 ),
               },
             ],
+          },
+        ],
+      },
+      {
+        path: '/profile',
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+        children: [
+          {
+            path: ':userId',
+            element: <Profile />,
           },
         ],
       },

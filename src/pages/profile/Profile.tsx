@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Flex, Image, useColorModeValue } from '@chakra-ui/react';
 
@@ -7,20 +7,36 @@ import { Card } from '../../components/cards/Card';
 import { Aside } from '../../components/Aside';
 import { MainHead } from '../../components/Head';
 import ResultLength from '../../components/ResultLength';
-import { useAuth } from '../../store/AuthContext';
+// import { useAuth } from '../../store/AuthContext';
 import { useProfile } from '../../hooks/querys';
+import { parseDate } from '../../utils/utils';
 
 export default function Profile() {
+  // const [userToken, setUserToken] = useState<string | undefined>('');
   const { userId } = useParams();
+  // const { currentUser } = useAuth();
   const { data } = useProfile(userId);
-  const { currentUser } = useAuth();
   const bgCover = useColorModeValue('gray.100', 'gray.700');
+
+  // useEffect(() => {
+  //   function getToken() {
+  //     try {
+  //       currentUser?.getIdToken().then((token) => {
+  //         setUserToken(token);
+  //       });
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+
+  //   getToken();
+  // }, []);
 
   return (
     <>
       <MainHead
-        title={`${currentUser?.displayName as string} | XBuniverse`}
-        urlImage={currentUser?.photoURL as string}
+        title={`${data.user.name} | XBuniverse`}
+        urlImage={data.user.picture}
       />
       <Flex
         justify='center'
@@ -30,16 +46,22 @@ export default function Profile() {
         bg={bgCover}
       >
         <Image
-          src={currentUser?.photoURL as string}
-          alt={`Imagen de perfil de ${currentUser?.displayName}`}
+          src={data.user.picture}
+          alt={`Imagen de perfil de ${data.user.name}`}
           borderRadius='10'
         />
         <Box as='h1' fontSize='3xl' mt='3' textAlign='center'>
-          {currentUser?.displayName}
+          {data.user.name}
         </Box>
         <Box as='span' fontSize='sm' textAlign='center'>
-          {currentUser?.email}
+          {data.user.email}
         </Box>
+        <Flex direction='column' fontSize='sm' mt='2' textAlign='center'>
+          <Box as='span' fontSize='md' fontWeight='bold'>
+            Se unió el
+          </Box>{' '}
+          {parseDate(data.user.createdAt)}
+        </Flex>
       </Flex>
       <Flex
         direction={{ base: 'column', md: 'row' }}

@@ -88,23 +88,6 @@ export function Home() {
             >
               <Link
                 w={{ base: '250px', md: '200px' }}
-                to='/new-post'
-                as={NavLink}
-                border='1px'
-                bg={bgButton}
-                color='black'
-                borderRadius='lg'
-                p='3'
-                fontSize='xl'
-                _hover={{
-                  outline: 'none',
-                  bg: 'green.600',
-                }}
-              >
-                Publicar
-              </Link>
-              {/* <Link
-                w={{ base: '250px', md: '200px' }}
                 to='/register'
                 as={NavLink}
                 border='1px'
@@ -119,7 +102,7 @@ export function Home() {
                 }}
               >
                 Regístrate
-              </Link> */}
+              </Link>
               <Link
                 w={{ base: '250px', md: '200px' }}
                 to='/explore'

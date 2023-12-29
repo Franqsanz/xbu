@@ -1,5 +1,6 @@
 import React from 'react';
 import type { IconType } from 'react-icons';
+import { User } from 'firebase/auth';
 
 type RNode = React.ReactNode;
 
@@ -76,6 +77,7 @@ interface BookType {
     url: number[];
     public_id: string;
   };
+  userId: string | undefined;
 }
 
 interface ModalCropperType extends DisclosureType {
@@ -156,6 +158,15 @@ interface MenuType {
   uid: string;
 }
 
+interface AuthContextType {
+  currentUser: User | null;
+  loading: boolean;
+}
+
+interface AuthProviderType {
+  children: RNode;
+}
+
 export type {
   AboutType,
   LinkType,
@@ -178,4 +189,6 @@ export type {
   CatchErrorType,
   SkeletonType,
   MenuType,
+  AuthContextType,
+  AuthProviderType,
 };

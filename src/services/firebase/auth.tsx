@@ -2,9 +2,17 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, useColorModeValue } from '@chakra-ui/react';
 import { GrGoogle } from 'react-icons/gr';
-import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+  signOut,
+} from 'firebase/auth';
 
 import { logIn } from './config';
+// import { useUserRegister } from '../../hooks/querys';
+import { useAuth } from '../../store/AuthContext';
 
 const provider = new GoogleAuthProvider();
 
@@ -12,26 +20,56 @@ provider.setCustomParameters({ prompt: 'select_account ' });
 
 function SignIn() {
   const navigate = useNavigate();
+  // const { mutate } = useUserRegister(token);
 
   async function signInWithGoogle() {
     try {
       const result = await signInWithPopup(logIn, provider);
       const token = await result.user.getIdToken();
+      // await signInWithRedirect(logIn, provider);
 
-      // Enviar el token al backend
-      fetch('http://localhost:9090/api/register', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'content-type': 'application/json',
+      // Obtener el resultado de la redirección
+      // const result = await getRedirectResult(logIn);
+
+      // mutate(token);
+      const serverResponse = await fetch(
+        'http://localhost:9090/auth/register',
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'content-type': 'application/json',
+          },
         },
-      });
+      );
 
-      navigate(`/profile/${result.user.uid}`);
+      if (serverResponse.ok) {
+        // El registro en el servidor fue exitoso, navegar a la página de perfil
+        navigate(`/profile/${result.user.uid}`);
+      } else {
+        console.error('Error en el servidor:', serverResponse.statusText);
+        await DisconnectFirebaseAccount();
+      }
     } catch (error) {
-      console.error(error);
+      await DisconnectFirebaseAccount();
+      console.warn(error);
     }
   }
+
+  async function DisconnectFirebaseAccount() {
+    // const { currentUser } = useAuth();
+
+    try {
+      await logOut();
+      // await currentUser?.delete(); // Elimina la cuenta de Firebase
+    } catch (firebaseError) {
+      console.error(
+        'Error al desconectar la cuenta de Firebase:',
+        firebaseError,
+      );
+    }
+  }
+
   return (
     <>
       <Button

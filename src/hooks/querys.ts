@@ -16,8 +16,9 @@ import {
   getMoreBooks,
   getRelatedBooks,
   getMoreBooksAuthors,
-  getUserAndBooks,
   postBook,
+  postRegister,
+  getUserAndBooks,
 } from '../services/api';
 import { keys } from '../utils/utils';
 import { BookType } from '../components/types';
@@ -145,10 +146,26 @@ function useBook(pathUrl: string | undefined) {
   });
 }
 
-function useProfile(id: string | undefined) {
+// Usuarios
+
+function useUserRegister(token: string) {
+  return useMutation({
+    mutationKey: ['post-token', token],
+    mutationFn: () => postRegister(token),
+  });
+}
+
+function useProfile(
+  id: string | undefined,
+  // token: string | undefined
+) {
   return useSuspenseQuery({
     queryKey: ['profile', id],
-    queryFn: () => getUserAndBooks(id),
+    queryFn: () =>
+      getUserAndBooks(
+        id,
+        // token
+      ),
     gcTime: 3000,
   });
 }
@@ -164,5 +181,6 @@ export {
   useMoreBooks,
   useRelatedBooks,
   useMoreBooksAuthors,
+  useUserRegister,
   useProfile,
 };

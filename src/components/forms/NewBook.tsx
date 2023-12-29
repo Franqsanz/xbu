@@ -30,6 +30,7 @@ import { useMutatePost } from '../../hooks/querys';
 import { ModalCropper } from '../forms/ModalCropper';
 import { generatePathUrl } from '../../utils/utils';
 import { MyPopover } from '../MyPopover';
+import { useAuth } from '../../store/AuthContext';
 
 const Cropper = lazy(() => import('react-cropper'));
 
@@ -46,6 +47,7 @@ export function FormNewBook() {
   let alertMessage;
   let previewImgUI;
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { currentUser } = useAuth();
   const bgColorBox = useColorModeValue('white', 'gray.900');
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
@@ -68,6 +70,7 @@ export function FormNewBook() {
       url: [],
       public_id: '',
     },
+    userId: currentUser?.uid,
   });
 
   function allFieldsBook(book: BookType): boolean {
