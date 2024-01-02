@@ -5,14 +5,15 @@ import { GrGoogle } from 'react-icons/gr';
 import {
   GoogleAuthProvider,
   signInWithPopup,
-  signInWithRedirect,
-  getRedirectResult,
+  // signInWithRedirect,
+  // getRedirectResult,
   signOut,
 } from 'firebase/auth';
 
 import { logIn } from './config';
+import { API_URL } from '../../config';
 // import { useUserRegister } from '../../hooks/querys';
-import { useAuth } from '../../store/AuthContext';
+// import { useAuth } from '../../store/AuthContext';
 
 const provider = new GoogleAuthProvider();
 
@@ -32,16 +33,13 @@ function SignIn() {
       // const result = await getRedirectResult(logIn);
 
       // mutate(token);
-      const serverResponse = await fetch(
-        'http://localhost:9090/auth/register',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'content-type': 'application/json',
-          },
+      const serverResponse = await fetch(`${API_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
         },
-      );
+      });
 
       if (serverResponse.ok) {
         // El registro en el servidor fue exitoso, navegar a la página de perfil
