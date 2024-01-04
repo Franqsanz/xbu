@@ -83,7 +83,6 @@ async function postRegister(token: string) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
-      'content-type': 'application/json',
     },
   });
 
@@ -100,7 +99,6 @@ async function getUserAndBooks(
     //   method: 'GET',
     //   headers: {
     //     Authorization: `Bearer ${token}`,
-    //     'Content-Type': 'application/json',
     //   },
     // }
   );

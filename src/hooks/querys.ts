@@ -5,6 +5,7 @@ import {
   useInfiniteQuery,
   QueryClient,
 } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import {
   getAllBooks,
@@ -20,6 +21,7 @@ import {
   postRegister,
   getUserAndBooks,
 } from '../services/api';
+import { logOut } from '../services/firebase/auth';
 import { keys } from '../utils/utils';
 import { BookType } from '../components/types';
 
@@ -148,10 +150,19 @@ function useBook(pathUrl: string | undefined) {
 
 // Usuarios
 
-function useUserRegister(token: string) {
+function useUserRegister() {
+  const navigate = useNavigate();
+
   return useMutation({
-    mutationKey: ['post-token', token],
-    mutationFn: () => postRegister(token),
+    mutationKey: [keys.userRegister],
+    mutationFn: (token: string) => postRegister(token),
+    onSuccess: (data) => {
+      if (data) return navigate(`/profile/${data.info.user.uid}`);
+    },
+    onError: async (error) => {
+      console.error('Error en el servidor:', error);
+      await logOut();
+    },
   });
 }
 
@@ -160,12 +171,8 @@ function useProfile(
   // token: string | undefined
 ) {
   return useSuspenseQuery({
-    queryKey: ['profile', id],
-    queryFn: () =>
-      getUserAndBooks(
-        id,
-        // token
-      ),
+    queryKey: [keys.profile, id],
+    queryFn: () => getUserAndBooks(id),
     gcTime: 3000,
   });
 }

@@ -13,6 +13,8 @@ const keys = {
   random: 'BooksRandom',
   relatedBooks: 'RelatedBooks',
   moreBooksAuthors: 'MoreBooksAuthors',
+  userRegister: 'UserRegister',
+  profile: 'Profile',
 };
 
 function handleImageLoad(e: React.SyntheticEvent) {

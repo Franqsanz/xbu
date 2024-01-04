@@ -9,10 +9,10 @@ import { SignIn } from '../services/firebase/auth';
 export function Login() {
   return (
     <>
-      <MainHead title='Iniciar Sesión | XBuniverse' />
-      <ContainerTitle title='Iniciar Sesión' />
+      <MainHead title='Ingresar | XBuniverse' />
+      <ContainerTitle title='Ingresar' />
       <Flex justify='center' py={{ base: '10vh', md: '31vh' }}>
-        <Stack direction='column' spacing='5'>
+        <Stack direction='column' spacing='3'>
           <SignIn />
           {/* <Button
             fontWeight='normal'
@@ -26,9 +26,9 @@ export function Login() {
             _hover={{ bg: '#242424' }}
             _active={{ bg: 'black' }}
           >
-            <Box fontSize='md'>(ex Twitter)</Box>
+            Continuar con X
           </Button>
-          <Button
+           <Button
             fontWeight='normal'
             leftIcon={<BsFacebook />}
             colorScheme='facebook'
