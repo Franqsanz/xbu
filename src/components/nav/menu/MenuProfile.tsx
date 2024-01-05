@@ -73,9 +73,9 @@ export function MenuProfile({ displayName, photoURL, uid }: MenuType) {
             fontWeight='normal'
             borderRadius='0'
             justifyContent='left'
-            onClick={() => {
-              logOut();
-              navigate('/', { replace: true });
+            onClick={async () => {
+              await logOut();
+              navigate('/login', { replace: true });
             }}
           >
             Cerrar Sessión

@@ -11,9 +11,19 @@ function AuthProvider({ children }: AuthProviderType) {
   const auth = getAuth();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
       setLoading(false);
+
+      // Renovación del token
+      if (user) {
+        try {
+          const token = await user.getIdToken(true);
+          window.localStorage.setItem('app_tk', token);
+        } catch (error) {
+          console.error('Error en app_tk:', error);
+        }
+      }
     });
 
     return () => unsubscribe();

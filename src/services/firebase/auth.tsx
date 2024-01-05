@@ -22,8 +22,8 @@ function SignIn() {
   async function signInWithGoogle() {
     try {
       const result = await signInWithPopup(logIn, provider);
-      const token = await result.user.getIdToken();
-      await localStorage.setItem('app_tk', token);
+      const token = await result.user.getIdToken(true);
+      await window.localStorage.setItem('app_tk', token);
 
       return mutateAsync(token);
     } catch (error) {
@@ -73,7 +73,7 @@ function SignIn() {
 async function logOut() {
   try {
     await signOut(logIn);
-    await localStorage.removeItem('app_tk');
+    await window.localStorage.removeItem('app_tk');
   } catch (error) {
     console.error('Error al cerrar sesión:', error);
   }

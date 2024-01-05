@@ -15,7 +15,7 @@ import ResultLength from '../../components/ResultLength';
 
 export default function Profile() {
   const { userId } = useParams();
-  const getToken = localStorage.getItem('app_tk');
+  const getToken = window.localStorage.getItem('app_tk');
   const { data } = useProfile(userId, getToken);
   const bgCover = useColorModeValue('gray.100', 'gray.700');
 
