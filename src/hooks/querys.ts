@@ -157,7 +157,9 @@ function useUserRegister() {
     mutationKey: [keys.userRegister],
     mutationFn: (token: string) => postRegister(token),
     onSuccess: (data) => {
-      if (data) return navigate(`/profile/${data.info.user.uid}`);
+      if (data) {
+        return navigate(`/profile/${data.info.user.uid}`, { replace: true });
+      }
     },
     onError: async (error) => {
       console.error('Error en el servidor:', error);
@@ -166,13 +168,10 @@ function useUserRegister() {
   });
 }
 
-function useProfile(
-  id: string | undefined,
-  // token: string | undefined
-) {
+function useProfile(id: string | undefined, token: string | null) {
   return useSuspenseQuery({
     queryKey: [keys.profile, id],
-    queryFn: () => getUserAndBooks(id),
+    queryFn: () => getUserAndBooks(id, token),
     gcTime: 3000,
   });
 }

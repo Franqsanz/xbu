@@ -89,19 +89,13 @@ async function postRegister(token: string) {
   return data;
 }
 
-async function getUserAndBooks(
-  id: string | undefined,
-  // token: string | undefined,
-) {
-  const data = await fetchData(
-    `${API_URL}/my-books/${id}`,
-    //  {
-    //   method: 'GET',
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // }
-  );
+async function getUserAndBooks(id: string | undefined, token: string | null) {
+  const data = await fetchData(`${API_URL}/user/my-books/${id}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return data;
 }

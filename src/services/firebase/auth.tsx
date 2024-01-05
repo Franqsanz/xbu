@@ -23,6 +23,7 @@ function SignIn() {
     try {
       const result = await signInWithPopup(logIn, provider);
       const token = await result.user.getIdToken();
+      await localStorage.setItem('app_tk', token);
 
       return mutateAsync(token);
     } catch (error) {
@@ -48,14 +49,14 @@ function SignIn() {
   return (
     <>
       <Button
-        w='275px'
+        w='260px'
         fontWeight='normal'
-        leftIcon={<GrGoogle />}
+        leftIcon={<GrGoogle size='20px' />}
         bg={useColorModeValue('#EA4335', '#EE685D')}
         color={useColorModeValue('white', 'black')}
         borderRadius='lg'
         p='7'
-        fontSize='xl'
+        fontSize='md'
         _hover={{ bg: '#D23C2F' }}
         _active={{ bg: '#BB352A' }}
         onClick={signInWithGoogle}
@@ -72,6 +73,7 @@ function SignIn() {
 async function logOut() {
   try {
     await signOut(logIn);
+    await localStorage.removeItem('app_tk');
   } catch (error) {
     console.error('Error al cerrar sesión:', error);
   }

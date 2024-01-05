@@ -254,8 +254,8 @@ export function MobileNav() {
                 ))}
               </List> */}
               {linkRegister}
-              <Box fontSize='xs' my='1'>
-                XBuniverse 2023
+              <Box fontSize='10px' my='1'>
+                XBuniverse 2023 - 2024
               </Box>
             </DrawerFooter>
           </DrawerContent>
