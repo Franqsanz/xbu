@@ -29,7 +29,7 @@ export default function Profile() {
         justify='center'
         align='center'
         direction='column'
-        h='300px'
+        h={{ base: '250px', md: '300px' }}
         bg={bgCover}
       >
         <Image
@@ -60,7 +60,7 @@ export default function Profile() {
           {parseDate(data.user.createdAt)}
         </Flex>
       </Flex>
-      <Flex justify='center' borderBottom='1px'>
+      <Flex justify='center' borderBottom='1px solid #A0AEC0'>
         <Box mt={{ base: 5, md: 8 }} mb='1' fontSize={{ base: 'md', md: 'lg' }}>
           PUBLICACIONES
         </Box>
