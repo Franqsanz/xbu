@@ -1,4 +1,6 @@
 import React from 'react';
+import { IoWarningOutline } from 'react-icons/io5';
+// import { RiDeleteBin6Line } from 'react-icons/ri';
 import {
   Modal,
   ModalOverlay,
@@ -9,8 +11,9 @@ import {
   ModalFooter,
   Box,
   Alert,
-  AlertIcon,
+  Icon,
   Button,
+  useColorModeValue,
 } from '@chakra-ui/react';
 
 import { ModalOptionsAndConfirType } from './types';
@@ -22,9 +25,11 @@ export function ModalConfirmation({
   name,
   isPending,
 }: ModalOptionsAndConfirType) {
+  const colorIconWar = useColorModeValue('yellow.700', 'yellow.300');
+
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size='md'>
+      <Modal isOpen={isOpen} onClose={onClose} size={{ base: 'xs', md: 'md' }}>
         <ModalOverlay backdropFilter='blur(7px)' />
         <ModalContent>
           <ModalHeader>Eliminar</ModalHeader>
@@ -36,13 +41,17 @@ export function ModalConfirmation({
             </Box>
             ?
             <Alert
-              mt='6'
+              mt='7'
               status='warning'
-              variant='left-accent'
-              borderRightRadius='lg'
-              fontSize='sm'
+              rounded='lg'
+              fontSize={{ base: 'xs', md: 'sm' }}
             >
-              <AlertIcon />
+              <Icon
+                as={IoWarningOutline}
+                boxSize='7'
+                mr='3'
+                color={colorIconWar}
+              />
               El libro será eliminado de manera permanente y no se podrá
               recuperar.
             </Alert>
@@ -53,10 +62,16 @@ export function ModalConfirmation({
               onClick={onDeleteBook}
               fontWeight='normal'
               fontSize='sm'
+              bg='red.400'
               loadingText='Eliminando...'
               isLoading={isPending}
               _hover={{ color: 'none' }}
             >
+              {/* <Icon
+                as={RiDeleteBin6Line}
+                boxSize='4'
+                mr='3'
+              /> */}
               Eliminar
             </Button>
             <Button

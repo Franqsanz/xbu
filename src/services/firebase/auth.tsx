@@ -49,13 +49,12 @@ function SignIn() {
   return (
     <>
       <Button
-        w='260px'
         fontWeight='normal'
         leftIcon={<GrGoogle size='20px' />}
         bg={useColorModeValue('#EA4335', '#EE685D')}
         color={useColorModeValue('white', 'black')}
         borderRadius='lg'
-        p='7'
+        p='6'
         fontSize='md'
         _hover={{ bg: '#D23C2F' }}
         _active={{ bg: '#BB352A' }}
