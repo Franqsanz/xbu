@@ -11,19 +11,32 @@ function AuthProvider({ children }: AuthProviderType) {
   const auth = getAuth();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setCurrentUser(user);
-      setLoading(false);
-
-      // Renovación del token
+    // Renovación del token
+    async function updateToken(user) {
       if (user) {
         try {
           const token = await user.getIdToken(true);
           window.localStorage.setItem('app_tk', token);
         } catch (error) {
-          console.error('Error en app_tk:', error);
+          console.error('Error al actualizar el token:', error);
         }
       }
+    }
+
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setCurrentUser(user);
+      setLoading(false);
+      updateToken(user);
+
+      const intervalToken = setInterval(
+        () => {
+          const currentUser = auth.currentUser;
+          updateToken(currentUser);
+        },
+        5 * 60 * 1000, // 5 minutos
+      );
+
+      return () => clearInterval(intervalToken);
     });
 
     return () => unsubscribe();

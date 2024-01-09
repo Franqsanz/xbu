@@ -20,6 +20,7 @@ import {
   postBook,
   postRegister,
   getUserAndBooks,
+  deleteBook,
 } from '../services/api';
 import { logOut } from '../services/firebase/auth';
 import { keys } from '../utils/utils';
@@ -176,6 +177,25 @@ function useProfile(id: string | undefined, token: string | null) {
   });
 }
 
+function useDeleteBook() {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationKey: ['deleteBook'],
+    mutationFn: (id: string | undefined) => deleteBook(id),
+    onSuccess: (data) => {
+      if (data) {
+        // return navigate(`/profile/${data.info.user.uid}`, { replace: true });
+        return navigate('/explore', { replace: true });
+      }
+    },
+    onError: async (error) => {
+      console.error('Error en el servidor:', error);
+      await logOut();
+    },
+  });
+}
+
 export {
   useMutatePost,
   useAllFilterOptions,
@@ -189,4 +209,5 @@ export {
   useMoreBooksAuthors,
   useUserRegister,
   useProfile,
+  useDeleteBook,
 };

@@ -13,11 +13,16 @@ import {
   useDisclosure,
   Icon,
 } from '@chakra-ui/react';
-import { FiArrowLeft, FiExternalLink, FiShare2 } from 'react-icons/fi';
+import {
+  FiArrowLeft,
+  FiExternalLink,
+  FiShare2,
+  FiMoreHorizontal,
+} from 'react-icons/fi';
 import { BsTag } from 'react-icons/bs';
 import LazyLoad from 'react-lazy-load';
 
-import { useBook } from '../hooks/querys';
+import { useBook, useDeleteBook } from '../hooks/querys';
 import { handleImageLoad } from '../utils/utils';
 import { MainHead } from '../components/Head';
 import { MyTag } from '../components/MyTag';
@@ -25,6 +30,9 @@ import { ModalShare } from '../components/ModalShare';
 import { MyLink } from '../components/MyLink';
 import { BooksSection } from '../components/BooksSection';
 import { ImageZoom } from '../components/ImageZoom';
+import { ModalOptions } from '../components/ModalOptions';
+import { ModalConfirmation } from '../components/ModalConfirmation';
+import { useAuth } from '../store/AuthContext';
 
 const Categories = lazy(() => import('../components/Categories'));
 const MoreBooksAuthors = lazy(
@@ -36,16 +44,55 @@ const MoreBooks = lazy(() => import('../components/cards/MoreBooks'));
 export default function Book() {
   const shareUrl = window.location.href;
   const { pathUrl } = useParams();
+  const { currentUser } = useAuth();
   const grayColor = useColorModeValue('gray.200', 'gray.600');
   const bgGrayCategory = useColorModeValue('gray.100', 'gray.700');
   const gradientColor = useColorModeValue('white', '#1A202C');
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
   const bgButton = useColorModeValue('white', 'black');
   const navigate = useNavigate();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenOptions,
+    onOpen: onOpenOptions,
+    onClose: onCloseOptions,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenConfirmation,
+    onOpen: onOpenConfirmation,
+    onClose: onCloseConfirmation,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenShare,
+    onOpen: onOpenShare,
+    onClose: onCloseShare,
+  } = useDisclosure();
   let uiLink;
+  let btnMoreOptions;
 
   const { data } = useBook(pathUrl);
+  const { mutate, isPending } = useDeleteBook();
+
+  const isCurrentUserAuthor = currentUser && currentUser.uid === data.userId;
+
+  if (currentUser && isCurrentUserAuthor) {
+    btnMoreOptions = (
+      <Button
+        mt={{ base: 1, md: 5 }}
+        fontWeight='500'
+        size='sm'
+        title='Más Opciones'
+        onClick={onOpenOptions}
+      >
+        <Flex align='center' justify='center'>
+          <Icon as={FiMoreHorizontal} />
+        </Flex>
+      </Button>
+    );
+  }
+
+  function handleDeleteBook() {
+    mutate(data.id);
+  }
 
   function handleGoBack() {
     navigate(-1);
@@ -95,13 +142,14 @@ export default function Book() {
         description={data.synopsis}
         urlImage={data.image.url}
       />
-      <Box
+      <Flex
         w='full'
         maxW='1255px'
         m='auto'
         px={{ base: 5, xl: 0 }}
         pt='4'
         pb='5'
+        justify='space-between'
       >
         <Button
           mt={{ base: 1, md: 5 }}
@@ -115,7 +163,23 @@ export default function Book() {
             Volver
           </Flex>
         </Button>
-      </Box>
+        {btnMoreOptions}
+      </Flex>
+      <ModalOptions
+        isOpen={isOpenOptions}
+        onClose={onCloseOptions}
+        onDeleteBook={onOpenConfirmation}
+      />
+      <ModalConfirmation
+        isOpen={isOpenConfirmation}
+        name={data.title}
+        onDeleteBook={handleDeleteBook}
+        isPending={isPending}
+        onClose={() => {
+          onCloseConfirmation();
+          onCloseOptions();
+        }}
+      />
       <Flex
         w='full'
         maxW='1300px'
@@ -281,7 +345,7 @@ export default function Book() {
               w={{ base: '100%', md: '130px' }}
               bg={bgButton}
               fontWeight='normal'
-              onClick={onOpen}
+              onClick={onOpenShare}
               p='6'
               border='1px'
               borderColor='green.600'
@@ -296,8 +360,8 @@ export default function Book() {
             </Button>
           </Flex>
           <ModalShare
-            isOpen={isOpen}
-            onClose={onClose}
+            isOpen={isOpenShare}
+            onClose={onCloseShare}
             shareUrl={shareUrl}
             data={data.title}
           />

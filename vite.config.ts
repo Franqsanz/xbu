@@ -79,5 +79,13 @@ export default defineConfig({
   build: {
     outDir: './dist',
     chunkSizeWarningLimit: 1500,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          // if (id.includes('commonjsHelpers')) return 'commonjsHelpers';
+          if (id.includes('node_modules')) return 'vendor';
+        },
+      },
+    },
   },
 });

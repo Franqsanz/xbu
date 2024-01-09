@@ -141,6 +141,12 @@ interface SkeletonType {
   showTags?: boolean;
 }
 
+interface ModalOptionsAndConfirType extends DisclosureType {
+  onDeleteBook: () => any | void;
+  name?: string;
+  isPending?: boolean;
+}
+
 interface BooksSectionType {
   title: string;
   data?: string;
@@ -191,4 +197,5 @@ export type {
   MenuType,
   AuthContextType,
   AuthProviderType,
+  ModalOptionsAndConfirType,
 };

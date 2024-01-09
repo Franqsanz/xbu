@@ -88,7 +88,7 @@ export function Home() {
             >
               <Link
                 w={{ base: '250px', md: '200px' }}
-                to='/register'
+                to='/login'
                 as={NavLink}
                 border='1px'
                 bg={bgButton}
@@ -101,7 +101,7 @@ export function Home() {
                   bg: 'green.600',
                 }}
               >
-                Regístrate
+                Ingresar
               </Link>
               <Link
                 w={{ base: '250px', md: '200px' }}
