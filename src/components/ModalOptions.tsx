@@ -40,20 +40,12 @@ export function ModalOptions({
               >
                 Editar
               </Button>
-              <Button
-                fontWeight='normal'
-                fontSize='sm'
-                _hover={{ color: 'none' }}
-              >
-                Copiar enlace
-              </Button>
             </Flex>
           </ModalBody>
           <ModalFooter justifyContent='center'>
             <Button
               w='full'
               onClick={onClose}
-              // fontWeight='normal'
               fontSize='sm'
               _hover={{ color: 'none' }}
             >

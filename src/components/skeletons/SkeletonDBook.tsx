@@ -4,19 +4,21 @@ import { Skeleton, SkeletonText, Flex, Box } from '@chakra-ui/react';
 export function SkeletonDetailsBook() {
   return (
     <>
-      <Box
+      <Flex
         w='full'
-        maxW='1234px'
+        maxW='1255px'
         m='auto'
         px={{ base: 5, xl: 0 }}
         pt='10'
         pb='3'
+        justify='space-between'
       >
         <Skeleton w='100px' h='30px' rounded='lg'></Skeleton>
-      </Box>
+        <Skeleton w='40px' h='30px' rounded='lg'></Skeleton>
+      </Flex>
       <Flex
         w='full'
-        maxW='1255px'
+        maxW='1300px'
         m='auto'
         mb='300px'
         align='flex-start'

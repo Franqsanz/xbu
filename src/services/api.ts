@@ -68,6 +68,16 @@ async function getAllFilterOptions() {
   return data;
 }
 
+async function updateBook(id: string | undefined, books: any) {
+  const data = await fetchData(`${API_URL}/book/update/${id}`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(books),
+  });
+
+  return data;
+}
+
 async function deleteBook(id: string | undefined) {
   const data = await fetchData(`${API_URL}/book/delete/${id}`, {
     method: 'DELETE',
@@ -112,6 +122,7 @@ export {
   getMoreBooksAuthors,
   postBook,
   deleteBook,
+  updateBook,
   // Usuarios
   postRegister,
   getUserAndBooks,

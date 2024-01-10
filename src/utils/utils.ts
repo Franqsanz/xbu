@@ -14,6 +14,8 @@ const keys = {
   relatedBooks: 'RelatedBooks',
   moreBooksAuthors: 'MoreBooksAuthors',
   userRegister: 'UserRegister',
+  updateBook: 'UpdateBook',
+  deleteBook: 'DeleteBook',
   profile: 'Profile',
 };
 
