@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
+  Avatar,
   Box,
   Button,
   useColorModeValue,
@@ -10,7 +11,6 @@ import {
   MenuItem,
   MenuGroup,
   MenuDivider,
-  Image,
 } from '@chakra-ui/react';
 
 import { logOut } from '../../../services/firebase/auth';
@@ -34,11 +34,10 @@ export function MenuProfile({ displayName, photoURL, uid }: MenuType) {
           borderRadius='full'
           _hover={{ border: `2px solid  ${colorBorder}` }}
         >
-          <Image
+          <Avatar
+            name={displayName as string}
             src={photoURL as string}
-            w={{ base: '25px', md: '35px' }}
-            h={{ base: '25px', md: '35px' }}
-            borderRadius='full'
+            size={{ base: 'xs', md: 'sm' }}
           />
         </MenuButton>
       </Button>
