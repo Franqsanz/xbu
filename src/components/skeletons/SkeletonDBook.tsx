@@ -9,8 +9,9 @@ export function SkeletonDetailsBook() {
         maxW='1255px'
         m='auto'
         px={{ base: 5, xl: 0 }}
-        pt='10'
+        pt='7'
         pb='3'
+        align='center'
         justify='space-between'
       >
         <Skeleton w='100px' h='30px' rounded='lg'></Skeleton>
