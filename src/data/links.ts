@@ -11,7 +11,6 @@ const navLink: Array<LinkType> = [
 
 const accountLinks: Array<LinkType> = [
   { name: 'Ingresar', href: 'login', icon: RiLoginCircleLine },
-  { name: 'Crear cuenta', href: 'register', icon: RiAccountCircleLine },
 ];
 
 const languages: Array<SelectBooksType> = [
