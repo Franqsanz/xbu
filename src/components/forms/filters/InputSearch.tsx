@@ -23,9 +23,9 @@ import {
 import { CgOptions } from 'react-icons/cg';
 import { FiSearch } from 'react-icons/fi';
 
-import { useAllSearchBooks } from '../../../hooks/querys';
-import { useDebounce } from '../../../hooks/useDebounce';
-import { BookSearchResultsType } from '../../../components/types';
+import { useAllSearchBooks } from '@hooks/querys';
+import { useDebounce } from '@hooks/useDebounce';
+import { BookSearchResultsType } from '@components/types';
 
 function highlightText(text, query) {
   const regex = new RegExp(`(${query.trim()})`, 'gi');

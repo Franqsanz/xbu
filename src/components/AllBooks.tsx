@@ -10,13 +10,13 @@ import {
 } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
 
-import { CardType } from './types';
-import { useBooksPaginate } from '../hooks/querys';
-import { MySimpleGrid } from './MySimpleGrid';
-import { Card } from './cards/Card';
-import { Aside } from './Aside';
-import { SkeletonAllBooks } from './skeletons/SkeletonABooks';
-import ResultLength from './ResultLength';
+import { CardType } from '@components/types';
+import { useBooksPaginate } from '@hooks/querys';
+import { MySimpleGrid } from '@components/MySimpleGrid';
+import { Card } from '@components/cards/Card';
+import { Aside } from '@components/Aside';
+import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
+import ResultLength from '@components/ResultLength';
 
 export function AllBooks() {
   const { ref, inView } = useInView();

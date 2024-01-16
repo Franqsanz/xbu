@@ -8,8 +8,8 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react';
 
-import Filter from './Filter';
-import { ModalType } from '../../types';
+import Filter from '@components/forms/filters/Filter';
+import { ModalType } from '@components/types';
 
 export function ModalFilter({ isOpen, onClose }: ModalType) {
   return (

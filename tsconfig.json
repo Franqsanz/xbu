@@ -17,7 +17,17 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noImplicitAny": false,
-    "types": ["vite/client", "vitest/globals", "cypress"]
+    "types": ["vite/client", "vitest/globals", "cypress"],
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@assets/*": ["./assets/*"],
+      "@components/*": ["./components/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@services/*": ["./services/*"],
+      "@pages/*": ["./pages/*"],
+      "@utils/*": ["./utils/*"]
+    }
   },
   "include": ["./src/**/*"],
   "exclude": ["./src/tests"],

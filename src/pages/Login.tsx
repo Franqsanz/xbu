@@ -2,17 +2,31 @@ import React from 'react';
 import { Box, Flex, Button, Stack } from '@chakra-ui/react';
 import { BsFacebook, BsTwitterX } from 'react-icons/bs';
 
-import { ContainerTitle } from '../components/ContainerTitle';
-import { MainHead } from '../components/Head';
-import { SignIn } from '../services/firebase/auth';
+import { ContainerTitle } from '@components/ContainerTitle';
+import { MainHead } from '@components/Head';
+import { SignIn } from '@services/firebase/auth';
 
 export function Login() {
   return (
     <>
       <MainHead title='Ingresar | XBuniverse' />
       <ContainerTitle title='Ingresar' />
-      <Flex justify='center' py={{ base: '10vh', md: '31vh' }}>
-        <Stack direction='column' spacing='3'>
+      <Flex
+        justify='center'
+        // py={{ base: '10vh', md: '31vh' }}
+        py='10'
+      >
+        <Stack
+          // maxW='400px'
+          w={{ base: 'auto', md: '400px' }}
+          h='300px'
+          direction='column'
+          justify='center'
+          align='center'
+          spacing='3'
+          borderRadius='xl'
+          border={{ base: 0, md: '1px solid #A0AEC0' }}
+        >
           <SignIn />
           {/* <Button
             fontWeight='normal'

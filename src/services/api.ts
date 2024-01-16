@@ -1,5 +1,5 @@
 import { API_URL } from '../config';
-import { fetchData } from '../utils/fetchData';
+import { fetchData } from '@utils/fetchData';
 
 async function getAllBooks() {
   const data = await fetchData(API_URL);
@@ -91,6 +91,7 @@ async function deleteBook(id: string | undefined) {
 async function postRegister(token: string) {
   const data = await fetchData(`${API_URL}/auth/register`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       Authorization: `Bearer ${token}`,
     },

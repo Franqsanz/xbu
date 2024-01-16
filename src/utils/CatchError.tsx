@@ -16,8 +16,8 @@ import {
 import { GrPowerReset } from 'react-icons/gr';
 import { FiArrowLeft } from 'react-icons/fi';
 
-import { PageNotFound, Lost } from '../assets/assets';
-import { CatchErrorType } from '../components/types';
+import { PageNotFound, Lost } from '@assets/assets';
+import { CatchErrorType } from '@components/types';
 // import { noConnection } from '../utils/fetchData';
 
 export function CatchError({ children, skeletonLoad }: CatchErrorType) {

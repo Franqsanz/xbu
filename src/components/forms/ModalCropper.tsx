@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { RiScissorsCutFill } from 'react-icons/ri';
 
-import { ModalCroppType } from '../types';
+import { ModalCroppType } from '@components/types';
 
 export function ModalCropper({
   children,

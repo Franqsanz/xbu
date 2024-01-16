@@ -29,7 +29,7 @@ import {
 import { FaCheckCircle } from 'react-icons/fa';
 import { MdCopyAll } from 'react-icons/md';
 
-import { ModalType } from './types';
+import { ModalType } from '@components/types';
 
 export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalType) {
   const bgInput = useColorModeValue('gray.200', 'gray.900');

@@ -7,7 +7,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-import { TagType } from './types';
+import { TagType } from '@components/types';
 
 export function MyTag({
   bg,

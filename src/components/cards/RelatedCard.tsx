@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { Flex, Box, useColorModeValue, Link, Icon } from '@chakra-ui/react';
 import { FiArrowRight } from 'react-icons/fi';
 
-import { CardType } from '../types';
-import { useHandleEnterKey } from '../../utils/utils';
+import { CardType } from '@components/types';
+import { useHandleEnterKey } from '@utils/utils';
 
 export function RelatedCard({
   title,

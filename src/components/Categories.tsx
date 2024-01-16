@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { Link } from '@chakra-ui/react';
 import { BsTag } from 'react-icons/bs';
 
-import { MyTag } from '../components/MyTag';
-import { useAllFilterOptions } from '../hooks/querys';
+import { MyTag } from '@components/MyTag';
+import { useAllFilterOptions } from '@hooks/querys';
 
 export default function Categories() {
   const { data } = useAllFilterOptions();

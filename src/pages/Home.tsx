@@ -17,13 +17,13 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 
-import { MainHead } from '../components/Head';
+import { MainHead } from '@components/Head';
 import {
   PatternPadWhite,
   PatternPadBlack,
   ImgBook,
   BookReading,
-} from '../assets/assets';
+} from '@assets/assets';
 
 export function Home() {
   const { colorMode } = useColorMode();

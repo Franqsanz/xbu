@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { AllBooks } from '../components/AllBooks';
-import { ContainerTitle } from '../components/ContainerTitle';
-import { MySliderCategories } from '../components/MySliderCategories';
-import { MainHead } from '../components/Head';
+import { AllBooks } from '@components/AllBooks';
+import { ContainerTitle } from '@components/ContainerTitle';
+import { MySliderCategories } from '@components/MySliderCategories';
+import { MainHead } from '@components/Head';
 
 export default function Explore() {
   return (

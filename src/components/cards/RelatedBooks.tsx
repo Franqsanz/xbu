@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, Text } from '@chakra-ui/react';
 
-import { RelatedCard } from './RelatedCard';
-import { ContainerRCard } from './ContainerRCard';
-import { CardType, RelatedBooksType } from '../types';
-import { useRelatedBooks } from '../../hooks/querys';
-import { useRefetchLocation } from '../../hooks/useRefetchLocation';
+import { RelatedCard } from '@components/cards/RelatedCard';
+import { ContainerRCard } from '@components/cards/ContainerRCard';
+import { CardType, RelatedBooksType } from '@components/types';
+import { useRelatedBooks } from '@hooks/querys';
+import { useRefetchLocation } from '@hooks/useRefetchLocation';
 
 export default function RelatedBooks({ currentBookId, id }: RelatedBooksType) {
   const { data, refetch } = useRelatedBooks(id);

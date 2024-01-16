@@ -10,12 +10,13 @@ import {
   Flex,
 } from '@chakra-ui/react';
 
-import { ModalOptionsAndConfirType } from './types';
+import { ModalOptionsAndConfirType } from '@components/types';
 
 export function ModalOptions({
   isOpen,
   onClose,
   onDeleteBook,
+  onEditBook,
 }: ModalOptionsAndConfirType) {
   return (
     <>
@@ -36,6 +37,7 @@ export function ModalOptions({
               <Button
                 fontWeight='normal'
                 fontSize='sm'
+                onClick={onEditBook}
                 _hover={{ color: 'none' }}
               >
                 Editar

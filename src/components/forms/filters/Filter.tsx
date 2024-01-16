@@ -9,8 +9,8 @@ import {
 } from '@chakra-ui/react';
 import { FiSearch } from 'react-icons/fi';
 
-import { useAllFilterOptions } from '../../../hooks/querys';
-import { SelectType } from '../../../components/types';
+import { useAllFilterOptions } from '@hooks/querys';
+import { SelectType } from '@components/types';
 
 interface Props {
   onClose: () => void;

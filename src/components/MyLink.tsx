@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Box, Link, useColorModeValue } from '@chakra-ui/react';
 
-import { MyLinkType } from './types';
+import { MyLinkType } from '@components/types';
 
 export function MyLink({ data, href, external, index }: MyLinkType) {
   const colorLinkCategory = useColorModeValue('green.800', 'green.400');

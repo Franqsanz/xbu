@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 
-import { AuthContextType, AuthProviderType } from '../components/types';
+import { AuthContextType, AuthProviderType } from '@components/types';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -17,6 +17,7 @@ function AuthProvider({ children }: AuthProviderType) {
         try {
           const token = await user.getIdToken(true);
           window.localStorage.setItem('app_tk', token);
+          document.cookie = `app_tk=${token}; SameSite=None; path=/;`;
         } catch (error) {
           console.error('Error al actualizar el token:', error);
         }
@@ -33,7 +34,7 @@ function AuthProvider({ children }: AuthProviderType) {
           const currentUser = auth.currentUser;
           updateToken(currentUser);
         },
-        5 * 60 * 1000, // 5 minutos
+        40 * 60 * 1000, // 40 minutos
       );
 
       return () => clearInterval(intervalToken);

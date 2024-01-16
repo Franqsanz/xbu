@@ -16,7 +16,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-import { ModalOptionsAndConfirType } from './types';
+import { ModalOptionsAndConfirType } from '@components/types';
 
 export function ModalConfirmation({
   isOpen,

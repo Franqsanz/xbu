@@ -1,10 +1,10 @@
 import React from 'react';
 import { Skeleton, SkeletonText, Flex, Box, Stack } from '@chakra-ui/react';
 
-import { MySimpleGrid } from '../MySimpleGrid';
-import { Aside } from '../Aside';
-import { SkeletonTags } from './SkeletonTags';
-import { SkeletonType } from '../types';
+import { MySimpleGrid } from '@components/MySimpleGrid';
+import { Aside } from '@components/Aside';
+import { SkeletonTags } from '@components/skeletons/SkeletonTags';
+import { SkeletonType } from '@components/types';
 
 export function SkeletonAllBooks({ showTags = true }: SkeletonType) {
   const Cards = Array.from({ length: 12 }, (_, index) => (

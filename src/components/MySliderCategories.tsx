@@ -2,8 +2,8 @@ import React, { useEffect, useRef, Suspense, lazy } from 'react';
 import { Box, Button, Flex, useColorModeValue } from '@chakra-ui/react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
-import { SkeletonTags } from './skeletons/SkeletonTags';
-const Categories = lazy(() => import('../components/Categories'));
+import { SkeletonTags } from '@components/skeletons/SkeletonTags';
+const Categories = lazy(() => import('@components/Categories'));
 
 export function MySliderCategories() {
   const bgArrows = useColorModeValue('white', 'black');

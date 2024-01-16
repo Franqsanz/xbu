@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { HeadType } from './types';
+import { HeadType } from '@components/types';
 // million-ignore
 export function MainHead({ title, description, urlImage }: HeadType) {
   return (

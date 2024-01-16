@@ -4,7 +4,7 @@ import { GrGoogle } from 'react-icons/gr';
 import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 
 import { logIn } from './config';
-import { useUserRegister } from '../../hooks/querys';
+import { useUserRegister } from '@hooks/querys';
 // import { useAuth } from '../../store/AuthContext';
 
 const provider = new GoogleAuthProvider();
@@ -24,6 +24,7 @@ function SignIn() {
       const result = await signInWithPopup(logIn, provider);
       const token = await result.user.getIdToken(true);
       await window.localStorage.setItem('app_tk', token);
+      document.cookie = `app_tk=${token}; SameSite=None; path=/;`;
 
       return mutateAsync(token);
     } catch (error) {

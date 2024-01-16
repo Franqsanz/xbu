@@ -15,7 +15,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 
-import { DrawerType } from './types';
+import { DrawerType } from '@components/types';
 
 export function FilterDrawer({
   isOpen,

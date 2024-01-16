@@ -25,9 +25,9 @@ import {
 } from '@chakra-ui/react';
 
 import { navLink, accountLinks } from '../../data/links';
-import { InputSearch } from '../forms/filters/InputSearch';
-import { ModalFilter } from '../forms/filters/ModalFilter';
-import { MenuProfile } from '../../components/nav/menu/MenuProfile';
+import { InputSearch } from '@components/forms/filters/InputSearch';
+import { ModalFilter } from '@components/forms/filters/ModalFilter';
+import { MenuProfile } from '@components/nav/menu/MenuProfile';
 import { useAuth } from '../../store/AuthContext';
 
 export function MobileNav() {

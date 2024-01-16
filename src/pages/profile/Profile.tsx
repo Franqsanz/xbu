@@ -2,15 +2,15 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Flex, Image, useColorModeValue } from '@chakra-ui/react';
 
-import { MySimpleGrid } from '../../components/MySimpleGrid';
-import { Card } from '../../components/cards/Card';
-import { Aside } from '../../components/Aside';
-import { MainHead } from '../../components/Head';
+import { MySimpleGrid } from '@components/MySimpleGrid';
+import { Card } from '@components/cards/Card';
+import { Aside } from '@components/Aside';
+import { MainHead } from '@components/Head';
+import { useProfile } from '@hooks/querys';
+import { parseDate } from '@utils/utils';
+import { CardType } from '@components/types';
+import ResultLength from '@components/ResultLength';
 // import { useAuth } from '../../store/AuthContext';
-import { useProfile } from '../../hooks/querys';
-import { parseDate } from '../../utils/utils';
-import { CardType } from '../../components/types';
-import ResultLength from '../../components/ResultLength';
 // import { logOut } from '../../services/firebase/auth';
 
 export default function Profile() {

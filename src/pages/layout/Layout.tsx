@@ -2,9 +2,9 @@ import React, { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Skeleton, Stack } from '@chakra-ui/react';
 
-import { Nav } from '../../components/nav/Nav';
-import { Footer } from '../../components/Footer';
-import { ScrollToTop } from '../../utils/ScrollToTop';
+import { Nav } from '@components/nav/Nav';
+import { Footer } from '@components/Footer';
+import { ScrollToTop } from '@utils/ScrollToTop';
 
 export function Layout() {
   return (

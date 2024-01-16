@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { RelatedBooksType } from '../components/types';
+import { RelatedBooksType } from '@components/types';
 
 type Book = {
   pathUrl: string;

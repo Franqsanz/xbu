@@ -142,7 +142,8 @@ interface SkeletonType {
 }
 
 interface ModalOptionsAndConfirType extends DisclosureType {
-  onDeleteBook: () => any | void;
+  onDeleteBook?: () => any | void;
+  onEditBook?: () => any | void;
   name?: string;
   isPending?: boolean;
 }

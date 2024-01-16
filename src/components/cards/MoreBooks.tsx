@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { RelatedCard } from './RelatedCard';
-import { ContainerRCard } from './ContainerRCard';
-import { CardType, RelatedBooksType } from '../types';
-import { useMoreBooks } from '../../hooks/querys';
-import { useRefetchLocation } from '../../hooks/useRefetchLocation';
+import { RelatedCard } from '@components/cards/RelatedCard';
+import { ContainerRCard } from '@components/cards/ContainerRCard';
+import { CardType, RelatedBooksType } from '@components/types';
+import { useMoreBooks } from '@hooks/querys';
+import { useRefetchLocation } from '@hooks/useRefetchLocation';
 
 export default function MoreBooks({ currentBookId }: RelatedBooksType) {
   const { data, refetch } = useMoreBooks();

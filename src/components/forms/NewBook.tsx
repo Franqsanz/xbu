@@ -25,11 +25,11 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 
 import { categories, format, languages } from '../../data/links';
-import { BookType } from '../types';
-import { useMutatePost } from '../../hooks/querys';
-import { ModalCropper } from '../forms/ModalCropper';
-import { generatePathUrl } from '../../utils/utils';
-import { MyPopover } from '../MyPopover';
+import { BookType } from '@components/types';
+import { useMutatePost } from '@hooks/querys';
+import { ModalCropper } from '@components/forms/ModalCropper';
+import { generatePathUrl } from '@utils/utils';
+import { MyPopover } from '@components/MyPopover';
 import { useAuth } from '../../store/AuthContext';
 
 const Cropper = lazy(() => import('react-cropper'));

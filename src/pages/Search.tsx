@@ -13,18 +13,18 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-import { Card } from '../components/cards/Card';
-import { CardType, LanguageAndYearType } from '../components/types';
-import { useFilter } from '../hooks/querys';
-import { ContainerTitle } from '../components/ContainerTitle';
-import { MySimpleGrid } from '../components/MySimpleGrid';
-import { MainHead } from '../components/Head';
-import { Aside } from '../components/Aside';
-import { MySliderCategories } from '../components/MySliderCategories';
-import { FilterDrawer } from '../components/FilterDrawer';
-import ResultLength from '../components/ResultLength';
-import { AboutCategories } from '../components/AboutCategories';
-import { Lost } from '../assets/assets';
+import { Card } from '@components/cards/Card';
+import { CardType, LanguageAndYearType } from '@components/types';
+import { useFilter } from '@hooks/querys';
+import { ContainerTitle } from '@components/ContainerTitle';
+import { MySimpleGrid } from '@components/MySimpleGrid';
+import { MainHead } from '@components/Head';
+import { Aside } from '@components/Aside';
+import { MySliderCategories } from '@components/MySliderCategories';
+import { FilterDrawer } from '@components/FilterDrawer';
+import ResultLength from '@components/ResultLength';
+import { AboutCategories } from '@components/AboutCategories';
+import { Lost } from '@assets/assets';
 import { aboutCategories } from '../data/links';
 
 export default function Search() {

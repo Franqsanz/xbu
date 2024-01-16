@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Box, Center, Flex, Divider, Spinner } from '@chakra-ui/react';
 
-import { BooksSectionType } from './types';
+import { BooksSectionType } from '@components/types';
 
 export function BooksSection({
   title,

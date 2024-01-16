@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Flex, Text, Link } from '@chakra-ui/react';
 
-import { ContainerTitle } from '../components/ContainerTitle';
-import { MainHead } from '../components/Head';
+import { ContainerTitle } from '@components/ContainerTitle';
+import { MainHead } from '@components/Head';
 
 export default function PrivacyPolicies() {
   return (

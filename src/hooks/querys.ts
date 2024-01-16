@@ -22,10 +22,10 @@ import {
   getUserAndBooks,
   updateBook,
   deleteBook,
-} from '../services/api';
-import { logOut } from '../services/firebase/auth';
-import { keys } from '../utils/utils';
-import { BookType } from '../components/types';
+} from '@services/api';
+import { logOut } from '@services/firebase/auth';
+import { keys } from '@utils/utils';
+import { BookType } from '@components/types';
 
 const queryClient = new QueryClient();
 

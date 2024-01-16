@@ -13,8 +13,8 @@ import {
   MenuDivider,
 } from '@chakra-ui/react';
 
-import { logOut } from '../../../services/firebase/auth';
-import { MenuType } from '../../../components/types';
+import { logOut } from '@services/firebase/auth';
+import { MenuType } from '@components/types';
 
 export function MenuProfile({ displayName, photoURL, uid }: MenuType) {
   const navigate = useNavigate();
