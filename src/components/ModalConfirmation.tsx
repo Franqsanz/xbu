@@ -22,7 +22,7 @@ export function ModalConfirmation({
   isOpen,
   onClose,
   onDeleteBook,
-  name,
+  title,
   isPending,
 }: ModalOptionsAndConfirType) {
   const colorIconWar = useColorModeValue('yellow.700', 'yellow.300');
@@ -37,7 +37,7 @@ export function ModalConfirmation({
           <ModalBody>
             ¿Está seguro que desea eliminar{' '}
             <Box as='span' fontWeight='bold'>
-              "{name}"
+              "{title}"
             </Box>
             ?
             <Alert
