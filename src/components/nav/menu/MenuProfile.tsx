@@ -77,7 +77,7 @@ export function MenuProfile({ displayName, photoURL, uid }: MenuType) {
               navigate('/login', { replace: true });
             }}
           >
-            Cerrar Sessión
+            Cerrar Sesión
           </MenuItem>
         </MenuGroup>
       </MenuList>

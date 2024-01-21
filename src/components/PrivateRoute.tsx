@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { useAuth } from '../store/AuthContext';
+import { useAuth } from '@contexts/AuthContext';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 
 export function PrivateRoute({ children }: { children: React.ReactNode }) {

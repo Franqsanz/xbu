@@ -23,6 +23,7 @@
       "@/*": ["./src/*"],
       "@assets/*": ["./assets/*"],
       "@components/*": ["./components/*"],
+      "@contexts/*": ["./contexts/*"],
       "@hooks/*": ["./hooks/*"],
       "@services/*": ["./services/*"],
       "@pages/*": ["./pages/*"],

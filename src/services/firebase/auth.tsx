@@ -24,7 +24,7 @@ function SignIn() {
       const result = await signInWithPopup(logIn, provider);
       const token = await result.user.getIdToken(true);
       await window.localStorage.setItem('app_tk', token);
-      document.cookie = `app_tk=${token}; SameSite=None; path=/;`;
+      // document.cookie = `app_tk=${token}; SameSite=None; path=/;`;
 
       return mutateAsync(token);
     } catch (error) {

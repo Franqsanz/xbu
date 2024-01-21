@@ -9,7 +9,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 import theme from '../theme';
 import routes from './routes';
-import { AuthProvider } from './store/AuthContext';
+import { AuthProvider } from '@contexts/AuthContext';
 
 const queryClient = new QueryClient();
 
