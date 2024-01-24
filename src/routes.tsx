@@ -1,22 +1,39 @@
-import React, { lazy } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import React, { lazy, useState } from 'react';
+import { createBrowserRouter, Navigate, useLocation } from 'react-router-dom';
 
-import { Home } from './pages/Home';
-import { Register } from './pages/Register';
-import { Login } from './pages/Login';
-import { CatchError } from './utils/CatchError';
-import { ErrorPage } from './pages/404';
-import { Layout } from './pages/layout/Layout';
-import { SkeletonAllBooks } from './components/skeletons/SkeletonABooks';
-import { SkeletonDetailsBook } from './components/skeletons/SkeletonDBook';
-import { PrivateRoute } from './components/PrivateRoute';
+import { Home } from '@pages/Home';
+import { Register } from '@pages/Register';
+import { Login } from '@pages/Login';
+import { CatchError } from '@utils/CatchError';
+import { ErrorPage } from '@pages/404';
+import { Layout } from '@pages/layout/Layout';
+import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
+import { SkeletonDetailsBook } from '@components/skeletons/SkeletonDBook';
+import { PrivateRoute } from '@components/PrivateRoute';
 
-const PrivacyPolicies = lazy(() => import('./pages/PrivacyPolicies'));
-const Explore = lazy(() => import('./pages/Explore'));
-const Book = lazy(() => import('./pages/Book'));
-const Search = lazy(() => import('./pages/Search'));
-const NewBook = lazy(() => import('./pages/NewBook'));
-const Profile = lazy(() => import('./pages/profile/Profile'));
+import { useAuth } from '@contexts/AuthContext';
+
+const PrivacyPolicies = lazy(() => import('@pages/PrivacyPolicies'));
+const Explore = lazy(() => import('@pages/Explore'));
+const Book = lazy(() => import('@pages/Book'));
+const Search = lazy(() => import('@pages/Search'));
+const NewBook = lazy(() => import('@pages/NewBook'));
+const Profile = lazy(() => import('@pages/profile/Profile'));
+
+export function Private({ children }: { children: React.ReactNode }) {
+  const { currentUser, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    return <SkeletonAllBooks />;
+  }
+
+  if (currentUser && location.pathname === '/login') {
+    return <Navigate to='/explore' />;
+  }
+
+  return <>{children}</>;
+}
 
 const routes = createBrowserRouter([
   {
@@ -25,7 +42,11 @@ const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: (
+          // <Private>
+          <Home />
+          // </Private>
+        ),
       },
       {
         path: '/explore',
@@ -49,7 +70,11 @@ const routes = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <Login />,
+        element: (
+          // <Private>
+          <Login />
+          // </Private>
+        ),
       },
       {
         path: '/books',

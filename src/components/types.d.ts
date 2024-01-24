@@ -72,12 +72,12 @@ interface BookType {
   sourceLink?: string;
   language: string;
   format: string;
-  pathUrl: string;
-  image?: {
-    url: number[];
+  pathUrl?: string;
+  image: {
+    url: string | number[];
     public_id: string;
   };
-  userId: string | undefined;
+  userId?: string | undefined;
 }
 
 interface ModalCropperType extends DisclosureType {
@@ -141,11 +141,26 @@ interface SkeletonType {
   showTags?: boolean;
 }
 
-interface ModalOptionsAndConfirType extends DisclosureType {
+interface ModalOptionsAndConfirType
+  extends Omit<Partial<BookType>>,
+    DisclosureType {
   onDeleteBook?: () => any | void;
   onEditBook?: () => any | void;
-  name?: string;
   isPending?: boolean;
+  id?: string;
+  title?: string;
+  authors?: string[];
+  synopsis?: string;
+  year?: string;
+  category?: string[];
+  numberPages?: string;
+  sourceLink?: string;
+  language?: string;
+  format?: string;
+  image?: {
+    url: string;
+    public_id: string;
+  };
 }
 
 interface BooksSectionType {

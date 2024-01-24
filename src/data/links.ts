@@ -173,7 +173,7 @@ const categories: Array<SelectBooksType> = [
   { value: 'Distópico', label: 'Distópico' },
 ];
 
-const format: Array<SelectBooksType> = [
+const formats: Array<SelectBooksType> = [
   { value: 'Físico', label: 'Físico' },
   { value: 'Electrónico', label: 'Electrónico' },
   { value: 'AudioLibro', label: 'AudioLibro' },
@@ -363,5 +363,5 @@ export {
   languages,
   categories,
   aboutCategories,
-  format,
+  formats,
 };

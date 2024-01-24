@@ -79,6 +79,10 @@ function parseDate(fechaISO: string) {
   return formatoFecha.format(fecha);
 }
 
+function sortArrayByLabel<T extends { label: string }>(array: T[]): T[] {
+  return array.slice().sort((a, b) => a.label.localeCompare(b.label));
+}
+
 export {
   keys,
   handleImageLoad,
@@ -86,4 +90,5 @@ export {
   generatePathUrl,
   isSpanish,
   parseDate,
+  sortArrayByLabel,
 };

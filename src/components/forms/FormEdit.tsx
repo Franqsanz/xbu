@@ -21,19 +21,36 @@ import pako from 'pako';
 import { useForm } from 'react-hook-form';
 import { Select } from 'chakra-react-select';
 import 'cropperjs/dist/cropper.css';
-import { AiOutlineCloudUpload } from 'react-icons/ai';
+import { AiOutlineSave } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 
 import { categories, formats, languages } from '../../data/links';
 import { BookType } from '@components/types';
-import { useMutatePost } from '@hooks/querys';
+import { useUpdateBook } from '@hooks/querys';
 import { ModalCropper } from '@components/forms/ModalCropper';
 import { generatePathUrl, sortArrayByLabel } from '@utils/utils';
 import { MyPopover } from '@components/MyPopover';
-import { useAuth } from '@contexts/AuthContext';
 const Cropper = lazy(() => import('react-cropper'));
 
-export function FormNewBook() {
+export function FormEdit({
+  id,
+  title,
+  authors,
+  synopsis,
+  year,
+  category,
+  numberPages,
+  sourceLink,
+  language,
+  format,
+  pathUrl,
+  image,
+}: BookType) {
+  const {
+    url,
+    // eslint-disable-next-line camelcase
+    public_id,
+  } = image;
   const {
     handleSubmit,
     register,
@@ -42,30 +59,30 @@ export function FormNewBook() {
   let alertMessage;
   let previewImgUI;
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { currentUser } = useAuth();
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
-  const { mutate, isPending, isSuccess, error } = useMutatePost();
   const [cropData, setCropData] = useState<string | null>(null);
   const [previewImg, setPreviewImg] = useState<Blob | MediaSource | null>(null);
   const [crop, setCrop] = useState<any>('');
   const [books, setBooks] = useState<BookType>({
-    title: '',
-    authors: [],
-    synopsis: '',
-    year: '',
-    category: [],
-    numberPages: '',
-    sourceLink: '',
-    language: '',
-    format: '',
-    pathUrl: '',
+    id,
+    title,
+    authors,
+    synopsis,
+    year,
+    category,
+    numberPages,
+    sourceLink,
+    language,
+    format,
+    pathUrl,
     image: {
-      url: [],
-      public_id: '',
+      url,
+      // eslint-disable-next-line camelcase
+      public_id,
     },
-    userId: currentUser?.uid,
   });
+  const { mutate, isPending, isSuccess, error } = useUpdateBook(books);
 
   function allFieldsBook(book: BookType): boolean {
     return (
@@ -176,12 +193,14 @@ export function FormNewBook() {
             const uint8Array = new Uint8Array(arrayBuffer);
             const compressedArrayBuffer = pako.deflate(uint8Array);
             const byteArray = [...new Uint8Array(compressedArrayBuffer)];
+            const publicId = books.image.public_id;
+            const pId = publicId.replace('xbu/', '');
 
             setBooks((prevBooks) => ({
               ...prevBooks,
               image: {
                 url: byteArray,
-                public_id: '',
+                public_id: pId,
               },
             }));
           };
@@ -194,10 +213,10 @@ export function FormNewBook() {
   }
 
   function onSubmit() {
-    mutate(books);
+    mutate(books.id);
   }
 
-  if (previewImg === null) {
+  if (previewImg === null && !books.image?.url) {
     previewImgUI = (
       <Flex
         py='3'
@@ -221,7 +240,7 @@ export function FormNewBook() {
         </Box>
       </Flex>
     );
-  } else {
+  } else if (previewImg) {
     previewImgUI = (
       <Box py='3' h='379px' outline='1px dashed gray' rounded='lg'>
         <Image
@@ -229,6 +248,18 @@ export function FormNewBook() {
           m='auto'
           rounded='lg'
           src={previewImg ? URL.createObjectURL(previewImg) : ''}
+          alt='Preview'
+        />
+      </Box>
+    );
+  } else if (books.image?.url) {
+    previewImgUI = (
+      <Box py='3' h='379px' outline='1px dashed gray' rounded='lg'>
+        <Image
+          h='360px'
+          m='auto'
+          rounded='lg'
+          src={books.image?.url as string}
           alt='Preview'
         />
       </Box>
@@ -263,20 +294,9 @@ export function FormNewBook() {
         align='center'
         justify='center'
         direction='column'
-        // mt='5'
-        // mb='16'
         p={{ base: 3, md: 0 }}
       >
-        <Box
-          w='full'
-          // boxShadow='2xl'
-          // p={{ base: 5, md: 10 }}
-          // rounded='lg'
-          // border='1px'
-          // bg={bgColorBox}
-          // borderColor='green.600'
-          maxWidth='800px'
-        >
+        <Box w='full' maxWidth='800px'>
           <Box mb='5' fontSize='md'>
             Los campos con el{' '}
             <Box display='inline' color='red.300'>
@@ -372,7 +392,7 @@ export function FormNewBook() {
                   <FormErrorMessage>{errors.synopsis.message}</FormErrorMessage>
                 )}
               </FormControl>
-              <FormControl isRequired>
+              <FormControl>
                 <FormLabel htmlFor='sinopsis' mt='2'>
                   Subir Imagen
                 </FormLabel>
@@ -487,6 +507,7 @@ export function FormNewBook() {
                     handleFieldChange('language', selectedOption?.value)
                   }
                   options={sortedLanguage}
+                  value={{ value: books.language, label: books.language }}
                   noOptionsMessage={({ inputValue }) =>
                     `Esta opción "${inputValue}" no existe`
                   }
@@ -578,6 +599,9 @@ export function FormNewBook() {
                   colorScheme='green'
                   onChange={handleCategoryChange}
                   options={sortedCategories}
+                  value={books.category.map((category) => {
+                    return { value: category, label: category };
+                  })}
                   closeMenuOnSelect={false}
                   noOptionsMessage={({ inputValue }) =>
                     `Esta opción "${inputValue}" no existe`
@@ -601,6 +625,7 @@ export function FormNewBook() {
                     handleFieldChange('format', selectedOption?.value)
                   }
                   options={sortedFormat}
+                  value={{ value: books.format, label: books.format }}
                   noOptionsMessage={({ inputValue }) =>
                     `Esta opción "${inputValue}" no existe`
                   }
@@ -618,11 +643,13 @@ export function FormNewBook() {
                   _hover={{ bg: 'green.600' }}
                   _active={{ bg: 'green.600' }}
                   isDisabled={disabled}
-                  loadingText='Publicando...'
+                  loadingText='Guardando...'
                   isLoading={isPending}
                 >
-                  <Icon as={AiOutlineCloudUpload} fontSize='25' mr='2' />
-                  Publicar
+                  <Flex align='center' justify='center'>
+                    <Icon as={AiOutlineSave} fontSize='25' mr='2' />
+                    Listo
+                  </Flex>
                 </Button>
               </Box>
             </Box>

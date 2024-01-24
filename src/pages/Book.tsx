@@ -22,24 +22,25 @@ import {
 import { BsTag } from 'react-icons/bs';
 import LazyLoad from 'react-lazy-load';
 
-import { useBook, useDeleteBook } from '../hooks/querys';
-import { handleImageLoad } from '../utils/utils';
-import { MainHead } from '../components/Head';
-import { MyTag } from '../components/MyTag';
-import { ModalShare } from '../components/ModalShare';
-import { MyLink } from '../components/MyLink';
-import { BooksSection } from '../components/BooksSection';
-import { ImageZoom } from '../components/ImageZoom';
-import { ModalOptions } from '../components/ModalOptions';
-import { ModalConfirmation } from '../components/ModalConfirmation';
-import { useAuth } from '../store/AuthContext';
+import { useBook, useDeleteBook } from '@hooks/querys';
+import { handleImageLoad } from '@utils/utils';
+import { MainHead } from '@components/Head';
+import { MyTag } from '@components/MyTag';
+import { ModalShare } from '@components/ModalShare';
+import { MyLink } from '@components/MyLink';
+import { BooksSection } from '@components/BooksSection';
+import { ImageZoom } from '@components/ImageZoom';
+import { ModalOptions } from '@components/ModalOptions';
+import { ModalConfirmation } from '@components/ModalConfirmation';
+import { ModalForm } from '@components/ModalForm';
+import { useAuth } from '@contexts/AuthContext';
 
-const Categories = lazy(() => import('../components/Categories'));
+const Categories = lazy(() => import('@components/Categories'));
 const MoreBooksAuthors = lazy(
-  () => import('../components/cards/MoreBooksAuthors'),
+  () => import('@components/cards/MoreBooksAuthors'),
 );
-const RelatedBooks = lazy(() => import('../components/cards/RelatedBooks'));
-const MoreBooks = lazy(() => import('../components/cards/MoreBooks'));
+const RelatedBooks = lazy(() => import('@components/cards/RelatedBooks'));
+const MoreBooks = lazy(() => import('@components/cards/MoreBooks'));
 
 export default function Book() {
   const shareUrl = window.location.href;
@@ -60,6 +61,11 @@ export default function Book() {
     isOpen: isOpenConfirmation,
     onOpen: onOpenConfirmation,
     onClose: onCloseConfirmation,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenEdit,
+    onOpen: onOpenEdit,
+    onClose: onCloseEdit,
   } = useDisclosure();
   const {
     isOpen: isOpenShare,
@@ -169,16 +175,35 @@ export default function Book() {
         isOpen={isOpenOptions}
         onClose={onCloseOptions}
         onDeleteBook={onOpenConfirmation}
+        onEditBook={() => {
+          onOpenEdit();
+          onCloseOptions();
+        }}
       />
       <ModalConfirmation
         isOpen={isOpenConfirmation}
-        name={data.title}
+        title={data.title}
         onDeleteBook={handleDeleteBook}
         isPending={isPending}
         onClose={() => {
           onCloseConfirmation();
           onCloseOptions();
         }}
+      />
+      <ModalForm
+        isOpen={isOpenEdit}
+        id={data.id}
+        title={data.title}
+        authors={data.authors}
+        synopsis={data.synopsis}
+        year={data.year}
+        category={data.category}
+        numberPages={data.numberPages}
+        sourceLink={data.sourceLink}
+        language={data.language}
+        format={data.format}
+        image={{ url: data.image.url, public_id: data.image.public_id }}
+        onClose={onCloseEdit}
       />
       <Flex
         w='full'
