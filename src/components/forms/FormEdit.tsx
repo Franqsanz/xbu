@@ -290,12 +290,7 @@ export function FormEdit({
 
   return (
     <>
-      <Flex
-        align='center'
-        justify='center'
-        direction='column'
-        p={{ base: 3, md: 0 }}
-      >
+      <Flex align='center' justify='center' direction='column'>
         <Box w='full' maxWidth='800px'>
           <Box mb='5' fontSize='md'>
             Los campos con el{' '}

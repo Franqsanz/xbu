@@ -40,7 +40,7 @@ export function ModalForm({
         isOpen={isOpen}
         onClose={onClose}
         closeOnOverlayClick={false}
-        size={{ base: 'sm', md: '4xl' }}
+        size={{ base: 'xs', lg: '4xl', md: '2xl' }}
       >
         <ModalOverlay backdropFilter='blur(7px)' />
         <ModalContent overflow='hidden'>
