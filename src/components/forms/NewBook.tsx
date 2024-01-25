@@ -263,18 +263,16 @@ export function FormNewBook() {
         align='center'
         justify='center'
         direction='column'
-        // mt='5'
-        // mb='16'
+        mt='5'
+        mb='16'
         p={{ base: 3, md: 0 }}
       >
         <Box
           w='full'
-          // boxShadow='2xl'
-          // p={{ base: 5, md: 10 }}
-          // rounded='lg'
-          // border='1px'
-          // bg={bgColorBox}
-          // borderColor='green.600'
+          boxShadow='2xl'
+          p={{ base: 5, md: 10 }}
+          rounded='lg'
+          border='1px'
           maxWidth='800px'
         >
           <Box mb='5' fontSize='md'>

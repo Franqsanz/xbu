@@ -1,4 +1,5 @@
 import React, { Suspense, lazy, useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FormControl,
   Button,
@@ -8,14 +9,12 @@ import {
   FormLabel,
   Textarea,
   Image,
-  Alert,
-  AlertIcon,
-  AlertTitle,
   useColorModeValue,
   useDisclosure,
   Icon,
   Skeleton,
   FormErrorMessage,
+  useToast,
 } from '@chakra-ui/react';
 import pako from 'pako';
 import { useForm } from 'react-hook-form';
@@ -56,9 +55,10 @@ export function FormEdit({
     register,
     formState: { errors },
   } = useForm<BookType>();
-  let alertMessage;
+  const navigate = useNavigate();
   let previewImgUI;
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
   const [cropData, setCropData] = useState<string | null>(null);
@@ -82,12 +82,13 @@ export function FormEdit({
       public_id,
     },
   });
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { mutate, isPending, isSuccess, error } = useUpdateBook(books);
 
   function allFieldsBook(book: BookType): boolean {
     return (
       Object.entries(book)
-        .filter(([key]) => key !== 'sourceLink')
+        .filter(([key]) => key !== 'sourceLink' && key !== 'pathUrl')
         .every(([, value]) => value) && book.category.length > 0
     );
   }
@@ -152,8 +153,6 @@ export function FormEdit({
     const generatedPathUrl = generatePathUrl(books.title);
     setBooks((books) => ({ ...books, pathUrl: generatedPathUrl }));
   }, [books.title]);
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   function handleButtonClick() {
     if (fileInputRef.current) {
@@ -267,25 +266,29 @@ export function FormEdit({
   }
 
   if (isSuccess) {
-    alertMessage = (
-      <Alert status='success' variant='solid' rounded='xl'>
-        <AlertIcon color='black' />
-        <AlertTitle fontWeight='normal' color='black'>
-          ¡Publicación exitosa!
-        </AlertTitle>
-      </Alert>
-    );
+    toast({
+      title: 'Guardado',
+      description: 'Modificaciones guardadas exitosamente.',
+      status: 'success',
+      position: 'bottom-left',
+      isClosable: true,
+      containerStyle: {
+        fontFamily: 'sans-serif',
+      },
+    });
+
+    navigate('/explore', { replace: true });
   } else if (error) {
-    alertMessage = (
-      <Alert status='error' variant='solid' rounded='xl'>
-        <AlertIcon />
-        <AlertTitle fontWeight='normal'>
-          Ha ocurrido un error al publicar.
-        </AlertTitle>
-      </Alert>
-    );
-  } else {
-    alertMessage = <Alert display='none' />;
+    toast({
+      title: 'Ha ocurrido un error',
+      description: 'No se ha podido guardar las modificaciones.',
+      status: 'error',
+      position: 'bottom-left',
+      isClosable: true,
+      containerStyle: {
+        fontFamily: 'sans-serif',
+      },
+    });
   }
 
   return (
@@ -297,6 +300,7 @@ export function FormEdit({
             onSubmit={handleSubmit(onSubmit)}
             justify='center'
             align='stretch'
+            pb='3'
             flexDirection={{ base: 'column', md: 'row' }}
           >
             <Box w='full' mr='5'>
@@ -661,7 +665,6 @@ export function FormEdit({
               </Box>
             </Box>
           </Flex>
-          <Box mt='10'>{alertMessage}</Box>
         </Box>
       </Flex>
     </>

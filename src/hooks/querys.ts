@@ -26,6 +26,7 @@ import {
 import { logOut } from '@services/firebase/auth';
 import { keys } from '@utils/utils';
 import { BookType } from '@components/types';
+// import { useAuth } from '@contexts/AuthContext';
 
 const queryClient = new QueryClient();
 
@@ -198,17 +199,15 @@ function useDeleteBook() {
 }
 
 function useUpdateBook(book: any) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  // const { currentUser } = useAuth();
 
   return useMutation({
     mutationKey: [keys.updateBook],
     mutationFn: (id: string | undefined) => updateBook(id, book),
-    onSuccess: (data) => {
-      if (data) {
-        // return navigate(`/profile/${data.info.user.uid}`, { replace: true });
-        return navigate('/explore', { replace: true });
-      }
-    },
+    // onSuccess: (data) => {
+    //   if (data) return navigate('/explore', { replace: true });
+    // },
     onError: async (error) => {
       console.error('Error en el servidor:', error);
       await logOut();
