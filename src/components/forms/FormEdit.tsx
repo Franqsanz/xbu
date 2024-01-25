@@ -292,13 +292,6 @@ export function FormEdit({
     <>
       <Flex align='center' justify='center' direction='column'>
         <Box w='full' maxWidth='800px'>
-          <Box mb='5' fontSize='md'>
-            Los campos con el{' '}
-            <Box display='inline' color='red.300'>
-              *
-            </Box>{' '}
-            son obligatorios
-          </Box>
           <Flex
             as='form'
             onSubmit={handleSubmit(onSubmit)}
@@ -627,7 +620,12 @@ export function FormEdit({
                   placeholder='Elija un Formato'
                 />
               </FormControl>
-              <Box mt={{ base: 10, md: '22rem' }}>
+              <Box
+                // justify='space-evenly'
+                // direction='column'
+                // gap='4'
+                mt={{ base: 10, md: '22rem' }}
+              >
                 <Button
                   type='submit'
                   w='full'
@@ -643,9 +641,23 @@ export function FormEdit({
                 >
                   <Flex align='center' justify='center'>
                     <Icon as={AiOutlineSave} fontSize='25' mr='2' />
-                    Listo
+                    Guardar
                   </Flex>
                 </Button>
+                {/* <Button
+                    // w='full'
+                    size='lg'
+                    // border='1px'
+                    // bg={bgColorButton}
+                    // color='black'
+                    // _hover={{ bg: 'green.600' }}
+                    // _active={{ bg: 'green.600' }}
+                >
+                  <Flex align='center' justify='center'>
+                    <Icon as={AiOutlineSave} fontSize='25' mr='2' />
+                    Cancelar
+                  </Flex>
+                </Button> */}
               </Box>
             </Box>
           </Flex>
