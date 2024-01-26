@@ -12,6 +12,7 @@ import {
   Button,
   useDisclosure,
   Icon,
+  useToast,
 } from '@chakra-ui/react';
 import {
   FiArrowLeft,
@@ -52,6 +53,7 @@ export default function Book() {
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
   const bgButton = useColorModeValue('white', 'black');
   const navigate = useNavigate();
+  const toast = useToast();
   const {
     isOpen: isOpenOptions,
     onOpen: onOpenOptions,
@@ -76,7 +78,7 @@ export default function Book() {
   let btnMoreOptions;
 
   const { data } = useBook(pathUrl);
-  const { mutate, isPending } = useDeleteBook();
+  const { mutate, isSuccess, isPending } = useDeleteBook();
 
   const isCurrentUserAuthor = currentUser && currentUser.uid === data.userId;
 
@@ -94,6 +96,20 @@ export default function Book() {
         </Flex>
       </Button>
     );
+  }
+
+  if (isSuccess) {
+    toast({
+      title: 'Libro eliminado',
+      description: 'Se ha eliminado exitosamente.',
+      position: 'top-right',
+      isClosable: true,
+      containerStyle: {
+        fontFamily: 'sans-serif',
+      },
+    });
+
+    navigate('/explore', { replace: true });
   }
 
   function handleDeleteBook() {

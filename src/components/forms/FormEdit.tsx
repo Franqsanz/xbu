@@ -46,17 +46,12 @@ export function FormEdit({
   image,
 }: BookType) {
   const {
-    url,
-    // eslint-disable-next-line camelcase
-    public_id,
-  } = image;
-  const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm<BookType>();
+  const { url, public_id } = image;
   const navigate = useNavigate();
-  let previewImgUI;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
@@ -78,10 +73,10 @@ export function FormEdit({
     pathUrl,
     image: {
       url,
-      // eslint-disable-next-line camelcase
       public_id,
     },
   });
+  let previewImgUI;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { mutate, isPending, isSuccess, error } = useUpdateBook(books);
 

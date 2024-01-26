@@ -44,6 +44,7 @@
     "prefer-const": 0,
     "func-style": [1, "declaration", { "allowArrowFunctions": false }],
     "n/handle-callback-err": 0,
+    "camelcase": 0,
     "prettier/prettier": [
       2,
       {
@@ -60,6 +61,7 @@
     "@typescript-eslint/no-non-null-assertion": 0,
     "@typescript-eslint/adjacent-overload-signatures": 0,
     "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-unnecessary-condition": 0,
     "react/no-unescaped-entities": 0,
     "react-hooks/exhaustive-deps": 0
   }

@@ -185,12 +185,12 @@ function useDeleteBook() {
   return useMutation({
     mutationKey: [keys.deleteBook],
     mutationFn: (id: string | undefined) => deleteBook(id),
-    onSuccess: (data) => {
-      if (data) {
-        // return navigate(`/profile/${data.info.user.uid}`, { replace: true });
-        return navigate('/explore', { replace: true });
-      }
-    },
+    // onSuccess: (data) => {
+    //   if (data) {
+    //     // return navigate(`/profile/${data.info.user.uid}`, { replace: true });
+    //     return navigate('/explore', { replace: true });
+    //   }
+    // },
     onError: async (error) => {
       console.error('Error en el servidor:', error);
       await logOut();
