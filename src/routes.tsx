@@ -1,8 +1,7 @@
-import React, { lazy, useState } from 'react';
-import { createBrowserRouter, Navigate, useLocation } from 'react-router-dom';
+import React, { lazy } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
 
 import { Home } from '@pages/Home';
-import { Register } from '@pages/Register';
 import { Login } from '@pages/Login';
 import { CatchError } from '@utils/CatchError';
 import { ErrorPage } from '@pages/404';
@@ -11,29 +10,12 @@ import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { SkeletonDetailsBook } from '@components/skeletons/SkeletonDBook';
 import { PrivateRoute } from '@components/PrivateRoute';
 
-import { useAuth } from '@contexts/AuthContext';
-
 const PrivacyPolicies = lazy(() => import('@pages/PrivacyPolicies'));
 const Explore = lazy(() => import('@pages/Explore'));
 const Book = lazy(() => import('@pages/Book'));
 const Search = lazy(() => import('@pages/Search'));
 const NewBook = lazy(() => import('@pages/NewBook'));
 const Profile = lazy(() => import('@pages/profile/Profile'));
-
-export function Private({ children }: { children: React.ReactNode }) {
-  const { currentUser, loading } = useAuth();
-  const location = useLocation();
-
-  if (loading) {
-    return <SkeletonAllBooks />;
-  }
-
-  if (currentUser && location.pathname === '/login') {
-    return <Navigate to='/explore' />;
-  }
-
-  return <>{children}</>;
-}
 
 const routes = createBrowserRouter([
   {
@@ -42,11 +24,7 @@ const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          // <Private>
-          <Home />
-          // </Private>
-        ),
+        element: <Home />,
       },
       {
         path: '/explore',
@@ -65,16 +43,8 @@ const routes = createBrowserRouter([
         element: <PrivacyPolicies />,
       },
       {
-        path: '/register',
-        element: <Register />,
-      },
-      {
         path: '/login',
-        element: (
-          // <Private>
-          <Login />
-          // </Private>
-        ),
+        element: <Login />,
       },
       {
         path: '/books',
