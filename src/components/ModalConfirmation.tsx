@@ -1,6 +1,5 @@
 import React from 'react';
 import { IoWarningOutline } from 'react-icons/io5';
-// import { RiDeleteBin6Line } from 'react-icons/ri';
 import {
   Modal,
   ModalOverlay,
@@ -67,11 +66,6 @@ export function ModalConfirmation({
               isLoading={isPending}
               _hover={{ color: 'none' }}
             >
-              {/* <Icon
-                as={RiDeleteBin6Line}
-                boxSize='4'
-                mr='3'
-              /> */}
               Eliminar
             </Button>
             <Button

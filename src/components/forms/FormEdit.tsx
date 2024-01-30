@@ -14,7 +14,6 @@ import {
   Icon,
   Skeleton,
   FormErrorMessage,
-  useToast,
 } from '@chakra-ui/react';
 import pako from 'pako';
 import { useForm } from 'react-hook-form';
@@ -22,6 +21,8 @@ import { Select } from 'chakra-react-select';
 import 'cropperjs/dist/cropper.css';
 import { AiOutlineSave } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
+import { FaCheckCircle } from 'react-icons/fa';
+import { IoWarningSharp } from 'react-icons/io5';
 
 import { categories, formats, languages } from '../../data/links';
 import { BookType } from '@components/types';
@@ -29,6 +30,7 @@ import { useUpdateBook } from '@hooks/querys';
 import { ModalCropper } from '@components/forms/ModalCropper';
 import { generatePathUrl, sortArrayByLabel } from '@utils/utils';
 import { MyPopover } from '@components/MyPopover';
+import { useMyToast } from '@hooks/useMyToast';
 const Cropper = lazy(() => import('react-cropper'));
 
 export function FormEdit({
@@ -53,7 +55,7 @@ export function FormEdit({
   const { url, public_id } = image;
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast();
+  const myToast = useMyToast();
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
   const [cropData, setCropData] = useState<string | null>(null);
@@ -261,28 +263,20 @@ export function FormEdit({
   }
 
   if (isSuccess) {
-    toast({
+    myToast({
       title: 'Guardado',
       description: 'Modificaciones guardadas exitosamente.',
-      status: 'success',
-      position: 'bottom-left',
-      isClosable: true,
-      containerStyle: {
-        fontFamily: 'sans-serif',
-      },
+      icon: FaCheckCircle,
+      bgColor: 'green.50',
     });
 
     navigate('/explore', { replace: true });
   } else if (error) {
-    toast({
+    myToast({
       title: 'Ha ocurrido un error',
       description: 'No se ha podido guardar las modificaciones.',
-      status: 'error',
-      position: 'bottom-left',
-      isClosable: true,
-      containerStyle: {
-        fontFamily: 'sans-serif',
-      },
+      icon: IoWarningSharp,
+      bgColor: 'red.400',
     });
   }
 
