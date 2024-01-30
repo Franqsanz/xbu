@@ -91,7 +91,7 @@ async function deleteBook(id: string | undefined) {
 async function postRegister(token: string) {
   const data = await fetchData(`${API_URL}/auth/register`, {
     method: 'POST',
-    credentials: 'include',
+    // credentials: 'include',
     headers: {
       Authorization: `Bearer ${token}`,
     },
