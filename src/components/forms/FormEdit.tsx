@@ -27,7 +27,7 @@ import { IoWarningSharp } from 'react-icons/io5';
 import { categories, formats, languages } from '../../data/links';
 import { BookType } from '@components/types';
 import { useUpdateBook } from '@hooks/querys';
-import { ModalCropper } from '@components/forms/ModalCropper';
+import { ModalCropper } from '@components/modals/ModalCropper';
 import { generatePathUrl, sortArrayByLabel } from '@utils/utils';
 import { MyPopover } from '@components/MyPopover';
 import { useMyToast } from '@hooks/useMyToast';

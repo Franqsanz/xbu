@@ -17,7 +17,7 @@ import {
 import { navLink, accountLinks } from '../../data/links';
 import { MenuProfile } from '@components/nav/menu/MenuProfile';
 import { InputSearch } from '@components/forms/filters/InputSearch';
-import { ModalFilter } from '@components/forms/filters/ModalFilter';
+import { ModalFilter } from '@components/modals/ModalFilter';
 import { useAuth } from '@contexts/AuthContext';
 
 export function DesktopNav() {

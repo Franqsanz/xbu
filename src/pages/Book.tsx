@@ -27,13 +27,13 @@ import { useBook, useDeleteBook } from '@hooks/querys';
 import { handleImageLoad } from '@utils/utils';
 import { MainHead } from '@components/Head';
 import { MyTag } from '@components/MyTag';
-import { ModalShare } from '@components/ModalShare';
+import { ModalShare } from '@components/modals/ModalShare';
 import { MyLink } from '@components/MyLink';
 import { BooksSection } from '@components/BooksSection';
 import { ImageZoom } from '@components/ImageZoom';
-import { ModalOptions } from '@components/ModalOptions';
-import { ModalConfirmation } from '@components/ModalConfirmation';
-import { ModalForm } from '@components/ModalForm';
+import { ModalOptions } from '@components/modals/ModalOptions';
+import { ModalConfirmation } from '@components/modals/ModalConfirmation';
+import { ModalForm } from '@components/modals/ModalForm';
 import { useAuth } from '@contexts/AuthContext';
 
 const Categories = lazy(() => import('@components/Categories'));
@@ -102,7 +102,7 @@ export default function Book() {
     toast({
       title: 'Libro eliminado',
       description: 'Se ha eliminado exitosamente.',
-      position: 'top-right',
+      position: 'bottom-right',
       isClosable: true,
       containerStyle: {
         fontFamily: 'sans-serif',

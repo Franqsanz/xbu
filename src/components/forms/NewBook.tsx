@@ -27,7 +27,7 @@ import { BiImageAdd } from 'react-icons/bi';
 import { categories, formats, languages } from '../../data/links';
 import { BookType } from '@components/types';
 import { useMutatePost } from '@hooks/querys';
-import { ModalCropper } from '@components/forms/ModalCropper';
+import { ModalCropper } from '@components/modals/ModalCropper';
 import { generatePathUrl, sortArrayByLabel } from '@utils/utils';
 import { MyPopover } from '@components/MyPopover';
 import { useAuth } from '@contexts/AuthContext';

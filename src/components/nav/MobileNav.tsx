@@ -26,7 +26,7 @@ import {
 
 import { navLink, accountLinks } from '../../data/links';
 import { InputSearch } from '@components/forms/filters/InputSearch';
-import { ModalFilter } from '@components/forms/filters/ModalFilter';
+import { ModalFilter } from '@components/modals/ModalFilter';
 import { MenuProfile } from '@components/nav/menu/MenuProfile';
 import { useAuth } from '@contexts/AuthContext';
 
