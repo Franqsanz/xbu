@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { Home } from '@pages/Home';
 import { Login } from '@pages/Login';
+import { CreateUser } from '@pages/CreateUser';
 import { CatchError } from '@utils/CatchError';
 import { ErrorPage } from '@pages/404';
 import { Layout } from '@pages/layout/Layout';
@@ -21,6 +22,7 @@ const routes = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
+    errorElement: <div>Error 500 o Error Boundary</div>,
     children: [
       {
         index: true,
@@ -45,6 +47,10 @@ const routes = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
+      },
+      {
+        path: '/create-username',
+        element: <CreateUser />,
       },
       {
         path: '/books',
@@ -83,18 +89,12 @@ const routes = createBrowserRouter([
         ],
       },
       {
-        path: '/profile',
+        path: '/:username/:userId?',
         element: (
           <PrivateRoute>
             <Profile />
           </PrivateRoute>
         ),
-        children: [
-          {
-            path: ':userId',
-            element: <Profile />,
-          },
-        ],
       },
       {
         path: '*',

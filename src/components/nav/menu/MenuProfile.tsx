@@ -16,7 +16,7 @@ import {
 import { logOut } from '@services/firebase/auth';
 import { MenuType } from '@components/types';
 
-export function MenuProfile({ displayName, photoURL, uid }: MenuType) {
+export function MenuProfile({ displayName, photoURL, username }: MenuType) {
   const navigate = useNavigate();
   const colorBorder = useColorModeValue('black', 'white');
 
@@ -50,7 +50,7 @@ export function MenuProfile({ displayName, photoURL, uid }: MenuType) {
           <MenuDivider />
           <MenuItem
             as={NavLink}
-            to={`/profile/${uid}`}
+            to={`/${username}`}
             _hover={{ textDecoration: 'none' }}
           >
             Perfil

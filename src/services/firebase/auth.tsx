@@ -1,37 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, useColorModeValue } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { GrGoogle } from 'react-icons/gr';
 import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 
 import { logIn } from './config';
-import { useUserRegister } from '@hooks/querys';
-// import { useAuth } from '../../store/AuthContext';
+import { useCheckUser } from '@hooks/querys';
+import { useAuth } from '@contexts/AuthContext';
 
 const provider = new GoogleAuthProvider();
 
 provider.setCustomParameters({ prompt: 'select_account ' });
 
 function SignIn() {
-  const { mutateAsync, isPending, isError, isSuccess } = useUserRegister();
-  let errorUI;
+  const navigate = useNavigate();
+  const { currentUser, loading } = useAuth();
+  const [userId, setUserId] = useState('');
+  const { data, isPending, error, refetch } = useCheckUser(userId);
 
-  if (isError) {
-    errorUI = <h1>error de conexion</h1>;
-  }
-
-  async function signInWithGoogle() {
+  async function SignInWithGoogle() {
     try {
       const result = await signInWithPopup(logIn, provider);
-      const token = await result.user.getIdToken(true);
-      await window.localStorage.setItem('app_tk', token);
-      // document.cookie = `app_tk=${token}; SameSite=None; path=/;`;
 
-      return mutateAsync(token);
+      if (result) {
+        const token = await result.user.getIdToken(true);
+        await window.localStorage.setItem('app_tk', token);
+        await window.localStorage.setItem('app_ud', result.user.uid);
+        // document.cookie = `app_tk=${token}; SameSite=None; path=/;`;
+      }
     } catch (error) {
       await DisconnectFirebaseAccount();
       console.warn(error);
     }
   }
+
+  useEffect(() => {
+    if (currentUser) {
+      function checkUserData() {
+        setUserId(currentUser?.uid as string);
+      }
+      checkUserData();
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (userId) {
+      refetch();
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (!isPending && (!data || data.uid === null)) {
+      return navigate('/create-username', {
+        state: { token: window.localStorage.getItem('app_tk') },
+      });
+    }
+
+    if (data && data.username) {
+      return navigate(`/${data.username}`);
+    }
+  }, [data, isPending, error]);
 
   async function DisconnectFirebaseAccount() {
     // const { currentUser } = useAuth();
@@ -39,11 +67,8 @@ function SignIn() {
     try {
       await logOut();
       // await currentUser?.delete(); // Elimina la cuenta de Firebase
-    } catch (firebaseError) {
-      console.error(
-        'Error al desconectar la cuenta de Firebase:',
-        firebaseError,
-      );
+    } catch (error) {
+      console.error('Error al desconectar la cuenta de Firebase:', error);
     }
   }
 
@@ -59,13 +84,13 @@ function SignIn() {
         fontSize='md'
         _hover={{ bg: '#D23C2F' }}
         _active={{ bg: '#BB352A' }}
-        onClick={signInWithGoogle}
-        loadingText='Redirigiendo...'
-        isLoading={isPending}
+        onClick={SignInWithGoogle}
+        // loadingText='Redirigiendo...'
+        // isLoading={loading}
       >
         Continuar con Google
       </Button>
-      <div>{errorUI}</div>
+      {/* <div>{errorUI}</div> */}
     </>
   );
 }
@@ -74,6 +99,7 @@ async function logOut() {
   try {
     await signOut(logIn);
     await window.localStorage.removeItem('app_tk');
+    await window.localStorage.removeItem('app_ud');
   } catch (error) {
     console.error('Error al cerrar sesión:', error);
   }

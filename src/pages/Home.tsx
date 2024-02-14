@@ -25,10 +25,12 @@ import {
   ImgBook,
   BookReading,
 } from '@assets/assets';
+import { useUserData } from '@hooks/querys';
 
 export function Home() {
   const { colorMode } = useColorMode();
   const { currentUser } = useAuth();
+  const { data } = useUserData(currentUser?.uid);
   const bgButton = useColorModeValue('green.500', 'green.700');
   const bContainer = useColorModeValue('gray.50', 'none');
   const height = useBreakpointValue({
@@ -90,7 +92,7 @@ export function Home() {
             >
               <Link
                 w={{ base: '250px', md: '200px' }}
-                to={!currentUser ? '/login' : `/profile/${currentUser?.uid}`}
+                to={!data ? '/login' : `/${data.username}`}
                 as={NavLink}
                 border='1px'
                 bg={bgButton}

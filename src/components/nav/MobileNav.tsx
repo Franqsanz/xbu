@@ -29,9 +29,11 @@ import { InputSearch } from '@components/forms/filters/InputSearch';
 import { ModalFilter } from '@components/modals/ModalFilter';
 import { MenuProfile } from '@components/nav/menu/MenuProfile';
 import { useAuth } from '@contexts/AuthContext';
+import { useUserData } from '@hooks/querys';
 
 export function MobileNav() {
   const { currentUser } = useAuth();
+  const { data } = useUserData(currentUser?.uid);
   const containerRef = useRef<HTMLDivElement>(null);
   const { colorMode, toggleColorMode } = useColorMode();
   const {
@@ -62,12 +64,12 @@ export function MobileNav() {
     },
   });
 
-  if (currentUser) {
+  if (data) {
     profileMenu = (
       <MenuProfile
-        displayName={currentUser.displayName}
-        photoURL={currentUser.photoURL}
-        uid={currentUser.uid}
+        displayName={data.name}
+        photoURL={data.picture}
+        username={data.username}
       />
     );
 

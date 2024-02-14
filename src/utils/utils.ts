@@ -17,6 +17,8 @@ const keys = {
   updateBook: 'UpdateBook',
   deleteBook: 'DeleteBook',
   profile: 'Profile',
+  checkUser: 'CheckUser',
+  userData: 'UserData',
 };
 
 function handleImageLoad(e: React.SyntheticEvent) {

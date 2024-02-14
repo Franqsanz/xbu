@@ -88,25 +88,40 @@ async function deleteBook(id: string | undefined) {
 
 // Usuarios
 
-async function postRegister(token: string) {
+async function postRegister(token: string, body: any) {
   const data = await fetchData(`${API_URL}/auth/register`, {
     method: 'POST',
     // credentials: 'include',
     headers: {
       Authorization: `Bearer ${token}`,
+      'content-type': 'application/json',
     },
+    body: JSON.stringify({ username: body }),
   });
 
   return data;
 }
 
-async function getUserAndBooks(id: string | undefined, token: string | null) {
-  const data = await fetchData(`${API_URL}/user/my-books/${id}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
+async function getCheckUser(id: string | undefined) {
+  const data = await fetchData(`${API_URL}/users/check-user/${id}`);
+
+  return data;
+}
+
+async function getUserAndBooks(
+  username: string | undefined,
+  userId: string | null,
+  token: string | null,
+) {
+  const data = await fetchData(
+    `${API_URL}/users/my-books/${username}/${userId}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
 
   return data;
 }
@@ -126,5 +141,6 @@ export {
   updateBook,
   // Usuarios
   postRegister,
+  getCheckUser,
   getUserAndBooks,
 };

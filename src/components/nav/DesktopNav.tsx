@@ -19,20 +19,22 @@ import { MenuProfile } from '@components/nav/menu/MenuProfile';
 import { InputSearch } from '@components/forms/filters/InputSearch';
 import { ModalFilter } from '@components/modals/ModalFilter';
 import { useAuth } from '@contexts/AuthContext';
+import { useUserData } from '@hooks/querys';
 
 export function DesktopNav() {
   const { currentUser } = useAuth();
+  const { data } = useUserData(currentUser?.uid);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
   let profileMenu;
 
-  if (currentUser) {
+  if (data) {
     profileMenu = (
       <MenuProfile
-        displayName={currentUser.displayName}
-        photoURL={currentUser.photoURL}
-        uid={currentUser.uid}
+        displayName={data.name}
+        photoURL={data.picture}
+        username={data.username}
       />
     );
   } else {

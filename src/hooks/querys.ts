@@ -19,6 +19,7 @@ import {
   getMoreBooksAuthors,
   postBook,
   postRegister,
+  getCheckUser,
   getUserAndBooks,
   updateBook,
   deleteBook,
@@ -153,17 +154,10 @@ function useBook(pathUrl: string | undefined) {
 
 // Usuarios
 
-function useUserRegister() {
-  const navigate = useNavigate();
-
+function useUserRegister(body: any) {
   return useMutation({
     mutationKey: [keys.userRegister],
-    mutationFn: (token: string) => postRegister(token),
-    onSuccess: (data) => {
-      if (data) {
-        return navigate(`/profile/${data.info.user.uid}`, { replace: true });
-      }
-    },
+    mutationFn: (token: string) => postRegister(token, body),
     onError: async (error) => {
       console.error('Error en el servidor:', error);
       await logOut();
@@ -171,26 +165,39 @@ function useUserRegister() {
   });
 }
 
-function useProfile(id: string | undefined, token: string | null) {
+function useCheckUser(id: string | undefined) {
+  return useQuery({
+    queryKey: [keys.checkUser, id],
+    queryFn: () => getCheckUser(id),
+    enabled: false,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
+}
+
+function useUserData(id: string | undefined) {
+  return useQuery({
+    queryKey: [keys.userData, id],
+    queryFn: () => getCheckUser(id),
+  });
+}
+
+function useProfile(
+  username: string | undefined,
+  userId: string | null,
+  token: string | null,
+) {
   return useSuspenseQuery({
-    queryKey: [keys.profile, id],
-    queryFn: () => getUserAndBooks(id, token),
+    queryKey: [keys.profile, username, userId],
+    queryFn: () => getUserAndBooks(username, userId, token),
     gcTime: 3000,
   });
 }
 
 function useDeleteBook() {
-  const navigate = useNavigate();
-
   return useMutation({
     mutationKey: [keys.deleteBook],
     mutationFn: (id: string | undefined) => deleteBook(id),
-    // onSuccess: (data) => {
-    //   if (data) {
-    //     // return navigate(`/profile/${data.info.user.uid}`, { replace: true });
-    //     return navigate('/explore', { replace: true });
-    //   }
-    // },
     onError: async (error) => {
       console.error('Error en el servidor:', error);
       await logOut();
@@ -199,15 +206,9 @@ function useDeleteBook() {
 }
 
 function useUpdateBook(book: any) {
-  // const navigate = useNavigate();
-  // const { currentUser } = useAuth();
-
   return useMutation({
     mutationKey: [keys.updateBook],
     mutationFn: (id: string | undefined) => updateBook(id, book),
-    // onSuccess: (data) => {
-    //   if (data) return navigate('/explore', { replace: true });
-    // },
     onError: async (error) => {
       console.error('Error en el servidor:', error);
       await logOut();
@@ -227,6 +228,8 @@ export {
   useRelatedBooks,
   useMoreBooksAuthors,
   useUserRegister,
+  useCheckUser,
+  useUserData,
   useProfile,
   useUpdateBook,
   useDeleteBook,

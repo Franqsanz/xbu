@@ -177,7 +177,8 @@ interface AboutType {
 interface MenuType {
   displayName: string | null;
   photoURL: string | null;
-  uid: string;
+  username: string;
+  uid?: string;
 }
 
 interface AuthContextType {

@@ -9,7 +9,7 @@ import { SignIn } from '@services/firebase/auth';
 export function Login() {
   return (
     <>
-      <MainHead title='Ingresar o Regístrate| XBuniverse' />
+      <MainHead title='Ingresar o Regístrate | XBuniverse' />
       <ContainerTitle title='Ingresar o Regístrate' />
       <Flex
         justify='center'

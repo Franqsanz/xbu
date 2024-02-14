@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { Box, Flex, Image, useColorModeValue } from '@chakra-ui/react';
 
 import { MySimpleGrid } from '@components/MySimpleGrid';
@@ -14,9 +14,10 @@ import ResultLength from '@components/ResultLength';
 // import { logOut } from '../../services/firebase/auth';
 
 export default function Profile() {
-  const { userId } = useParams();
   const getToken = window.localStorage.getItem('app_tk');
-  const { data } = useProfile(userId, getToken);
+  const getUid = window.localStorage.getItem('app_ud');
+  const { username } = useParams();
+  const { data } = useProfile(username, getUid, getToken);
   const bgCover = useColorModeValue('gray.100', 'gray.700');
 
   return (
@@ -29,7 +30,7 @@ export default function Profile() {
         justify='center'
         align='center'
         direction='column'
-        h={{ base: '250px', md: '300px' }}
+        h={{ base: '230px', md: '260px' }}
         bg={bgCover}
       >
         <Image
@@ -44,9 +45,6 @@ export default function Profile() {
           textAlign='center'
         >
           {data.user.name}
-        </Box>
-        <Box as='span' fontSize={{ base: 'xs', md: 'sm' }} textAlign='center'>
-          {data.user.email}
         </Box>
         <Flex
           direction='column'
