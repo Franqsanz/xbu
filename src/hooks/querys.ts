@@ -180,7 +180,7 @@ function useUserData(id: string | undefined) {
   return useQuery({
     queryKey: [keys.userData, id],
     queryFn: () => getCheckUser(id),
-    refetchOnWindowFocus: false,
+    // refetchOnWindowFocus: false,
     retry: 4,
   });
 }
