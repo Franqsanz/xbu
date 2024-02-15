@@ -10,14 +10,15 @@ import { useProfile } from '@hooks/querys';
 import { parseDate } from '@utils/utils';
 import { CardType } from '@components/types';
 import ResultLength from '@components/ResultLength';
-// import { useAuth } from '../../store/AuthContext';
+import { useAuth } from '@contexts/AuthContext';
 // import { logOut } from '../../services/firebase/auth';
 
 export default function Profile() {
   const getToken = window.localStorage.getItem('app_tk');
-  const getUid = window.localStorage.getItem('app_ud');
+  const { currentUser } = useAuth();
+  const uid = currentUser?.uid;
   const { username } = useParams();
-  const { data } = useProfile(username, getUid, getToken);
+  const { data } = useProfile(username, uid, getToken);
   const bgCover = useColorModeValue('gray.100', 'gray.700');
 
   return (
@@ -36,7 +37,8 @@ export default function Profile() {
         <Image
           src={data.user.picture}
           alt={`Imagen de perfil de ${data.user.name}`}
-          borderRadius='10'
+          referrerPolicy='no-referrer'
+          borderRadius='full'
         />
         <Box
           as='h1'

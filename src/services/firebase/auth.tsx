@@ -25,7 +25,6 @@ function SignIn() {
       if (result) {
         const token = await result.user.getIdToken(true);
         await window.localStorage.setItem('app_tk', token);
-        await window.localStorage.setItem('app_ud', result.user.uid);
         // document.cookie = `app_tk=${token}; SameSite=None; path=/;`;
       }
     } catch (error) {

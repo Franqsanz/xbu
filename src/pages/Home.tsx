@@ -30,7 +30,8 @@ import { useUserData } from '@hooks/querys';
 export function Home() {
   const { colorMode } = useColorMode();
   const { currentUser } = useAuth();
-  const { data } = useUserData(currentUser?.uid);
+  const uid = currentUser?.uid;
+  const { data } = useUserData(uid);
   const bgButton = useColorModeValue('green.500', 'green.700');
   const bContainer = useColorModeValue('gray.50', 'none');
   const height = useBreakpointValue({

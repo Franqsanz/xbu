@@ -149,6 +149,7 @@ function useBook(pathUrl: string | undefined) {
     queryFn: () => getBook(pathUrl),
     refetchOnWindowFocus: false,
     gcTime: 3000,
+    retry: 1,
   });
 }
 
@@ -179,12 +180,14 @@ function useUserData(id: string | undefined) {
   return useQuery({
     queryKey: [keys.userData, id],
     queryFn: () => getCheckUser(id),
+    refetchOnWindowFocus: false,
+    retry: 4,
   });
 }
 
 function useProfile(
   username: string | undefined,
-  userId: string | null,
+  userId: string | undefined,
   token: string | null,
 ) {
   return useSuspenseQuery({

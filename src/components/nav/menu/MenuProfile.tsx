@@ -38,6 +38,7 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
             name={displayName as string}
             src={photoURL as string}
             size={{ base: 'xs', md: 'sm' }}
+            referrerPolicy='no-referrer'
           />
         </MenuButton>
       </Button>

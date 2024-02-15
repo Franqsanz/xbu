@@ -33,7 +33,8 @@ import { useUserData } from '@hooks/querys';
 
 export function MobileNav() {
   const { currentUser } = useAuth();
-  const { data } = useUserData(currentUser?.uid);
+  const uid = currentUser?.uid;
+  const { data } = useUserData(uid);
   const containerRef = useRef<HTMLDivElement>(null);
   const { colorMode, toggleColorMode } = useColorMode();
   const {

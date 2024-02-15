@@ -23,7 +23,8 @@ import { useUserData } from '@hooks/querys';
 
 export function DesktopNav() {
   const { currentUser } = useAuth();
-  const { data } = useUserData(currentUser?.uid);
+  const uid = currentUser?.uid;
+  const { data } = useUserData(uid);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');

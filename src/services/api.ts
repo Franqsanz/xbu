@@ -110,7 +110,7 @@ async function getCheckUser(id: string | undefined) {
 
 async function getUserAndBooks(
   username: string | undefined,
-  userId: string | null,
+  userId: string | undefined,
   token: string | null,
 ) {
   const data = await fetchData(
