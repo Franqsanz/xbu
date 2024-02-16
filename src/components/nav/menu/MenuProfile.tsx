@@ -13,11 +13,12 @@ import {
   MenuDivider,
 } from '@chakra-ui/react';
 
-import { logOut } from '@services/firebase/auth';
+import { useAccountActions } from '@hooks/useAccountActions';
 import { MenuType } from '@components/types';
 
 export function MenuProfile({ displayName, photoURL, username }: MenuType) {
   const navigate = useNavigate();
+  const { logOut } = useAccountActions();
   const colorBorder = useColorModeValue('black', 'white');
 
   return (

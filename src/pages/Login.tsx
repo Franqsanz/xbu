@@ -4,7 +4,7 @@ import { BsFacebook, BsTwitterX } from 'react-icons/bs';
 
 import { ContainerTitle } from '@components/ContainerTitle';
 import { MainHead } from '@components/Head';
-import { SignIn } from '@services/firebase/auth';
+import { SignIn } from '@services/auth/auth';
 
 export function Login() {
   return (

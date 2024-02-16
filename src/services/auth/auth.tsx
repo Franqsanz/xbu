@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Button, useColorModeValue } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { GrGoogle } from 'react-icons/gr';
-import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { logIn } from './config';
 import { useCheckUser } from '@hooks/querys';
 import { useAuth } from '@contexts/AuthContext';
+import { useAccountActions } from '@hooks/useAccountActions';
 
-const provider = new GoogleAuthProvider();
-
-provider.setCustomParameters({ prompt: 'select_account ' });
-
-function SignIn() {
+export function SignIn() {
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
   const navigate = useNavigate();
-  const { currentUser, loading } = useAuth();
+  const { currentUser } = useAuth();
+  const { logOut } = useAccountActions();
   const [userId, setUserId] = useState('');
   const { data, isPending, error, refetch } = useCheckUser(userId);
 
@@ -84,24 +84,11 @@ function SignIn() {
         _hover={{ bg: '#D23C2F' }}
         _active={{ bg: '#BB352A' }}
         onClick={SignInWithGoogle}
-        // loadingText='Redirigiendo...'
-        // isLoading={loading}
+        loadingText='Redirigiendo...'
+        isLoading={!isPending}
       >
         Continuar con Google
       </Button>
-      {/* <div>{errorUI}</div> */}
     </>
   );
 }
-
-async function logOut() {
-  try {
-    await signOut(logIn);
-    await window.localStorage.removeItem('app_tk');
-    await window.localStorage.removeItem('app_ud');
-  } catch (error) {
-    console.error('Error al cerrar sesión:', error);
-  }
-}
-
-export { SignIn, logOut };

@@ -5,7 +5,6 @@ import {
   useInfiniteQuery,
   QueryClient,
 } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 
 import {
   getAllBooks,
@@ -24,7 +23,7 @@ import {
   updateBook,
   deleteBook,
 } from '@services/api';
-import { logOut } from '@services/firebase/auth';
+import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
 import { BookType } from '@components/types';
 // import { useAuth } from '@contexts/AuthContext';
@@ -81,6 +80,7 @@ function useAllSearchBooks(book: string) {
     queryFn: () => getAllSearchBooks(book),
     refetchOnWindowFocus: false,
     enabled: false,
+    retry: 1,
   });
 }
 
@@ -102,6 +102,7 @@ function useBooksPaginate() {
 
       return lastPage.info.nextPage;
     },
+    retry: 1,
   });
 }
 
@@ -110,6 +111,7 @@ function useFilter(query: string | undefined, param: string | undefined) {
     queryKey: [keys.filter, query, param],
     queryFn: () => getBooksFilter(query, param),
     gcTime: 3000,
+    retry: 1,
   });
 }
 
@@ -120,6 +122,7 @@ function useMoreBooks() {
     refetchOnWindowFocus: false,
     gcTime: 3000,
     staleTime: 50000,
+    retry: 1,
   });
 }
 
@@ -130,6 +133,7 @@ function useRelatedBooks(id: string | undefined) {
     refetchOnWindowFocus: false,
     gcTime: 3000,
     staleTime: 50000,
+    retry: 1,
   });
 }
 
@@ -140,6 +144,7 @@ function useMoreBooksAuthors(id: string | undefined) {
     refetchOnWindowFocus: false,
     gcTime: 3000,
     staleTime: 50000,
+    retry: 1,
   });
 }
 
@@ -156,6 +161,8 @@ function useBook(pathUrl: string | undefined) {
 // Usuarios
 
 function useUserRegister(body: any) {
+  const { logOut } = useAccountActions();
+
   return useMutation({
     mutationKey: [keys.userRegister],
     mutationFn: (token: string) => postRegister(token, body),
@@ -181,7 +188,6 @@ function useUserData(id: string | undefined) {
     queryKey: [keys.userData, id],
     queryFn: () => getCheckUser(id),
     staleTime: 0,
-    // refetchInterval: 1000,
     retry: 4,
   });
 }
@@ -199,6 +205,8 @@ function useProfile(
 }
 
 function useDeleteBook() {
+  const { logOut } = useAccountActions();
+
   return useMutation({
     mutationKey: [keys.deleteBook],
     mutationFn: (id: string | undefined) => deleteBook(id),
@@ -210,6 +218,8 @@ function useDeleteBook() {
 }
 
 function useUpdateBook(book: any) {
+  const { logOut } = useAccountActions();
+
   return useMutation({
     mutationKey: [keys.updateBook],
     mutationFn: (id: string | undefined) => updateBook(id, book),
