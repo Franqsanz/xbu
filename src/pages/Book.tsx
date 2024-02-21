@@ -21,6 +21,7 @@ import {
   FiMoreHorizontal,
 } from 'react-icons/fi';
 import { BsTag } from 'react-icons/bs';
+import { FaCheckCircle } from 'react-icons/fa';
 import LazyLoad from 'react-lazy-load';
 
 import { useBook, useDeleteBook } from '@hooks/querys';
@@ -35,6 +36,7 @@ import { ModalOptions } from '@components/modals/ModalOptions';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 import { ModalForm } from '@components/modals/ModalForm';
 import { useAuth } from '@contexts/AuthContext';
+import { useMyToast } from '@hooks/useMyToast';
 
 const Categories = lazy(() => import('@components/Categories'));
 const MoreBooksAuthors = lazy(
@@ -53,7 +55,7 @@ export default function Book() {
   const infoTextColor = useColorModeValue('gray.600', 'gray.400');
   const bgButton = useColorModeValue('white', 'black');
   const navigate = useNavigate();
-  const toast = useToast();
+  const myToast = useMyToast();
   const {
     isOpen: isOpenOptions,
     onOpen: onOpenOptions,
@@ -99,14 +101,12 @@ export default function Book() {
   }
 
   if (isSuccess) {
-    toast({
+    myToast({
       title: 'Libro eliminado',
       description: 'Se ha eliminado exitosamente.',
-      position: 'bottom-right',
-      isClosable: true,
-      containerStyle: {
-        fontFamily: 'sans-serif',
-      },
+      icon: FaCheckCircle,
+      iconColor: 'green.700',
+      bgColor: 'black',
     });
 
     navigate('/explore', { replace: true });

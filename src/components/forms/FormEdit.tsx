@@ -267,7 +267,8 @@ export function FormEdit({
       title: 'Guardado',
       description: 'Modificaciones guardadas exitosamente.',
       icon: FaCheckCircle,
-      bgColor: 'green.50',
+      iconColor: 'green.700',
+      bgColor: 'black',
     });
 
     navigate('/explore', { replace: true });
@@ -276,7 +277,8 @@ export function FormEdit({
       title: 'Ha ocurrido un error',
       description: 'No se ha podido guardar las modificaciones.',
       icon: IoWarningSharp,
-      bgColor: 'red.400',
+      iconColor: 'red.400',
+      bgColor: 'black',
     });
   }
 

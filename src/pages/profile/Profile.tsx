@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { Box, Button, Flex, Image, useColorModeValue } from '@chakra-ui/react';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { Box, Flex, Image, useColorModeValue } from '@chakra-ui/react';
 
 import { MySimpleGrid } from '@components/MySimpleGrid';
 import { Card } from '@components/cards/Card';
@@ -11,16 +11,13 @@ import { parseDate } from '@utils/utils';
 import { CardType } from '@components/types';
 import ResultLength from '@components/ResultLength';
 import { useAuth } from '@contexts/AuthContext';
-import { useAccountActions } from '@hooks/useAccountActions';
 // import { logOut } from '../../services/firebase/auth';
 
 export default function Profile() {
   const getToken = window.localStorage.getItem('app_tk');
-  const { deleteAccount } = useAccountActions();
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
   const { username } = useParams();
-  const navigate = useNavigate();
   const { data } = useProfile(username, uid, getToken);
   const bgCover = useColorModeValue('gray.100', 'gray.700');
 
@@ -67,14 +64,6 @@ export default function Profile() {
         <Box mt={{ base: 5, md: 8 }} mb='1' fontSize={{ base: 'md', md: 'lg' }}>
           PUBLICACIONES
         </Box>
-        <Button
-          onClick={() => {
-            deleteAccount();
-            navigate('/');
-          }}
-        >
-          Eliminar cuenta
-        </Button>
       </Flex>
       <Flex
         direction={{ base: 'column', md: 'row' }}

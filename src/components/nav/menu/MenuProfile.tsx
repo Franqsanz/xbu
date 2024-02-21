@@ -64,6 +64,13 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
           >
             Crear Publicación
           </MenuItem>
+          <MenuItem
+            as={NavLink}
+            to='/my-account'
+            _hover={{ textDecoration: 'none' }}
+          >
+            Cuenta
+          </MenuItem>
         </MenuGroup>
         <MenuDivider />
         <MenuGroup>
