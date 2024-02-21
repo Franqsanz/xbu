@@ -106,7 +106,7 @@ export function Home() {
                   bg: 'green.600',
                 }}
               >
-                Ingresar
+                {!data ? 'Ingresar' : 'Perfil'}
               </Link>
               <Link
                 w={{ base: '250px', md: '200px' }}

@@ -11,6 +11,7 @@ import { parseDate } from '@utils/utils';
 import { CardType } from '@components/types';
 import ResultLength from '@components/ResultLength';
 import { useAuth } from '@contexts/AuthContext';
+import { NoData } from '@assets/assets';
 // import { logOut } from '../../services/firebase/auth';
 
 export default function Profile() {
@@ -61,7 +62,7 @@ export default function Profile() {
         </Flex>
       </Flex>
       <Flex justify='center' borderBottom='1px solid #A0AEC0'>
-        <Box mt={{ base: 5, md: 8 }} mb='1' fontSize={{ base: 'md', md: 'lg' }}>
+        <Box mt='3' mb='1' fontSize={{ base: 'md', md: 'lg' }}>
           PUBLICACIONES
         </Box>
       </Flex>
@@ -107,7 +108,28 @@ export default function Profile() {
             )}
           </MySimpleGrid>
         ) : (
-          <Box>Aún no hay publicaciones</Box>
+          <Flex
+            w='full'
+            direction='column'
+            justify='center'
+            align='center'
+            mt='10'
+          >
+            <Image
+              src={NoData}
+              maxW='full'
+              w={{ base: '200px', md: '400px' }}
+              mt='5'
+            />
+            <Box
+              mt='7'
+              mb='10'
+              fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
+              textAlign={{ base: 'center', md: 'left' }}
+            >
+              Aún no hay publicaciones
+            </Box>
+          </Flex>
         )}
       </Flex>
     </>

@@ -10,6 +10,8 @@ const images = {
     'https://res.cloudinary.com/xbu/image/upload/v1690907908/xbu_assets/patternpadWhite_cwhqna.svg',
   PageNotFound:
     'https://res.cloudinary.com/xbu/image/upload/v1691664467/xbu_assets/page_not_found_rl8gve.svg',
+  NoData:
+    'https://res.cloudinary.com/xbu/image/upload/v1708539494/xbu_assets/noData_gs71zg.svg',
 };
 
 export const {
@@ -19,4 +21,5 @@ export const {
   PatternPadBlack,
   PatternPadWhite,
   PageNotFound,
+  NoData,
 } = images;
