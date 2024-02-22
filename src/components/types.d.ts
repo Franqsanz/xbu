@@ -147,6 +147,8 @@ interface ModalOptionsAndConfirType
   onDeleteBook?: () => any | void;
   onEditBook?: () => any | void;
   isPending?: boolean;
+  warningText?: string;
+  isStrong?: boolean;
   id?: string;
   title?: string;
   authors?: string[];

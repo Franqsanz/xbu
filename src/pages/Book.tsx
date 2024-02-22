@@ -199,6 +199,8 @@ export default function Book() {
       <ModalConfirmation
         isOpen={isOpenConfirmation}
         title={data.title}
+        isStrong={true}
+        warningText='El libro será eliminado de manera permanente y no se podrá recuperar.'
         onDeleteBook={handleDeleteBook}
         isPending={isPending}
         onClose={() => {

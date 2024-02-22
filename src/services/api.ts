@@ -114,7 +114,7 @@ async function getUserAndBooks(
   token: string | null,
 ) {
   const data = await fetchData(
-    `${API_URL}/users/my-books/${username}/${userId}`,
+    `${API_URL}/users/${username}/my-books/${userId}`,
     {
       method: 'GET',
       headers: {
@@ -122,6 +122,14 @@ async function getUserAndBooks(
       },
     },
   );
+
+  return data;
+}
+
+async function deleteAccount(id: string | undefined) {
+  const data = await fetchData(`${API_URL}/users/delete-account/${id}`, {
+    method: 'DELETE',
+  });
 
   return data;
 }
@@ -143,4 +151,5 @@ export {
   postRegister,
   getCheckUser,
   getUserAndBooks,
+  deleteAccount,
 };

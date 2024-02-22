@@ -22,6 +22,7 @@ import {
   getUserAndBooks,
   updateBook,
   deleteBook,
+  deleteAccount,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
@@ -205,14 +206,11 @@ function useProfile(
 }
 
 function useDeleteBook() {
-  const { logOut } = useAccountActions();
-
   return useMutation({
     mutationKey: [keys.deleteBook],
     mutationFn: (id: string | undefined) => deleteBook(id),
     onError: async (error) => {
       console.error('Error en el servidor:', error);
-      await logOut();
     },
   });
 }
@@ -226,6 +224,19 @@ function useUpdateBook(book: any) {
     onError: async (error) => {
       console.error('Error en el servidor:', error);
       await logOut();
+    },
+  });
+}
+
+function useDeleteAccount() {
+  // const { logOut } = useAccountActions();
+
+  return useMutation({
+    mutationKey: ['deleteAccount'],
+    mutationFn: (id: string | undefined) => deleteAccount(id),
+    onError: async (error) => {
+      console.error('Error en el servidor:', error);
+      // await logOut();
     },
   });
 }
@@ -247,4 +258,5 @@ export {
   useProfile,
   useUpdateBook,
   useDeleteBook,
+  useDeleteAccount,
 };

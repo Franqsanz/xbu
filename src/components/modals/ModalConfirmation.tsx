@@ -8,7 +8,6 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalFooter,
-  Box,
   Alert,
   Icon,
   Button,
@@ -22,7 +21,9 @@ export function ModalConfirmation({
   onClose,
   onDeleteBook,
   title,
+  warningText,
   isPending,
+  isStrong,
 }: ModalOptionsAndConfirType) {
   const colorIconWar = useColorModeValue('yellow.700', 'yellow.300');
 
@@ -35,10 +36,7 @@ export function ModalConfirmation({
           <ModalCloseButton />
           <ModalBody>
             ¿Está seguro que desea eliminar{' '}
-            <Box as='span' fontWeight='bold'>
-              "{title}"
-            </Box>
-            ?
+            {isStrong ? <strong>"{title}"</strong> : title}?
             <Alert
               mt='7'
               status='warning'
@@ -51,8 +49,7 @@ export function ModalConfirmation({
                 mr='3'
                 color={colorIconWar}
               />
-              El libro será eliminado de manera permanente y no se podrá
-              recuperar.
+              {warningText}
             </Alert>
           </ModalBody>
           <ModalFooter gap='3'>
