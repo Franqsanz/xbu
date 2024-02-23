@@ -58,7 +58,8 @@ export function ModalConfirmation({
               onClick={onDeleteBook}
               fontWeight='normal'
               fontSize='sm'
-              bg='red.400'
+              bg='red.500'
+              color='white'
               loadingText='Eliminando...'
               isLoading={isPending}
               _hover={{ color: 'none' }}

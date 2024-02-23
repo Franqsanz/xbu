@@ -26,11 +26,12 @@ export function ModalOptions({
           <ModalBody py='5'>
             <Flex direction='column' gap='2'>
               <Button
-                bg='red.400'
+                bg='red.500'
+                color='white'
                 fontWeight='normal'
                 fontSize='sm'
-                _hover={{ color: 'none' }}
                 onClick={onDeleteBook}
+                _hover={{ color: 'none' }}
               >
                 Eliminar
               </Button>

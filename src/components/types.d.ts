@@ -186,6 +186,7 @@ interface MenuType {
 interface AuthContextType {
   currentUser: User | null;
   loading: boolean;
+  token: string;
 }
 
 interface AuthProviderType {

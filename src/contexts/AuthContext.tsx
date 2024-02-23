@@ -8,6 +8,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 function AuthProvider({ children }: AuthProviderType) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState('');
   const auth = getAuth();
 
   useEffect(() => {
@@ -17,6 +18,7 @@ function AuthProvider({ children }: AuthProviderType) {
         try {
           const token = await user.getIdToken(true);
           window.localStorage.setItem('app_tk', token);
+          setToken(token);
           // document.cookie = `app_tk=${token}; SameSite=None; path=/;`;
         } catch (error) {
           console.error('Error al actualizar el token:', error);
@@ -46,6 +48,7 @@ function AuthProvider({ children }: AuthProviderType) {
   const value: AuthContextType = {
     currentUser,
     loading,
+    token,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

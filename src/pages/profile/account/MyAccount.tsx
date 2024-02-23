@@ -38,7 +38,14 @@ export function MyAccount() {
       <MainHead title={`Mi Cuenta | XBuniverse`} />
       <ContainerTitle title='Mi Cuenta' />
       <Flex justify='center' h='230px' mt='70px'>
-        <Button bgColor='red.300' onClick={onOpen}>
+        <Button
+          fontWeight='normal'
+          bg='red.500'
+          color='white'
+          onClick={onOpen}
+          _hover={{ color: 'none' }}
+          _active={{ bg: 'red.500' }}
+        >
           Eliminar cuenta
         </Button>
         <ModalConfirmation

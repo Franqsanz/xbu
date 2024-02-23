@@ -12,13 +12,14 @@ import { SkeletonDetailsBook } from '@components/skeletons/SkeletonDBook';
 import { PrivateRoute } from '@components/PrivateRoute';
 
 import { MyAccount } from '@pages/profile/account/MyAccount';
+import { Profile } from '@pages/profile/Profile';
 
 const PrivacyPolicies = lazy(() => import('@pages/PrivacyPolicies'));
 const Explore = lazy(() => import('@pages/Explore'));
 const Book = lazy(() => import('@pages/Book'));
 const Search = lazy(() => import('@pages/Search'));
 const NewBook = lazy(() => import('@pages/NewBook'));
-const Profile = lazy(() => import('@pages/profile/Profile'));
+// const Profile = lazy(() => import('@pages/profile/Profile'));
 
 const routes = createBrowserRouter([
   {
