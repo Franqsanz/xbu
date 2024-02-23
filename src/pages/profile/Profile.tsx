@@ -72,7 +72,14 @@ export function Profile() {
     );
   } else {
     asideAndCardsUI = (
-      <Flex w='full' direction='column' justify='center' align='center' my='10'>
+      <Flex
+        w='full'
+        direction='column'
+        justify='center'
+        align='center'
+        mt='5'
+        mb='20'
+      >
         <Box
           my={{ base: 2, md: 7 }}
           fontSize={{ base: 'lg', lg: '3xl' }}
@@ -91,7 +98,7 @@ export function Profile() {
           fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
           textAlign={{ base: 'center', md: 'left' }}
         >
-          Aún no hay publicacione
+          Aún no hay publicaciones
         </Box>
         <Link
           w={{ base: '85%', md: '230px' }}
