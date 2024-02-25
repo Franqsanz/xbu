@@ -1,5 +1,5 @@
-![XBuniverse](public/logo.png)
 # XBuniverse
+![XBuniverse](public/dispositivos.png)
 
 XBuniverse es un sitio web dedicado a los amantes de la lectura y la literatura. Es un espacio diseñado para compartir y descubrir libros de diversas temáticas.
 
