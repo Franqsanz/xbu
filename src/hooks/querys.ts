@@ -198,10 +198,16 @@ function useProfile(
   userId: string | undefined,
   token: string | null,
 ) {
-  return useSuspenseQuery({
+  return useInfiniteQuery({
     queryKey: [keys.profile, username, userId],
-    queryFn: () => getUserAndBooks(username, userId, token),
-    gcTime: 3000,
+    queryFn: ({ pageParam }) =>
+      getUserAndBooks(username, userId, token, pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.info.nextPage === null) return;
+
+      return lastPage.info.nextPage;
+    },
   });
 }
 
@@ -232,7 +238,7 @@ function useDeleteAccount() {
   // const { logOut } = useAccountActions();
 
   return useMutation({
-    mutationKey: ['deleteAccount'],
+    mutationKey: [keys.deleteAccount],
     mutationFn: (id: string | undefined) => deleteAccount(id),
     onError: async (error) => {
       console.error('Error en el servidor:', error);

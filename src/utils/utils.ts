@@ -19,6 +19,7 @@ const keys = {
   profile: 'Profile',
   checkUser: 'CheckUser',
   userData: 'UserData',
+  deleteAccount: 'DeleteAccount',
 };
 
 function handleImageLoad(e: React.SyntheticEvent) {
@@ -69,6 +70,9 @@ function isSpanish(language) {
 
 function parseDate(fechaISO: string) {
   const fecha = new Date(fechaISO);
+
+  // Verificar si la fecha es válida
+  if (isNaN(fecha.getTime())) return null;
 
   const opciones: Intl.DateTimeFormatOptions = {
     year: 'numeric',

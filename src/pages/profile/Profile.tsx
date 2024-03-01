@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
   Box,
   Flex,
   Image,
   Link,
   Icon,
   useColorModeValue,
+  Spinner,
 } from '@chakra-ui/react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
+import { useInView } from 'react-intersection-observer';
 
 import { MySimpleGrid } from '@components/MySimpleGrid';
 import { Card } from '@components/cards/Card';
@@ -20,53 +25,89 @@ import { CardType } from '@components/types';
 import ResultLength from '@components/ResultLength';
 import { useAuth } from '@contexts/AuthContext';
 import { NoData } from '@assets/assets';
+import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 // import { logOut } from '../../services/firebase/auth';
 
 export function Profile() {
+  const bgCover = useColorModeValue('gray.100', 'gray.700');
+  const { ref, inView } = useInView();
   const getToken = window.localStorage.getItem('app_tk');
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
   const { username } = useParams();
-  const { data } = useProfile(username, uid, getToken);
-  const bgCover = useColorModeValue('gray.100', 'gray.700');
+  const { data, isPending, error, fetchNextPage, isFetchingNextPage } =
+    useProfile(username, uid, getToken);
+  const createdAt = data?.pages[0].user.createdAt;
   let asideAndCardsUI;
+  let fetchingNextPageUI;
 
-  if (data.books.length > 0) {
+  useEffect(() => {
+    if (inView) fetchNextPage();
+  }, [inView]);
+
+  if (isPending) {
+    return <SkeletonAllBooks showTags={false} />;
+  }
+
+  if (error) {
+    return (
+      <Alert
+        status='error'
+        variant='subtle'
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='center'
+        textAlign='center'
+        minH='70vh'
+      >
+        <AlertIcon boxSize='50px' />
+        <AlertTitle mt='5' fontSize='xl'>
+          No se pudieron obtener los datos
+        </AlertTitle>
+      </Alert>
+    );
+  }
+
+  if (data?.pages[0].info.totalBooks > 0) {
     asideAndCardsUI = (
       <>
         <Aside>
-          <ResultLength data={data.books.length} />
+          <ResultLength data={data?.pages[0].info.totalBooks} />
           {/* {aboutCategoriesUI}
           {asideFilter}  */}
         </Aside>
         <MySimpleGrid>
-          {data.books.map(
-            ({
-              id,
-              category,
-              language,
-              title,
-              authors,
-              synopsis,
-              sourceLink,
-              pathUrl,
-              image,
-            }: CardType) => (
-              <React.Fragment key={id}>
-                <Card
-                  id={id}
-                  category={category}
-                  language={language}
-                  title={title}
-                  authors={authors}
-                  synopsis={synopsis}
-                  sourceLink={sourceLink}
-                  pathUrl={pathUrl}
-                  image={image}
-                />
-              </React.Fragment>
-            ),
-          )}
+          {data?.pages.map((page, index) => (
+            <React.Fragment key={index}>
+              {page.results.map(
+                ({
+                  id,
+                  category,
+                  language,
+                  title,
+                  authors,
+                  synopsis,
+                  sourceLink,
+                  pathUrl,
+                  image,
+                }: CardType) => (
+                  <React.Fragment key={id}>
+                    <Card
+                      id={id}
+                      category={category}
+                      language={language}
+                      title={title}
+                      authors={authors}
+                      synopsis={synopsis}
+                      sourceLink={sourceLink}
+                      pathUrl={pathUrl}
+                      image={image}
+                    />
+                  </React.Fragment>
+                ),
+              )}
+            </React.Fragment>
+          ))}
         </MySimpleGrid>
       </>
     );
@@ -122,11 +163,23 @@ export function Profile() {
     );
   }
 
+  if (isFetchingNextPage) {
+    fetchingNextPageUI = (
+      <Box p='10' textAlign='center'>
+        <Spinner
+          size={{ base: 'lg', md: 'xl' }}
+          thickness='4px'
+          speed='0.40s'
+        />
+      </Box>
+    );
+  }
+
   return (
     <>
       <MainHead
-        title={`${data.user.name} | XBuniverse`}
-        urlImage={data.user.picture}
+        title={`${data?.pages[0].user.name} | XBuniverse`}
+        urlImage={data?.pages[0].user.picture}
       />
       <Flex
         justify='center'
@@ -136,8 +189,8 @@ export function Profile() {
         bg={bgCover}
       >
         <Image
-          src={data.user.picture}
-          alt={`Imagen de perfil de ${data.user.name}`}
+          src={data?.pages[0].user.picture}
+          alt={`Imagen de perfil de ${data?.pages[0].user.name}`}
           referrerPolicy='no-referrer'
           borderRadius='full'
         />
@@ -147,7 +200,7 @@ export function Profile() {
           mt='3'
           textAlign='center'
         >
-          {data.user.name}
+          {data?.pages[0].user.name}
         </Box>
         <Flex
           direction='column'
@@ -158,7 +211,7 @@ export function Profile() {
           <Box as='span' fontSize={{ base: 'sm', md: 'md' }} fontWeight='bold'>
             Se unió el
           </Box>{' '}
-          {parseDate(data.user.createdAt)}
+          {parseDate(createdAt)}
         </Flex>
       </Flex>
       <Flex justify='center' borderBottom='1px solid #A0AEC0'>
@@ -174,6 +227,7 @@ export function Profile() {
       >
         {asideAndCardsUI}
       </Flex>
+      <Box ref={ref}>{fetchingNextPageUI}</Box>
     </>
   );
 }

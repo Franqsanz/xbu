@@ -112,9 +112,10 @@ async function getUserAndBooks(
   username: string | undefined,
   userId: string | undefined,
   token: string | null,
+  page: number | undefined,
 ) {
   const data = await fetchData(
-    `${API_URL}/users/${username}/my-books/${userId}`,
+    `${API_URL}/users/${username}/my-books/${userId}?limit=5&page=${page}`,
     {
       method: 'GET',
       headers: {
