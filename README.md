@@ -25,3 +25,35 @@ XBuniverse es un sitio web dedicado a los amantes de la lectura y la literatura.
 * Crea una cuenta en XBuniverse para compartir tus libros favoritos con otros amantes de la lectura.
 
 ¡Únete a XBuniverse y sumérgete en el fascinante mundo de la lectura! Explora y comparte.
+
+## Contribuir
+
+1. Bifurcar y clonar el repositorio:
+
+```sh
+git clone https://github.com/username/xbu.git
+```
+
+2. Acceder a la carpeta:
+```sh
+cd xbu
+```
+
+3. Instalar las dependencias y ejecutar el proyecto:
+```sh
+npm install
+
+npm run dev
+```
+
+4. Crea una nueva rama para trabajar en lo que tienes pensado o resolver algún issues:
+
+```sh
+git checkout -b mi-nueva-rama
+```
+
+5. Subir los cambios a tu bifurcación:
+
+```sh
+git push origin mi-nueva-rama
+```

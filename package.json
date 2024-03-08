@@ -30,7 +30,7 @@
     "firebase": "10.7.2",
     "framer-motion": "10.16.4",
     "medium-zoom": "1.1.0",
-    "million": "2.6.4",
+    "million": "3.0.5",
     "nanoid": "5.0.3",
     "pako": "2.1.0",
     "react": "18.2.0",
@@ -47,6 +47,7 @@
     "zustand": "4.4.6"
   },
   "devDependencies": {
+    "@million/lint": "0.0.66",
     "@sentry/react": "7.77.0",
     "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.1.2",
