@@ -47,7 +47,6 @@
     "zustand": "4.4.6"
   },
   "devDependencies": {
-    "@million/lint": "0.0.66",
     "@sentry/react": "7.77.0",
     "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.1.2",
