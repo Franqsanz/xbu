@@ -3,6 +3,9 @@ import type { IconType } from 'react-icons';
 import { User } from 'firebase/auth';
 
 type RNode = React.ReactNode;
+type MyChangeEvent = React.ChangeEvent<
+  HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+>;
 
 interface DisclosureType {
   isOpen: boolean;
@@ -194,6 +197,7 @@ interface AuthProviderType {
 }
 
 export type {
+  MyChangeEvent,
   AboutType,
   LinkType,
   SelectBooksType,

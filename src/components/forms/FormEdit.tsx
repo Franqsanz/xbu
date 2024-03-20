@@ -25,12 +25,19 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { IoWarningSharp } from 'react-icons/io5';
 
 import { categories, formats, languages } from '../../data/links';
-import { BookType } from '@components/types';
+import { BookType, MyChangeEvent } from '@components/types';
 import { useUpdateBook } from '@hooks/querys';
 import { ModalCropper } from '@components/modals/ModalCropper';
-import { generatePathUrl, sortArrayByLabel } from '@utils/utils';
+import { sortArrayByLabel } from '@utils/utils';
 import { MyPopover } from '@components/MyPopover';
+import {
+  handleInputChange,
+  handleCategory,
+  handleField,
+  useFileInputRef,
+} from '@components/forms/utils/utilsForm';
 import { useMyToast } from '@hooks/useMyToast';
+import { useGenerateSlug } from '@hooks/useGenerateSlug';
 const Cropper = lazy(() => import('react-cropper'));
 
 export function FormEdit({
@@ -52,12 +59,14 @@ export function FormEdit({
     register,
     formState: { errors },
   } = useForm<BookType>();
+  let previewImgUI;
   const { url, public_id } = image;
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const myToast = useMyToast();
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
+  const { fileInputRef, handleButtonClick } = useFileInputRef();
   const [cropData, setCropData] = useState<string | null>(null);
   const [previewImg, setPreviewImg] = useState<Blob | MediaSource | null>(null);
   const [crop, setCrop] = useState<any>('');
@@ -78,9 +87,8 @@ export function FormEdit({
       public_id,
     },
   });
-  let previewImgUI;
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const { mutate, isPending, isSuccess, error } = useUpdateBook(books);
+  useGenerateSlug(books.title, setBooks); // Genera el pathUrl (Slug)
 
   function allFieldsBook(book: BookType): boolean {
     return (
@@ -96,65 +104,16 @@ export function FormEdit({
   const sortedLanguage = sortArrayByLabel(languages);
   const sortedFormat = sortArrayByLabel(formats);
 
-  function handleChange(
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >,
-  ) {
-    const { name, value } = e.target;
-
-    // Si el campo es 'author', dividimos los nombres por comas en un array
-    if (name === 'authors') {
-      const authorNames = value.split(',');
-      setBooks({
-        ...books,
-        [name]: authorNames, // Guardamos un array de nombres de autores
-      });
-    } else {
-      setBooks({
-        ...books,
-        [name]: value,
-      });
-    }
+  function handleChange(e: MyChangeEvent) {
+    handleInputChange(e, books, setBooks);
   }
 
   function handleCategoryChange(selectedOptions) {
-    // Verificar si se seleccionaron opciones
-    if (selectedOptions && selectedOptions.length > 0) {
-      // Obtener los valores de las opciones seleccionadas
-      const selectedValues = selectedOptions.map((option) => option.value);
-
-      // Actualizar el estado de 'books' con los valores seleccionados
-      setBooks((prevBooks) => ({
-        ...prevBooks,
-        category: selectedValues,
-      }));
-    } else {
-      // Si no se seleccionaron opciones, establecer el estado de 'category' como un array vacío
-      setBooks((prevBooks) => ({
-        ...prevBooks,
-        category: [],
-      }));
-    }
+    handleCategory(selectedOptions, setBooks);
   }
 
   function handleFieldChange(fieldName, newValue) {
-    setBooks((books) => ({
-      ...books,
-      [fieldName]: newValue,
-    }));
-  }
-
-  useEffect(() => {
-    // Genera el pathUrl basado en el título cada vez que se actualiza
-    const generatedPathUrl = generatePathUrl(books.title);
-    setBooks((books) => ({ ...books, pathUrl: generatedPathUrl }));
-  }, [books.title]);
-
-  function handleButtonClick() {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+    handleField(fieldName, newValue, setBooks);
   }
 
   async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {

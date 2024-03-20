@@ -1,4 +1,5 @@
-import React, { Suspense, lazy, useState, useEffect, useRef } from 'react';
+import React, { Suspense, lazy, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FormControl,
   Button,
@@ -8,9 +9,6 @@ import {
   FormLabel,
   Textarea,
   Image,
-  Alert,
-  AlertIcon,
-  AlertTitle,
   useColorModeValue,
   useDisclosure,
   Icon,
@@ -23,13 +21,23 @@ import { Select } from 'chakra-react-select';
 import 'cropperjs/dist/cropper.css';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
+import { FaCheckCircle } from 'react-icons/fa';
+import { IoWarningSharp } from 'react-icons/io5';
 
 import { categories, formats, languages } from '../../data/links';
-import { BookType } from '@components/types';
+import { BookType, MyChangeEvent } from '@components/types';
 import { useMutatePost } from '@hooks/querys';
 import { ModalCropper } from '@components/modals/ModalCropper';
-import { generatePathUrl, sortArrayByLabel } from '@utils/utils';
+import { sortArrayByLabel } from '@utils/utils';
+import { useGenerateSlug } from '@hooks/useGenerateSlug';
 import { MyPopover } from '@components/MyPopover';
+import {
+  handleInputChange,
+  handleCategory,
+  handleField,
+  useFileInputRef,
+} from '@components/forms/utils/utilsForm';
+import { useMyToast } from '@hooks/useMyToast';
 import { useAuth } from '@contexts/AuthContext';
 const Cropper = lazy(() => import('react-cropper'));
 
@@ -39,12 +47,14 @@ export function FormNewBook() {
     register,
     formState: { errors },
   } = useForm<BookType>();
-  let alertMessage;
   let previewImgUI;
+  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const myToast = useMyToast();
   const { currentUser } = useAuth();
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
+  const { fileInputRef, handleButtonClick } = useFileInputRef();
   const { mutate, isPending, isSuccess, error } = useMutatePost();
   const [cropData, setCropData] = useState<string | null>(null);
   const [previewImg, setPreviewImg] = useState<Blob | MediaSource | null>(null);
@@ -66,6 +76,7 @@ export function FormNewBook() {
     },
     userId: currentUser?.uid,
   });
+  useGenerateSlug(books.title, setBooks); // Genera el pathUrl (Slug)
 
   function allFieldsBook(book: BookType): boolean {
     return (
@@ -81,67 +92,16 @@ export function FormNewBook() {
   const sortedLanguage = sortArrayByLabel(languages);
   const sortedFormat = sortArrayByLabel(formats);
 
-  function handleChange(
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >,
-  ) {
-    const { name, value } = e.target;
-
-    // Si el campo es 'author', dividimos los nombres por comas en un array
-    if (name === 'authors') {
-      const authorNames = value.split(',');
-      setBooks({
-        ...books,
-        [name]: authorNames, // Guardamos un array de nombres de autores
-      });
-    } else {
-      setBooks({
-        ...books,
-        [name]: value,
-      });
-    }
+  function handleChange(e: MyChangeEvent) {
+    handleInputChange(e, books, setBooks);
   }
 
   function handleCategoryChange(selectedOptions) {
-    // Verificar si se seleccionaron opciones
-    if (selectedOptions && selectedOptions.length > 0) {
-      // Obtener los valores de las opciones seleccionadas
-      const selectedValues = selectedOptions.map((option) => option.value);
-
-      // Actualizar el estado de 'books' con los valores seleccionados
-      setBooks((prevBooks) => ({
-        ...prevBooks,
-        category: selectedValues,
-      }));
-    } else {
-      // Si no se seleccionaron opciones, establecer el estado de 'category' como un array vacío
-      setBooks((prevBooks) => ({
-        ...prevBooks,
-        category: [],
-      }));
-    }
+    handleCategory(selectedOptions, setBooks);
   }
 
   function handleFieldChange(fieldName, newValue) {
-    setBooks((books) => ({
-      ...books,
-      [fieldName]: newValue,
-    }));
-  }
-
-  useEffect(() => {
-    // Genera el pathUrl basado en el título cada vez que se actualiza
-    const generatedPathUrl = generatePathUrl(books.title);
-    setBooks((books) => ({ ...books, pathUrl: generatedPathUrl }));
-  }, [books.title]);
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  function handleButtonClick() {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+    handleField(fieldName, newValue, setBooks);
   }
 
   async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -236,25 +196,23 @@ export function FormNewBook() {
   }
 
   if (isSuccess) {
-    alertMessage = (
-      <Alert status='success' variant='solid' rounded='xl'>
-        <AlertIcon color='black' />
-        <AlertTitle fontWeight='normal' color='black'>
-          ¡Publicación exitosa!
-        </AlertTitle>
-      </Alert>
-    );
+    myToast({
+      title: 'Guardado',
+      description: '¡Publicación exitosa!',
+      icon: FaCheckCircle,
+      iconColor: 'green.700',
+      bgColor: 'black',
+    });
+
+    navigate('/explore', { replace: true });
   } else if (error) {
-    alertMessage = (
-      <Alert status='error' variant='solid' rounded='xl'>
-        <AlertIcon />
-        <AlertTitle fontWeight='normal'>
-          Ha ocurrido un error al publicar.
-        </AlertTitle>
-      </Alert>
-    );
-  } else {
-    alertMessage = <Alert display='none' />;
+    myToast({
+      title: 'Ha ocurrido un error',
+      description: 'No se ha podido guardar las modificaciones.',
+      icon: IoWarningSharp,
+      iconColor: 'red.400',
+      bgColor: 'black',
+    });
   }
 
   return (
@@ -273,7 +231,7 @@ export function FormNewBook() {
           p={{ base: 5, md: 10 }}
           rounded='lg'
           border='1px'
-          maxWidth='800px'
+          maxWidth='900px'
         >
           <Box mb='5' fontSize='md'>
             Los campos con el{' '}
@@ -625,7 +583,6 @@ export function FormNewBook() {
               </Box>
             </Box>
           </Flex>
-          <Box mt='10'>{alertMessage}</Box>
         </Box>
       </Flex>
     </>
