@@ -21,7 +21,7 @@ const Search = lazy(() => import('@pages/Search'));
 const NewBook = lazy(() => import('@pages/NewBook'));
 // const Profile = lazy(() => import('@pages/profile/Profile'));
 
-const routes = createBrowserRouter([
+export const routes = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
@@ -114,5 +114,3 @@ const routes = createBrowserRouter([
     ],
   },
 ]);
-
-export default routes;

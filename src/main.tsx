@@ -8,7 +8,7 @@ import * as Sentry from '@sentry/react';
 import { HelmetProvider } from 'react-helmet-async';
 
 import theme from '../theme';
-import routes from './routes';
+import { routes } from './routes';
 import { AuthProvider } from '@contexts/AuthContext';
 
 const queryClient = new QueryClient();

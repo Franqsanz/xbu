@@ -28,10 +28,10 @@ XBuniverse es un sitio web dedicado a los amantes de la lectura y la literatura.
 
 ## Contribuir
 
-1. Bifurcar y clonar el repositorio:
+1. Clonar el repositorio:
 
 ```sh
-git clone https://github.com/username/xbu.git
+git clone https://github.com/Franqsanz/xbu.git
 ```
 
 2. Acceder a la carpeta:
@@ -44,16 +44,4 @@ cd xbu
 npm install
 
 npm run dev
-```
-
-4. Crea una nueva rama para trabajar en lo que tienes pensado o resolver algún issues:
-
-```sh
-git checkout -b mi-nueva-rama
-```
-
-5. Subir los cambios a tu bifurcación:
-
-```sh
-git push origin mi-nueva-rama
 ```
