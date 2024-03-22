@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-// const fileInputRef = useRef<HTMLInputElement>(null);
+import pako from 'pako';
 
 function handleInputChange(
   e,
@@ -69,4 +69,62 @@ function useFileInputRef() {
   return { fileInputRef, handleButtonClick };
 }
 
-export { handleInputChange, handleCategory, handleField, useFileInputRef };
+async function handleImage(e, setCropData, onOpen) {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  // 1 MB
+  if (file.size > 1000000) {
+    alert(
+      `El tamaño de la imagen es mayor a 1 MB. Por favor, seleccione una imagen de menor tamaño.`,
+    );
+
+    return;
+  }
+
+  const blobImage = new Blob([file], { type: 'image/webp' });
+  setCropData(URL.createObjectURL(blobImage));
+
+  onOpen();
+}
+
+async function getCrop(crop, setPreviewImg, books, setBooks, onClose) {
+  if (typeof crop !== 'undefined') {
+    const croppedCanvas = crop.getCroppedCanvas();
+    croppedCanvas.toBlob((blob) => {
+      setPreviewImg(blob);
+
+      if (blob) {
+        const reader = new FileReader();
+        reader.onload = function () {
+          const arrayBuffer = reader.result as ArrayBuffer;
+          const uint8Array = new Uint8Array(arrayBuffer);
+          const compressedArrayBuffer = pako.deflate(uint8Array);
+          const byteArray = [...new Uint8Array(compressedArrayBuffer)];
+          const publicId = books.image.public_id;
+          const pId = publicId.replace('xbu/', '');
+
+          setBooks((prevBooks) => ({
+            ...prevBooks,
+            image: {
+              url: byteArray,
+              public_id: pId,
+            },
+          }));
+        };
+        reader.readAsArrayBuffer(blob);
+
+        onClose();
+      }
+    }, 'image/webp');
+  }
+}
+
+export {
+  handleInputChange,
+  handleCategory,
+  handleField,
+  useFileInputRef,
+  handleImage,
+  getCrop,
+};

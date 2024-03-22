@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState, useEffect, useRef } from 'react';
+import React, { Suspense, lazy, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   FormControl,
@@ -15,7 +15,6 @@ import {
   Skeleton,
   FormErrorMessage,
 } from '@chakra-ui/react';
-import pako from 'pako';
 import { useForm } from 'react-hook-form';
 import { Select } from 'chakra-react-select';
 import 'cropperjs/dist/cropper.css';
@@ -35,6 +34,8 @@ import {
   handleCategory,
   handleField,
   useFileInputRef,
+  handleImage,
+  getCrop,
 } from '@components/forms/utils/utilsForm';
 import { useMyToast } from '@hooks/useMyToast';
 import { useGenerateSlug } from '@hooks/useGenerateSlug';
@@ -116,55 +117,12 @@ export function FormEdit({
     handleField(fieldName, newValue, setBooks);
   }
 
-  async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // 1 MB
-    if (file.size > 1000000) {
-      alert(
-        `El tamaño de la imagen es mayor a 1 MB. Por favor, seleccione una imagen de menor tamaño.`,
-      );
-
-      return;
-    }
-
-    const blobImage = new Blob([file], { type: 'image/webp' });
-    setCropData(URL.createObjectURL(blobImage));
-
-    onOpen();
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    handleImage(e, setCropData, onOpen);
   }
 
-  async function getCropData() {
-    if (typeof crop !== 'undefined') {
-      const croppedCanvas = crop.getCroppedCanvas();
-      croppedCanvas.toBlob((blob) => {
-        setPreviewImg(blob);
-
-        if (blob) {
-          const reader = new FileReader();
-          reader.onload = function () {
-            const arrayBuffer = reader.result as ArrayBuffer;
-            const uint8Array = new Uint8Array(arrayBuffer);
-            const compressedArrayBuffer = pako.deflate(uint8Array);
-            const byteArray = [...new Uint8Array(compressedArrayBuffer)];
-            const publicId = books.image.public_id;
-            const pId = publicId.replace('xbu/', '');
-
-            setBooks((prevBooks) => ({
-              ...prevBooks,
-              image: {
-                url: byteArray,
-                public_id: pId,
-              },
-            }));
-          };
-          reader.readAsArrayBuffer(blob);
-
-          onClose();
-        }
-      }, 'image/webp');
-    }
+  function getCropData() {
+    getCrop(crop, setPreviewImg, books, setBooks, onClose);
   }
 
   function onSubmit() {
