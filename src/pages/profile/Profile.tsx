@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { useInView } from 'react-intersection-observer';
+// import Cookies from 'js-cookie';
 
 import { MySimpleGrid } from '@components/MySimpleGrid';
 import { Card } from '@components/cards/Card';
@@ -22,15 +23,17 @@ import { MainHead } from '@components/Head';
 import { useProfile } from '@hooks/querys';
 import { parseDate } from '@utils/utils';
 import { CardType } from '@components/types';
-import ResultLength from '@components/ResultLength';
+import { ResultLength } from '@components/ResultLength';
 import { useAuth } from '@contexts/AuthContext';
 import { NoData } from '@assets/assets';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 // import { logOut } from '../../services/firebase/auth';
 
 export function Profile() {
+  // const [getToken, setGetToken] = useState<string | null>('');
   const bgCover = useColorModeValue('gray.100', 'gray.700');
   const { ref, inView } = useInView();
+  // const getToken = Cookies.get('app_tk');
   const getToken = window.localStorage.getItem('app_tk');
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
@@ -40,6 +43,16 @@ export function Profile() {
   const createdAt = data?.pages[0].user.createdAt;
   let asideAndCardsUI;
   let fetchingNextPageUI;
+
+  // console.log(getToken);
+
+  // useEffect(() => {
+  //   const getToken = window.localStorage.getItem('app_tk');
+
+  //   if (getToken) {
+  //     setGetToken(getToken);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (inView) fetchNextPage();

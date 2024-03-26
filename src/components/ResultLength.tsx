@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Flex } from '@chakra-ui/react';
 
-export default function ResultLength({ data }: any) {
+export function ResultLength({ data }: any) {
   return (
     <Box mt={{ base: '0', xl: '97px' }}>
       <Flex

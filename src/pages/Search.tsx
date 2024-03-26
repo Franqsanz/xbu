@@ -22,7 +22,7 @@ import { MainHead } from '@components/Head';
 import { Aside } from '@components/Aside';
 import { MySliderCategories } from '@components/MySliderCategories';
 import { FilterDrawer } from '@components/FilterDrawer';
-import ResultLength from '@components/ResultLength';
+import { ResultLength } from '@components/ResultLength';
 import { AboutCategories } from '@components/AboutCategories';
 import { Lost } from '@assets/assets';
 import { aboutCategories } from '../data/links';

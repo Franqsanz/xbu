@@ -16,7 +16,7 @@ import { MySimpleGrid } from '@components/MySimpleGrid';
 import { Card } from '@components/cards/Card';
 import { Aside } from '@components/Aside';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
-import ResultLength from '@components/ResultLength';
+import { ResultLength } from '@components/ResultLength';
 
 export function AllBooks() {
   const { ref, inView } = useInView();
