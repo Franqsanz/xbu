@@ -12,7 +12,7 @@ import {
   Button,
   useDisclosure,
   Icon,
-  useToast,
+  Tooltip,
 } from '@chakra-ui/react';
 import {
   FiArrowLeft,
@@ -86,17 +86,18 @@ export default function Book() {
 
   if (currentUser && isCurrentUserAuthor) {
     btnMoreOptions = (
-      <Button
-        mt={{ base: 1, md: 5 }}
-        fontWeight='500'
-        size='sm'
-        title='Más Opciones'
-        onClick={onOpenOptions}
-      >
-        <Flex align='center' justify='center'>
-          <Icon as={FiMoreHorizontal} />
-        </Flex>
-      </Button>
+      <Tooltip label='Más Opciones' fontSize='sm' bg='black' color='white'>
+        <Button
+          mt={{ base: 1, md: 5 }}
+          fontWeight='500'
+          size='sm'
+          onClick={onOpenOptions}
+        >
+          <Flex align='center' justify='center'>
+            <Icon as={FiMoreHorizontal} />
+          </Flex>
+        </Button>
+      </Tooltip>
     );
   }
 

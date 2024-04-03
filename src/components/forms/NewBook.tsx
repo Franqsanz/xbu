@@ -25,7 +25,7 @@ import { IoWarningSharp } from 'react-icons/io5';
 
 import { categories, formats, languages } from '../../data/links';
 import { BookType, MyChangeEvent } from '@components/types';
-import { useMutatePost } from '@hooks/querys';
+import { useMutatePost, useCheckUser } from '@hooks/querys';
 import { ModalCropper } from '@components/modals/ModalCropper';
 import { sortArrayByLabel } from '@utils/utils';
 import { useGenerateSlug } from '@hooks/useGenerateSlug';
@@ -53,6 +53,8 @@ export function FormNewBook() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const myToast = useMyToast();
   const { currentUser } = useAuth();
+  const userId = currentUser?.uid;
+  const { data, refetch } = useCheckUser(userId);
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
   const { fileInputRef, handleButtonClick } = useFileInputRef();
@@ -113,8 +115,13 @@ export function FormNewBook() {
     getCrop(crop, setPreviewImg, books, setBooks, onClose);
   }
 
-  function onSubmit() {
-    mutate(books);
+  async function onSubmit() {
+    try {
+      await refetch();
+      mutate(books);
+    } catch (error) {
+      console.error('Error al obtener los datos del usuario');
+    }
   }
 
   if (previewImg === null) {
@@ -164,7 +171,7 @@ export function FormNewBook() {
       bgColor: 'black',
     });
 
-    navigate('/explore', { replace: true });
+    navigate(`/${data.username}`, { replace: true });
   } else if (error) {
     myToast({
       title: 'Ha ocurrido un error',
@@ -281,6 +288,7 @@ export function FormNewBook() {
                   bg={bgColorInput}
                   name='synopsis'
                   value={books.synopsis}
+                  // fieldSizing='content'
                   onChange={handleChange}
                   _focus={{ bg: 'transparent' }}
                 />
@@ -531,11 +539,11 @@ export function FormNewBook() {
                   border='1px'
                   bg={bgColorButton}
                   color='black'
-                  _hover={{ bg: 'green.600' }}
-                  _active={{ bg: 'green.600' }}
                   isDisabled={disabled}
                   loadingText='Publicando...'
                   isLoading={isPending}
+                  _hover={{ bg: 'green.600' }}
+                  _active={{ bg: 'green.600' }}
                 >
                   <Icon as={AiOutlineCloudUpload} fontSize='25' mr='2' />
                   Publicar

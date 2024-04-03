@@ -8,6 +8,7 @@ import {
   ModalFooter,
   Button,
   Flex,
+  useColorModeValue,
 } from '@chakra-ui/react';
 
 import { ModalOptionsAndConfirType } from '@components/types';
@@ -18,6 +19,8 @@ export function ModalOptions({
   onDeleteBook,
   onEditBook,
 }: ModalOptionsAndConfirType) {
+  const bgColorButton = useColorModeValue('green.500', 'green.700');
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} size='xs'>
@@ -50,7 +53,11 @@ export function ModalOptions({
               w='full'
               onClick={onClose}
               fontSize='sm'
-              _hover={{ color: 'none' }}
+              border='1px'
+              bg={bgColorButton}
+              color='black'
+              _hover={{ bg: 'green.600' }}
+              _active={{ bg: 'green.600' }}
             >
               Cancelar
             </Button>
