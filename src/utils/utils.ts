@@ -43,7 +43,7 @@ function generatePathUrl(name: string) {
   const formattedName = name
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
+    .replace(/[\u0300-\u036f()°º:]/g, '');
   const withoutDotsName = formattedName.replace(/\.|\//g, '');
   const withoutQuestionMarks = withoutDotsName.replace(/[?¿]/g, '');
   const dashedName = withoutQuestionMarks.replace(/\s+/g, '-');
