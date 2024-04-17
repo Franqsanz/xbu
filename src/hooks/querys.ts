@@ -14,6 +14,7 @@ import {
   getBook,
   getBooksFilter,
   getMoreBooks,
+  getMostViewedBooks,
   getRelatedBooks,
   getMoreBooksAuthors,
   postBook,
@@ -120,6 +121,17 @@ function useMoreBooks() {
   return useSuspenseQuery({
     queryKey: [keys.random],
     queryFn: getMoreBooks,
+    refetchOnWindowFocus: false,
+    gcTime: 3000,
+    staleTime: 50000,
+    retry: 1,
+  });
+}
+
+function useMostViewedBooks() {
+  return useSuspenseQuery({
+    queryKey: [keys.mostViewed],
+    queryFn: getMostViewedBooks,
     refetchOnWindowFocus: false,
     gcTime: 3000,
     staleTime: 50000,
@@ -256,6 +268,7 @@ export {
   useBook,
   useFilter,
   useMoreBooks,
+  useMostViewedBooks,
   useRelatedBooks,
   useMoreBooksAuthors,
   useUserRegister,

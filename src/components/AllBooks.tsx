@@ -17,6 +17,7 @@ import { Card } from '@components/cards/Card';
 import { Aside } from '@components/Aside';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { ResultLength } from '@components/ResultLength';
+import { MostViewed } from '@components/MostViewed';
 
 export function AllBooks() {
   const { ref, inView } = useInView();
@@ -86,6 +87,7 @@ export function AllBooks() {
                 </Box>
                 .
               </Text>
+              <MostViewed />
             </Flex>
           </Box>
         </Aside>

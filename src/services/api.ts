@@ -36,6 +36,10 @@ async function getMoreBooks() {
   return await fetchData(`${API_URL}/books/more-books`);
 }
 
+async function getMostViewedBooks() {
+  return await fetchData(`${API_URL}/books/most-viewed-books`);
+}
+
 async function getRelatedBooks(id: string | undefined) {
   return await fetchData(`${API_URL}/books/related-books/${id}`);
 }
@@ -111,6 +115,7 @@ export {
   getBooksFilter,
   getAllFilterOptions,
   getMoreBooks,
+  getMostViewedBooks,
   getRelatedBooks,
   getMoreBooksAuthors,
   postBook,

@@ -13,6 +13,7 @@ const keys = {
   random: 'BooksRandom',
   relatedBooks: 'RelatedBooks',
   moreBooksAuthors: 'MoreBooksAuthors',
+  mostViewed: 'MostViewed',
   userRegister: 'UserRegister',
   updateBook: 'UpdateBook',
   deleteBook: 'DeleteBook',
