@@ -36,8 +36,8 @@ async function getMoreBooks() {
   return await fetchData(`${API_URL}/books/more-books`);
 }
 
-async function getMostViewedBooks() {
-  return await fetchData(`${API_URL}/books/most-viewed-books`);
+async function getMostViewedBooks(query: string) {
+  return await fetchData(`${API_URL}/books/most-viewed-books?detail=${query}`);
 }
 
 async function getRelatedBooks(id: string | undefined) {
@@ -91,7 +91,7 @@ async function getUserAndBooks(
   page: number | undefined,
 ) {
   return await fetchData(
-    `${API_URL}/users/${username}/my-books/${userId}?limit=5&page=${page}`,
+    `${API_URL}/users/${username}/my-books/${userId}?limit=10&page=${page}`,
     {
       method: 'GET',
       headers: {

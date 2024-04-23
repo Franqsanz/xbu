@@ -1,5 +1,6 @@
 import { GrHome } from 'react-icons/gr';
 import { MdOutlineExplore } from 'react-icons/md';
+import { ImEyePlus } from 'react-icons/im';
 import { RiAccountCircleLine, RiLoginCircleLine } from 'react-icons/ri';
 
 import { AboutType, LinkType, SelectBooksType } from '../components/types';
@@ -7,6 +8,7 @@ import { AboutType, LinkType, SelectBooksType } from '../components/types';
 const navLink: Array<LinkType> = [
   { name: 'Inicio', href: '/', icon: GrHome },
   { name: 'Explorar', href: 'explore', icon: MdOutlineExplore },
+  { name: 'Más Vistos', href: 'most-viewed', icon: ImEyePlus },
 ];
 
 const accountLinks: Array<LinkType> = [

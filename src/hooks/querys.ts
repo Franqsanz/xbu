@@ -128,10 +128,10 @@ function useMoreBooks() {
   });
 }
 
-function useMostViewedBooks() {
+function useMostViewedBooks(query) {
   return useSuspenseQuery({
-    queryKey: [keys.mostViewed],
-    queryFn: getMostViewedBooks,
+    queryKey: [keys.mostViewed, query],
+    queryFn: () => getMostViewedBooks(query),
     refetchOnWindowFocus: false,
     gcTime: 3000,
     staleTime: 50000,

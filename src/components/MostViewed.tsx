@@ -5,7 +5,7 @@ import { Box, Flex, Link } from '@chakra-ui/react';
 import { useMostViewedBooks } from '@hooks/querys';
 
 export function MostViewed() {
-  const { data } = useMostViewedBooks();
+  const { data } = useMostViewedBooks('summary');
 
   return (
     <>

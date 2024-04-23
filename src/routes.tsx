@@ -16,6 +16,7 @@ import { Profile } from '@pages/profile/Profile';
 
 const PrivacyPolicies = lazy(() => import('@pages/PrivacyPolicies'));
 const Explore = lazy(() => import('@pages/Explore'));
+const MostViewed = lazy(() => import('@pages/MostViewed'));
 const Book = lazy(() => import('@pages/Book'));
 const Search = lazy(() => import('@pages/Search'));
 const NewBook = lazy(() => import('@pages/NewBook'));
@@ -34,6 +35,10 @@ export const routes = createBrowserRouter([
       {
         path: '/explore',
         element: <Explore />,
+      },
+      {
+        path: '/most-viewed',
+        element: <MostViewed />,
       },
       {
         path: '/new-post',
