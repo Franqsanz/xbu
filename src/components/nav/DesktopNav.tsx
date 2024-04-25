@@ -111,7 +111,6 @@ export function DesktopNav() {
             <List display='flex' alignItems='center'>
               <InputSearch width='300px' top='47px' onOpen={onOpen} />
               <ModalFilter isOpen={isOpen} onClose={onClose} />
-              {profileMenu}
               <Button
                 onClick={toggleColorMode}
                 bg='none'
@@ -125,6 +124,7 @@ export function DesktopNav() {
                   <RiMoonLine size='20' />
                 )}
               </Button>
+              {profileMenu}
             </List>
           </Box>
         </Flex>

@@ -43,7 +43,7 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
           />
         </MenuButton>
       </Button>
-      <MenuList w='250px'>
+      <MenuList>
         <MenuGroup
           title={displayName as string}
           fontSize='md'
