@@ -169,6 +169,13 @@ export function FormNewBook() {
       icon: FaCheckCircle,
       iconColor: 'green.700',
       bgColor: 'black',
+      position: 'top-right',
+      width: '300px',
+      color: 'white',
+      align: 'center',
+      padding: '2',
+      fntSize: 'md',
+      bxSize: 5,
     });
 
     navigate(`/${data.username}`, { replace: true });
@@ -179,6 +186,13 @@ export function FormNewBook() {
       icon: IoWarningSharp,
       iconColor: 'red.400',
       bgColor: 'black',
+      position: 'top-right',
+      width: '300px',
+      color: 'white',
+      align: 'center',
+      padding: '2',
+      fntSize: 'md',
+      bxSize: 5,
     });
   }
 

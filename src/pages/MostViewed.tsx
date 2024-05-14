@@ -12,7 +12,7 @@ export default function MostViewed() {
 
   return (
     <>
-      <MainHead title={`Top 10 Más Vistos | XBuniverse`} />
+      <MainHead title='Top 10 Más Vistos | XBuniverse' />
       <ContainerTitle title='Top 10 Más Vistos' />
       <MySimpleGrid>
         {data?.map(
