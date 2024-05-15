@@ -6,6 +6,7 @@ import { MySimpleGrid } from '@components/MySimpleGrid';
 import { Card } from '@components/cards/Card';
 import { CardType } from '@components/types';
 import { useMostViewedBooks } from '@hooks/querys';
+import { MySliderCategories } from '@components/MySliderCategories';
 
 export default function MostViewed() {
   const { data } = useMostViewedBooks('full');
@@ -14,7 +15,8 @@ export default function MostViewed() {
     <>
       <MainHead title='Top 10 Más Vistos | XBuniverse' />
       <ContainerTitle title='Top 10 Más Vistos' />
-      <MySimpleGrid>
+      <MySliderCategories />
+      <MySimpleGrid width='6xl'>
         {data?.map(
           ({
             id,

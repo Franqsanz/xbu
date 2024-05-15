@@ -1,7 +1,12 @@
 import React from 'react';
 import { SimpleGrid, useColorModeValue } from '@chakra-ui/react';
 
-export function MySimpleGrid({ children }: { children: React.ReactNode }) {
+interface SimpleGridType {
+  width?: string;
+  children: React.ReactNode;
+}
+
+export function MySimpleGrid({ width = '8xl', children }: SimpleGridType) {
   const colorCard = useColorModeValue('gray.900', 'gray.100');
 
   return (
@@ -10,7 +15,7 @@ export function MySimpleGrid({ children }: { children: React.ReactNode }) {
         as='section'
         maxW='full'
         minH='100vh'
-        w='8xl'
+        w={width}
         columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }}
         justifyItems='center'
         m='auto'
