@@ -11,7 +11,7 @@ import {
 import { useInView } from 'react-intersection-observer';
 
 import { CardType } from '@components/types';
-import { useBooksPaginate } from '@hooks/querys';
+import { useBooksPaginate } from '@hooks/queries';
 import { MySimpleGrid } from '@components/MySimpleGrid';
 import { Card } from '@components/cards/Card';
 import { Aside } from '@components/Aside';

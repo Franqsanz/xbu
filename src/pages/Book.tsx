@@ -24,7 +24,7 @@ import { BsTag } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 import LazyLoad from 'react-lazy-load';
 
-import { useBook, useDeleteBook } from '@hooks/querys';
+import { useBook, useDeleteBook } from '@hooks/queries';
 import { handleImageLoad } from '@utils/utils';
 import { MainHead } from '@components/Head';
 import { MyTag } from '@components/MyTag';

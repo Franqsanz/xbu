@@ -23,7 +23,7 @@ import {
 import { CgOptions } from 'react-icons/cg';
 import { FiSearch } from 'react-icons/fi';
 
-import { useAllSearchBooks } from '@hooks/querys';
+import { useAllSearchBooks } from '@hooks/queries';
 import { useDebounce } from '@hooks/useDebounce';
 import { BookSearchResultsType } from '@components/types';
 

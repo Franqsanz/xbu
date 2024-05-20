@@ -15,7 +15,7 @@ import {
 
 import { Card } from '@components/cards/Card';
 import { CardType, LanguageAndYearType } from '@components/types';
-import { useFilter } from '@hooks/querys';
+import { useFilter } from '@hooks/queries';
 import { ContainerTitle } from '@components/ContainerTitle';
 import { MySimpleGrid } from '@components/MySimpleGrid';
 import { MainHead } from '@components/Head';

@@ -5,7 +5,7 @@ import { ContainerTitle } from '@components/ContainerTitle';
 import { MySimpleGrid } from '@components/MySimpleGrid';
 import { Card } from '@components/cards/Card';
 import { CardType } from '@components/types';
-import { useMostViewedBooks } from '@hooks/querys';
+import { useMostViewedBooks } from '@hooks/queries';
 import { MySliderCategories } from '@components/MySliderCategories';
 
 export default function MostViewed() {

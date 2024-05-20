@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { FiSearch } from 'react-icons/fi';
 
-import { useAllFilterOptions } from '@hooks/querys';
+import { useAllFilterOptions } from '@hooks/queries';
 import { SelectType } from '@components/types';
 
 interface Props {

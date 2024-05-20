@@ -3,7 +3,7 @@ import React from 'react';
 import { RelatedCard } from '@components/cards/RelatedCard';
 import { ContainerRCard } from '@components/cards/ContainerRCard';
 import { CardType, RelatedBooksType } from '@components/types';
-import { useMoreBooks } from '@hooks/querys';
+import { useMoreBooks } from '@hooks/queries';
 import { useRefetchLocation } from '@hooks/useRefetchLocation';
 
 export default function MoreBooks({ currentBookId }: RelatedBooksType) {

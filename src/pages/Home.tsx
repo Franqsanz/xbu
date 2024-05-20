@@ -25,7 +25,7 @@ import {
   ImgBook,
   BookReading,
 } from '@assets/assets';
-import { useUserData } from '@hooks/querys';
+import { useUserData } from '@hooks/queries';
 
 export function Home() {
   const { colorMode } = useColorMode();

@@ -25,7 +25,7 @@ import { IoWarningSharp } from 'react-icons/io5';
 
 import { categories, formats, languages } from '../../data/links';
 import { BookType, MyChangeEvent } from '@components/types';
-import { useUpdateBook } from '@hooks/querys';
+import { useUpdateBook } from '@hooks/queries';
 import { ModalCropper } from '@components/modals/ModalCropper';
 import { sortArrayByLabel } from '@utils/utils';
 import { MyPopover } from '@components/MyPopover';

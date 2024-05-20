@@ -4,7 +4,7 @@ import { Box, Text } from '@chakra-ui/react';
 import { RelatedCard } from '@components/cards/RelatedCard';
 import { ContainerRCard } from '@components/cards/ContainerRCard';
 import { CardType, RelatedBooksType } from '@components/types';
-import { useRelatedBooks } from '@hooks/querys';
+import { useRelatedBooks } from '@hooks/queries';
 import { useRefetchLocation } from '@hooks/useRefetchLocation';
 
 export default function RelatedBooks({ currentBookId, id }: RelatedBooksType) {

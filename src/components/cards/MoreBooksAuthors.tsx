@@ -4,7 +4,7 @@ import { Box, Text } from '@chakra-ui/react';
 import { RelatedCard } from '@components/cards/RelatedCard';
 import { ContainerRCard } from '@components/cards/ContainerRCard';
 import { CardType, RelatedBooksType } from '@components/types';
-import { useMoreBooksAuthors } from '@hooks/querys';
+import { useMoreBooksAuthors } from '@hooks/queries';
 import { useRefetchLocation } from '@hooks/useRefetchLocation';
 
 export default function MoreBooksAuthors({

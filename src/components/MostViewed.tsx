@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Box, Flex, Link } from '@chakra-ui/react';
 
-import { useMostViewedBooks } from '@hooks/querys';
+import { useMostViewedBooks } from '@hooks/queries';
 
 export function MostViewed() {
   const { data } = useMostViewedBooks('summary');

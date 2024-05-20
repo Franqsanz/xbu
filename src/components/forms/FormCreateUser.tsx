@@ -11,7 +11,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-import { useUserRegister } from '@hooks/querys';
+import { useUserRegister } from '@hooks/queries';
 
 export function FormCreateUser() {
   const [username, setUsername] = useState<string>('');

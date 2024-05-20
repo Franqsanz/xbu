@@ -19,7 +19,7 @@ import { MenuProfile } from '@components/nav/menu/MenuProfile';
 import { InputSearch } from '@components/forms/filters/InputSearch';
 import { ModalFilter } from '@components/modals/ModalFilter';
 import { useAuth } from '@contexts/AuthContext';
-import { useUserData } from '@hooks/querys';
+import { useUserData } from '@hooks/queries';
 
 export function DesktopNav() {
   const { currentUser } = useAuth();

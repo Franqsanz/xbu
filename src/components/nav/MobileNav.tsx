@@ -29,7 +29,7 @@ import { InputSearch } from '@components/forms/filters/InputSearch';
 import { ModalFilter } from '@components/modals/ModalFilter';
 import { MenuProfile } from '@components/nav/menu/MenuProfile';
 import { useAuth } from '@contexts/AuthContext';
-import { useUserData } from '@hooks/querys';
+import { useUserData } from '@hooks/queries';
 
 export function MobileNav() {
   const { currentUser } = useAuth();

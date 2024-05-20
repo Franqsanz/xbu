@@ -4,7 +4,7 @@ import { Link } from '@chakra-ui/react';
 import { BsTag } from 'react-icons/bs';
 
 import { MyTag } from '@components/MyTag';
-import { useAllFilterOptions } from '@hooks/querys';
+import { useAllFilterOptions } from '@hooks/queries';
 
 export default function Categories() {
   const { data } = useAllFilterOptions();
