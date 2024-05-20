@@ -13,7 +13,7 @@ import {
 // import { Card } from '@components/cards/Card';
 // import { Aside } from '@components/Aside';
 import { MainHead } from '@components/Head';
-// import { useProfile } from '@hooks/querys';
+// import { useProfile } from '@hooks/queries';
 // import { parseDate } from '@utils/utils';
 // import { CardType } from '@components/types';
 // import ResultLength from '@components/ResultLength';

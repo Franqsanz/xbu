@@ -3,20 +3,21 @@ import { Button, useColorModeValue } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { GrGoogle } from 'react-icons/gr';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+// import Cookies from 'js-cookie';
 
 import { logIn } from './config';
-import { useCheckUser } from '@hooks/querys';
+import { useCheckUser } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
 import { useAccountActions } from '@hooks/useAccountActions';
 
 export function SignIn() {
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: 'select_account' });
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const { logOut } = useAccountActions();
   const [userId, setUserId] = useState('');
   const { data, isPending, error, refetch } = useCheckUser(userId);
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
 
   async function SignInWithGoogle() {
     try {
@@ -25,6 +26,7 @@ export function SignIn() {
       if (result) {
         const token = await result.user.getIdToken(true);
         await window.localStorage.setItem('app_tk', token);
+        // Cookies.set('app_tk', token);
         // document.cookie = `app_tk=${token}; SameSite=None; path=/;`;
       }
     } catch (error) {
