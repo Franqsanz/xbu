@@ -63,6 +63,7 @@ export function useMyToast() {
           p={padding}
           bg={bgColor}
           rounded='lg'
+          border={`1px solid ${color}`}
           boxShadow='md'
           mt={marginT}
         >
