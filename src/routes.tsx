@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { ScrollRestoration, createBrowserRouter } from 'react-router-dom';
 
 import { Home } from '@pages/Home';
 import { Login } from '@pages/Login';
@@ -25,7 +25,12 @@ const NewBook = lazy(() => import('@pages/NewBook'));
 export const routes = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: (
+      <>
+        <ScrollRestoration />
+        <Layout />
+      </>
+    ),
     errorElement: <div>Error 500 o Error Boundary</div>,
     children: [
       {
