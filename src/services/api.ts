@@ -14,11 +14,11 @@ async function getBooksPaginate(page: number | undefined) {
 }
 
 async function getBook(pathUrl: string | undefined) {
-  return await fetchData(`${API_URL}/book/path/${pathUrl}`);
+  return await fetchData(`${API_URL}/books/path/${pathUrl}`);
 }
 
 async function postBook(books: any) {
-  return await fetchData(`${API_URL}/book/post`, {
+  return await fetchData(`${API_URL}/books`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(books),
@@ -53,7 +53,7 @@ async function getAllFilterOptions() {
 }
 
 async function updateBook(id: string | undefined, books: any) {
-  return await fetchData(`${API_URL}/book/update/${id}`, {
+  return await fetchData(`${API_URL}/books/${id}`, {
     method: 'PATCH',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(books),
@@ -61,7 +61,7 @@ async function updateBook(id: string | undefined, books: any) {
 }
 
 async function deleteBook(id: string | undefined) {
-  return await fetchData(`${API_URL}/book/delete/${id}`, {
+  return await fetchData(`${API_URL}/books/${id}`, {
     method: 'DELETE',
   });
 }
@@ -71,7 +71,6 @@ async function deleteBook(id: string | undefined) {
 async function postRegister(token: string, body: any) {
   return await fetchData(`${API_URL}/auth/register`, {
     method: 'POST',
-    // credentials: 'include',
     headers: {
       Authorization: `Bearer ${token}`,
       'content-type': 'application/json',
@@ -91,9 +90,10 @@ async function getUserAndBooks(
   page: number | undefined,
 ) {
   return await fetchData(
-    `${API_URL}/users/${username}/my-books/${userId}?limit=10&page=${page}`,
+    `${API_URL}/users/${userId}/${username}/my-books?limit=10&page=${page}`,
     {
       method: 'GET',
+      credentials: 'include',
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -102,7 +102,7 @@ async function getUserAndBooks(
 }
 
 async function deleteAccount(id: string | undefined) {
-  return await fetchData(`${API_URL}/users/delete-account/${id}`, {
+  return await fetchData(`${API_URL}/users/${id}`, {
     method: 'DELETE',
   });
 }
