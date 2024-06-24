@@ -45,3 +45,6 @@ npm install
 
 npm run dev
 ```
+
+## License
+[MIT © 2023](./LICENSE) Franco Sánchez

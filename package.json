@@ -18,8 +18,11 @@
     "test:ui": "vitest --ui",
     "test:watch": "npm run test -- --watch",
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "prepare": "husky install"
   },
+  "author": "Franco Andrés Sánchez",
+  "license": "MIT",
   "dependencies": {
     "@chakra-ui/react": "2.8.2",
     "@emotion/react": "11.11.4",

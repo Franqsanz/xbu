@@ -147,7 +147,7 @@ export function FormEdit({
           </Box>
           <Box mt='1' fontSize='13px'>
             <Box as='span'>
-              Solo se aceptan formatos PNG, JPG y WebP con un máximo de 1 MB.
+              Solo se aceptan formatos PNG, JPG y WebP con un máximo de 2 MB.
             </Box>
           </Box>
         </Box>

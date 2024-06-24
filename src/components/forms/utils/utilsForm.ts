@@ -73,10 +73,10 @@ async function handleImage(e, setCropData, onOpen) {
   const file = e.target.files?.[0];
   if (!file) return;
 
-  // 1 MB
-  if (file.size > 1000000) {
+  // 2 MB
+  if (file.size > 2000000) {
     alert(
-      `El tamaño de la imagen es mayor a 1 MB. Por favor, seleccione una imagen de menor tamaño.`,
+      `El tamaño de la imagen es mayor a 2 MB. Por favor, seleccione una imagen de menor tamaño.`,
     );
 
     return;

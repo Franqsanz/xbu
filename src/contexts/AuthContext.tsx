@@ -19,7 +19,6 @@ function AuthProvider({ children }: AuthProviderType) {
           const token = await user.getIdToken(true);
           window.localStorage.setItem('app_tk', token);
           setToken(token);
-          // document.cookie = `app_tk=${token}; SameSite=None; path=/;`;
         } catch (error) {
           console.error('Error al actualizar el token:', error);
         }
