@@ -275,7 +275,7 @@ export default function Book() {
           <Box>
             <Link
               as={NavLink}
-              to={`/books/search/category/${data.category[0]}`}
+              to={`/books/filter/category/${data.category[0]}`}
             >
               <MyTag
                 bg='green.50'
@@ -303,9 +303,9 @@ export default function Book() {
           >
             {data.authors.map((author, index) => (
               <MyLink
-                external={true}
+                external={false}
                 key={index}
-                href={`https://www.google.com/search?q=${author}+escritor`}
+                href={`/books/filter/authors/${author}`}
                 data={author}
                 index={index !== data.authors.length - 1 && ','}
               />
@@ -333,7 +333,7 @@ export default function Book() {
                     <Box as='span'>
                       <MyLink
                         external={false}
-                        href={`/books/search/year/${data.year}`}
+                        href={`/books/filter/year/${data.year}`}
                         data={data.year}
                       />
                     </Box>
@@ -355,7 +355,7 @@ export default function Book() {
                     <Box as='span'>
                       <MyLink
                         external={false}
-                        href={`/books/search/language/${data.language}`}
+                        href={`/books/filter/language/${data.language}`}
                         data={data.language}
                       />
                     </Box>
@@ -379,7 +379,7 @@ export default function Book() {
                         <MyLink
                           external={false}
                           key={index}
-                          href={`/books/search/category/${category}`}
+                          href={`/books/filter/category/${category}`}
                           data={category}
                           index={index !== data.category.length - 1 && ','}
                         />

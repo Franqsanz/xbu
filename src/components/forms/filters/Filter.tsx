@@ -61,7 +61,7 @@ export default function Filter({ onClose }: Props) {
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    navigate(`/books/search/${query}/${value}`);
+    navigate(`/books/filter/${query}/${value}`);
     onClose();
   }
 

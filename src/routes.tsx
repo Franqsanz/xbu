@@ -69,7 +69,7 @@ export const routes = createBrowserRouter([
         path: '/books',
         children: [
           {
-            path: 'search',
+            path: 'filter',
             children: [
               {
                 path: ':query/:param',

@@ -17,7 +17,7 @@ export default function Categories() {
             display='flex'
             key={_id}
             as={NavLink}
-            to={`/books/search/category/${_id}`}
+            to={`/books/filter/category/${_id}`}
             tabIndex={-1}
             _hover={{ outline: 'none' }}
           >
