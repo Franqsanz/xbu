@@ -1,18 +1,18 @@
 /// <reference types="vite/client" />
 
-import { defineConfig, splitVendorChunkPlugin } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import million from 'million/compiler';
 import compression from 'vite-plugin-compression';
 import webfontDownload from 'vite-plugin-webfont-dl';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { createHtmlPlugin } from 'vite-plugin-html';
+import removeConsole from 'vite-plugin-remove-console';
 import path from 'path';
 
 export default defineConfig({
   plugins: [
     million.vite({ auto: true }),
-    splitVendorChunkPlugin(),
     react(),
     webfontDownload(
       [
@@ -26,6 +26,7 @@ export default defineConfig({
         proxy: false,
       },
     ),
+    removeConsole(),
     createHtmlPlugin({ minify: true }),
     compression({
       algorithm: 'brotliCompress',

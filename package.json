@@ -84,6 +84,7 @@
     "vite-plugin-html": "3.2.2",
     "vite-plugin-image-optimizer": "1.1.7",
     "vite-plugin-minify": "1.5.2",
+    "vite-plugin-remove-console": "2.2.0",
     "vite-plugin-webfont-dl": "3.9.4",
     "vitest": "1.5.2"
   }
