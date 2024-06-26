@@ -90,6 +90,9 @@ export default defineConfig({
   server: {
     port: 1010,
   },
+  esbuild: {
+    drop: ['console', 'debugger'],
+  },
   build: {
     outDir: './dist',
     chunkSizeWarningLimit: 1500,
