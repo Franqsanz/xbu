@@ -174,7 +174,7 @@ export default function Book() {
       />
       <Flex
         w='full'
-        maxW='1255px'
+        maxW='1170px'
         m='auto'
         px={{ base: 5, xl: 0 }}
         pt='4'
@@ -232,8 +232,9 @@ export default function Book() {
         onClose={onCloseEdit}
       />
       <Flex
+        as='section'
         w='full'
-        maxW='1300px'
+        maxW='1220px'
         m='auto'
         mb={{ base: 25, md: 32 }}
         align='flex-start'

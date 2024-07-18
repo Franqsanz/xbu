@@ -6,11 +6,11 @@ export function SkeletonDetailsBook() {
     <>
       <Flex
         w='full'
-        maxW='1255px'
+        maxW='1170px'
         m='auto'
         px={{ base: 5, xl: 0 }}
         pt='7'
-        pb='3'
+        pb='5'
         align='center'
         justify='space-between'
       >
@@ -19,7 +19,7 @@ export function SkeletonDetailsBook() {
       </Flex>
       <Flex
         w='full'
-        maxW='1300px'
+        maxW='1170px'
         m='auto'
         mb='300px'
         align='flex-start'

@@ -72,7 +72,14 @@ export function DesktopNav() {
         backdropBlur='12px'
         zIndex='1'
       >
-        <Flex as='nav' w='100%' justify='space-around' align='center'>
+        <Flex
+          as='nav'
+          w='100%'
+          maxW='1160px'
+          m='auto'
+          justify='space-between'
+          align='center'
+        >
           <Flex align='center'>
             <Box
               as='span'

@@ -5,7 +5,7 @@ import { MobileNav } from '@components/nav/MobileNav';
 import { DesktopNav } from '@components/nav/DesktopNav';
 
 export function Nav() {
-  const isMobile = useBreakpointValue({ base: true, md: false });
+  const isMobile = useBreakpointValue({ base: true, lg: false });
 
   return <>{isMobile ? <MobileNav /> : <DesktopNav />}</>;
 }
