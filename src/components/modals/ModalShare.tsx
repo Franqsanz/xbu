@@ -17,7 +17,7 @@ import {
 import {
   WhatsappShareButton,
   TwitterShareButton,
-  TwitterIcon,
+  XIcon,
   FacebookIcon,
   FacebookShareButton,
   WhatsappIcon,
@@ -110,7 +110,7 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalType) {
               <TwitterShareButton url={shareUrl || ''} title={data}>
                 <Flex direction='column' align='center'>
                   <Icon
-                    as={TwitterIcon}
+                    as={XIcon}
                     boxSize={{ base: 10, md: 12 }}
                     rounded='3xl'
                   />
