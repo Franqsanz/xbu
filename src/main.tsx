@@ -10,21 +10,22 @@ import { HelmetProvider } from 'react-helmet-async';
 import theme from '../theme';
 import { routes } from './routes';
 import { AuthProvider } from '@contexts/AuthContext';
+import { API_URL } from './config';
 
 const queryClient = new QueryClient();
 
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DNS,
   integrations: [
-    new Sentry.BrowserTracing({
-      tracePropagationTargets: [
-        'localhost',
-        /^https:\/\/xb-api\.vercel\.app\/api/,
-      ],
-    }),
-    new Sentry.Replay(),
+    Sentry.browserTracingIntegration(),
+    Sentry.replayIntegration(),
   ],
   tracesSampleRate: 1.0,
+  tracePropagationTargets: [
+    API_URL,
+    /^\/api\//,
+    // /^https:\/\/xb-api\.vercel\.app\/api/,
+  ],
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
 });

@@ -173,6 +173,7 @@ export default function Book() {
         urlImage={data.image.url}
       />
       <Flex
+        as='section'
         w='full'
         maxW='1170px'
         m='auto'
