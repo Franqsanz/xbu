@@ -23,6 +23,8 @@ import {
 import { BsTag } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 import LazyLoad from 'react-lazy-load';
+import Atropos from 'atropos/react';
+import 'atropos/css';
 
 import { useBook, useDeleteBook } from '@hooks/queries';
 import { handleImageLoad } from '@utils/utils';
@@ -453,19 +455,30 @@ export default function Book() {
               zIndex='1'
             >
               <LazyLoad width={290} height={420} offset={0} threshold={0.99}>
-                <ImageZoom
-                  w='290px'
-                  h='420px'
-                  src={data.image.url}
-                  alt={`Imagen de "${data.title}"`}
-                  rounded='lg'
-                  border='1px solid #A0AEC0'
-                  boxShadow='lg'
-                  decoding='async'
-                  filter='blur(10px)'
-                  transition='filter 0.5s ease-in-out'
-                  onLoad={handleImageLoad}
-                />
+                <Atropos
+                  highlight={true}
+                  rotateTouch={false}
+                  rotateXMax={30}
+                  rotateYMax={30}
+                  stretchX={45}
+                  stretchY={45}
+                  duration={200}
+                  shadow={false}
+                >
+                  <ImageZoom
+                    w='290px'
+                    h='420px'
+                    src={data.image.url}
+                    alt={`Imagen de "${data.title}"`}
+                    rounded='lg'
+                    border='1px solid #A0AEC0'
+                    boxShadow='lg'
+                    decoding='async'
+                    filter='blur(10px)'
+                    transition='filter 0.5s ease-in-out'
+                    onLoad={handleImageLoad}
+                  />
+                </Atropos>
               </LazyLoad>
             </Flex>
             <Image

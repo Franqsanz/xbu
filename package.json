@@ -28,6 +28,7 @@
     "@emotion/styled": "11.13.0",
     "@tanstack/react-query": "5.51.11",
     "@tanstack/react-query-devtools": "5.51.11",
+    "atropos": "2.0.2",
     "chakra-react-select": "4.9.1",
     "firebase": "10.12.4",
     "framer-motion": "11.3.8",
