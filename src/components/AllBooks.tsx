@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { ScrollRestoration } from 'react-router-dom';
 import {
   Flex,
   Spinner,
@@ -12,6 +13,7 @@ import { useInView } from 'react-intersection-observer';
 
 import { CardType } from '@components/types';
 import { useBooksPaginate } from '@hooks/queries';
+import { useScrollRestoration } from '@hooks/useScrollRestoration';
 import { MySimpleGrid } from '@components/MySimpleGrid';
 import { Card } from '@components/cards/Card';
 import { Aside } from '@components/Aside';
@@ -25,9 +27,19 @@ export function AllBooks() {
     useBooksPaginate();
   let fetchingNextPageUI;
 
+  useScrollRestoration(isPending); // Restablecer la posición del scroll al volver de la vista del libro
+
   useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView]);
+    let isMounted = true;
+
+    if (inView && isMounted) {
+      fetchNextPage();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [inView, fetchNextPage]);
 
   if (isPending) {
     return <SkeletonAllBooks showTags={false} />;
@@ -66,6 +78,7 @@ export function AllBooks() {
 
   return (
     <>
+      <ScrollRestoration />
       <Flex
         as='article'
         direction={{ base: 'column', md: 'row' }}
