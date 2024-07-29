@@ -109,9 +109,22 @@ function useBooksPaginate() {
 }
 
 function useFilter(query: string | undefined, param: string | undefined) {
-  return useSuspenseQuery({
+  // return useSuspenseQuery({
+  //   queryKey: [keys.filter, query, param],
+  //   queryFn: () => getBooksFilter(query, param, page),
+  //   gcTime: 3000,
+  //   retry: 1,
+  // });
+
+  return useInfiniteQuery({
     queryKey: [keys.filter, query, param],
-    queryFn: () => getBooksFilter(query, param),
+    queryFn: ({ pageParam }) => getBooksFilter(query, param, pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.info.nextPage === null) return;
+
+      return lastPage.info.nextPage;
+    },
     gcTime: 3000,
     retry: 1,
   });

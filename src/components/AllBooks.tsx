@@ -27,7 +27,7 @@ export function AllBooks() {
     useBooksPaginate();
   let fetchingNextPageUI;
 
-  useScrollRestoration(isPending); // Restablecer la posición del scroll al volver de la vista del libro
+  useScrollRestoration(isPending); // Restablece la posición del scroll al volver de la vista del libro
 
   useEffect(() => {
     let isMounted = true;

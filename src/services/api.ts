@@ -17,19 +17,14 @@ async function getBook(pathUrl: string | undefined) {
   return await fetchData(`${API_URL}/books/path/${pathUrl}`);
 }
 
-async function postBook(books: any) {
-  return await fetchData(`${API_URL}/books`, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(books),
-  });
-}
-
 async function getBooksFilter(
   query: string | undefined,
   param: string | undefined,
+  page: number | undefined,
 ) {
-  return await fetchData(`${API_URL}/books?${query}=${param}`);
+  return await fetchData(
+    `${API_URL}/books?${query}=${param}&limit=10&page=${page}`,
+  );
 }
 
 async function getMoreBooks() {
@@ -50,6 +45,14 @@ async function getMoreBooksAuthors(id: string | undefined) {
 
 async function getAllFilterOptions() {
   return await fetchData(`${API_URL}/books/options`);
+}
+
+async function postBook(books: any) {
+  return await fetchData(`${API_URL}/books`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(books),
+  });
 }
 
 async function updateBook(id: string | undefined, books: any) {

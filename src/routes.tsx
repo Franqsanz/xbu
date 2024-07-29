@@ -74,7 +74,9 @@ export const routes = createBrowserRouter([
               {
                 path: ':query/:param',
                 element: (
-                  <CatchError skeletonLoad={<SkeletonAllBooks />}>
+                  <CatchError
+                    skeletonLoad={<SkeletonAllBooks showTags={true} />}
+                  >
                     <Search />
                   </CatchError>
                 ),
