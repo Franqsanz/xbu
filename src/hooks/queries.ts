@@ -24,6 +24,7 @@ import {
   updateBook,
   deleteBook,
   deleteAccount,
+  getBooksFilterPaginated,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
@@ -108,17 +109,14 @@ function useBooksPaginate() {
   });
 }
 
-function useFilter(query: string | undefined, param: string | undefined) {
-  // return useSuspenseQuery({
-  //   queryKey: [keys.filter, query, param],
-  //   queryFn: () => getBooksFilter(query, param, page),
-  //   gcTime: 3000,
-  //   retry: 1,
-  // });
-
+function useFilterPaginated(
+  query: string | undefined,
+  param: string | undefined,
+) {
   return useInfiniteQuery({
-    queryKey: [keys.filter, query, param],
-    queryFn: ({ pageParam }) => getBooksFilter(query, param, pageParam),
+    queryKey: [keys.filterPaginated, query, param],
+    queryFn: ({ pageParam }) =>
+      getBooksFilterPaginated(query, param, pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       if (lastPage.info.nextPage === null) return;
@@ -126,7 +124,18 @@ function useFilter(query: string | undefined, param: string | undefined) {
       return lastPage.info.nextPage;
     },
     gcTime: 3000,
-    retry: 1,
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+}
+
+function useFilter(query: string | undefined, param: string | undefined) {
+  return useQuery({
+    queryKey: [keys.filter, query, param],
+    queryFn: () => getBooksFilter(query, param),
+    gcTime: 3000,
+    retry: false,
+    refetchOnWindowFocus: false,
   });
 }
 
@@ -279,6 +288,7 @@ export {
   useAllSearchBooks,
   useBooksPaginate,
   useBook,
+  useFilterPaginated,
   useFilter,
   useMoreBooks,
   useMostViewedBooks,

@@ -22,9 +22,7 @@ export function FilterDrawer({
   onClose,
   handleLanguageChange,
   language,
-  languagesMap,
   year,
-  yearsMap,
   handleYearChange,
 }: DrawerType) {
   const bgContentCheckbox = useColorModeValue('white', 'transparent');
@@ -80,8 +78,8 @@ export function FilterDrawer({
                   direction='column-reverse'
                   gap='5'
                 >
-                  {language &&
-                    language.map((language) => (
+                  {Array.isArray(language) &&
+                    language?.map(({ language, count }: any) => (
                       <Radio
                         key={language}
                         value={language}
@@ -89,7 +87,7 @@ export function FilterDrawer({
                       >
                         {language}
                         <Box as='span' ml='2' color='gray.500'>
-                          ({languagesMap && languagesMap[language]})
+                          ({count})
                         </Box>
                       </Radio>
                     ))}
@@ -116,8 +114,8 @@ export function FilterDrawer({
                   direction='column-reverse'
                   gap='5'
                 >
-                  {year &&
-                    year.map((year) => (
+                  {Array.isArray(year) &&
+                    year?.map(({ year, count }: any) => (
                       <Radio
                         key={year}
                         value={year}
@@ -125,7 +123,7 @@ export function FilterDrawer({
                       >
                         {year}
                         <Box as='span' ml='2' color='gray.500'>
-                          ({yearsMap && yearsMap[year]})
+                          ({count})
                         </Box>
                       </Radio>
                     ))}

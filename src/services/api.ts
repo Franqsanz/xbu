@@ -17,7 +17,7 @@ async function getBook(pathUrl: string | undefined) {
   return await fetchData(`${API_URL}/books/path/${pathUrl}`);
 }
 
-async function getBooksFilter(
+async function getBooksFilterPaginated(
   query: string | undefined,
   param: string | undefined,
   page: number | undefined,
@@ -25,6 +25,13 @@ async function getBooksFilter(
   return await fetchData(
     `${API_URL}/books?${query}=${param}&limit=10&page=${page}`,
   );
+}
+
+async function getBooksFilter(
+  query: string | undefined,
+  param: string | undefined,
+) {
+  return await fetchData(`${API_URL}/books?${query}=${param}`);
 }
 
 async function getMoreBooks() {
@@ -115,6 +122,7 @@ export {
   getAllSearchBooks,
   getBooksPaginate,
   getBook,
+  getBooksFilterPaginated,
   getBooksFilter,
   getAllFilterOptions,
   getMoreBooks,

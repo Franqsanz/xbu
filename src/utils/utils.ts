@@ -9,6 +9,7 @@ const keys = {
   one: 'BookOne',
   filtersOptions: 'BookFiltersOptions',
   paginate: 'BookPaginate',
+  filterPaginated: 'BooksFilterPaginated',
   filter: 'BooksFilter',
   random: 'BooksRandom',
   relatedBooks: 'RelatedBooks',

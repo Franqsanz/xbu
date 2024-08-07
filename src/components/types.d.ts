@@ -112,9 +112,7 @@ type languagesYMapType = { [key: string]: number } | undefined;
 
 interface LanguageAndYearType {
   language: languageYType;
-  languagesMap: languagesYMapType;
   year: languageYType;
-  yearsMap: languagesYMapType;
 }
 
 interface DrawerType extends DisclosureType, LanguageAndYearType {
