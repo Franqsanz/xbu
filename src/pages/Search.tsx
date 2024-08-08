@@ -48,6 +48,8 @@ export default function Search() {
   let buttonFilter;
   let fetchingNextPageUI;
   const isFiltering = !!selectedLanguage || !!selectedYear; // Verificar si los radios estan activos o no.
+  const hasMultipleLanguages = languages.length > 1;
+  const hasMultipleYears = years.length > 1;
 
   const {
     data: dataPaginated,
@@ -119,73 +121,75 @@ export default function Search() {
     setSelectedYear('');
   }, [location.pathname]);
 
-  asideFilter = (
-    <Flex
-      display={{ base: 'none', md: 'flex' }}
-      direction='column'
-      mt='10'
-      pb='10'
-    >
-      <Flex align='center' py='2' mb='2' fontSize='xl' fontWeight='bold'>
-        <Icon as={CgOptions} boxSize='20px' mr='2' />
-        Filtrar por:
+  if (hasMultipleLanguages || hasMultipleYears) {
+    asideFilter = (
+      <Flex
+        display={{ base: 'none', md: 'flex' }}
+        direction='column'
+        mt='10'
+        pb='10'
+      >
+        <Flex align='center' py='2' mb='2' fontSize='xl' fontWeight='bold'>
+          <Icon as={CgOptions} boxSize='20px' mr='2' />
+          Filtrar por:
+        </Flex>
+        <RadioGroup
+          value={selectedLanguage}
+          onChange={handleLanguageChange}
+          colorScheme='green'
+        >
+          <Box mb='4' borderBottom='1px'>
+            Idioma
+          </Box>
+          <Flex direction='column' gap='3'>
+            <Radio value=''>Todos los Idiomas</Radio>
+            {Array.isArray(languages) &&
+              languages.map(({ language, count }: any) => (
+                <Radio key={language} value={language}>
+                  {language}
+                  <Box as='span' ml='2' color='gray.500'>
+                    ({count})
+                  </Box>
+                </Radio>
+              ))}
+          </Flex>
+        </RadioGroup>
+        <RadioGroup
+          value={selectedYear}
+          onChange={handleYearChange}
+          colorScheme='green'
+        >
+          <Box my='4' borderBottom='1px'>
+            Año
+          </Box>
+          <Flex direction='column' gap='3'>
+            <Radio value=''>Todos los Años</Radio>
+            {Array.isArray(years) &&
+              years.map(({ year, count }: any) => (
+                <Radio key={year} value={String(year)}>
+                  {year}
+                  <Box as='span' ml='2' color='gray.500'>
+                    ({count})
+                  </Box>
+                </Radio>
+              ))}
+          </Flex>
+        </RadioGroup>
       </Flex>
-      <RadioGroup
-        value={selectedLanguage}
-        onChange={handleLanguageChange}
-        colorScheme='green'
-      >
-        <Box mb='4' borderBottom='1px'>
-          Idioma
-        </Box>
-        <Flex direction='column' gap='3'>
-          <Radio value=''>Todos los Idiomas</Radio>
-          {Array.isArray(languages) &&
-            languages.map(({ language, count }: any) => (
-              <Radio key={language} value={language}>
-                {language}
-                <Box as='span' ml='2' color='gray.500'>
-                  ({count})
-                </Box>
-              </Radio>
-            ))}
-        </Flex>
-      </RadioGroup>
-      <RadioGroup
-        value={selectedYear}
-        onChange={handleYearChange}
-        colorScheme='green'
-      >
-        <Box my='4' borderBottom='1px'>
-          Año
-        </Box>
-        <Flex direction='column' gap='3'>
-          <Radio value=''>Todos los Años</Radio>
-          {Array.isArray(years) &&
-            years.map(({ year, count }: any) => (
-              <Radio key={year} value={String(year)}>
-                {year}
-                <Box as='span' ml='2' color='gray.500'>
-                  ({count})
-                </Box>
-              </Radio>
-            ))}
-        </Flex>
-      </RadioGroup>
-    </Flex>
-  );
+    );
 
-  buttonFilter = (
-    <Button
-      display={{ base: 'flex', xl: 'none' }}
-      onClick={onToggle}
-      fontWeight='500'
-      size='sm'
-    >
-      <Icon as={CgOptions} boxSize='4' mr='2' />
-      Filtrar
-    </Button>
-  );
+    buttonFilter = (
+      <Button
+        display={{ base: 'flex', xl: 'none' }}
+        onClick={onToggle}
+        fontWeight='500'
+        size='sm'
+      >
+        <Icon as={CgOptions} boxSize='4' mr='2' />
+        Filtrar
+      </Button>
+    );
+  }
 
   // Verifica si los 3 campos de aboutCategories esten con info o no
   const categoryCheck = aboutCategories.find((item) => {

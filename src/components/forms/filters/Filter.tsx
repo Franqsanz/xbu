@@ -26,22 +26,22 @@ export default function Filter({ onClose }: Props) {
 
   const categories =
     data &&
-    data[0].categories[0].map(({ _id, count }) => ({
-      value: _id,
+    data[0].categories[0].map(({ category, count }) => ({
+      value: category,
       total: count,
     }));
 
   const years =
     data &&
-    data[0].years[0].map(({ _id, count }) => ({
-      value: _id,
+    data[0].years[0].map(({ year, count }) => ({
+      value: year,
       total: count,
     }));
 
   const languages =
     data &&
-    data[0].languages[0].map(({ _id, count }) => ({
-      value: _id,
+    data[0].languages[0].map(({ language, count }) => ({
+      value: language,
       total: count,
     }));
 

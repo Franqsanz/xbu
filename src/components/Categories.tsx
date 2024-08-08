@@ -12,12 +12,12 @@ export default function Categories() {
   return (
     <>
       {data &&
-        data[0].categories[0].map(({ _id, count }) => (
+        data[0].categories[0].map(({ category, count }) => (
           <Link
             display='flex'
-            key={_id}
+            key={category}
             as={NavLink}
-            to={`/books/filter/category/${_id}`}
+            to={`/books/filter/category/${category}`}
             tabIndex={-1}
             _hover={{ outline: 'none' }}
           >
@@ -25,7 +25,7 @@ export default function Categories() {
               bg='green.50'
               color='green.900'
               icon={BsTag}
-              name={_id}
+              name={category}
               size='lg'
               tabIndex={0}
               isFocused={true}
