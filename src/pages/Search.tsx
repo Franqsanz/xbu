@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, ScrollRestoration } from 'react-router-dom';
 import { CgOptions } from 'react-icons/cg';
 import { useInView } from 'react-intersection-observer';
 import {
@@ -21,6 +21,7 @@ import {
 import { Card } from '@components/cards/Card';
 import { CardType } from '@components/types';
 import { useFilter, useFilterPaginated } from '@hooks/queries';
+// import { useScrollRestoration } from '@hooks/useScrollRestoration';
 import { ContainerTitle } from '@components/ContainerTitle';
 import { MySimpleGrid } from '@components/MySimpleGrid';
 import { MainHead } from '@components/Head';
@@ -84,6 +85,7 @@ export default function Search() {
   }
 
   const results = getNormalizedResults();
+  // useScrollRestoration(isPendingPaginated); // Restablece la posición del scroll al volver de la vista del libro
 
   useEffect(() => {
     let isMounted = true;
@@ -243,6 +245,7 @@ export default function Search() {
 
   return (
     <>
+      <ScrollRestoration />
       <MainHead title={`${param} | XBuniverse`} />
       <ContainerTitle title={`${param}`} />
       <MySliderCategories />
