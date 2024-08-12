@@ -1,4 +1,5 @@
 import React from 'react';
+import { Flex } from '@chakra-ui/react';
 
 import { MainHead } from '@components/Head';
 import { ContainerTitle } from '@components/ContainerTitle';
@@ -16,31 +17,37 @@ export default function MostViewed() {
       <MainHead title='Top 10 Más Vistos | XBuniverse' />
       <ContainerTitle title='Top 10 Más Vistos' />
       <MySliderCategories />
-      <MySimpleGrid width='6xl'>
-        {data?.map(
-          ({
-            id,
-            category,
-            title,
-            language,
-            authors,
-            pathUrl,
-            image,
-          }: CardType) => (
-            <>
-              <Card
-                id={id}
-                category={category}
-                title={title}
-                authors={authors}
-                language={language}
-                pathUrl={pathUrl}
-                image={image}
-              />
-            </>
-          ),
-        )}
-      </MySimpleGrid>
+      <Flex
+        maxW={{ base: '1070px', '2xl': '1280px' }}
+        m='0 auto'
+        px={{ base: 5, md: 10, '2xl': 16 }}
+      >
+        <MySimpleGrid>
+          {data?.map(
+            ({
+              id,
+              category,
+              title,
+              language,
+              authors,
+              pathUrl,
+              image,
+            }: CardType) => (
+              <>
+                <Card
+                  id={id}
+                  category={category}
+                  title={title}
+                  authors={authors}
+                  language={language}
+                  pathUrl={pathUrl}
+                  image={image}
+                />
+              </>
+            ),
+          )}
+        </MySimpleGrid>
+      </Flex>
     </>
   );
 }
