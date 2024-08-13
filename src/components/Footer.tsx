@@ -64,41 +64,44 @@ export function Footer() {
 
   return (
     <>
-      <Flex
-        as='footer'
-        bg={bgFooter}
-        py='5'
-        justify='center'
-        direction='column'
-        align='center'
-        fontSize='sm'
-      >
-        Hecho con ❤ por Franqsanz
-        <Link
-          as={NavLink}
-          to='/privacy-policies'
-          mt='2'
-          textDecoration='underline'
-          _hover={{ textDecoration: 'none' }}
-        >
-          Políticas de Privacidad
-        </Link>
-        <Box display={{ base: 'none', md: 'block' }} fontSize='14px' my='2'>
-          2024 XBuniverse
-        </Box>
+      <Box mt='auto'>
         <Flex
-          mt={{ base: 4, md: 2 }}
+          as='footer'
+          bg={bgFooter}
+          mt='20'
+          py='5'
+          justify='center'
+          direction='column'
           align='center'
-          fontSize='xs'
-          bg='black'
-          p='1.5'
-          rounded='lg'
-          color='#EAEAEA'
+          fontSize='sm'
         >
-          <Box mr='2'>Estado de conexión</Box>
-          {connectionState}
+          Hecho con ❤ por Franqsanz
+          <Link
+            as={NavLink}
+            to='/privacy-policies'
+            mt='2'
+            textDecoration='underline'
+            _hover={{ textDecoration: 'none' }}
+          >
+            Políticas de Privacidad
+          </Link>
+          <Box display={{ base: 'none', md: 'block' }} fontSize='14px' my='2'>
+            2024 XBuniverse
+          </Box>
+          <Flex
+            mt={{ base: 4, md: 2 }}
+            align='center'
+            fontSize='xs'
+            bg='black'
+            p='1.5'
+            rounded='lg'
+            color='#EAEAEA'
+          >
+            <Box mr='2'>Estado de conexión</Box>
+            {connectionState}
+          </Flex>
         </Flex>
-      </Flex>
+      </Box>
     </>
   );
 }

@@ -234,7 +234,7 @@ export function Profile() {
       </Flex>
       <Flex
         direction={{ base: 'column', md: 'row' }}
-        maxW='1700px'
+        maxW={{ base: '1260px', '2xl': '1560px' }}
         m='0 auto'
         px={{ base: 5, md: 10, '2xl': 16 }}
       >

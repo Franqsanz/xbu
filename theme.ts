@@ -37,6 +37,11 @@ export default extendTheme({
           zIndex: 2,
         },
       },
+      '#root': {
+        display: { base: 'block', lg: 'flex' },
+        flexDirection: 'column',
+        minHeight: '100vh',
+      },
       h1: {
         fontWeight: 'extrabold',
       },

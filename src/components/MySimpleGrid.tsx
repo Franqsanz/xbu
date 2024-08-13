@@ -14,7 +14,6 @@ export function MySimpleGrid({ width = '8xl', children }: SimpleGridType) {
       <SimpleGrid
         as='section'
         maxW='full'
-        minH='100vh'
         w={width}
         columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }}
         justifyItems='center'
