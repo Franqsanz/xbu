@@ -71,7 +71,7 @@ export function MySliderCategories() {
         <Box
           id='slider'
           display='flex'
-          w='5xl'
+          w={{ base: '68rem', '2xl': '84rem' }}
           overflowX={{ base: 'auto', md: 'hidden' }}
           scrollBehavior='smooth'
           flexDirection='row'

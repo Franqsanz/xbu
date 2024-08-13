@@ -112,12 +112,21 @@ export function Card({
             >
               <Box
                 w='full'
-                maxW='240px'
+                maxW={{ base: '130px', lg: '210px' }}
                 fontSize={{ base: 'xs', sm: 'md' }}
                 fontWeight='400'
                 mx='1'
                 mb='2'
                 textTransform='uppercase'
+                sx={{
+                  display: '-webkit-box',
+                  '-webkit-box-orient': 'vertical',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  '-webkit-line-clamp': '2',
+                  lineHeight: 1.5,
+                  maxHeight: 'calc(1.5em * 2)',
+                }}
               >
                 {title}
               </Box>

@@ -9,7 +9,13 @@ export function SkeletonTags() {
   return (
     <>
       <Flex justify='center' overflow='hidden'>
-        <HStack w='5xl' spacing='4' mt='5' mb='5' mx='10'>
+        <HStack
+          w={{ base: '68rem', '2xl': '84rem' }}
+          spacing='4'
+          mt='5'
+          mb='5'
+          mx='10'
+        >
           {TagCategories}
         </HStack>
       </Flex>

@@ -27,6 +27,15 @@ export function MostViewed() {
                 my='1'
                 fontSize='sm'
                 _hover={{ color: 'green.500', outline: 'none' }}
+                sx={{
+                  display: '-webkit-box',
+                  '-webkit-box-orient': 'vertical',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  '-webkit-line-clamp': '2',
+                  lineHeight: 1.5,
+                  maxHeight: 'calc(1.5em * 2)',
+                }}
               >
                 {title}
               </Link>
