@@ -64,9 +64,8 @@ export function Footer() {
 
   return (
     <>
-      <Box mt='auto'>
+      <Box as='footer' mt='auto'>
         <Flex
-          as='footer'
           bg={bgFooter}
           mt='20'
           py='5'

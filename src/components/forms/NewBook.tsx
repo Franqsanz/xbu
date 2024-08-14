@@ -199,6 +199,7 @@ export function FormNewBook() {
   return (
     <>
       <Flex
+        as='section'
         align='center'
         justify='center'
         direction='column'

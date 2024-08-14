@@ -48,6 +48,7 @@ export function Home() {
         urlImage='https://xbu.netlify.app/ogImage.png'
       />
       <Container
+        as='section'
         maxW='9xl'
         p='0'
         bg={bContainer}
@@ -136,6 +137,7 @@ export function Home() {
         </Box>
       </Container>
       <Flex
+        as='section'
         w='full'
         justify='center'
         align='flex-start'
@@ -179,6 +181,7 @@ export function Home() {
         </Stack>
       </Flex>
       <Flex
+        as='section'
         w='full'
         justify='center'
         align='flex-start'

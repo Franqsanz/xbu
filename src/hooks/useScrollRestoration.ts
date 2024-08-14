@@ -1,17 +1,18 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-export function useScrollRestoration(loading) {
+export function useScrollRestoration(loading: boolean) {
   const location = useLocation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     function handleScroll() {
-      sessionStorage.setItem(location.key, JSON.stringify(window.scrollY));
+      sessionStorage.setItem(location.pathname, JSON.stringify(window.scrollY));
     }
 
     window.addEventListener('scroll', handleScroll);
 
-    const scrollPosition = sessionStorage.getItem(location.key);
+    const scrollPosition = sessionStorage.getItem(location.pathname);
+
     if (scrollPosition && !loading) {
       window.scrollTo(0, JSON.parse(scrollPosition));
     }
@@ -19,5 +20,5 @@ export function useScrollRestoration(loading) {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [location.key, loading]);
+  }, [location.pathname, loading]);
 }

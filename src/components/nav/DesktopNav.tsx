@@ -75,7 +75,7 @@ export function DesktopNav() {
         <Flex
           as='nav'
           w='100%'
-          maxW='1160px'
+          maxW={{ base: '1160px', '2xl': '1430px' }}
           m='auto'
           justify='space-between'
           align='center'

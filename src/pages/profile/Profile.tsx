@@ -195,6 +195,7 @@ export function Profile() {
         urlImage={data?.pages[0].user.picture}
       />
       <Flex
+        as='section'
         justify='center'
         align='center'
         direction='column'
@@ -233,6 +234,7 @@ export function Profile() {
         </Box>
       </Flex>
       <Flex
+        as='article'
         direction={{ base: 'column', md: 'row' }}
         maxW={{ base: '1260px', '2xl': '1560px' }}
         m='0 auto'
