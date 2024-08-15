@@ -54,7 +54,6 @@ export default function Book() {
   const grayColor = useColorModeValue('gray.200', 'gray.600');
   const bgGrayCategory = useColorModeValue('gray.100', 'gray.700');
   const gradientColor = useColorModeValue('white', '#1A202C');
-  const infoTextColor = useColorModeValue('gray.600', 'gray.400');
   const bgButton = useColorModeValue('white', 'black');
   const navigate = useNavigate();
   const myToast = useMyToast();
@@ -132,15 +131,9 @@ export default function Book() {
 
   if (data.sourceLink === '') {
     uiLink = (
-      <Box mb='10'>
-        <Box
-          as='span'
-          ml='2'
-          fontSize='md'
-          fontStyle='italic'
-          color={infoTextColor}
-        >
-          El autor de la publicación no a proporsionado un link
+      <Box mb='10' w={{ base: '100%', md: '380px' }}>
+        <Box as='p' ml='2' fontSize='md' fontStyle='italic'>
+          El autor de la publicación no ha proporcionado un link.
         </Box>
       </Box>
     );
