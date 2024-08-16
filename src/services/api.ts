@@ -13,8 +13,18 @@ async function getBooksPaginate(page: number | undefined) {
   return await fetchData(`${API_URL}/books?limit=10&page=${page}`);
 }
 
-async function getBook(pathUrl: string | undefined) {
-  return await fetchData(`${API_URL}/books/path/${pathUrl}`);
+async function getBook(pathUrl: string | undefined, token?: string | null) {
+  const headers = new Headers();
+  headers.append('content-type', 'application/json');
+
+  if (token) {
+    headers.append('Authorization', `Bearer ${token}`);
+  }
+
+  return await fetchData(`${API_URL}/books/path/${pathUrl}`, {
+    method: 'GET',
+    headers,
+  });
 }
 
 async function getBooksFilterPaginated(

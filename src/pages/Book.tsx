@@ -49,6 +49,7 @@ const MoreBooks = lazy(() => import('@components/cards/MoreBooks'));
 
 export default function Book() {
   const shareUrl = window.location.href;
+  const getToken = window.localStorage.getItem('app_tk');
   const { pathUrl } = useParams();
   const { currentUser } = useAuth();
   const grayColor = useColorModeValue('gray.200', 'gray.600');
@@ -80,7 +81,7 @@ export default function Book() {
   let uiLink;
   let btnMoreOptions;
 
-  const { data } = useBook(pathUrl);
+  const { data } = useBook(pathUrl, getToken);
   const { mutate, isSuccess, isPending } = useDeleteBook();
 
   const isCurrentUserAuthor = currentUser && currentUser.uid === data.userId;

@@ -183,10 +183,10 @@ function useMoreBooksAuthors(id: string | undefined) {
   });
 }
 
-function useBook(pathUrl: string | undefined) {
+function useBook(pathUrl: string | undefined, token?: string | null) {
   return useSuspenseQuery({
     queryKey: [keys.one, pathUrl],
-    queryFn: () => getBook(pathUrl),
+    queryFn: () => getBook(pathUrl, token),
     refetchOnWindowFocus: false,
     gcTime: 3000,
     retry: 1,
