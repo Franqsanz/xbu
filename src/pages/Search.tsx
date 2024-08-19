@@ -130,6 +130,8 @@ export default function Search() {
         direction='column'
         mt='10'
         pb='10'
+        position='sticky'
+        top='16'
       >
         <Flex align='center' py='2' mb='2' fontSize='xl' fontWeight='bold'>
           <Icon as={CgOptions} boxSize='20px' mr='2' />

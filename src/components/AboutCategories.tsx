@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Link } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 
 import { aboutCategories } from '../data/links';
 
@@ -15,7 +15,21 @@ export function AboutCategories({ category }: any) {
           <Box fontSize='2xl' mt='5' fontWeight='bold'>
             Sobre {category}
           </Box>
-          <Text mt='2' fontSize='sm'>
+          <Text
+            mt='2'
+            fontSize='sm'
+            maxH='250px'
+            overflow='auto'
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '7px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: '#a2aab3',
+                borderRadius: '30px',
+              },
+            }}
+          >
             {description}
           </Text>
         </React.Fragment>
