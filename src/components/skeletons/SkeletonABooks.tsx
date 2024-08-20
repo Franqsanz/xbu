@@ -1,8 +1,8 @@
 import React from 'react';
 import { Skeleton, SkeletonText, Flex, Box, Stack } from '@chakra-ui/react';
 
-import { MySimpleGrid } from '@components/MySimpleGrid';
-import { Aside } from '@components/Aside';
+import { MySimpleGrid } from '@components/ui/MySimpleGrid';
+import { Aside } from '@components/aside/Aside';
 import { SkeletonTags } from '@components/skeletons/SkeletonTags';
 import { SkeletonType } from '@components/types';
 

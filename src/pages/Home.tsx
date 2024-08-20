@@ -17,7 +17,7 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 
-import { MainHead } from '@components/Head';
+import { MainHead } from '@components/layout/Head';
 import { useAuth } from '@contexts/AuthContext';
 import {
   PatternPadWhite,

@@ -9,7 +9,7 @@ import { ErrorPage } from '@pages/404';
 import { Layout } from '@pages/layout/Layout';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { SkeletonDetailsBook } from '@components/skeletons/SkeletonDBook';
-import { PrivateRoute } from '@components/PrivateRoute';
+import { PrivateRoute } from '@components/nav/PrivateRoute';
 
 import { MyAccount } from '@pages/profile/account/MyAccount';
 import { Profile } from '@pages/profile/Profile';

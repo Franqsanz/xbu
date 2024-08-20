@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Link, Text, VStack, Box, Image, Flex, Icon } from '@chakra-ui/react';
 import { FiArrowLeft } from 'react-icons/fi';
 
-import { MainHead } from '@components/Head';
+import { MainHead } from '@components/layout/Head';
 import { PageNotFound } from '@assets/assets';
 
 export function ErrorPage() {

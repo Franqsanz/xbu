@@ -14,7 +14,7 @@ import { BsTag } from 'react-icons/bs';
 import { IoLanguageOutline } from 'react-icons/io5';
 
 import { CardType } from '@components/types';
-import { MyTag } from '@components/MyTag';
+import { MyTag } from '@components/ui/MyTag';
 import { handleImageLoad, useHandleEnterKey, isSpanish } from '@utils/utils';
 
 export function Card({

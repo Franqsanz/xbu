@@ -45,7 +45,7 @@ function generatePathUrl(name: string) {
   const formattedName = name
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f()°º:]/g, '');
+    .replace(/[\u0300-\u036f()°º:,]/g, '');
   const withoutDotsName = formattedName.replace(/\.|\//g, '');
   const withoutQuestionMarks = withoutDotsName.replace(/[?¿]/g, '');
   const dashedName = withoutQuestionMarks.replace(/\s+/g, '-');
@@ -53,15 +53,6 @@ function generatePathUrl(name: string) {
 
   return `${dashedName}-${randomId}`;
 }
-
-// function aboutAuthors(authorNames: string[]) {
-//   const authorLinks = authorNames.map((authorName) => {
-//     const encodedAuthorName = encodeURIComponent(authorName);
-//     return `https://www.google.com/search?q=${encodedAuthorName}+escritor`;
-//   });
-
-//   return authorLinks;
-// }
 
 // Funcion para verificar si se encuentra en otro idioma que no sea español
 function isSpanish(language) {

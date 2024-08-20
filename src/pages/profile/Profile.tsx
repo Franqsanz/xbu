@@ -16,14 +16,14 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { useInView } from 'react-intersection-observer';
 // import Cookies from 'js-cookie';
 
-import { MySimpleGrid } from '@components/MySimpleGrid';
+import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { Card } from '@components/cards/Card';
-import { Aside } from '@components/Aside';
-import { MainHead } from '@components/Head';
+import { Aside } from '@components/aside/Aside';
+import { MainHead } from '@components/layout/Head';
 import { useProfile } from '@hooks/queries';
 import { parseDate } from '@utils/utils';
 import { CardType } from '@components/types';
-import { ResultLength } from '@components/ResultLength';
+import { ResultLength } from '@components/aside/ResultLength';
 import { useAuth } from '@contexts/AuthContext';
 import { NoData } from '@assets/assets';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';

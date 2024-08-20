@@ -12,14 +12,14 @@ import {
 // import { MySimpleGrid } from '@components/MySimpleGrid';
 // import { Card } from '@components/cards/Card';
 // import { Aside } from '@components/Aside';
-import { MainHead } from '@components/Head';
+import { MainHead } from '@components/layout/Head';
 // import { useProfile } from '@hooks/queries';
 // import { parseDate } from '@utils/utils';
 // import { CardType } from '@components/types';
 // import ResultLength from '@components/ResultLength';
 // import { useAuth } from '@contexts/AuthContext';
 import { useAccountActions } from '@hooks/useAccountActions';
-import { ContainerTitle } from '@components/ContainerTitle';
+import { ContainerTitle } from '@components/layout/ContainerTitle';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 // import { logOut } from '../../services/firebase/auth';
 

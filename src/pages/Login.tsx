@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, Flex, Button, Stack } from '@chakra-ui/react';
 import { BsFacebook, BsTwitterX } from 'react-icons/bs';
 
-import { ContainerTitle } from '@components/ContainerTitle';
-import { MainHead } from '@components/Head';
+import { ContainerTitle } from '@components/layout/ContainerTitle';
+import { MainHead } from '@components/layout/Head';
 import { SignIn } from '@services/auth/auth';
 
 export function Login() {

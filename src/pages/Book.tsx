@@ -28,12 +28,12 @@ import 'atropos/css';
 
 import { useBook, useDeleteBook } from '@hooks/queries';
 import { handleImageLoad } from '@utils/utils';
-import { MainHead } from '@components/Head';
-import { MyTag } from '@components/MyTag';
+import { MainHead } from '@components/layout/Head';
+import { MyTag } from '@components/ui/MyTag';
 import { ModalShare } from '@components/modals/ModalShare';
-import { MyLink } from '@components/MyLink';
+import { MyLink } from '@components/ui/MyLink';
 import { BooksSection } from '@components/BooksSection';
-import { ImageZoom } from '@components/ImageZoom';
+import { ImageZoom } from '@components/ui/ImageZoom';
 import { ModalOptions } from '@components/modals/ModalOptions';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 import { ModalForm } from '@components/modals/ModalForm';

@@ -14,12 +14,12 @@ import { useInView } from 'react-intersection-observer';
 import { CardType } from '@components/types';
 import { useBooksPaginate } from '@hooks/queries';
 import { useScrollRestoration } from '@hooks/useScrollRestoration';
-import { MySimpleGrid } from '@components/MySimpleGrid';
+import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { Card } from '@components/cards/Card';
-import { Aside } from '@components/Aside';
+import { Aside } from '@components/aside/Aside';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
-import { ResultLength } from '@components/ResultLength';
-import { MostViewed } from '@components/MostViewed';
+import { ResultLength } from '@components/aside/ResultLength';
+import { MostViewed } from '@components/aside/MostViewed';
 
 export function AllBooks() {
   const { ref, inView } = useInView();

@@ -29,7 +29,7 @@ import { useMutatePost, useCheckUser } from '@hooks/queries';
 import { ModalCropper } from '@components/modals/ModalCropper';
 import { sortArrayByLabel } from '@utils/utils';
 import { useGenerateSlug } from '@hooks/useGenerateSlug';
-import { MyPopover } from '@components/MyPopover';
+import { MyPopover } from '@components/ui/MyPopover';
 import {
   handleInputChange,
   handleCategory,

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Flex } from '@chakra-ui/react';
 
-import { MainHead } from '@components/Head';
-import { ContainerTitle } from '@components/ContainerTitle';
-import { MySimpleGrid } from '@components/MySimpleGrid';
+import { MainHead } from '@components/layout/Head';
+import { ContainerTitle } from '@components/layout/ContainerTitle';
+import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { Card } from '@components/cards/Card';
 import { CardType } from '@components/types';
 import { useMostViewedBooks } from '@hooks/queries';
-import { MySliderCategories } from '@components/MySliderCategories';
+import { MySliderCategories } from '@components/ui/MySliderCategories';
 
 export default function MostViewed() {
   const { data } = useMostViewedBooks('full');
