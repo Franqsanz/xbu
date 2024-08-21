@@ -212,9 +212,10 @@ function useCheckUser(id: string | undefined) {
   return useQuery({
     queryKey: [keys.checkUser, id],
     queryFn: () => getCheckUser(id),
+    gcTime: 24 * 3600 * 1000,
     enabled: false,
     refetchOnWindowFocus: false,
-    retry: 1,
+    retry: false,
   });
 }
 
@@ -222,8 +223,9 @@ function useUserData(id: string | undefined) {
   return useQuery({
     queryKey: [keys.userData, id],
     queryFn: () => getCheckUser(id),
-    staleTime: 0,
-    retry: 4,
+    gcTime: 24 * 3600 * 1000,
+    staleTime: 24 * 3600 * 1000,
+    retry: 2,
   });
 }
 

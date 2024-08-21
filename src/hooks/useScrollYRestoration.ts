@@ -1,7 +1,7 @@
 import { useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-export function useScrollRestoration(loading: boolean) {
+export function useScrollYRestoration(loading: boolean) {
   const location = useLocation();
 
   useLayoutEffect(() => {

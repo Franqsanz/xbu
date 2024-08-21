@@ -13,7 +13,7 @@ import { useInView } from 'react-intersection-observer';
 
 import { CardType } from '@components/types';
 import { useBooksPaginate } from '@hooks/queries';
-import { useScrollRestoration } from '@hooks/useScrollRestoration';
+import { useScrollYRestoration } from '@hooks/useScrollYRestoration';
 import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { Card } from '@components/cards/Card';
 import { Aside } from '@components/aside/Aside';
@@ -27,7 +27,7 @@ export function AllBooks() {
     useBooksPaginate();
   let fetchingNextPageUI;
 
-  useScrollRestoration(isPending); // Restablece la posición del scroll al volver de la vista del libro
+  useScrollYRestoration(isPending); // Restablece la posición del scroll al volver de la vista del libro
 
   useEffect(() => {
     let isMounted = true;

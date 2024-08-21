@@ -20,6 +20,7 @@ export function AboutCategories({ category }: any) {
             fontSize='sm'
             maxH='250px'
             overflow='auto'
+            pr='1'
             sx={{
               '&::-webkit-scrollbar': {
                 width: '7px',

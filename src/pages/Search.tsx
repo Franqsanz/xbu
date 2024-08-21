@@ -21,7 +21,7 @@ import {
 import { Card } from '@components/cards/Card';
 import { CardType } from '@components/types';
 import { useFilter, useFilterPaginated } from '@hooks/queries';
-import { useScrollRestoration } from '@hooks/useScrollRestoration';
+import { useScrollYRestoration } from '@hooks/useScrollYRestoration';
 import { ContainerTitle } from '@components/layout/ContainerTitle';
 import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { MainHead } from '@components/layout/Head';
@@ -85,7 +85,7 @@ export default function Search() {
   }
 
   const results = getNormalizedResults();
-  useScrollRestoration(isPendingPaginated); // Restablece la posición del scroll al volver de la vista del libro
+  useScrollYRestoration(isPendingPaginated); // Restablece la posición del scroll al volver de la vista del libro
 
   useEffect(() => {
     let isMounted = true;
