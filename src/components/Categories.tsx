@@ -5,7 +5,7 @@ import { BsTag } from 'react-icons/bs';
 
 import { MyTag } from '@components/ui/MyTag';
 import { useAllFilterOptions } from '@hooks/queries';
-import { useCategoryStore } from '@contexts/categoryStore';
+import { useCategoryStore } from '@store/useCategoryStore';
 
 export default function Categories() {
   const { data } = useAllFilterOptions();
