@@ -21,21 +21,11 @@ export function MyPopover({ textBody, textFooter }: Props) {
     <>
       <Popover placement='top'>
         <PopoverTrigger>
-          <Button
-            bg='none'
-            h='0'
-            _active={{ bg: 'none' }}
-            _hover={{ bg: 'none' }}
-          >
+          <Button bg='none' h='0' _active={{ bg: 'none' }} _hover={{ bg: 'none' }}>
             <Icon as={AiOutlineQuestionCircle} fontSize='20' />
           </Button>
         </PopoverTrigger>
-        <PopoverContent
-          bg='black'
-          color='white'
-          textAlign='center'
-          fontSize='sm'
-        >
+        <PopoverContent bg='black' color='white' textAlign='center' fontSize='sm'>
           <PopoverArrow bg='black' />
           <PopoverBody>{textBody}</PopoverBody>
           {textFooter ? <PopoverFooter>{textFooter}</PopoverFooter> : null}

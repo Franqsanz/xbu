@@ -43,12 +43,7 @@ export function ModalConfirmation({
               rounded='lg'
               fontSize={{ base: 'xs', md: 'sm' }}
             >
-              <Icon
-                as={IoWarningOutline}
-                boxSize='7'
-                mr='3'
-                color={colorIconWar}
-              />
+              <Icon as={IoWarningOutline} boxSize='7' mr='3' color={colorIconWar} />
               {warningText}
             </Alert>
           </ModalBody>

@@ -49,9 +49,7 @@ export function Footer() {
   }, [networkState, prevNetworkState, myToast]);
 
   if (networkState === 'online') {
-    connectionState = (
-      <Box w='14px' h='14px' rounded='full' bg='green.500'></Box>
-    );
+    connectionState = <Box w='14px' h='14px' rounded='full' bg='green.500'></Box>;
   }
 
   if (networkState === 'offline') {

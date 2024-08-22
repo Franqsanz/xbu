@@ -129,11 +129,7 @@ export function MobileNav() {
               _hover={{ bg: 'none', color: 'green.500' }}
               _active={{ bg: 'none' }}
             >
-              {isOpenMenu ? (
-                <IoClose fontSize='18' />
-              ) : (
-                <FiMenu fontSize='18' />
-              )}
+              {isOpenMenu ? <IoClose fontSize='18' /> : <FiMenu fontSize='18' />}
             </Button>
             <Box
               as='span'
@@ -163,11 +159,7 @@ export function MobileNav() {
               _active={{ bg: 'none' }}
               _hover={{ color: 'green.500' }}
             >
-              {colorMode === 'dark' ? (
-                <BsSun size='18' />
-              ) : (
-                <RiMoonLine size='18' />
-              )}
+              {colorMode === 'dark' ? <BsSun size='18' /> : <RiMoonLine size='18' />}
             </Button>
             {profileMenu}
           </Flex>
@@ -186,12 +178,7 @@ export function MobileNav() {
           </DrawerContent>
         </Drawer>
         <ModalFilter isOpen={isOpenDFilter} onClose={onCloseDFilter} />
-        <Drawer
-          isOpen={isOpenMenu}
-          placement='left'
-          onClose={onCloseMenu}
-          size='xs'
-        >
+        <Drawer isOpen={isOpenMenu} placement='left' onClose={onCloseMenu} size='xs'>
           <DrawerOverlay backdropFilter='blur(5px)' />
           <DrawerContent
             bg={bgDrawer}

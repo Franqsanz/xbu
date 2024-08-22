@@ -210,10 +210,6 @@ export default function Search() {
     }
   }
 
-  if (isPendingPaginated) {
-    return <SkeletonAllBooks showTags={true} />;
-  }
-
   if (errorPaginated) {
     return (
       <Alert
@@ -236,11 +232,7 @@ export default function Search() {
   if (isFetchingNextPage) {
     fetchingNextPageUI = (
       <Box p='10' textAlign='center'>
-        <Spinner
-          size={{ base: 'lg', md: 'xl' }}
-          thickness='4px'
-          speed='0.40s'
-        />
+        <Spinner size={{ base: 'lg', md: 'xl' }} thickness='4px' speed='0.40s' />
       </Box>
     );
   }
@@ -272,78 +264,81 @@ export default function Search() {
         handleLanguageChange={handleLanguageChange}
         handleYearChange={handleYearChange}
       />
-      <Flex
-        direction={{ base: 'column', md: 'row' }}
-        maxW={{ base: '1260px', '2xl': '1560px' }}
-        m='0 auto'
-        px={{ base: 5, md: 10, '2xl': 16 }}
-      >
-        <Aside>
-          <ResultLength data={dataPaginated?.pages[0].info.totalBooks} />
-          {aboutCategoriesUI}
-          {asideFilter}
-        </Aside>
-        {results.length > 0 ? (
-          <MySimpleGrid>
-            {results.map(
-              ({
-                id,
-                title,
-                synopsis,
-                authors,
-                category,
-                language,
-                sourceLink,
-                image,
-                pathUrl,
-              }: CardType) => (
-                <React.Fragment key={id}>
-                  <Card
-                    id={id}
-                    category={category}
-                    language={language}
-                    title={title}
-                    authors={authors}
-                    synopsis={synopsis}
-                    sourceLink={sourceLink}
-                    pathUrl={pathUrl}
-                    image={image}
-                  />
-                </React.Fragment>
-              ),
-            )}
-          </MySimpleGrid>
-        ) : (
+      {isPendingPaginated ? (
+        <SkeletonAllBooks showTags={false} />
+      ) : (
+        <>
           <Flex
-            w='full'
-            h={{ base: '50vh', md: 'auto' }}
-            align='center'
-            direction='column'
+            direction={{ base: 'column', md: 'row' }}
+            maxW={{ base: '1260px', '2xl': '1560px' }}
+            m='0 auto'
+            px={{ base: 5, md: 10, '2xl': 16 }}
           >
-            <Box
-              fontSize={{ base: '2xl', lg: '5xl' }}
-              mt={{ base: 10, lg: 24 }}
-            >
-              ¡Ups!
-            </Box>
-            <Image
-              src={Lost}
-              maxW='full'
-              w={{ base: '200px', md: '400px' }}
-              mt='5'
-              decoding='async'
-            />
-            <Box
-              mt='7'
-              mb='10'
-              fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
-              textAlign={{ base: 'center', md: 'left' }}
-            >
-              No se encontraron libros que cumplan con los filtros seleccionados
-            </Box>
+            <Aside>
+              <ResultLength data={dataPaginated?.pages[0].info.totalBooks} />
+              {aboutCategoriesUI}
+              {asideFilter}
+            </Aside>
+            {results.length > 0 ? (
+              <MySimpleGrid>
+                {results.map(
+                  ({
+                    id,
+                    title,
+                    synopsis,
+                    authors,
+                    category,
+                    language,
+                    sourceLink,
+                    image,
+                    pathUrl,
+                  }: CardType) => (
+                    <React.Fragment key={id}>
+                      <Card
+                        id={id}
+                        category={category}
+                        language={language}
+                        title={title}
+                        authors={authors}
+                        synopsis={synopsis}
+                        sourceLink={sourceLink}
+                        pathUrl={pathUrl}
+                        image={image}
+                      />
+                    </React.Fragment>
+                  ),
+                )}
+              </MySimpleGrid>
+            ) : (
+              <Flex
+                w='full'
+                h={{ base: '50vh', md: 'auto' }}
+                align='center'
+                direction='column'
+              >
+                <Box fontSize={{ base: '2xl', lg: '5xl' }} mt={{ base: 10, lg: 24 }}>
+                  ¡Ups!
+                </Box>
+                <Image
+                  src={Lost}
+                  maxW='full'
+                  w={{ base: '200px', md: '400px' }}
+                  mt='5'
+                  decoding='async'
+                />
+                <Box
+                  mt='7'
+                  mb='10'
+                  fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
+                  textAlign={{ base: 'center', md: 'left' }}
+                >
+                  No se encontraron libros que cumplan con los filtros seleccionados
+                </Box>
+              </Flex>
+            )}
           </Flex>
-        )}
-      </Flex>
+        </>
+      )}
       {!isFiltering && <Box ref={ref}>{fetchingNextPageUI}</Box>}
     </>
   );

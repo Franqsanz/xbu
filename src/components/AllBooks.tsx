@@ -67,11 +67,7 @@ export function AllBooks() {
   if (isFetchingNextPage) {
     fetchingNextPageUI = (
       <Box p='10' textAlign='center'>
-        <Spinner
-          size={{ base: 'lg', md: 'xl' }}
-          thickness='4px'
-          speed='0.40s'
-        />
+        <Spinner size={{ base: 'lg', md: 'xl' }} thickness='4px' speed='0.40s' />
       </Box>
     );
   }
@@ -91,8 +87,8 @@ export function AllBooks() {
           <Box mt='5'>
             <Flex textAlign={{ base: 'center', lg: 'left' }} direction='column'>
               <Text>
-                Explora todos los libros publicados y encuentra tu próxima
-                lectura favorita.
+                Explora todos los libros publicados y encuentra tu próxima lectura
+                favorita.
               </Text>
               <Text mt='5'>
                 "Un libro es un sueño que sostienes en tus manos" -{' '}

@@ -109,14 +109,10 @@ function useBooksPaginate() {
   });
 }
 
-function useFilterPaginated(
-  query: string | undefined,
-  param: string | undefined,
-) {
+function useFilterPaginated(query: string | undefined, param: string | undefined) {
   return useInfiniteQuery({
     queryKey: [keys.filterPaginated, query, param],
-    queryFn: ({ pageParam }) =>
-      getBooksFilterPaginated(query, param, pageParam),
+    queryFn: ({ pageParam }) => getBooksFilterPaginated(query, param, pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       if (lastPage.info.nextPage === null) return;
@@ -236,8 +232,7 @@ function useProfile(
 ) {
   return useInfiniteQuery({
     queryKey: [keys.profile, username, userId],
-    queryFn: ({ pageParam }) =>
-      getUserAndBooks(username, userId, token, pageParam),
+    queryFn: ({ pageParam }) => getUserAndBooks(username, userId, token, pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       if (lastPage.info.nextPage === null) return;

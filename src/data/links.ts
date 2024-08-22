@@ -359,11 +359,4 @@ const aboutCategories: Array<AboutType> = [
   },
 ];
 
-export {
-  navLink,
-  accountLinks,
-  languages,
-  categories,
-  aboutCategories,
-  formats,
-};
+export { navLink, accountLinks, languages, categories, aboutCategories, formats };

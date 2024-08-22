@@ -51,7 +51,7 @@
         "trailingComma": "all",
         "tabWidth": 2,
         "singleQuote": true,
-        "printWidth": 80,
+        "printWidth": 85,
         "jsxSingleQuote": true,
         "bracketSameLine": false,
         "endOfLine": "auto"

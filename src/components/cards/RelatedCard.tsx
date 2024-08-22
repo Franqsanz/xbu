@@ -6,12 +6,7 @@ import { FiArrowRight } from 'react-icons/fi';
 import { CardType } from '@components/types';
 import { useHandleEnterKey } from '@utils/utils';
 
-export function RelatedCard({
-  title,
-  authors,
-  pathUrl,
-  refetchQueries,
-}: CardType) {
+export function RelatedCard({ title, authors, pathUrl, refetchQueries }: CardType) {
   const handleEnterKey = useHandleEnterKey(pathUrl);
   const borderCard = useColorModeValue('gray.200', 'gray.600');
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');

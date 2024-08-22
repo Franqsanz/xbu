@@ -44,11 +44,7 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
         </MenuButton>
       </Button>
       <MenuList>
-        <MenuGroup
-          title={displayName as string}
-          fontSize='md'
-          textAlign='center'
-        >
+        <MenuGroup title={displayName as string} fontSize='md' textAlign='center'>
           <MenuDivider />
           <MenuItem
             as={NavLink}
@@ -57,11 +53,7 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
           >
             Perfil
           </MenuItem>
-          <MenuItem
-            as={NavLink}
-            to='/new-post'
-            _hover={{ textDecoration: 'none' }}
-          >
+          <MenuItem as={NavLink} to='/new-post' _hover={{ textDecoration: 'none' }}>
             Crear Publicación
           </MenuItem>
           <MenuItem

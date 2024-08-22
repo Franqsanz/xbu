@@ -54,9 +54,7 @@ export function Home() {
         bg={bContainer}
         backgroundSize='cover'
         backgroundPosition='center center'
-        backgroundImage={
-          colorMode === 'dark' ? PatternPadBlack : PatternPadWhite
-        }
+        backgroundImage={colorMode === 'dark' ? PatternPadBlack : PatternPadWhite}
         backgroundAttachment='fixed'
       >
         <Box py={{ base: 10, md: '20vh' }} pt={{ base: 24, lg: 28 }}>
@@ -162,21 +160,20 @@ export function Home() {
           <Text fontSize='lg'>
             XBuniverse es una plataforma en línea que permite a los usuarios
             compartir y descubrir libros de su elección. Cualquier persona puede
-            crear una cuenta y comenzar a compartir sus libros favoritos con
-            otros usuarios de la comunidad.
+            crear una cuenta y comenzar a compartir sus libros favoritos con otros
+            usuarios de la comunidad.
           </Text>
           <Text fontSize='lg'>
-            Además de compartir libros, también puedes explorar una amplia
-            selección de títulos disponibles y descubrir nuevas lecturas
-            interesantes.
+            Además de compartir libros, también puedes explorar una amplia selección
+            de títulos disponibles y descubrir nuevas lecturas interesantes.
           </Text>
           <Text fontSize='lg'>
-            La plataforma es muy fácil de usar, lo que significa que puedes
-            comenzar a compartir y explorar libros en cuestión de minutos.
+            La plataforma es muy fácil de usar, lo que significa que puedes comenzar
+            a compartir y explorar libros en cuestión de minutos.
           </Text>
           <Text fontSize='lg' fontWeight='500'>
-            ¡Regístrate ahora en XBuniverse y únete a esta comunidad de amantes
-            de la lectura!
+            ¡Regístrate ahora en XBuniverse y únete a esta comunidad de amantes de la
+            lectura!
           </Text>
         </Stack>
       </Flex>
@@ -212,8 +209,8 @@ export function Home() {
             emocionantes, conocimientos fascinantes y aventuras inolvidables.
           </Text>
           <Text fontSize='lg'>
-            Ya sea que estés buscando un libro para acompañarte en tu próximo
-            viaje o simplemente para disfrutar en tu tiempo libre.
+            Ya sea que estés buscando un libro para acompañarte en tu próximo viaje o
+            simplemente para disfrutar en tu tiempo libre.
           </Text>
         </Stack>
         <LazyLoad offset={0}>

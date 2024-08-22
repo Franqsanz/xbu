@@ -38,8 +38,11 @@ export function Profile() {
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
   const { username } = useParams();
-  const { data, isPending, error, fetchNextPage, isFetchingNextPage } =
-    useProfile(username, uid, getToken);
+  const { data, isPending, error, fetchNextPage, isFetchingNextPage } = useProfile(
+    username,
+    uid,
+    getToken,
+  );
   const createdAt = data?.pages[0].user.createdAt;
   let asideAndCardsUI;
   let fetchingNextPageUI;
@@ -141,12 +144,7 @@ export function Profile() {
         >
           Bienvenido a XBuniverse
         </Box>
-        <Image
-          src={NoData}
-          maxW='full'
-          w={{ base: '200px', md: '400px' }}
-          mt='5'
-        />
+        <Image src={NoData} maxW='full' w={{ base: '200px', md: '400px' }} mt='5' />
         <Box
           my='7'
           fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
@@ -179,11 +177,7 @@ export function Profile() {
   if (isFetchingNextPage) {
     fetchingNextPageUI = (
       <Box p='10' textAlign='center'>
-        <Spinner
-          size={{ base: 'lg', md: 'xl' }}
-          thickness='4px'
-          speed='0.40s'
-        />
+        <Spinner size={{ base: 'lg', md: 'xl' }} thickness='4px' speed='0.40s' />
       </Box>
     );
   }
@@ -208,12 +202,7 @@ export function Profile() {
           referrerPolicy='no-referrer'
           borderRadius='full'
         />
-        <Box
-          as='h1'
-          fontSize={{ base: 'xl', md: '3xl' }}
-          mt='3'
-          textAlign='center'
-        >
+        <Box as='h1' fontSize={{ base: 'xl', md: '3xl' }} mt='3' textAlign='center'>
           {data?.pages[0].user.name}
         </Box>
         <Flex

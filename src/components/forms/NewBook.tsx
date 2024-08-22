@@ -137,9 +137,7 @@ export function FormNewBook() {
         justify='center'
       >
         <Box px='3' textAlign='center'>
-          <Box as='span'>
-            Aquí verás una vista previa de la imagen recortada.
-          </Box>
+          <Box as='span'>Aquí verás una vista previa de la imagen recortada.</Box>
           <Box mt='1' fontSize='13px'>
             <Box as='span'>
               Solo se aceptan formatos PNG, JPG y WebP con un máximo de 2 MB.

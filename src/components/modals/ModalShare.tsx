@@ -109,11 +109,7 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalType) {
               </FacebookShareButton>
               <TwitterShareButton url={shareUrl || ''} title={data}>
                 <Flex direction='column' align='center'>
-                  <Icon
-                    as={XIcon}
-                    boxSize={{ base: 10, md: 12 }}
-                    rounded='3xl'
-                  />
+                  <Icon as={XIcon} boxSize={{ base: 10, md: 12 }} rounded='3xl' />
                   <Box as='span' fontSize='sm' mt='3'>
                     X
                   </Box>
@@ -138,13 +134,7 @@ export function ModalShare({ shareUrl, data, isOpen, onClose }: ModalType) {
                     boxSize={{ base: 10, md: 12 }}
                     rounded='3xl'
                   />
-                  <Box
-                    w='90px'
-                    textAlign='center'
-                    as='span'
-                    fontSize='sm'
-                    mt='3'
-                  >
+                  <Box w='90px' textAlign='center' as='span' fontSize='sm' mt='3'>
                     Correo electrónico
                   </Box>
                 </Flex>

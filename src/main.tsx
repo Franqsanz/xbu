@@ -16,10 +16,7 @@ const queryClient = new QueryClient();
 
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DNS,
-  integrations: [
-    Sentry.browserTracingIntegration(),
-    Sentry.replayIntegration(),
-  ],
+  integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
   tracesSampleRate: 1.0,
   tracePropagationTargets: [
     API_URL,
@@ -44,6 +41,4 @@ const html = (
   </HelmetProvider>
 );
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  html,
-);
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(html);

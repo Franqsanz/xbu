@@ -3,6 +3,7 @@ import { Box, Button, Flex, useColorModeValue } from '@chakra-ui/react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 import { SkeletonTags } from '@components/skeletons/SkeletonTags';
+
 const Categories = lazy(() => import('@components/Categories'));
 
 export function MySliderCategories() {
@@ -15,7 +16,7 @@ export function MySliderCategories() {
     const container = containerRef.current as any;
     let isHovered = false;
 
-    function handleScroll(event) {
+    function handleScroll(event: WheelEvent) {
       if (isHovered) {
         container.scrollLeft += event.deltaY;
         event.preventDefault();

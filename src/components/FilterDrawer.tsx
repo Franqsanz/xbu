@@ -91,10 +91,7 @@ export function FilterDrawer({
                         </Box>
                       </Radio>
                     ))}
-                  <Radio
-                    value=''
-                    onChange={() => handleAllRadioChange('language')}
-                  >
+                  <Radio value='' onChange={() => handleAllRadioChange('language')}>
                     Todos los Idiomas
                   </Radio>
                 </Flex>

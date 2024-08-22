@@ -41,9 +41,7 @@ import { useAuth } from '@contexts/AuthContext';
 import { useMyToast } from '@hooks/useMyToast';
 
 const Categories = lazy(() => import('@components/Categories'));
-const MoreBooksAuthors = lazy(
-  () => import('@components/cards/MoreBooksAuthors'),
-);
+const MoreBooksAuthors = lazy(() => import('@components/cards/MoreBooksAuthors'));
 const RelatedBooks = lazy(() => import('@components/cards/RelatedBooks'));
 const MoreBooks = lazy(() => import('@components/cards/MoreBooks'));
 
@@ -271,10 +269,7 @@ export default function Book() {
           mb='2'
         >
           <Box>
-            <Link
-              as={NavLink}
-              to={`/books/filter/category/${data.category[0]}`}
-            >
+            <Link as={NavLink} to={`/books/filter/category/${data.category[0]}`}>
               <MyTag
                 bg='green.50'
                 color='green.900'
@@ -424,9 +419,7 @@ export default function Book() {
           <BooksSection
             title='Libros relacionados con'
             data={data.category[0]}
-            booksComponent={
-              <RelatedBooks id={data.id} currentBookId={pathUrl} />
-            }
+            booksComponent={<RelatedBooks id={data.id} currentBookId={pathUrl} />}
           />
           <BooksSection
             title='Más libros en XBuniverse'
@@ -442,12 +435,7 @@ export default function Book() {
           top='65px'
         >
           <Box maxW={{ base: '920px', lg: 'auto' }} m='1rem auto'>
-            <Flex
-              as='figure'
-              justifyContent='center'
-              position='relative'
-              zIndex='1'
-            >
+            <Flex as='figure' justifyContent='center' position='relative' zIndex='1'>
               <LazyLoad width={290} height={420} offset={0} threshold={0.99}>
                 <Atropos
                   highlight={true}

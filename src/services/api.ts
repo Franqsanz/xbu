@@ -32,15 +32,10 @@ async function getBooksFilterPaginated(
   param: string | undefined,
   page: number | undefined,
 ) {
-  return await fetchData(
-    `${API_URL}/books?${query}=${param}&limit=10&page=${page}`,
-  );
+  return await fetchData(`${API_URL}/books?${query}=${param}&limit=10&page=${page}`);
 }
 
-async function getBooksFilter(
-  query: string | undefined,
-  param: string | undefined,
-) {
+async function getBooksFilter(query: string | undefined, param: string | undefined) {
   return await fetchData(`${API_URL}/books?${query}=${param}`);
 }
 

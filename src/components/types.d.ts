@@ -96,8 +96,7 @@ interface ModalType extends DisclosureType {
   data?: string;
 }
 
-interface RelatedBooksType
-  extends Omit<CardType, 'title' | 'authors' | 'pathUrl'> {
+interface RelatedBooksType extends Omit<CardType, 'title' | 'authors' | 'pathUrl'> {
   data?: any;
   currentBookId?: string | undefined;
   refetch?: () => void;
@@ -142,9 +141,7 @@ interface SkeletonType {
   showTags?: boolean;
 }
 
-interface ModalOptionsAndConfirType
-  extends Omit<Partial<BookType>>,
-    DisclosureType {
+interface ModalOptionsAndConfirType extends Omit<Partial<BookType>>, DisclosureType {
   onDeleteBook?: () => any | void;
   onEditBook?: () => any | void;
   isPending?: boolean;

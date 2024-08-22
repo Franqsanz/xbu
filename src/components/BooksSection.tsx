@@ -3,11 +3,7 @@ import { Box, Center, Flex, Divider, Spinner } from '@chakra-ui/react';
 
 import { BooksSectionType } from '@components/types';
 
-export function BooksSection({
-  title,
-  data,
-  booksComponent,
-}: BooksSectionType) {
+export function BooksSection({ title, data, booksComponent }: BooksSectionType) {
   return (
     <>
       <Box mt='10' mb='5'>
