@@ -18,7 +18,12 @@ export default function Categories() {
   const isActive = isCategoryActive(location as any);
 
   function handleCategoryClick(category: string) {
-    const disabledRoutes = ['/explore', '/most-viewed'];
+    const disabledRoutes = [
+      '/explore',
+      '/most-viewed',
+      '/books/filter/year/',
+      '/books/filter/language/',
+    ];
     const isDisabled = disabledRoutes.some((route) =>
       location.pathname.startsWith(route),
     );

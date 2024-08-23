@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import {
   Alert,
@@ -14,13 +14,12 @@ import {
 } from '@chakra-ui/react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { useInView } from 'react-intersection-observer';
-// import Cookies from 'js-cookie';
 
 import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { Card } from '@components/cards/Card';
 import { Aside } from '@components/aside/Aside';
 import { MainHead } from '@components/layout/Head';
-import { useProfile } from '@hooks/queries';
+import { useProfile, useCheckUser } from '@hooks/queries';
 import { parseDate } from '@utils/utils';
 import { CardType } from '@components/types';
 import { ResultLength } from '@components/aside/ResultLength';
@@ -30,39 +29,34 @@ import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 // import { logOut } from '../../services/firebase/auth';
 
 export function Profile() {
-  // const [getToken, setGetToken] = useState<string | null>('');
   const bgCover = useColorModeValue('gray.100', 'gray.700');
   const { ref, inView } = useInView();
-  // const getToken = Cookies.get('app_tk');
   const getToken = window.localStorage.getItem('app_tk');
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
   const { username } = useParams();
-  const { data, isPending, error, fetchNextPage, isFetchingNextPage } = useProfile(
-    username,
-    uid,
-    getToken,
-  );
-  const createdAt = data?.pages[0].user.createdAt;
+  const {
+    data: profileData,
+    isPending,
+    error,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useProfile(username, uid, getToken);
+  const { data: userData, refetch } = useCheckUser(uid);
+  const createdAt = userData?.createdAt;
   let asideAndCardsUI;
   let fetchingNextPageUI;
 
-  // console.log(getToken);
-
-  // useEffect(() => {
-  //   const getToken = window.localStorage.getItem('app_tk');
-
-  //   if (getToken) {
-  //     setGetToken(getToken);
-  //   }
-  // }, []);
+  useEffect(() => {
+    refetch();
+  }, []);
 
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
 
   if (isPending) {
-    return <SkeletonAllBooks showTags={false} />;
+    return <SkeletonAllBooks showTags={true} />;
   }
 
   if (error) {
@@ -84,16 +78,16 @@ export function Profile() {
     );
   }
 
-  if (data?.pages[0].info.totalBooks > 0) {
+  if (profileData?.pages[0].info.totalBooks > 0) {
     asideAndCardsUI = (
       <>
         <Aside>
-          <ResultLength data={data?.pages[0].info.totalBooks} />
+          <ResultLength data={profileData?.pages[0].info.totalBooks} />
           {/* {aboutCategoriesUI}
           {asideFilter}  */}
         </Aside>
         <MySimpleGrid>
-          {data?.pages.map((page, index) => (
+          {profileData?.pages.map((page, index) => (
             <React.Fragment key={index}>
               {page.results.map(
                 ({
@@ -185,8 +179,8 @@ export function Profile() {
   return (
     <>
       <MainHead
-        title={`${data?.pages[0].user.name} | XBuniverse`}
-        urlImage={data?.pages[0].user.picture}
+        title={`${userData?.name} | XBuniverse`}
+        urlImage={userData?.picture}
       />
       <Flex
         as='section'
@@ -197,13 +191,13 @@ export function Profile() {
         bg={bgCover}
       >
         <Image
-          src={data?.pages[0].user.picture}
-          alt={`Imagen de perfil de ${data?.pages[0].user.name}`}
+          src={userData?.picture}
+          alt={`Imagen de perfil de ${userData?.name}`}
           referrerPolicy='no-referrer'
           borderRadius='full'
         />
         <Box as='h1' fontSize={{ base: 'xl', md: '3xl' }} mt='3' textAlign='center'>
-          {data?.pages[0].user.name}
+          {userData?.name}
         </Box>
         <Flex
           direction='column'

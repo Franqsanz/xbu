@@ -219,9 +219,9 @@ function useUserData(id: string | undefined) {
   return useQuery({
     queryKey: [keys.userData, id],
     queryFn: () => getCheckUser(id),
-    gcTime: 24 * 3600 * 1000,
-    staleTime: 24 * 3600 * 1000,
-    retry: 2,
+    gcTime: 0,
+    staleTime: 0,
+    retry: false,
   });
 }
 
@@ -231,7 +231,7 @@ function useProfile(
   token: string | null,
 ) {
   return useInfiniteQuery({
-    queryKey: [keys.profile, username, userId],
+    queryKey: [keys.profile, username, userId, token],
     queryFn: ({ pageParam }) => getUserAndBooks(username, userId, token, pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
@@ -239,6 +239,10 @@ function useProfile(
 
       return lastPage.info.nextPage;
     },
+    enabled: !!token,
+    gcTime: 0,
+    staleTime: 0,
+    retry: false,
   });
 }
 

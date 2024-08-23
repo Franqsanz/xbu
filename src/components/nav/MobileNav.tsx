@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FiMenu, FiSearch } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
@@ -29,12 +29,12 @@ import { InputSearch } from '@components/forms/filters/InputSearch';
 import { ModalFilter } from '@components/modals/ModalFilter';
 import { MenuProfile } from '@components/nav/menu/MenuProfile';
 import { useAuth } from '@contexts/AuthContext';
-import { useUserData } from '@hooks/queries';
+import { useCheckUser } from '@hooks/queries';
 
 export function MobileNav() {
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
-  const { data } = useUserData(uid);
+  const { data, refetch } = useCheckUser(uid);
   const containerRef = useRef<HTMLDivElement>(null);
   const { colorMode, toggleColorMode } = useColorMode();
   const {
@@ -57,6 +57,12 @@ export function MobileNav() {
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
   let profileMenu;
   let linkRegister;
+
+  useEffect(() => {
+    if (uid) {
+      refetch();
+    }
+  }, [uid, refetch]);
 
   useOutsideClick({
     ref: containerRef,

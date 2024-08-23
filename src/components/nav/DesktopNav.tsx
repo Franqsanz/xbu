@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { BsSun } from 'react-icons/bs';
 import { RiMoonLine } from 'react-icons/ri';
@@ -19,16 +19,22 @@ import { MenuProfile } from '@components/nav/menu/MenuProfile';
 import { InputSearch } from '@components/forms/filters/InputSearch';
 import { ModalFilter } from '@components/modals/ModalFilter';
 import { useAuth } from '@contexts/AuthContext';
-import { useUserData } from '@hooks/queries';
+import { useCheckUser } from '@hooks/queries';
 
 export function DesktopNav() {
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
-  const { data } = useUserData(uid);
+  const { data, refetch } = useCheckUser(uid);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
   let profileMenu;
+
+  useEffect(() => {
+    if (uid) {
+      refetch();
+    }
+  }, [uid, refetch]);
 
   if (data) {
     profileMenu = (

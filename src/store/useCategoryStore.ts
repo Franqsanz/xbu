@@ -7,7 +7,12 @@ interface CategoryType {
   isCategoryActive: (location: Location) => boolean;
 }
 
-const disabledRoutes = ['/explore', '/most-viewed'];
+const disabledRoutes = [
+  '/explore',
+  '/most-viewed',
+  '/books/filter/year/',
+  '/books/filter/language/',
+];
 
 export const useCategoryStore = create(
   persist<CategoryType>(
