@@ -43,7 +43,7 @@ export function Profile() {
     isFetchingNextPage,
   } = useProfile(username, uid, getToken);
   const { data: userData, refetch } = useCheckUser(uid);
-  const createdAt = userData?.createdAt;
+  const createdAt = parseDate(userData?.createdAt);
   let asideAndCardsUI;
   let fetchingNextPageUI;
 
@@ -208,7 +208,7 @@ export function Profile() {
           <Box as='span' fontSize={{ base: 'sm', md: 'md' }} fontWeight='bold'>
             Se unió el
           </Box>{' '}
-          {parseDate(createdAt)}
+          {createdAt}
         </Flex>
       </Flex>
       <Flex justify='center' borderBottom='1px solid #A0AEC0'>

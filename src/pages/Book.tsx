@@ -22,6 +22,7 @@ import {
 } from 'react-icons/fi';
 import { BsTag } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
+import { ImEye } from 'react-icons/im';
 import LazyLoad from 'react-lazy-load';
 import Atropos from 'atropos/react';
 import 'atropos/css';
@@ -32,6 +33,7 @@ import { MainHead } from '@components/layout/Head';
 import { MyTag } from '@components/ui/MyTag';
 import { ModalShare } from '@components/modals/ModalShare';
 import { MyLink } from '@components/ui/MyLink';
+import { Views } from '@components/ui/Views';
 import { BooksSection } from '@components/BooksSection';
 import { ImageZoom } from '@components/ui/ImageZoom';
 import { ModalOptions } from '@components/modals/ModalOptions';
@@ -239,7 +241,7 @@ export default function Book() {
           as='figure'
           display={{ base: 'block', lg: 'none' }}
           m='auto'
-          pb='4'
+          pb='16'
           zIndex='0'
         >
           <LazyLoad width={230} height={340} offset={0} threshold={0.99}>
@@ -257,6 +259,16 @@ export default function Book() {
               onLoad={handleImageLoad}
             />
           </LazyLoad>
+          <Views
+            justify='center'
+            align='stretch'
+            mt='6'
+            left='0'
+            right='0'
+            position='absolute'
+            fontSize='sm'
+            views={data.views}
+          />
         </Box>
         <Flex
           w='full'
@@ -475,11 +487,22 @@ export default function Book() {
               decoding='async'
               filter='blur(10px)'
             />
+            <Views
+              justify='center'
+              align='stretch'
+              mt='6'
+              left='0'
+              right='0'
+              position='absolute'
+              fontSize='sm'
+              views={data.views}
+            />
             <Box
+              w='290px'
               h='650px'
               overflowX='hidden'
               mt='14'
-              p='0 1.25rem 0 1.25rem'
+              p='0 1.25rem 0 0.90rem'
               border='1px'
               borderColor={grayColor}
               boxShadow='xl'

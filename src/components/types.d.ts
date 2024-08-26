@@ -40,6 +40,7 @@ interface CardType {
     url: string;
     public_id: string;
   };
+  views?: number;
 }
 
 interface TitleType {

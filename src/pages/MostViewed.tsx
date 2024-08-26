@@ -32,6 +32,7 @@ export default function MostViewed() {
               authors,
               pathUrl,
               image,
+              views,
             }: CardType) => (
               <>
                 <Card
@@ -42,6 +43,7 @@ export default function MostViewed() {
                   language={language}
                   pathUrl={pathUrl}
                   image={image}
+                  views={views}
                 />
               </>
             ),

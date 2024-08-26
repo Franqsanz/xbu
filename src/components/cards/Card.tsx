@@ -15,6 +15,7 @@ import { IoLanguageOutline } from 'react-icons/io5';
 
 import { CardType } from '@components/types';
 import { MyTag } from '@components/ui/MyTag';
+import { Views } from '@components/ui/Views';
 import { handleImageLoad, useHandleEnterKey, isSpanish } from '@utils/utils';
 
 export function Card({
@@ -24,6 +25,7 @@ export function Card({
   authors,
   category,
   pathUrl,
+  views,
 }: CardType) {
   const handleEnterKey = useHandleEnterKey(pathUrl);
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
@@ -142,6 +144,16 @@ export function Card({
                   {index < authors.length - 1 && ', '}
                 </Box>
               ))}
+              {views !== undefined && (
+                <Views
+                  align='center'
+                  mt='2'
+                  px='7'
+                  fontSize={{ base: '0.55rem', sm: 'xs' }}
+                  color={colorAuthorCard}
+                  views={views}
+                />
+              )}
             </Flex>
           </Flex>
         </LinkOverlay>

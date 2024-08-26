@@ -181,7 +181,7 @@ function useMoreBooksAuthors(id: string | undefined) {
 
 function useBook(pathUrl: string | undefined, token?: string | null) {
   return useSuspenseQuery({
-    queryKey: [keys.one, pathUrl],
+    queryKey: [keys.one, pathUrl, token],
     queryFn: () => getBook(pathUrl, token),
     refetchOnWindowFocus: false,
     gcTime: 3000,
