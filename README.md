@@ -17,7 +17,6 @@
 
 XBuniverse es un sitio web dedicado a los amantes de la lectura y la literatura. Es un espacio diseñado para compartir y descubrir libros de diversas temáticas.
 
-
 * **Explora una amplia selección de libros:** Accede a una extensa biblioteca de títulos que abarcan géneros literarios como ficción, no ficción, ciencia ficción, misterio, romance y muchos más.
 
 * **Explora Temáticas Específicas:** ¿Te apasiona la ciencia ficción? ¿O prefieres los thrillers? Filtra tus búsquedas por género, autor o año para encontrar exactamente lo que deseas.
@@ -25,6 +24,10 @@ XBuniverse es un sitio web dedicado a los amantes de la lectura y la literatura.
 * Crea una cuenta en XBuniverse para compartir tus libros favoritos con otros amantes de la lectura.
 
 ¡Únete a XBuniverse y sumérgete en el fascinante mundo de la lectura! Explora y comparte.
+
+---
+
+![XBuniverse sreenshot](public/screenshot.jpg)
 
 ## Contribuir
 
@@ -35,16 +38,23 @@ git clone https://github.com/Franqsanz/xbu.git
 ```
 
 2. Acceder a la carpeta:
+
 ```sh
 cd xbu
 ```
 
 3. Instalar las dependencias y ejecutar el proyecto:
+
 ```sh
 npm install
 
 npm run dev
+# O
+pnpm install
+
+pnpm run dev
 ```
 
 ## License
-[MIT © 2023](./LICENSE) Franco Sánchez
+
+[MIT © 2024](./LICENSE) Franco Andrés Sánchez
