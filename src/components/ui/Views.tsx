@@ -2,11 +2,11 @@ import React from 'react';
 import { Flex, Icon } from '@chakra-ui/react';
 import { ImEye } from 'react-icons/im';
 
-export function Views({ views, ...props }: any) {
+export function Views({ views, bxSize, ...props }: any) {
   return (
     <>
-      <Flex {...props}>
-        <Icon as={ImEye} boxSize='5' mr='2' />
+      <Flex fontSize='sm' {...props}>
+        <Icon as={ImEye} boxSize={bxSize} mr='2' />
         {views}
       </Flex>
     </>

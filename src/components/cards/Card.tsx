@@ -149,9 +149,9 @@ export function Card({
                   align='center'
                   mt='2'
                   px='7'
-                  fontSize={{ base: '0.55rem', sm: 'xs' }}
                   color={colorAuthorCard}
                   views={views}
+                  bxSize='4'
                 />
               )}
             </Flex>

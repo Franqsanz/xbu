@@ -22,7 +22,6 @@ import {
 } from 'react-icons/fi';
 import { BsTag } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
-import { ImEye } from 'react-icons/im';
 import LazyLoad from 'react-lazy-load';
 import Atropos from 'atropos/react';
 import 'atropos/css';
@@ -266,8 +265,8 @@ export default function Book() {
             left='0'
             right='0'
             position='absolute'
-            fontSize='sm'
             views={data.views}
+            bxSize='5'
           />
         </Box>
         <Flex
@@ -494,8 +493,8 @@ export default function Book() {
               left='0'
               right='0'
               position='absolute'
-              fontSize='sm'
               views={data.views}
+              bxSize='5'
             />
             <Box
               w='290px'
