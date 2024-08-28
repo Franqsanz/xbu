@@ -15,6 +15,23 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands';
+import { mount } from 'cypress/react18';
+import { ChakraProvider } from '@chakra-ui/react';
+import theme from '../../theme';
+import { createElement } from 'react';
 
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount: typeof mount;
+    }
+  }
+}
+
+Cypress.Commands.add('mount', (component, options) => {
+  const wrappedComponent = createElement(ChakraProvider, { theme }, component);
+
+  return mount(wrappedComponent, options);
+});
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

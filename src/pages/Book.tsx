@@ -155,7 +155,7 @@ export default function Book() {
       bxSize: 5,
     });
 
-    return navigate('/explore', { replace: true });
+    navigate('/explore', { replace: true });
   }
 
   function handleDeleteBook() {
