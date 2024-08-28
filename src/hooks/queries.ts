@@ -21,6 +21,7 @@ import {
   postRegister,
   getCheckUser,
   getUserAndBooks,
+  updateFavoriteStatus,
   updateBook,
   deleteBook,
   deleteAccount,
@@ -189,6 +190,16 @@ function useBook(pathUrl: string | undefined, token?: string | null) {
   });
 }
 
+function useFavoriteBook(body: boolean) {
+  return useMutation({
+    mutationKey: ['favoriteBook'],
+    mutationFn: (id: string) => updateFavoriteStatus(id, body),
+    onError: (error) => {
+      console.error('Error updating favorite status');
+    },
+  });
+}
+
 // Usuarios
 
 function useUserRegister(body: any) {
@@ -295,6 +306,9 @@ export {
   useMostViewedBooks,
   useRelatedBooks,
   useMoreBooksAuthors,
+  useFavoriteBook,
+
+  // Usuarios
   useUserRegister,
   useCheckUser,
   useUserData,

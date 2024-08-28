@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import {
   Box,
@@ -22,11 +22,12 @@ import {
 } from 'react-icons/fi';
 import { BsTag } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
+import { MdOutlineFavoriteBorder, MdOutlineFavorite } from 'react-icons/md';
 import LazyLoad from 'react-lazy-load';
 import Atropos from 'atropos/react';
 import 'atropos/css';
 
-import { useBook, useDeleteBook } from '@hooks/queries';
+import { useBook, useFavoriteBook, useDeleteBook } from '@hooks/queries';
 import { handleImageLoad } from '@utils/utils';
 import { MainHead } from '@components/layout/Head';
 import { MyTag } from '@components/ui/MyTag';
@@ -79,11 +80,20 @@ export default function Book() {
   } = useDisclosure();
   let uiLink;
   let btnMoreOptions;
+  let btnFavorite;
 
   const { data } = useBook(pathUrl, getToken);
-  const { mutate, isSuccess, isPending } = useDeleteBook();
+
+  const [isFavorite, setIsFavorite] = useState<boolean>(data.isFavorite);
+
+  const { mutate: mutateFavorite } = useFavoriteBook(isFavorite);
+  const { mutate: mutateDelete, isSuccess, isPending } = useDeleteBook();
 
   const isCurrentUserAuthor = currentUser && currentUser.uid === data.userId;
+
+  useEffect(() => {
+    setIsFavorite(data.isFavorite);
+  }, [data.isFavorite]);
 
   if (currentUser && isCurrentUserAuthor) {
     btnMoreOptions = (
@@ -96,6 +106,33 @@ export default function Book() {
         >
           <Flex align='center' justify='center'>
             <Icon as={FiMoreHorizontal} />
+          </Flex>
+        </Button>
+      </Tooltip>
+    );
+  }
+
+  async function handleToggleFavorite() {
+    const newFavoriteStatus = !isFavorite;
+    setIsFavorite(newFavoriteStatus);
+
+    return await mutateFavorite(data.id);
+  }
+
+  if (currentUser) {
+    btnFavorite = (
+      <Tooltip
+        label={isFavorite ? 'Eliminar de Favoritos' : 'Agregar a Favoritos'}
+        fontSize='sm'
+        bg='black'
+        color='white'
+      >
+        <Button mt={{ base: 1, md: 5 }} size='sm' onClick={handleToggleFavorite}>
+          <Flex align='center' justify='center'>
+            <Icon
+              as={isFavorite ? MdOutlineFavorite : MdOutlineFavoriteBorder}
+              boxSize={5}
+            />
           </Flex>
         </Button>
       </Tooltip>
@@ -118,15 +155,15 @@ export default function Book() {
       bxSize: 5,
     });
 
-    navigate('/explore', { replace: true });
+    return navigate('/explore', { replace: true });
   }
 
   function handleDeleteBook() {
-    mutate(data.id);
+    return mutateDelete(data.id);
   }
 
   function handleGoBack() {
-    navigate(-1);
+    return navigate(-1);
   }
 
   if (data.sourceLink === '') {
@@ -189,7 +226,10 @@ export default function Book() {
             Volver
           </Flex>
         </Button>
-        {btnMoreOptions}
+        <Flex gap='2'>
+          {btnFavorite}
+          {btnMoreOptions}
+        </Flex>
       </Flex>
       <ModalOptions
         isOpen={isOpenOptions}

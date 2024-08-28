@@ -59,6 +59,14 @@ async function getAllFilterOptions() {
   return await fetchData(`${API_URL}/books/options`);
 }
 
+async function updateFavoriteStatus(id: string | undefined, body: any) {
+  return await fetchData(`${API_URL}/books/favorite/${id}`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ id, isFavorite: body }),
+  });
+}
+
 async function postBook(books: any) {
   return await fetchData(`${API_URL}/books`, {
     method: 'POST',
@@ -134,6 +142,7 @@ export {
   getMostViewedBooks,
   getRelatedBooks,
   getMoreBooksAuthors,
+  updateFavoriteStatus,
   postBook,
   deleteBook,
   updateBook,
