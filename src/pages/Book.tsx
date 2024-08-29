@@ -83,17 +83,26 @@ export default function Book() {
   let btnFavorite;
 
   const { data } = useBook(pathUrl, getToken);
+  let bookObject = data;
 
-  const [isFavorite, setIsFavorite] = useState<boolean>(data.isFavorite);
+  if (Array.isArray(bookObject)) {
+    const [obj] = data;
 
-  const { mutate: mutateFavorite } = useFavoriteBook(isFavorite);
+    bookObject = obj;
+  } else {
+    bookObject = data;
+  }
+
+  const [isFavorite, setIsFavorite] = useState<boolean>(bookObject.isFavorite);
+
+  const { mutate: mutateFavorite } = useFavoriteBook(bookObject.id, isFavorite);
   const { mutate: mutateDelete, isSuccess, isPending } = useDeleteBook();
 
-  const isCurrentUserAuthor = currentUser && currentUser.uid === data.userId;
+  const isCurrentUserAuthor = currentUser && currentUser.uid === bookObject.userId;
 
   useEffect(() => {
-    setIsFavorite(data.isFavorite);
-  }, [data.isFavorite]);
+    setIsFavorite(bookObject.isFavorite);
+  }, [bookObject.isFavorite]);
 
   if (currentUser && isCurrentUserAuthor) {
     btnMoreOptions = (
@@ -116,7 +125,7 @@ export default function Book() {
     const newFavoriteStatus = !isFavorite;
     setIsFavorite(newFavoriteStatus);
 
-    return await mutateFavorite(data.id);
+    return await mutateFavorite(currentUser?.uid);
   }
 
   if (currentUser) {
@@ -200,9 +209,9 @@ export default function Book() {
   return (
     <>
       <MainHead
-        title={`${data.title} | XBuniverse`}
-        description={data.synopsis}
-        urlImage={data.image.url}
+        title={`${bookObject.title} | XBuniverse`}
+        description={bookObject.synopsis}
+        urlImage={bookObject.image.url}
       />
       <Flex
         as='section'
@@ -242,7 +251,7 @@ export default function Book() {
       />
       <ModalConfirmation
         isOpen={isOpenConfirmation}
-        title={data.title}
+        title={bookObject.title}
         isStrong={true}
         warningText='El libro será eliminado de manera permanente y no se podrá recuperar.'
         onDeleteBook={handleDeleteBook}
@@ -254,17 +263,20 @@ export default function Book() {
       />
       <ModalForm
         isOpen={isOpenEdit}
-        id={data.id}
-        title={data.title}
-        authors={data.authors}
-        synopsis={data.synopsis}
-        year={data.year}
-        category={data.category}
-        numberPages={data.numberPages}
-        sourceLink={data.sourceLink}
-        language={data.language}
-        format={data.format}
-        image={{ url: data.image.url, public_id: data.image.public_id }}
+        id={bookObject.id}
+        title={bookObject.title}
+        authors={bookObject.authors}
+        synopsis={bookObject.synopsis}
+        year={bookObject.year}
+        category={bookObject.category}
+        numberPages={bookObject.numberPages}
+        sourceLink={bookObject.sourceLink}
+        language={bookObject.language}
+        format={bookObject.format}
+        image={{
+          url: bookObject.image.url,
+          public_id: bookObject.image.public_id,
+        }}
         onClose={onCloseEdit}
       />
       <Flex
@@ -287,8 +299,8 @@ export default function Book() {
             <ImageZoom
               w='230px'
               h='340px'
-              src={data.image.url}
-              alt={`Imagen de "${data.title}"`}
+              src={bookObject.image.url}
+              alt={`Imagen de "${bookObject.title}"`}
               rounded='md'
               border='1px solid #A0AEC0'
               boxShadow='xl'
@@ -305,7 +317,7 @@ export default function Book() {
             left='0'
             right='0'
             position='absolute'
-            views={data.views}
+            views={bookObject.views}
             bxSize='5'
           />
         </Box>
@@ -320,12 +332,15 @@ export default function Book() {
           mb='2'
         >
           <Box>
-            <Link as={NavLink} to={`/books/filter/category/${data.category[0]}`}>
+            <Link
+              as={NavLink}
+              to={`/books/filter/category/${bookObject.category[0]}`}
+            >
               <MyTag
                 bg='green.50'
                 color='green.900'
                 icon={BsTag}
-                name={data.category[0]}
+                name={bookObject.category[0]}
                 size='lg'
                 tabIndex={-1}
               />
@@ -337,7 +352,7 @@ export default function Book() {
             mt='5'
             textTransform='uppercase'
           >
-            {data.title}
+            {bookObject.title}
           </Box>
           <Flex
             my='1'
@@ -345,13 +360,13 @@ export default function Book() {
             textTransform='uppercase'
             flexWrap='wrap'
           >
-            {data.authors.map((author, index) => (
+            {bookObject.authors.map((author, index) => (
               <MyLink
                 external={false}
                 key={index}
                 href={`/books/filter/authors/${author}`}
                 data={author}
-                index={index !== data.authors.length - 1 && ','}
+                index={index !== bookObject.authors.length - 1 && ','}
               />
             ))}
           </Flex>
@@ -360,7 +375,7 @@ export default function Book() {
               Sinopsis
             </Box>
             <Text mt='3' mb='10' fontSize='md' whiteSpace='pre-wrap'>
-              {data.synopsis}
+              {bookObject.synopsis}
             </Text>
           </Box>
           <Box p='2' fontSize='lg' bg={grayColor} roundedTop='lg'>
@@ -377,8 +392,8 @@ export default function Book() {
                     <Box as='span'>
                       <MyLink
                         external={false}
-                        href={`/books/filter/year/${data.year}`}
-                        data={data.year}
+                        href={`/books/filter/year/${bookObject.year}`}
+                        data={bookObject.year}
                       />
                     </Box>
                   </Box>
@@ -388,7 +403,7 @@ export default function Book() {
                     <Box as='span'>N° paginas:</Box>
                   </Box>
                   <Box>
-                    <Box as='span'>{data.numberPages}</Box>
+                    <Box as='span'>{bookObject.numberPages}</Box>
                   </Box>
                 </Flex>
                 <Flex my='2'>
@@ -399,8 +414,8 @@ export default function Book() {
                     <Box as='span'>
                       <MyLink
                         external={false}
-                        href={`/books/filter/language/${data.language}`}
-                        data={data.language}
+                        href={`/books/filter/language/${bookObject.language}`}
+                        data={bookObject.language}
                       />
                     </Box>
                   </Box>
@@ -410,7 +425,7 @@ export default function Book() {
                     <Box as='span'>Formato:</Box>
                   </Box>
                   <Box>
-                    <Box as='span'>{data.format}</Box>
+                    <Box as='span'>{bookObject.format}</Box>
                   </Box>
                 </Flex>
                 <Flex>
@@ -419,13 +434,13 @@ export default function Book() {
                   </Box>
                   <Box>
                     <Flex flexWrap='wrap' as='span'>
-                      {data.category.map((category, index) => (
+                      {bookObject.category.map((category, index) => (
                         <MyLink
                           external={false}
                           key={index}
                           href={`/books/filter/category/${category}`}
                           data={category}
-                          index={index !== data.category.length - 1 && ','}
+                          index={index !== bookObject.category.length - 1 && ','}
                         />
                       ))}
                     </Flex>
@@ -458,19 +473,21 @@ export default function Book() {
             isOpen={isOpenShare}
             onClose={onCloseShare}
             shareUrl={shareUrl}
-            data={data.title}
+            data={bookObject.title}
           />
           <BooksSection
             title='Más libros del autor'
-            data={data.authors[0]}
+            data={bookObject.authors[0]}
             booksComponent={
-              <MoreBooksAuthors id={data.id} currentBookId={pathUrl} />
+              <MoreBooksAuthors id={bookObject.id} currentBookId={pathUrl} />
             }
           />
           <BooksSection
             title='Libros relacionados con'
-            data={data.category[0]}
-            booksComponent={<RelatedBooks id={data.id} currentBookId={pathUrl} />}
+            data={bookObject.category[0]}
+            booksComponent={
+              <RelatedBooks id={bookObject.id} currentBookId={pathUrl} />
+            }
           />
           <BooksSection
             title='Más libros en XBuniverse'
@@ -501,8 +518,8 @@ export default function Book() {
                   <ImageZoom
                     w='290px'
                     h='420px'
-                    src={data.image.url}
-                    alt={`Imagen de "${data.title}"`}
+                    src={bookObject.image.url}
+                    alt={`Imagen de "${bookObject.title}"`}
                     rounded='lg'
                     border='1px solid #A0AEC0'
                     boxShadow='lg'
@@ -517,7 +534,7 @@ export default function Book() {
             <Image
               w='290px'
               h='420px'
-              src={data.image.url}
+              src={bookObject.image.url}
               position='absolute'
               bottom='710px'
               left='6px'
@@ -533,7 +550,7 @@ export default function Book() {
               left='0'
               right='0'
               position='absolute'
-              views={data.views}
+              views={bookObject.views}
               bxSize='5'
             />
             <Box

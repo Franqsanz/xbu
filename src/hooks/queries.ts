@@ -21,7 +21,7 @@ import {
   postRegister,
   getCheckUser,
   getUserAndBooks,
-  updateFavoriteStatus,
+  patchToggleFavorite,
   updateBook,
   deleteBook,
   deleteAccount,
@@ -190,10 +190,11 @@ function useBook(pathUrl: string | undefined, token?: string | null) {
   });
 }
 
-function useFavoriteBook(body: boolean) {
+function useFavoriteBook(body: any, isFavorite: boolean) {
   return useMutation({
     mutationKey: ['favoriteBook'],
-    mutationFn: (id: string) => updateFavoriteStatus(id, body),
+    mutationFn: (userId: string | undefined) =>
+      patchToggleFavorite(userId, body, isFavorite),
     onError: (error) => {
       console.error('Error updating favorite status');
     },
