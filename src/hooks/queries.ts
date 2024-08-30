@@ -26,6 +26,7 @@ import {
   deleteBook,
   deleteAccount,
   getBooksFilterPaginated,
+  getFindAllBookFavorite,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
@@ -192,7 +193,7 @@ function useBook(pathUrl: string | undefined, token?: string | null) {
 
 function useFavoriteBook(body: any, isFavorite: boolean) {
   return useMutation({
-    mutationKey: ['favoriteBook'],
+    mutationKey: [keys.favoriteBook],
     mutationFn: (userId: string | undefined) =>
       patchToggleFavorite(userId, body, isFavorite),
     onError: (error) => {
@@ -258,6 +259,23 @@ function useProfile(
   });
 }
 
+function useAllFavoriteByUser(userId: string | undefined) {
+  return useInfiniteQuery({
+    queryKey: [keys.userFavoriteBooks, userId],
+    queryFn: ({ pageParam }) => getFindAllBookFavorite(userId, pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.info.nextPage === null) return;
+
+      return lastPage.info.nextPage;
+    },
+    enabled: !!userId,
+    gcTime: 0,
+    staleTime: 0,
+    retry: false,
+  });
+}
+
 function useDeleteBook() {
   return useMutation({
     mutationKey: [keys.deleteBook],
@@ -314,6 +332,7 @@ export {
   useCheckUser,
   useUserData,
   useProfile,
+  useAllFavoriteByUser,
   useUpdateBook,
   useDeleteBook,
   useDeleteAccount,

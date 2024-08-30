@@ -15,12 +15,14 @@ const keys = {
   relatedBooks: 'RelatedBooks',
   moreBooksAuthors: 'MoreBooksAuthors',
   mostViewed: 'MostViewed',
+  favoriteBook: 'FavoriteBook',
   userRegister: 'UserRegister',
   updateBook: 'UpdateBook',
   deleteBook: 'DeleteBook',
   profile: 'Profile',
   checkUser: 'CheckUser',
   userData: 'UserData',
+  userFavoriteBooks: 'UserFavoriteBooks',
   deleteAccount: 'DeleteAccount',
 };
 

@@ -20,7 +20,7 @@ const MostViewed = lazy(() => import('@pages/MostViewed'));
 const Book = lazy(() => import('@pages/Book'));
 const Search = lazy(() => import('@pages/Search'));
 const NewBook = lazy(() => import('@pages/NewBook'));
-// const Profile = lazy(() => import('@pages/profile/Profile'));
+const Favorites = lazy(() => import('@pages/Favorites'));
 
 export const routes = createBrowserRouter([
   {
@@ -44,6 +44,10 @@ export const routes = createBrowserRouter([
       {
         path: '/most-viewed',
         element: <MostViewed />,
+      },
+      {
+        path: '/my-favorites',
+        element: <Favorites />,
       },
       {
         path: '/new-post',

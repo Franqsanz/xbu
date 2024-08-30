@@ -128,6 +128,12 @@ async function getUserAndBooks(
   );
 }
 
+async function getFindAllBookFavorite(userId: string | undefined, page: number) {
+  return await fetchData(
+    `${API_URL}/users/${userId}/my-favorites?limit=10&page=${page}`,
+  );
+}
+
 async function deleteAccount(id: string | undefined) {
   return await fetchData(`${API_URL}/users/${id}`, {
     method: 'DELETE',
@@ -154,5 +160,6 @@ export {
   postRegister,
   getCheckUser,
   getUserAndBooks,
+  getFindAllBookFavorite,
   deleteAccount,
 };
