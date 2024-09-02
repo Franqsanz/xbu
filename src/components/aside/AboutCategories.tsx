@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Text } from '@chakra-ui/react';
 
-import { aboutCategories } from '../../data/links';
+import { aboutCategories } from '../../constant/constants';
 
 export function AboutCategories({ category }: any) {
   const filteredAboutCategories = aboutCategories.filter((item) => {

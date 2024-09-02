@@ -31,7 +31,7 @@ import { FilterDrawer } from '@components/FilterDrawer';
 import { ResultLength } from '@components/aside/ResultLength';
 import { AboutCategories } from '@components/aside/AboutCategories';
 import { Lost } from '@assets/assets';
-import { aboutCategories } from '../data/links';
+import { aboutCategories } from '../constant/constants';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 
 export default function Search() {

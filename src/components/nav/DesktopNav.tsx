@@ -14,7 +14,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-import { navLink, accountLinks } from '../../data/links';
+import { navLink, accountLinks } from '../../constant/constants';
 import { MenuProfile } from '@components/nav/menu/MenuProfile';
 import { InputSearch } from '@components/forms/filters/InputSearch';
 import { ModalFilter } from '@components/modals/ModalFilter';
@@ -100,23 +100,28 @@ export function DesktopNav() {
             </Box>
             <Box>
               <List display='flex' alignItems='center'>
-                {navLink.map(({ name, href }) => (
-                  <ListItem key={name}>
-                    <Link
-                      as={NavLink}
-                      to={href as string}
-                      ml='7'
-                      fontWeight='medium'
-                      _activeLink={{
-                        borderBottom: '2px',
-                        borderColor: 'green.500',
-                      }}
-                      _hover={{ color: 'green.500' }}
-                    >
-                      {name}
-                    </Link>
-                  </ListItem>
-                ))}
+                {navLink
+                  .filter(({ name }) => {
+                    if (name === 'Mis favoritos' && !data) return false;
+                    return true;
+                  })
+                  .map(({ name, href }) => (
+                    <ListItem key={name}>
+                      <Link
+                        as={NavLink}
+                        to={href as string}
+                        ml='7'
+                        fontWeight='medium'
+                        _activeLink={{
+                          borderBottom: '2px',
+                          borderColor: 'green.500',
+                        }}
+                        _hover={{ color: 'green.500' }}
+                      >
+                        {name}
+                      </Link>
+                    </ListItem>
+                  ))}
               </List>
             </Box>
           </Flex>

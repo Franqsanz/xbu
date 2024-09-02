@@ -23,7 +23,7 @@ import { BiImageAdd } from 'react-icons/bi';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IoWarningSharp } from 'react-icons/io5';
 
-import { categories, formats, languages } from '../../data/links';
+import { categories, formats, languages } from '../../constant/constants';
 import { BookType, MyChangeEvent } from '@components/types';
 import { useUpdateBook } from '@hooks/queries';
 import { ModalCropper } from '@components/modals/ModalCropper';

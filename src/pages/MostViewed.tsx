@@ -14,8 +14,8 @@ export default function MostViewed() {
 
   return (
     <>
-      <MainHead title='Top 10 Más Vistos | XBuniverse' />
-      <ContainerTitle title='Top 10 Más Vistos' />
+      <MainHead title='Top 10 Más vistos | XBuniverse' />
+      <ContainerTitle title='Top 10 Más vistos' />
       <MySliderCategories />
       <Flex
         maxW={{ base: '1070px', '2xl': '1280px' }}

@@ -23,7 +23,7 @@ import { BiImageAdd } from 'react-icons/bi';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IoWarningSharp } from 'react-icons/io5';
 
-import { categories, formats, languages } from '../../data/links';
+import { categories, formats, languages } from '../../constant/constants';
 import { BookType, MyChangeEvent } from '@components/types';
 import { useMutatePost, useCheckUser } from '@hooks/queries';
 import { ModalCropper } from '@components/modals/ModalCropper';
@@ -180,7 +180,7 @@ export function FormNewBook() {
   } else if (error) {
     myToast({
       title: 'Ha ocurrido un error',
-      description: 'No se ha podido guardar las modificaciones.',
+      description: 'No se ha podido realizar la publicación.',
       icon: IoWarningSharp,
       iconColor: 'red.400',
       bgColor: 'black',

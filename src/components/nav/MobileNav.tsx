@@ -24,7 +24,7 @@ import {
   DrawerFooter,
 } from '@chakra-ui/react';
 
-import { navLink, accountLinks } from '../../data/links';
+import { navLink, accountLinks } from '../../constant/constants';
 import { InputSearch } from '@components/forms/filters/InputSearch';
 import { ModalFilter } from '@components/modals/ModalFilter';
 import { MenuProfile } from '@components/nav/menu/MenuProfile';
@@ -196,28 +196,33 @@ export function MobileNav() {
             <DrawerCloseButton />
             <DrawerBody>
               <List mt='10'>
-                {navLink.map(({ icon, name, href }) => (
-                  <ListItem key={name} my='2'>
-                    <Link
-                      display='flex'
-                      alignItems='center'
-                      onClick={onCloseMenu}
-                      as={NavLink}
-                      to={href as string}
-                      p='3'
-                      rounded='xl'
-                      fontWeight='medium'
-                      _hover={{
-                        bg: 'gray.700',
-                        border: 'none',
-                        color: 'green.500',
-                      }}
-                    >
-                      <Icon as={icon} boxSize='5' mr='5' />
-                      {name}
-                    </Link>
-                  </ListItem>
-                ))}
+                {navLink
+                  .filter(({ name }) => {
+                    if (name === 'Mis favoritos' && !data) return false;
+                    return true;
+                  })
+                  .map(({ icon, name, href }) => (
+                    <ListItem key={name} my='2'>
+                      <Link
+                        display='flex'
+                        alignItems='center'
+                        onClick={onCloseMenu}
+                        as={NavLink}
+                        to={href as string}
+                        p='3'
+                        rounded='xl'
+                        fontWeight='medium'
+                        _hover={{
+                          bg: 'gray.700',
+                          border: 'none',
+                          color: 'green.500',
+                        }}
+                      >
+                        <Icon as={icon} boxSize='5' mr='5' />
+                        {name}
+                      </Link>
+                    </ListItem>
+                  ))}
               </List>
             </DrawerBody>
             <DrawerFooter
