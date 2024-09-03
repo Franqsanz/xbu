@@ -184,13 +184,12 @@ export function FormEdit({
       icon: FaCheckCircle,
       iconColor: 'green.700',
       bgColor: 'black',
-      position: 'top-right',
       width: '300px',
       color: 'white',
       align: 'center',
-      padding: '2',
+      padding: '1',
       fntSize: 'md',
-      bxSize: 4,
+      bxSize: 5,
     });
 
     navigate('/explore', { replace: true });
@@ -201,11 +200,10 @@ export function FormEdit({
       icon: IoWarningSharp,
       iconColor: 'red.400',
       bgColor: 'black',
-      position: 'top-right',
       width: '300px',
       color: 'white',
       align: 'center',
-      padding: '2',
+      padding: '1',
       fntSize: 'md',
       bxSize: 5,
     });

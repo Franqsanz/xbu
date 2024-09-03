@@ -94,9 +94,15 @@ export default function Book() {
   }
 
   const [isFavorite, setIsFavorite] = useState<boolean>(bookObject.isFavorite);
-
-  const { mutate: mutateFavorite } = useFavoriteBook(bookObject.id, isFavorite);
-  const { mutate: mutateDelete, isSuccess, isPending } = useDeleteBook();
+  const { mutate: mutateFavorite, isSuccess: successFavorite } = useFavoriteBook(
+    bookObject.id,
+    isFavorite,
+  );
+  const {
+    mutate: mutateDelete,
+    isSuccess: successDelete,
+    isPending,
+  } = useDeleteBook();
 
   const isCurrentUserAuthor = currentUser && currentUser.uid === bookObject.userId;
 
@@ -128,6 +134,21 @@ export default function Book() {
     return await mutateFavorite(currentUser?.uid);
   }
 
+  if (successFavorite) {
+    myToast({
+      title: isFavorite ? 'Se agrego a favoritos' : 'Se quito de favoritos',
+      icon: FaCheckCircle,
+      iconColor: 'green.700',
+      bgColor: 'black',
+      width: '200px',
+      color: 'whitesmoke',
+      align: 'center',
+      padding: '1',
+      fntSize: 'md',
+      bxSize: 5,
+    });
+  }
+
   if (currentUser) {
     btnFavorite = (
       <Tooltip
@@ -148,14 +169,13 @@ export default function Book() {
     );
   }
 
-  if (isSuccess) {
+  if (successDelete) {
     myToast({
       title: 'Libro eliminado',
       description: 'Se ha eliminado exitosamente.',
       icon: FaCheckCircle,
       iconColor: 'green.700',
       bgColor: 'black',
-      position: 'top-right',
       width: '300px',
       color: 'white',
       align: 'center',
@@ -168,14 +188,14 @@ export default function Book() {
   }
 
   function handleDeleteBook() {
-    return mutateDelete(data.id);
+    return mutateDelete(bookObject.id);
   }
 
   function handleGoBack() {
     return navigate(-1);
   }
 
-  if (data.sourceLink === '') {
+  if (bookObject.sourceLink === '') {
     uiLink = (
       <Box mb='10' w={{ base: '100%', md: '380px' }}>
         <Box as='p' ml='2' fontSize='md' fontStyle='italic'>
@@ -188,7 +208,7 @@ export default function Book() {
       <Link
         w={{ base: '100%', md: '165px' }}
         display='block'
-        href={data.sourceLink}
+        href={bookObject.sourceLink}
         isExternal
         bg='green.500'
         color='black'
