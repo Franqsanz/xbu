@@ -1,5 +1,8 @@
-import React from 'react';
-import { Flex } from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Box, Flex, Icon, Image, Link, Spinner } from '@chakra-ui/react';
+import { useInView } from 'react-intersection-observer';
+import { MdOutlineExplore } from 'react-icons/md';
 
 import { useAllFavoriteByUser } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
@@ -11,63 +14,132 @@ import { ContainerTitle } from '@components/layout/ContainerTitle';
 import { Aside } from '@components/aside/Aside';
 import { ResultLength } from '@components/aside/ResultLength';
 import { MySliderCategories } from '@components/ui/MySliderCategories';
+import { MyContainer } from '@components/ui/MyContainer';
+import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
+import { emptyFavorites } from '@assets/assets';
 
 export default function Favorites() {
+  const { ref, inView } = useInView();
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
-  const { data, fetchNextPage, isFetchingNextPage } = useAllFavoriteByUser(uid);
+  const { data, isPending, fetchNextPage, isFetchingNextPage } =
+    useAllFavoriteByUser(uid);
+  let fetchingNextPageUI;
+  let asideAndCardsUI;
+
+  useEffect(() => {
+    if (inView) fetchNextPage();
+  }, [inView]);
+
+  if (isPending) {
+    return <SkeletonAllBooks showTags={true} />;
+  }
+
+  if (data?.pages[0].info.totalBooks > 0) {
+    asideAndCardsUI = (
+      <>
+        <Aside>
+          <ResultLength data={data?.pages[0].info.totalBooks} />
+          {/* {asideFilter} */}
+        </Aside>
+        <MySimpleGrid>
+          {data?.pages.map((page, index) => (
+            <React.Fragment key={index}>
+              {page.results
+                // .slice()
+                // .reverse()
+                .map(
+                  ({
+                    id,
+                    category,
+                    language,
+                    title,
+                    authors,
+                    synopsis,
+                    sourceLink,
+                    pathUrl,
+                    image,
+                  }: CardType) => (
+                    <React.Fragment key={id}>
+                      <Card
+                        id={id}
+                        category={category}
+                        language={language}
+                        title={title}
+                        authors={authors}
+                        synopsis={synopsis}
+                        sourceLink={sourceLink}
+                        pathUrl={pathUrl}
+                        image={image}
+                      />
+                    </React.Fragment>
+                  ),
+                )}
+            </React.Fragment>
+          ))}
+        </MySimpleGrid>
+      </>
+    );
+  } else {
+    asideAndCardsUI = (
+      <Flex
+        w='full'
+        direction='column'
+        justify='center'
+        align='center'
+        mt='20'
+        mb='10'
+      >
+        <Image
+          src={emptyFavorites}
+          maxW='full'
+          w={{ base: '200px', md: '300px' }}
+          mt='5'
+        />
+        <Box
+          my='7'
+          fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
+          textAlign={{ base: 'center', md: 'left' }}
+        >
+          Todavía no has añadido libros a tus favoritos.
+        </Box>
+        <Link
+          w='auto'
+          display='block'
+          as={NavLink}
+          to='/explore'
+          bg='green.500'
+          color='black'
+          p='3'
+          border='1px'
+          rounded='lg'
+          textAlign='center'
+          _hover={{ outline: 'none', bg: 'green.600' }}
+        >
+          <Flex align='center' justify='center'>
+            <Icon as={MdOutlineExplore} fontSize='25' mr='2' />
+            ¡Explora!
+          </Flex>
+        </Link>
+      </Flex>
+    );
+  }
+
+  if (isFetchingNextPage) {
+    fetchingNextPageUI = (
+      <Box p='10' textAlign='center'>
+        <Spinner size={{ base: 'lg', md: 'xl' }} thickness='4px' speed='0.40s' />
+      </Box>
+    );
+  }
 
   return (
     <>
       <MainHead title='Mis favoritos | XBuniverse' />
       <ContainerTitle title='Mis favoritos' />
       <MySliderCategories />
-      <Flex
-        as='article'
-        direction={{ base: 'column', md: 'row' }}
-        maxW={{ base: '1260px', '2xl': '1560px' }}
-        m='0 auto'
-        px={{ base: 5, md: 10, '2xl': 16 }}
-      >
-        <Aside>
-          <ResultLength data={data?.pages[0].info.totalBooks} />
-          {/* {aboutCategoriesUI}
-          {asideFilter}  */}
-        </Aside>
-        <MySimpleGrid>
-          {data?.pages.map((page, index) => (
-            <React.Fragment key={index}>
-              {page.results.map(
-                ({
-                  id,
-                  category,
-                  language,
-                  title,
-                  authors,
-                  synopsis,
-                  sourceLink,
-                  pathUrl,
-                  image,
-                }: CardType) => (
-                  <React.Fragment key={id}>
-                    <Card
-                      id={id}
-                      category={category}
-                      language={language}
-                      title={title}
-                      authors={authors}
-                      synopsis={synopsis}
-                      sourceLink={sourceLink}
-                      pathUrl={pathUrl}
-                      image={image}
-                    />
-                  </React.Fragment>
-                ),
-              )}
-            </React.Fragment>
-          ))}
-        </MySimpleGrid>
-      </Flex>
+      <MyContainer>{asideAndCardsUI}</MyContainer>
+      <Box ref={ref}>{fetchingNextPageUI}</Box>
     </>
   );
 }

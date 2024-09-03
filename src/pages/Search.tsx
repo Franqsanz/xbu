@@ -33,6 +33,7 @@ import { AboutCategories } from '@components/aside/AboutCategories';
 import { Lost } from '@assets/assets';
 import { aboutCategories } from '../constant/constants';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
+import { MyContainer } from '@components/ui/MyContainer';
 
 export default function Search() {
   const { ref, inView } = useInView();
@@ -268,12 +269,7 @@ export default function Search() {
         <SkeletonAllBooks showTags={false} />
       ) : (
         <>
-          <Flex
-            direction={{ base: 'column', md: 'row' }}
-            maxW={{ base: '1260px', '2xl': '1560px' }}
-            m='0 auto'
-            px={{ base: 5, md: 10, '2xl': 16 }}
-          >
+          <MyContainer>
             <Aside>
               <ResultLength data={dataPaginated?.pages[0].info.totalBooks} />
               {aboutCategoriesUI}
@@ -336,7 +332,7 @@ export default function Search() {
                 </Box>
               </Flex>
             )}
-          </Flex>
+          </MyContainer>
         </>
       )}
       {!isFiltering && <Box ref={ref}>{fetchingNextPageUI}</Box>}

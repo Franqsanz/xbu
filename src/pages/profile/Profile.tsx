@@ -26,6 +26,7 @@ import { ResultLength } from '@components/aside/ResultLength';
 import { useAuth } from '@contexts/AuthContext';
 import { NoData } from '@assets/assets';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
+import { MyContainer } from '@components/ui/MyContainer';
 // import { logOut } from '../../services/firebase/auth';
 
 export function Profile() {
@@ -216,15 +217,7 @@ export function Profile() {
           PUBLICACIONES
         </Box>
       </Flex>
-      <Flex
-        as='article'
-        direction={{ base: 'column', md: 'row' }}
-        maxW={{ base: '1260px', '2xl': '1560px' }}
-        m='0 auto'
-        px={{ base: 5, md: 10, '2xl': 16 }}
-      >
-        {asideAndCardsUI}
-      </Flex>
+      <MyContainer>{asideAndCardsUI}</MyContainer>
       <Box ref={ref}>{fetchingNextPageUI}</Box>
     </>
   );

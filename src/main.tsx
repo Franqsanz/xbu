@@ -18,11 +18,10 @@ Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DNS,
   integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],
   tracesSampleRate: 1.0,
-  tracePropagationTargets: [
-    API_URL,
-    /^\/api\//,
-    // /^https:\/\/xb-api\.vercel\.app\/api/,
-  ],
+  // tracePropagationTargets: [
+  //   API_URL,
+  //   /^\/api\//,
+  // ],
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
 });

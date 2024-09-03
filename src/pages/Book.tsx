@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react';
-import { useParams, useNavigate, NavLink } from 'react-router-dom';
+import { useParams, useNavigate, NavLink, useLocation } from 'react-router-dom';
 import {
   Box,
   Center,
@@ -49,6 +49,7 @@ const MoreBooks = lazy(() => import('@components/cards/MoreBooks'));
 
 export default function Book() {
   const shareUrl = window.location.href;
+  const location = useLocation();
   const getToken = window.localStorage.getItem('app_tk');
   const { pathUrl } = useParams();
   const { currentUser } = useAuth();
@@ -87,7 +88,6 @@ export default function Book() {
 
   if (Array.isArray(bookObject)) {
     const [obj] = data;
-
     bookObject = obj;
   } else {
     bookObject = data;
@@ -102,7 +102,7 @@ export default function Book() {
 
   useEffect(() => {
     setIsFavorite(bookObject.isFavorite);
-  }, [bookObject.isFavorite]);
+  }, [bookObject.isFavorite, location.pathname]);
 
   if (currentUser && isCurrentUserAuthor) {
     btnMoreOptions = (

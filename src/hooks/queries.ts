@@ -144,7 +144,7 @@ function useMoreBooks() {
     refetchOnWindowFocus: false,
     gcTime: 3000,
     staleTime: 50000,
-    retry: 1,
+    retry: false,
   });
 }
 
@@ -155,7 +155,7 @@ function useMostViewedBooks(query) {
     refetchOnWindowFocus: false,
     gcTime: 3000,
     staleTime: 50000,
-    retry: 1,
+    retry: false,
   });
 }
 
@@ -166,7 +166,7 @@ function useRelatedBooks(id: string | undefined) {
     refetchOnWindowFocus: false,
     gcTime: 3000,
     staleTime: 50000,
-    retry: 1,
+    retry: false,
   });
 }
 
@@ -177,7 +177,7 @@ function useMoreBooksAuthors(id: string | undefined) {
     refetchOnWindowFocus: false,
     gcTime: 3000,
     staleTime: 50000,
-    retry: 1,
+    retry: false,
   });
 }
 

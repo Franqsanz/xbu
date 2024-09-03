@@ -20,6 +20,7 @@ import { Aside } from '@components/aside/Aside';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { ResultLength } from '@components/aside/ResultLength';
 import { MostViewed } from '@components/aside/MostViewed';
+import { MyContainer } from '@components/ui/MyContainer';
 
 export function AllBooks() {
   const { ref, inView } = useInView();
@@ -75,13 +76,7 @@ export function AllBooks() {
   return (
     <>
       <ScrollRestoration />
-      <Flex
-        as='article'
-        direction={{ base: 'column', md: 'row' }}
-        maxW={{ base: '1260px', '2xl': '1560px' }}
-        m='0 auto'
-        px={{ base: 5, md: 10, '2xl': 16 }}
-      >
+      <MyContainer>
         <Aside>
           <ResultLength data={data.pages[0].info.totalBooks} />
           <Box mt='5'>
@@ -134,7 +129,7 @@ export function AllBooks() {
             </React.Fragment>
           ))}
         </MySimpleGrid>
-      </Flex>
+      </MyContainer>
       <Box ref={ref}>{fetchingNextPageUI}</Box>
     </>
   );
