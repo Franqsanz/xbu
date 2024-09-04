@@ -107,6 +107,23 @@ export default function Book() {
   const isCurrentUserAuthor = currentUser && currentUser.uid === bookObject.userId;
 
   useEffect(() => {
+    if (successFavorite) {
+      myToast({
+        title: isFavorite ? 'Se agrego a favoritos' : 'Se quito de favoritos',
+        icon: FaCheckCircle,
+        iconColor: 'green.700',
+        bgColor: 'black',
+        width: '200px',
+        color: 'whitesmoke',
+        align: 'center',
+        padding: '1',
+        fntSize: 'md',
+        bxSize: 5,
+      });
+    }
+  }, [successFavorite]);
+
+  useEffect(() => {
     setIsFavorite(bookObject.isFavorite);
   }, [bookObject.isFavorite, location.pathname]);
 
@@ -132,21 +149,6 @@ export default function Book() {
     setIsFavorite(newFavoriteStatus);
 
     return await mutateFavorite(currentUser?.uid);
-  }
-
-  if (successFavorite) {
-    myToast({
-      title: isFavorite ? 'Se agrego a favoritos' : 'Se quito de favoritos',
-      icon: FaCheckCircle,
-      iconColor: 'green.700',
-      bgColor: 'black',
-      width: '200px',
-      color: 'whitesmoke',
-      align: 'center',
-      padding: '1',
-      fntSize: 'md',
-      bxSize: 5,
-    });
   }
 
   if (currentUser) {
@@ -498,20 +500,16 @@ export default function Book() {
           <BooksSection
             title='Más libros del autor'
             data={bookObject.authors[0]}
-            booksComponent={
-              <MoreBooksAuthors id={bookObject.id} currentBookId={pathUrl} />
-            }
+            booksComponent={<MoreBooksAuthors id={bookObject.id} />}
           />
           <BooksSection
             title='Libros relacionados con'
             data={bookObject.category[0]}
-            booksComponent={
-              <RelatedBooks id={bookObject.id} currentBookId={pathUrl} />
-            }
+            booksComponent={<RelatedBooks id={bookObject.id} />}
           />
           <BooksSection
             title='Más libros en XBuniverse'
-            booksComponent={<MoreBooks currentBookId={pathUrl} />}
+            booksComponent={<MoreBooks id={bookObject.id} />}
           />
         </Flex>
         <Flex

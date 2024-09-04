@@ -39,12 +39,12 @@ async function getBooksFilter(query: string | undefined, param: string | undefin
   return await fetchData(`${API_URL}/books?${query}=${param}`);
 }
 
-async function getMoreBooks() {
-  return await fetchData(`${API_URL}/books/more-books`);
-}
-
 async function getMostViewedBooks(query: string) {
   return await fetchData(`${API_URL}/books/most-viewed-books?detail=${query}`);
+}
+
+async function getMoreBooks(id: string | undefined) {
+  return await fetchData(`${API_URL}/books/more-books/${id}`);
 }
 
 async function getRelatedBooks(id: string | undefined) {

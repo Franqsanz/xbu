@@ -137,10 +137,10 @@ function useFilter(query: string | undefined, param: string | undefined) {
   });
 }
 
-function useMoreBooks() {
+function useMostViewedBooks(query) {
   return useSuspenseQuery({
-    queryKey: [keys.random],
-    queryFn: getMoreBooks,
+    queryKey: [keys.mostViewed, query],
+    queryFn: () => getMostViewedBooks(query),
     refetchOnWindowFocus: false,
     gcTime: 3000,
     staleTime: 50000,
@@ -148,10 +148,10 @@ function useMoreBooks() {
   });
 }
 
-function useMostViewedBooks(query) {
+function useMoreBooks(id: string | undefined) {
   return useSuspenseQuery({
-    queryKey: [keys.mostViewed, query],
-    queryFn: () => getMostViewedBooks(query),
+    queryKey: [keys.random, id],
+    queryFn: () => getMoreBooks(id),
     refetchOnWindowFocus: false,
     gcTime: 3000,
     staleTime: 50000,

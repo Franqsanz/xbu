@@ -2,18 +2,16 @@ import React from 'react';
 
 import { RelatedCard } from '@components/cards/RelatedCard';
 import { ContainerRCard } from '@components/cards/ContainerRCard';
-import { CardType, RelatedBooksType } from '@components/types';
+import { CardType } from '@components/types';
 import { useMoreBooks } from '@hooks/queries';
-import { useRefetchLocation } from '@hooks/useRefetchLocation';
 
-export default function MoreBooks({ currentBookId }: RelatedBooksType) {
-  const { data, refetch } = useMoreBooks();
-  const moreBooks = useRefetchLocation({ currentBookId, data, refetch });
+export default function MoreBooks({ id }) {
+  const { data, refetch } = useMoreBooks(id);
 
   return (
     <>
       <ContainerRCard>
-        {moreBooks.map(({ id, title, authors, pathUrl }: CardType) => (
+        {data.map(({ id, title, authors, pathUrl }: CardType) => (
           <React.Fragment key={id}>
             <RelatedCard
               title={title}
