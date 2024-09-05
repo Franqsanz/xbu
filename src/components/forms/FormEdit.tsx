@@ -98,7 +98,9 @@ export function FormEdit({
   function allFieldsBook(book: BookType): boolean {
     return (
       Object.entries(book)
-        .filter(([key]) => key !== 'sourceLink' && key !== 'pathUrl')
+        .filter(
+          ([key]) => key !== 'sourceLink' && key !== 'pathUrl' && key !== 'rating',
+        )
         .every(([, value]) => value) && book.category.length > 0
     );
   }
