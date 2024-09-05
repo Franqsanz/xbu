@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 import pako from 'pako';
+import { MyChangeEvent } from '@components/types';
 
 function handleInputChange(
-  e,
+  e: MyChangeEvent,
   books,
   setBooks: React.Dispatch<React.SetStateAction<any>>,
 ) {
@@ -14,6 +15,13 @@ function handleInputChange(
     setBooks({
       ...books,
       [name]: authorNames, // Guardamos un array de nombres de autores
+    });
+  } else if (name === 'rating') {
+    const rating = parseFloat(value);
+
+    setBooks({
+      ...books,
+      [name]: rating,
     });
   } else {
     setBooks({

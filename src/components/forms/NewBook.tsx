@@ -22,6 +22,7 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IoWarningSharp } from 'react-icons/io5';
+import { Rating } from '@smastrom/react-rating';
 
 import { categories, formats, languages } from '../../constant/constants';
 import { BookType, MyChangeEvent } from '@components/types';
@@ -78,13 +79,14 @@ export function FormNewBook() {
       public_id: '',
     },
     userId: currentUser?.uid,
+    rating: 0,
   });
   useGenerateSlug(books.title, setBooks); // Genera el pathUrl (Slug)
 
   function allFieldsBook(book: BookType): boolean {
     return (
       Object.entries(book)
-        .filter(([key]) => key !== 'sourceLink')
+        .filter(([key]) => key !== 'sourceLink' && key !== 'rating')
         .every(([, value]) => value) && book.category.length > 0
     );
   }
@@ -109,6 +111,13 @@ export function FormNewBook() {
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     handleImage(e, setCropData, onOpen);
+  }
+
+  function handleRatingChange(newRating: number) {
+    setBooks((books) => ({
+      ...books,
+      rating: newRating,
+    }));
   }
 
   function getCropData() {
@@ -209,7 +218,7 @@ export function FormNewBook() {
           p={{ base: 5, md: 10 }}
           rounded='lg'
           border='1px'
-          maxWidth='900px'
+          maxWidth='1000px'
         >
           <Box mb='5' fontSize='md'>
             Los campos con el{' '}
@@ -294,7 +303,7 @@ export function FormNewBook() {
                     required: 'Sinopsis es obligatorio',
                   })}
                   id='sinopsis'
-                  rows={12}
+                  rows={17}
                   mb='5'
                   bg={bgColorInput}
                   name='synopsis'
@@ -540,6 +549,21 @@ export function FormNewBook() {
                     `Esta opción "${inputValue}" no existe`
                   }
                   placeholder='Elija un Formato'
+                />
+              </FormControl>
+              <FormControl mt={{ base: 5, md: 8 }}>
+                <Flex align='center' mb='9px'>
+                  <FormLabel htmlFor='categoria' m='0'>
+                    Calificación{' '}
+                    <Box display='inline' fontSize='xs'>
+                      (Opcional)
+                    </Box>
+                  </FormLabel>
+                </Flex>
+                <Rating
+                  style={{ maxWidth: 190 }}
+                  value={books.rating}
+                  onChange={handleRatingChange}
                 />
               </FormControl>
               <Box mt={{ base: 10, md: '22rem' }}>

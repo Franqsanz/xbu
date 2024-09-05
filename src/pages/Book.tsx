@@ -299,6 +299,7 @@ export default function Book() {
           url: bookObject.image.url,
           public_id: bookObject.image.public_id,
         }}
+        rating={bookObject.rating}
         onClose={onCloseEdit}
       />
       <Flex

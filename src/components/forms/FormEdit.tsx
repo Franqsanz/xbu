@@ -39,6 +39,7 @@ import {
 } from '@components/forms/utils/utilsForm';
 import { useMyToast } from '@hooks/useMyToast';
 import { useGenerateSlug } from '@hooks/useGenerateSlug';
+import { Rating } from '@smastrom/react-rating';
 const Cropper = lazy(() => import('react-cropper'));
 
 export function FormEdit({
@@ -54,6 +55,7 @@ export function FormEdit({
   format,
   pathUrl,
   image,
+  rating,
 }: BookType) {
   const {
     handleSubmit,
@@ -87,7 +89,9 @@ export function FormEdit({
       url,
       public_id,
     },
+    rating,
   });
+
   const { mutate, isPending, isSuccess, error } = useUpdateBook(books);
   useGenerateSlug(books.title, setBooks); // Genera el pathUrl (Slug)
 
@@ -119,6 +123,13 @@ export function FormEdit({
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     handleImage(e, setCropData, onOpen);
+  }
+
+  function handleRatingChange(newRating: number) {
+    setBooks((books) => ({
+      ...books,
+      rating: newRating,
+    }));
   }
 
   function getCropData() {
@@ -212,7 +223,7 @@ export function FormEdit({
   return (
     <>
       <Flex align='center' justify='center' direction='column'>
-        <Box w='full' maxWidth='800px'>
+        <Box w='full' maxWidth='930px'>
           <Flex
             as='form'
             onSubmit={handleSubmit(onSubmit)}
@@ -290,7 +301,7 @@ export function FormEdit({
                     required: 'Sinopsis es obligatorio',
                   })}
                   id='sinopsis'
-                  rows={12}
+                  rows={17}
                   mb='5'
                   bg={bgColorInput}
                   name='synopsis'
@@ -540,6 +551,21 @@ export function FormEdit({
                     `Esta opción "${inputValue}" no existe`
                   }
                   placeholder='Elija un Formato'
+                />
+              </FormControl>
+              <FormControl mt={{ base: 5, md: 8 }}>
+                <Flex align='center' mb='9px'>
+                  <FormLabel htmlFor='categoria' m='0'>
+                    Calificación{' '}
+                    <Box display='inline' fontSize='xs'>
+                      (Opcional)
+                    </Box>
+                  </FormLabel>
+                </Flex>
+                <Rating
+                  style={{ maxWidth: 190 }}
+                  value={books.rating}
+                  onChange={handleRatingChange}
                 />
               </FormControl>
               <Box

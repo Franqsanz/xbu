@@ -82,6 +82,7 @@ interface BookType {
     public_id: string;
   };
   userId?: string | undefined;
+  rating: number;
 }
 
 interface ModalCropperType extends DisclosureType {
@@ -162,6 +163,7 @@ interface ModalOptionsAndConfirType extends Omit<Partial<BookType>>, DisclosureT
     url: string;
     public_id: string;
   };
+  rating?: number;
 }
 
 interface BooksSectionType {

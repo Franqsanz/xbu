@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import * as Sentry from '@sentry/react';
 import { HelmetProvider } from 'react-helmet-async';
+import '@smastrom/react-rating/style.css';
 
 import theme from '../theme';
 import { routes } from './routes';
