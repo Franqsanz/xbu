@@ -41,6 +41,7 @@ import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 import { ModalForm } from '@components/modals/ModalForm';
 import { useAuth } from '@contexts/AuthContext';
 import { useMyToast } from '@hooks/useMyToast';
+import { Rating } from '@smastrom/react-rating';
 
 const Categories = lazy(() => import('@components/Categories'));
 const MoreBooksAuthors = lazy(() => import('@components/cards/MoreBooksAuthors'));
@@ -393,7 +394,10 @@ export default function Book() {
               />
             ))}
           </Flex>
-          <Box mt='5'>
+          <Box mt='3'>
+            <Rating style={{ maxWidth: 140 }} value={bookObject.rating} readOnly />
+          </Box>
+          <Box mt='6'>
             <Box p='2' fontSize='lg' bg={grayColor} roundedTop='lg'>
               Sinopsis
             </Box>
