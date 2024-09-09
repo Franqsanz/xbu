@@ -239,7 +239,7 @@ export default function Book() {
       <Flex
         as='section'
         w='full'
-        maxW='1170px'
+        maxW='1195px'
         m='auto'
         px={{ base: 5, xl: 0 }}
         pt='4'
