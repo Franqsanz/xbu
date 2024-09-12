@@ -25,7 +25,8 @@ import { CardType } from '@components/types';
 import { ResultLength } from '@components/aside/ResultLength';
 import { useAuth } from '@contexts/AuthContext';
 import { NoData } from '@assets/assets';
-import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
+// import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
+import { SkeletonProfile } from '@components/skeletons/SkeletonProfile';
 import { MyContainer } from '@components/ui/MyContainer';
 // import { logOut } from '../../services/firebase/auth';
 
@@ -57,7 +58,7 @@ export function Profile() {
   }, [inView]);
 
   if (isPending) {
-    return <SkeletonAllBooks showTags={true} />;
+    return <SkeletonProfile />;
   }
 
   if (error) {

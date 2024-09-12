@@ -1,13 +1,18 @@
 import React from 'react';
-import { Skeleton, SkeletonText, Flex, Box, Stack } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
+  Stack,
+} from '@chakra-ui/react';
 
-import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { MyContainer } from '@components/ui/MyContainer';
 import { Aside } from '@components/aside/Aside';
-import { SkeletonTags } from '@components/skeletons/SkeletonTags';
-import { SkeletonType } from '@components/types';
+import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 
-export function SkeletonAllBooks({ showTags = true }: SkeletonType) {
+export function SkeletonProfile() {
   const Cards = Array.from({ length: 12 }, (_, index) => (
     <Stack key={index} spacing='2' mb='10'>
       <Skeleton
@@ -21,15 +26,11 @@ export function SkeletonAllBooks({ showTags = true }: SkeletonType) {
 
   return (
     <>
-      {showTags && (
-        <>
-          <Skeleton py={{ base: 14, md: 20 }} />
-          <SkeletonTags />
-          <Flex display={{ base: 'flex', xl: 'none' }}>
-            <Skeleton w='full' h='50px' />
-          </Flex>
-        </>
-      )}
+      <Flex as='section' justify='center' direction='column' mt='7'>
+        <SkeletonCircle size='100px' m='auto' />
+        <Skeleton w='235px' h='25px' m='0 auto' mt='6' />
+        <Skeleton w='180px' h='20px' m='0 auto' my='3' />
+      </Flex>
       <MyContainer>
         <Aside>
           <Box mt={{ base: '7', md: '97px' }}>

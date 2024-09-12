@@ -221,7 +221,7 @@ function useCheckUser(id: string | undefined) {
   return useQuery({
     queryKey: [keys.checkUser, id],
     queryFn: () => getCheckUser(id),
-    gcTime: 24 * 3600 * 1000,
+    gcTime: 0,
     enabled: false,
     refetchOnWindowFocus: false,
     retry: false,

@@ -113,12 +113,12 @@ export function FormNewBook() {
     handleImage(e, setCropData, onOpen);
   }
 
-  function handleRatingChange(newRating: number) {
-    setBooks((books) => ({
-      ...books,
-      rating: newRating,
-    }));
-  }
+  // function handleRatingChange(newRating: number) {
+  //   setBooks((books) => ({
+  //     ...books,
+  //     rating: newRating,
+  //   }));
+  // }
 
   function getCropData() {
     getCrop(crop, setPreviewImg, books, setBooks, onClose);
@@ -551,7 +551,7 @@ export function FormNewBook() {
                   placeholder='Elija un Formato'
                 />
               </FormControl>
-              <FormControl mt={{ base: 5, md: 8 }}>
+              <FormControl mt={{ base: 5, md: 7 }}>
                 <Flex align='center' mb='9px'>
                   <FormLabel htmlFor='categoria' m='0'>
                     Calificación{' '}
@@ -560,11 +560,31 @@ export function FormNewBook() {
                     </Box>
                   </FormLabel>
                 </Flex>
-                <Rating
-                  style={{ maxWidth: 190 }}
-                  value={books.rating}
-                  onChange={handleRatingChange}
+                <Select
+                  id='rating'
+                  name='rating'
+                  size={{ base: 'md', md: 'lg' }}
+                  variant='filled'
+                  onChange={(selectedOption) =>
+                    handleFieldChange('rating', selectedOption?.value)
+                  }
+                  options={[
+                    { value: 0, label: 0 },
+                    { value: 1, label: 1 },
+                    { value: 1.5, label: 1.5 },
+                    { value: 2, label: 2 },
+                    { value: 2.5, label: 2.5 },
+                    { value: 3, label: 3 },
+                    { value: 3.5, label: 3.5 },
+                    { value: 4, label: 4 },
+                    { value: 4.5, label: 4.5 },
+                    { value: 5, label: 5 },
+                  ]}
+                  placeholder='Elija una Calificación'
                 />
+                <Box mt='3.5'>
+                  <Rating style={{ maxWidth: 190 }} value={books.rating} readOnly />
+                </Box>
               </FormControl>
               <Box mt={{ base: 10, md: '22rem' }}>
                 <Button

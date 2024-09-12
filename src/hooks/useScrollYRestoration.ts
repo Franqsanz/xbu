@@ -11,7 +11,7 @@ export function useScrollYRestoration(loading: boolean) {
 
     window.addEventListener('scroll', handleScroll);
 
-    const scrollPosition = sessionStorage.getItem(location.pathname);
+    const scrollPosition = window.sessionStorage.getItem(location.pathname);
 
     if (scrollPosition && !loading) {
       window.scrollTo(0, JSON.parse(scrollPosition));

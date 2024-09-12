@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, ScrollRestoration } from 'react-router-dom';
 import { Box, Flex, Icon, Image, Link, Spinner } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
 import { MdOutlineExplore } from 'react-icons/md';
@@ -45,36 +45,33 @@ export default function Favorites() {
         <MySimpleGrid>
           {data?.pages.map((page, index) => (
             <React.Fragment key={index}>
-              {page.results
-                // .slice()
-                // .reverse()
-                .map(
-                  ({
-                    id,
-                    category,
-                    language,
-                    title,
-                    authors,
-                    synopsis,
-                    sourceLink,
-                    pathUrl,
-                    image,
-                  }: CardType) => (
-                    <React.Fragment key={id}>
-                      <Card
-                        id={id}
-                        category={category}
-                        language={language}
-                        title={title}
-                        authors={authors}
-                        synopsis={synopsis}
-                        sourceLink={sourceLink}
-                        pathUrl={pathUrl}
-                        image={image}
-                      />
-                    </React.Fragment>
-                  ),
-                )}
+              {page.results.map(
+                ({
+                  id,
+                  category,
+                  language,
+                  title,
+                  authors,
+                  synopsis,
+                  sourceLink,
+                  pathUrl,
+                  image,
+                }: CardType) => (
+                  <React.Fragment key={id}>
+                    <Card
+                      id={id}
+                      category={category}
+                      language={language}
+                      title={title}
+                      authors={authors}
+                      synopsis={synopsis}
+                      sourceLink={sourceLink}
+                      pathUrl={pathUrl}
+                      image={image}
+                    />
+                  </React.Fragment>
+                ),
+              )}
             </React.Fragment>
           ))}
         </MySimpleGrid>
@@ -137,6 +134,7 @@ export default function Favorites() {
     <>
       <MainHead title='Mis favoritos | XBuniverse' />
       <ContainerTitle title='Mis favoritos' />
+      <ScrollRestoration />
       <MySliderCategories />
       <MyContainer>{asideAndCardsUI}</MyContainer>
       <Box ref={ref}>{fetchingNextPageUI}</Box>
