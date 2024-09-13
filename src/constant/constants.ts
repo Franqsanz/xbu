@@ -178,6 +178,12 @@ const categories: Array<SelectBooksType> = [
   { value: 'Thriller de Espías', label: 'Thriller de Espías' },
   { value: 'Utópico', label: 'Utópico' },
   { value: 'Distópico', label: 'Distópico' },
+  { value: 'Romance paranormal', label: 'Romance paranormal' },
+  { value: 'Paranormal', label: 'Paranormal' },
+  { value: 'Familia', label: 'Familia' },
+  { value: 'Asia', label: 'Asia' },
+  { value: 'Audiolibro', label: 'Audiolibro' },
+  { value: 'Ficción para adultos', label: 'Ficción para adultos' },
 ];
 
 const formats: Array<SelectBooksType> = [
