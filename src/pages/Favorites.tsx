@@ -1,6 +1,14 @@
 import React, { useEffect } from 'react';
 import { NavLink, ScrollRestoration } from 'react-router-dom';
-import { Box, Flex, Icon, Image, Link, Spinner } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Icon,
+  Image,
+  Link,
+  Spinner,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
 import { MdOutlineExplore } from 'react-icons/md';
 
@@ -19,6 +27,7 @@ import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { emptyFavorites } from '@assets/assets';
 
 export default function Favorites() {
+  const grayColor = useColorModeValue('#E2E8F0', '#2D3748');
   const { ref, inView } = useInView();
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
@@ -136,6 +145,18 @@ export default function Favorites() {
       <ContainerTitle title='Mis favoritos' />
       <ScrollRestoration />
       <MySliderCategories />
+      <Flex
+        display={{ base: 'flex', xl: 'none' }}
+        mt='4'
+        pt='3'
+        pb='3'
+        px={{ base: '7', md: '20', sm: '10' }}
+        justify={{ base: 'space-around', sm: 'space-between' }}
+        align='stretch'
+        borderY={`1px solid ${grayColor}`}
+      >
+        <ResultLength data={data?.pages[0].info.totalBooks} />
+      </Flex>
       <MyContainer>{asideAndCardsUI}</MyContainer>
       <Box ref={ref}>{fetchingNextPageUI}</Box>
     </>

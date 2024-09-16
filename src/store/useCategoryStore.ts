@@ -10,6 +10,7 @@ interface CategoryType {
 const disabledRoutes = [
   '/explore',
   '/most-viewed',
+  '/my-favorites',
   '/books/filter/year/',
   '/books/filter/language/',
 ];

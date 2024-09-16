@@ -31,6 +31,7 @@ import { MyContainer } from '@components/ui/MyContainer';
 // import { logOut } from '../../services/firebase/auth';
 
 export function Profile() {
+  const grayColor = useColorModeValue('#E2E8F0', '#2D3748');
   const bgCover = useColorModeValue('gray.100', 'gray.700');
   const { ref, inView } = useInView();
   const getToken = window.localStorage.getItem('app_tk');
@@ -213,10 +214,22 @@ export function Profile() {
           {createdAt}
         </Flex>
       </Flex>
-      <Flex justify='center' borderBottom='1px solid #A0AEC0'>
+      <Flex justify='center'>
         <Box mt='3' mb='1' fontSize={{ base: 'md', md: 'lg' }}>
           PUBLICACIONES
         </Box>
+      </Flex>
+      <Flex
+        display={{ base: 'flex', xl: 'none' }}
+        mt='4'
+        pt='3'
+        pb='3'
+        px={{ base: '7', md: '20', sm: '10' }}
+        justify={{ base: 'space-around', sm: 'space-between' }}
+        align='stretch'
+        borderY={`1px solid ${grayColor}`}
+      >
+        <ResultLength data={profileData?.pages[0].info.totalBooks} />
       </Flex>
       <MyContainer>{asideAndCardsUI}</MyContainer>
       <Box ref={ref}>{fetchingNextPageUI}</Box>
