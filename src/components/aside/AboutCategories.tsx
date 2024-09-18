@@ -19,11 +19,11 @@ export function AboutCategories({ category }: any) {
             mt='2'
             fontSize='sm'
             maxH='250px'
-            overflow='auto'
+            overflowY='scroll'
             pr='1'
             sx={{
               '&::-webkit-scrollbar': {
-                width: '7px',
+                width: '5px',
               },
               '&::-webkit-scrollbar-thumb': {
                 background: '#a2aab3',

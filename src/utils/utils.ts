@@ -84,6 +84,18 @@ function sortArrayByLabel<T extends { label: string }>(array: T[]): T[] {
   return array.slice().sort((a, b) => a.label.localeCompare(b.label));
 }
 
+function capitalizeWords(str: string) {
+  return str
+    .split(' ') // Dividir la cadena por espacios
+    .map((word) =>
+      word
+        .split('.') // Dividir cada palabra por puntos
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1)) // Capitalizar cada parte después de un punto
+        .join('.'),
+    ) // Unir las partes capitalizadas con un punto
+    .join(' '); // Unir las palabras capitalizadas con espacios
+}
+
 export {
   keys,
   handleImageLoad,
@@ -92,4 +104,5 @@ export {
   isSpanish,
   parseDate,
   sortArrayByLabel,
+  capitalizeWords,
 };

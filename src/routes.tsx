@@ -19,7 +19,7 @@ const PrivacyPolicies = lazy(() => import('@pages/PrivacyPolicies'));
 const Explore = lazy(() => import('@pages/Explore'));
 const MostViewed = lazy(() => import('@pages/MostViewed'));
 const Book = lazy(() => import('@pages/Book'));
-const Search = lazy(() => import('@pages/Search'));
+const FilteredData = lazy(() => import('@pages/FilteredData'));
 const NewBook = lazy(() => import('@pages/NewBook'));
 const Favorites = lazy(() => import('@pages/Favorites'));
 
@@ -81,7 +81,7 @@ export const routes = createBrowserRouter([
                 path: ':query/:param',
                 element: (
                   <CatchError skeletonLoad={<SkeletonAllBooks showTags={true} />}>
-                    <Search />
+                    <FilteredData />
                   </CatchError>
                 ),
               },

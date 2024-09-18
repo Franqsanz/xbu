@@ -6,6 +6,7 @@ export function MyContainer({ children }: { children: React.ReactNode }) {
     <>
       <Flex
         as='article'
+        w='full'
         direction={{ base: 'column', md: 'row' }}
         maxW={{ base: '1260px', '2xl': '1560px' }}
         m='0 auto'

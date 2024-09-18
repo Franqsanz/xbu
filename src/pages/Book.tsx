@@ -427,7 +427,7 @@ export default function Book() {
                 </Flex>
                 <Flex>
                   <Box minW='160px'>
-                    <Box as='span'>N° paginas:</Box>
+                    <Box as='span'>N° páginas:</Box>
                   </Box>
                   <Box>
                     <Box as='span'>{bookObject.numberPages}</Box>
