@@ -8,19 +8,12 @@ import {
   Icon,
   useDisclosure,
   Box,
-  Radio,
-  RadioGroup,
   Image,
   useColorModeValue,
   Spinner,
   Alert,
   AlertIcon,
   AlertTitle,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
 } from '@chakra-ui/react';
 
 import { Card } from '@components/cards/Card';
@@ -39,8 +32,7 @@ import { Lost } from '@assets/assets';
 import { aboutCategories } from '../constant/constants';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { MyContainer } from '@components/ui/MyContainer';
-import { FilterNumberPages } from '@components/filters/FilterNumberPages';
-import { capitalizeWords } from '@utils/utils';
+import { FilterAccordion } from '@components/filters/FilterAccordion';
 
 export default function FilteredData() {
   const { ref, inView } = useInView();
@@ -211,116 +203,21 @@ export default function FilteredData() {
             },
           }}
         >
-          <Accordion allowToggle mb='2'>
-            <AccordionItem border='none'>
-              <h2>
-                <AccordionButton px='1' borderRadius='md'>
-                  <Box as='span' pl='1' flex='1' textAlign='left'>
-                    N° de páginas
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb='3' p='3'>
-                <FilterNumberPages
-                  min={selectedMinPages}
-                  max={selectedMaxPages}
-                  setMin={handleMinChange}
-                  setMax={handleMaxChange}
-                />
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem border='none'>
-              <h2>
-                <AccordionButton px='1' borderRadius='md'>
-                  <Box as='span' pl='1' flex='1' textAlign='left'>
-                    Idioma
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb='3' p='3'>
-                <RadioGroup
-                  value={selectedLanguage}
-                  onChange={handleLanguageChange}
-                  colorScheme='green'
-                >
-                  <Flex direction='column' gap='3'>
-                    <Radio value=''>Todos los Idiomas</Radio>
-                    {Array.isArray(languages) &&
-                      languages.map(({ language, count }: any) => (
-                        <Radio key={language} value={language}>
-                          {language}
-                          <Box as='span' ml='2' color='gray.500'>
-                            ({count})
-                          </Box>
-                        </Radio>
-                      ))}
-                  </Flex>
-                </RadioGroup>
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem border='none'>
-              <h2>
-                <AccordionButton px='1' borderRadius='md'>
-                  <Box as='span' pl='1' flex='1' textAlign='left'>
-                    Año
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb='3' p='3'>
-                <RadioGroup
-                  value={selectedYear}
-                  onChange={handleYearChange}
-                  colorScheme='green'
-                >
-                  <Flex direction='column' gap='3'>
-                    <Radio value=''>Todos los Años</Radio>
-                    {Array.isArray(years) &&
-                      years.map(({ year, count }: any) => (
-                        <Radio key={year} value={String(year)}>
-                          {year}
-                          <Box as='span' ml='2' color='gray.500'>
-                            ({count})
-                          </Box>
-                        </Radio>
-                      ))}
-                  </Flex>
-                </RadioGroup>
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem border='none'>
-              <h2>
-                <AccordionButton px='1' borderRadius='md'>
-                  <Box as='span' pl='1' flex='1' textAlign='left'>
-                    Autor
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb='3' p='3'>
-                <RadioGroup
-                  value={selectedAuthor}
-                  onChange={handleAuthorChange}
-                  colorScheme='green'
-                >
-                  <Flex direction='column' gap='3'>
-                    <Radio value=''>Todos los Autores</Radio>
-                    {Array.isArray(authors) &&
-                      authors.map(({ authors, count }: any) => (
-                        <Radio key={authors} value={authors}>
-                          {capitalizeWords(authors)}
-                          <Box as='span' ml='2' color='gray.500'>
-                            ({count})
-                          </Box>
-                        </Radio>
-                      ))}
-                  </Flex>
-                </RadioGroup>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+          <FilterAccordion
+            selectedMinPages={selectedMinPages}
+            selectedMaxPages={selectedMaxPages}
+            handleMinChange={handleMinChange}
+            handleMaxChange={handleMaxChange}
+            selectedLanguage={selectedLanguage}
+            handleLanguageChange={handleLanguageChange}
+            languages={languages}
+            selectedYear={selectedYear}
+            handleYearChange={handleYearChange}
+            years={years}
+            selectedAuthor={selectedAuthor}
+            handleAuthorChange={handleAuthorChange}
+            authors={authors}
+          />
         </Flex>
       </Flex>
     );

@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 
 import { DrawerType } from '@components/types';
+// import { FilterAccordion } from '@components/filters/FilterAccordion';
 
 export function FilterDrawer({
   isOpen,
@@ -52,16 +53,34 @@ export function FilterDrawer({
       <Drawer isOpen={isOpen} placement='bottom' onClose={onClose} size='xl'>
         <DrawerOverlay bg='#1212126e' />
         <DrawerContent
+          m='0 auto'
+          w='95%'
           bg={bgDrawer}
           backdropFilter='auto'
           backdropBlur='12px'
           roundedTop='3xl'
-          maxH='450px'
-          borderTop='1px solid #A0AEC0'
+          border='1px solid #A0AEC0'
+          borderBottom='0'
         >
           <DrawerHeader>Filtrar por:</DrawerHeader>
           <DrawerCloseButton />
           <DrawerBody>
+            {/* <FilterAccordion
+              selectedMinPages=''
+              selectedMaxPages=''
+              handleMinChange=''
+              handleMaxChange=''
+              selectedLanguage={selectedLanguage}
+              handleLanguageChange={handleLanguageChange}
+              languages=''
+              selectedYear={selectedYear}
+              handleYearChange={handleYearChange}
+              years=''
+              selectedAuthor=''
+              handleAuthorChange=''
+              authors=''
+            /> */}
+
             <Flex px='2' direction='column' mb='10'>
               <Box mb='4' borderBottom='1px'>
                 Idioma
@@ -92,7 +111,7 @@ export function FilterDrawer({
                       </Radio>
                     ))}
                   <Radio value='' onChange={() => handleAllRadioChange('language')}>
-                    Todos los Idiomas
+                    Todos
                   </Radio>
                 </Flex>
               </RadioGroup>
@@ -125,7 +144,7 @@ export function FilterDrawer({
                       </Radio>
                     ))}
                   <Radio value='' onChange={() => handleAllRadioChange('year')}>
-                    Todos los Años
+                    Todos
                   </Radio>
                 </Flex>
               </RadioGroup>

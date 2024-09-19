@@ -188,7 +188,8 @@ export function MobileNav() {
           <DrawerOverlay backdropFilter='blur(5px)' />
           <DrawerContent
             bg={bgDrawer}
-            maxW='294px'
+            maxW={{ base: '300px', sm: '380px' }}
+            borderRight='1px solid #A0AEC0'
             backdropFilter='auto'
             backdropBlur='12px'
             roundedRight='2xl'
