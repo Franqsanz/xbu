@@ -50,11 +50,12 @@ export function FilterDrawer({
 
   return (
     <>
-      <Drawer isOpen={isOpen} placement='bottom' onClose={onClose} size='xl'>
+      <Drawer isOpen={isOpen} placement='bottom' onClose={onClose}>
         <DrawerOverlay bg='#1212126e' />
         <DrawerContent
           m='0 auto'
           w='95%'
+          maxH='450px'
           bg={bgDrawer}
           backdropFilter='auto'
           backdropBlur='12px'
