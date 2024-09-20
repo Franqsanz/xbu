@@ -33,6 +33,7 @@ import { aboutCategories } from '../constant/constants';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { MyContainer } from '@components/ui/MyContainer';
 import { FilterAccordion } from '@components/filters/FilterAccordion';
+// import { AsideFilter } from '@components/filters/AsideFilter';
 
 export default function FilteredData() {
   const { ref, inView } = useInView();
@@ -72,7 +73,7 @@ export default function FilteredData() {
     isFetchingNextPage,
   } = useFilterPaginated(query, param);
 
-  const { data: dataFilter } = useFilter(query, param);
+  const { data: dataFilter, isPending: isPendingFilter } = useFilter(query, param);
 
   useScrollYRestoration(isPendingPaginated); // Restablece la posición del scroll al volver de la vista del libro
 
@@ -109,6 +110,26 @@ export default function FilteredData() {
     setSelectedMaxPages('');
   }, [location.pathname]);
 
+  // Filtrar por número de páginas
+  function pagesMatch(numberPages) {
+    const minPages = selectedMinPages ? Number(selectedMinPages) : null;
+    const maxPages = selectedMaxPages ? Number(selectedMaxPages) : null;
+
+    if (minPages !== null && maxPages !== null) {
+      return numberPages >= minPages && numberPages <= maxPages;
+    }
+
+    if (minPages !== null) {
+      return numberPages >= minPages;
+    }
+
+    if (maxPages !== null) {
+      return numberPages <= maxPages;
+    }
+
+    return true;
+  }
+
   // Esta función ejecuta la petición de paginación por defecto
   // y si se aplican los filtros ejecuta la petición "dataFilter".
   function getNormalizedResults() {
@@ -128,22 +149,10 @@ export default function FilteredData() {
             ? authors[0].toLowerCase() === selectedAuthor
             : true;
 
-          // Filtrar por número de páginas
-          const minPages = selectedMinPages ? Number(selectedMinPages) : null;
-          const maxPages = selectedMaxPages ? Number(selectedMaxPages) : null;
-
-          let pagesMatch = true;
-
-          if (minPages !== null && maxPages !== null) {
-            pagesMatch = numberPages >= minPages && numberPages <= maxPages;
-          } else if (minPages !== null) {
-            pagesMatch = numberPages >= minPages;
-          } else if (maxPages !== null) {
-            pagesMatch = numberPages <= maxPages;
-          }
-
           // Devuelve el resultado solo si cumple con todos los filtros
-          return languageMatch && yearMatch && authorMatch && pagesMatch;
+          return (
+            languageMatch && yearMatch && authorMatch && pagesMatch(numberPages)
+          );
         }) || []
       );
     }
@@ -191,7 +200,7 @@ export default function FilteredData() {
           display={{ base: 'none', md: 'flex' }}
           direction='column'
           h='450px'
-          overflowY='scroll'
+          overflowY='auto'
           pr='2'
           sx={{
             '&::-webkit-scrollbar': {
@@ -203,21 +212,25 @@ export default function FilteredData() {
             },
           }}
         >
-          <FilterAccordion
-            selectedMinPages={selectedMinPages}
-            selectedMaxPages={selectedMaxPages}
-            handleMinChange={handleMinChange}
-            handleMaxChange={handleMaxChange}
-            selectedLanguage={selectedLanguage}
-            handleLanguageChange={handleLanguageChange}
-            languages={languages}
-            selectedYear={selectedYear}
-            handleYearChange={handleYearChange}
-            years={years}
-            selectedAuthor={selectedAuthor}
-            handleAuthorChange={handleAuthorChange}
-            authors={authors}
-          />
+          {isPendingFilter ? (
+            <Spinner thickness='4px' speed='0.40s' />
+          ) : (
+            <FilterAccordion
+              selectedMinPages={selectedMinPages}
+              selectedMaxPages={selectedMaxPages}
+              handleMinChange={handleMinChange}
+              handleMaxChange={handleMaxChange}
+              selectedLanguage={selectedLanguage}
+              handleLanguageChange={handleLanguageChange}
+              languages={languages}
+              selectedYear={selectedYear}
+              handleYearChange={handleYearChange}
+              years={years}
+              selectedAuthor={selectedAuthor}
+              handleAuthorChange={handleAuthorChange}
+              authors={authors}
+            />
+          )}
         </Flex>
       </Flex>
     );
@@ -301,8 +314,10 @@ export default function FilteredData() {
         onClose={onClose}
         language={languages}
         year={years}
+        authors={authors}
         handleLanguageChange={handleLanguageChange}
         handleYearChange={handleYearChange}
+        handleAuthorChange={handleAuthorChange}
       />
       {isPendingPaginated ? (
         <SkeletonAllBooks showTags={false} />

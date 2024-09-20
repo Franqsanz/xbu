@@ -21,7 +21,7 @@ export function SkeletonContainer() {
     <>
       <MyContainer>
         <Aside>
-          <Box mt={{ base: '7', md: '97px' }}>
+          <Box mt={{ base: '7', md: '52px' }}>
             <SkeletonText
               mt='1'
               noOfLines={2}

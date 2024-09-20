@@ -19,7 +19,7 @@ export function AboutCategories({ category }: any) {
             mt='2'
             fontSize='sm'
             maxH='250px'
-            overflowY='scroll'
+            overflowY='auto'
             pr='1'
             sx={{
               '&::-webkit-scrollbar': {

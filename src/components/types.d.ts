@@ -108,17 +108,19 @@ interface SelectType extends Omit<SelectBooksType, 'label'> {
   total: number;
 }
 
-type languageYType = string[] | undefined;
+type OptionType = string[] | undefined;
 type languagesYMapType = { [key: string]: number } | undefined;
 
 interface LanguageAndYearType {
-  language: languageYType;
-  year: languageYType;
+  language: OptionType;
+  year: OptionType;
+  authors: OptionType;
 }
 
 interface DrawerType extends DisclosureType, LanguageAndYearType {
   handleLanguageChange: (languages: any) => void;
   handleYearChange: (years: any) => void;
+  handleAuthorChange: (authors: any) => void;
 }
 
 interface BookSearchResultsType {

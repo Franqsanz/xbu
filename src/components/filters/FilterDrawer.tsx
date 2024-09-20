@@ -23,28 +23,47 @@ export function FilterDrawer({
   onClose,
   handleLanguageChange,
   language,
-  year,
   handleYearChange,
+  year,
+  authors,
+  handleAuthorChange,
 }: DrawerType) {
   const bgContentCheckbox = useColorModeValue('white', 'transparent');
   const bgDrawer = useColorModeValue('white', '#121212e4');
   const bgButtonApply = useColorModeValue('green.500', 'green.700');
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
+  const [selectedAuthor, setSelectedAuthor] = useState('');
 
   function handleRadioChange(type: string, value: string) {
     if (type === 'language') {
       setSelectedLanguage(value);
-    } else if (type === 'year') {
+      return;
+    }
+
+    if (type === 'year') {
       setSelectedYear(value);
+      return;
+    }
+
+    if (type === 'authors') {
+      setSelectedAuthor(value);
     }
   }
 
   function handleAllRadioChange(type: string) {
     if (type === 'language') {
       setSelectedLanguage('');
-    } else if (type === 'year') {
+      return;
+    }
+
+    if (type === 'year') {
       setSelectedYear('');
+      return;
+    }
+
+    if (type === 'authors') {
+      setSelectedAuthor('');
     }
   }
 
@@ -54,7 +73,7 @@ export function FilterDrawer({
         <DrawerOverlay bg='#1212126e' />
         <DrawerContent
           m='0 auto'
-          w='95%'
+          w='96%'
           maxH='450px'
           bg={bgDrawer}
           backdropFilter='auto'
@@ -145,6 +164,39 @@ export function FilterDrawer({
                       </Radio>
                     ))}
                   <Radio value='' onChange={() => handleAllRadioChange('year')}>
+                    Todos
+                  </Radio>
+                </Flex>
+              </RadioGroup>
+              <Box mt='5' mb='4' borderBottom='1px'>
+                Autor
+              </Box>
+              <RadioGroup
+                value={selectedAuthor}
+                onChange={handleAuthorChange}
+                colorScheme='green'
+              >
+                <Flex
+                  mx='2'
+                  bg={bgContentCheckbox}
+                  rounded='lg'
+                  direction='column-reverse'
+                  gap='5'
+                >
+                  {Array.isArray(authors) &&
+                    authors?.map(({ authors, count }: any) => (
+                      <Radio
+                        key={authors}
+                        value={authors}
+                        onChange={() => handleRadioChange('authors', authors)}
+                      >
+                        {authors}
+                        <Box as='span' ml='2' color='gray.500'>
+                          ({count})
+                        </Box>
+                      </Radio>
+                    ))}
+                  <Radio value='' onChange={() => handleAllRadioChange('authors')}>
                     Todos
                   </Radio>
                 </Flex>
