@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 
 import { DrawerType } from '@components/types';
+import { capitalizeWords } from '@utils/utils';
 // import { FilterAccordion } from '@components/filters/FilterAccordion';
 
 export function FilterDrawer({
@@ -190,7 +191,7 @@ export function FilterDrawer({
                         value={authors}
                         onChange={() => handleRadioChange('authors', authors)}
                       >
-                        {authors}
+                        {capitalizeWords(authors)}
                         <Box as='span' ml='2' color='gray.500'>
                           ({count})
                         </Box>
