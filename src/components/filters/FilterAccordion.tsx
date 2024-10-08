@@ -15,7 +15,7 @@ export function FilterAccordion(props) {
 
   return (
     <>
-      <Accordion allowToggle mb='2'>
+      <Accordion defaultIndex={[0]} allowToggle mb='2'>
         {accordionItems.map(({ title, content }, index) => (
           <AccordionItem border='none' key={index}>
             <h2>
