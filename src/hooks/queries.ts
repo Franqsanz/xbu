@@ -94,6 +94,8 @@ function useAllFilterOptions() {
     queryKey: [keys.filtersOptions],
     queryFn: getAllFilterOptions,
     refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 10,
+    gcTime: 1000 * 60 * 15,
   });
 }
 

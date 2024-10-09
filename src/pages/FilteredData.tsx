@@ -9,7 +9,6 @@ import {
   useDisclosure,
   Box,
   Image,
-  useColorModeValue,
   Spinner,
   Alert,
   AlertIcon,
@@ -33,13 +32,13 @@ import { aboutCategories } from '../constant/constants';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { MyContainer } from '@components/ui/MyContainer';
 import { FilterAccordion } from '@components/filters/FilterAccordion';
+import { MobileResultBar } from '@components/ui/MobileResultBar';
 // import { AsideFilter } from '@components/filters/AsideFilter';
 
 export default function FilteredData() {
   const { ref, inView } = useInView();
   const location = useLocation();
   const { isOpen, onToggle, onClose } = useDisclosure();
-  const grayColor = useColorModeValue('#E2E8F0', '#2D3748');
   const [languages, setLanguages] = useState<string[]>([]);
   const [authors, setAuthors] = useState<string[]>([]);
   const [years, setYears] = useState<string[]>([]);
@@ -202,6 +201,11 @@ export default function FilteredData() {
           h='450px'
           overflowY='auto'
           pr='2'
+          // p='0 1.25rem 0 0.90rem'
+          // border='1px'
+          // boxShadow='xl'
+          // rounded='xl'
+          // borderColor='gray.200'
           sx={{
             '&::-webkit-scrollbar': {
               width: '5px',
@@ -213,7 +217,9 @@ export default function FilteredData() {
           }}
         >
           {isPendingFilter ? (
-            <Spinner thickness='4px' speed='0.40s' />
+            <Box m='auto'>
+              <Spinner thickness='2px' speed='0.40s' />
+            </Box>
           ) : (
             <FilterAccordion
               selectedMinPages={selectedMinPages}
@@ -296,19 +302,7 @@ export default function FilteredData() {
       <MainHead title={`${param} | XBuniverse`} />
       <ContainerTitle title={`${param}`} />
       <MySliderCategories />
-      <Flex
-        display={{ base: 'flex', xl: 'none' }}
-        mt='4'
-        pt='3'
-        pb='3'
-        px={{ base: '7', md: '20', sm: '10' }}
-        justify={{ base: 'space-around', sm: 'space-between' }}
-        align='stretch'
-        borderY={`1px solid ${grayColor}`}
-      >
-        <ResultLength data={dataPaginated?.pages[0].info.totalBooks} />
-        {buttonFilter}
-      </Flex>
+      <MobileResultBar data={dataPaginated}>{buttonFilter}</MobileResultBar>
       <FilterDrawer
         isOpen={isOpen}
         onClose={onClose}

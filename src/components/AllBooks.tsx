@@ -21,6 +21,7 @@ import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { ResultLength } from '@components/aside/ResultLength';
 import { MostViewed } from '@components/aside/MostViewed';
 import { MyContainer } from '@components/ui/MyContainer';
+import { MobileResultBar } from '@components/ui/MobileResultBar';
 
 export function AllBooks() {
   const { ref, inView } = useInView();
@@ -76,6 +77,7 @@ export function AllBooks() {
   return (
     <>
       <ScrollRestoration />
+      <MobileResultBar data={data} />
       <MyContainer>
         <Aside>
           <ResultLength data={data.pages[0].info.totalBooks} />

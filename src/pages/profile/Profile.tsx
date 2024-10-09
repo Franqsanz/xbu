@@ -28,10 +28,10 @@ import { NoData } from '@assets/assets';
 // import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { SkeletonProfile } from '@components/skeletons/SkeletonProfile';
 import { MyContainer } from '@components/ui/MyContainer';
+import { MobileResultBar } from '@components/ui/MobileResultBar';
 // import { logOut } from '../../services/firebase/auth';
 
 export function Profile() {
-  const grayColor = useColorModeValue('#E2E8F0', '#2D3748');
   const bgCover = useColorModeValue('gray.100', 'gray.700');
   const { ref, inView } = useInView();
   const getToken = window.localStorage.getItem('app_tk');
@@ -219,18 +219,7 @@ export function Profile() {
           PUBLICACIONES
         </Box>
       </Flex>
-      <Flex
-        display={{ base: 'flex', xl: 'none' }}
-        mt='4'
-        pt='3'
-        pb='3'
-        px={{ base: '7', md: '20', sm: '10' }}
-        justify={{ base: 'space-around', sm: 'space-between' }}
-        align='stretch'
-        borderY={`1px solid ${grayColor}`}
-      >
-        <ResultLength data={profileData?.pages[0].info.totalBooks} />
-      </Flex>
+      <MobileResultBar data={profileData} />
       <MyContainer>{asideAndCardsUI}</MyContainer>
       <Box ref={ref}>{fetchingNextPageUI}</Box>
     </>
