@@ -45,13 +45,20 @@ export function Card({
           tabIndex={-1}
           _hover={{ outline: 'none' }}
         >
-          <Flex as='figure' direction='column'>
+          <Flex
+            as='figure'
+            h='full'
+            direction='column'
+            alignItems='center'
+            justifyContent='space-between'
+          >
             <Flex
               w={{ base: '120px', sm: '180px', md: '200px' }}
               m='auto'
               mb='7'
               direction='column'
               position='relative'
+              alignItems='center'
             >
               <Box
                 display={{ base: 'none', md: 'block' }}
@@ -108,8 +115,10 @@ export function Card({
             </Flex>
             <Flex
               as='figcaption'
+              h='full'
               direction='column'
               alignItems='center'
+              justifyContent='space-between'
               textAlign='center'
             >
               <Box
@@ -118,7 +127,7 @@ export function Card({
                 fontSize={{ base: 'xs', sm: 'md' }}
                 fontWeight='400'
                 mx='1'
-                mb='2'
+                mb='1'
                 textTransform='uppercase'
                 sx={{
                   display: '-webkit-box',
