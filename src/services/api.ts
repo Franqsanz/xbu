@@ -71,6 +71,24 @@ async function patchToggleFavorite(
   });
 }
 
+async function getFindAllCollections(userId: string | undefined) {
+  return await fetchData(`${API_URL}/users/${userId}/my-collections`);
+}
+
+async function postCollections(userId: string | undefined, body: any) {
+  return await fetchData(`${API_URL}/users/${userId}/my-collections`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ name: body }),
+  });
+}
+
+async function deleteCollections(id: string | undefined, collectionId: string) {
+  return await fetchData(`${API_URL}/users/${id}/my-collections/${collectionId}`, {
+    method: 'DELETE',
+  });
+}
+
 async function postBook(books: any) {
   return await fetchData(`${API_URL}/books`, {
     method: 'POST',
@@ -153,6 +171,9 @@ export {
   getRelatedBooks,
   getMoreBooksAuthors,
   patchToggleFavorite,
+  getFindAllCollections,
+  postCollections,
+  deleteCollections,
   postBook,
   deleteBook,
   updateBook,

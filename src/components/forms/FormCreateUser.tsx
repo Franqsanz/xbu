@@ -27,7 +27,7 @@ export function FormCreateUser() {
     setUsername(value);
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     mutateAsync(token);
   }
@@ -38,50 +38,45 @@ export function FormCreateUser() {
 
   return (
     <>
-      <Flex
-        as='form'
-        onSubmit={handleSubmit}
-        justify='center'
-        p='5'
-        mt='24'
-        h='400px'
-      >
-        <Flex gap='5' direction='column'>
-          <Box
-            as='h1'
-            textAlign='center'
-            fontSize={{ base: 'lg', md: '2xl' }}
-            mb='5'
-          >
-            Elegir nombre de usuario
-          </Box>
-          <FormControl isRequired>
-            <InputGroup size={{ base: 'md', md: 'lg' }}>
-              <InputLeftAddon>xbu.com/</InputLeftAddon>
-              <Input
-                type='text'
-                name='username'
-                value={username}
-                onChange={handleChange}
-              />
-            </InputGroup>
-          </FormControl>
-          <Button
-            type='submit'
-            size='lg'
-            border='1px'
-            bg={bgColorButton}
-            color='black'
-            _hover={{ bg: 'green.600' }}
-            _active={{ bg: 'green.600' }}
-            fontWeight='normal'
-            loadingText='Creando cuenta...'
-            isLoading={isPending}
-          >
-            Siguiente
-          </Button>
+      <form onSubmit={handleSubmit}>
+        <Flex justify='center' p='5' mt='24' h='400px'>
+          <Flex gap='5' direction='column'>
+            <Box
+              as='h1'
+              textAlign='center'
+              fontSize={{ base: 'lg', md: '2xl' }}
+              mb='5'
+            >
+              Elegir nombre de usuario
+            </Box>
+            <FormControl isRequired>
+              <InputGroup size={{ base: 'md', md: 'lg' }}>
+                <InputLeftAddon>xbu.com/</InputLeftAddon>
+                <Input
+                  type='text'
+                  name='username'
+                  value={username}
+                  onChange={handleChange}
+                />
+              </InputGroup>
+            </FormControl>
+            <Button
+              type='submit'
+              size='lg'
+              border='1px'
+              bg={bgColorButton}
+              color='black'
+              _hover={{ bg: 'green.600' }}
+              _active={{ bg: 'green.600' }}
+              fontWeight='normal'
+              loadingText='Creando cuenta...'
+              isLoading={isPending}
+            >
+              Siguiente
+            </Button>
+          </Flex>
         </Flex>
-      </Flex>
+      </form>
     </>
   );
 }

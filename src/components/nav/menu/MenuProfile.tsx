@@ -58,6 +58,13 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
           </MenuItem>
           <MenuItem
             as={NavLink}
+            to='/my-collections'
+            _hover={{ textDecoration: 'none' }}
+          >
+            Mis Colecciones
+          </MenuItem>
+          <MenuItem
+            as={NavLink}
             to='/my-account'
             _hover={{ textDecoration: 'none' }}
           >

@@ -14,6 +14,8 @@ const images = {
     'https://res.cloudinary.com/xbu/image/upload/v1708539494/xbu_assets/noData_gs71zg.svg',
   emptyFavorites:
     'https://res.cloudinary.com/xbu/image/upload/v1725365540/xbu_assets/undraw_with_love_re_1q3m_yxcely.svg',
+  collections:
+    'https://res.cloudinary.com/xbu/image/upload/v1729604473/xbu_assets/collections_frakbc.svg',
 };
 
 export const {
@@ -25,4 +27,5 @@ export const {
   PageNotFound,
   NoData,
   emptyFavorites,
+  collections,
 } = images;

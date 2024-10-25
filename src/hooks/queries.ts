@@ -27,6 +27,9 @@ import {
   deleteAccount,
   getBooksFilterPaginated,
   getFindAllBookFavorite,
+  getFindAllCollections,
+  deleteCollections,
+  postCollections,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
@@ -198,9 +201,6 @@ function useFavoriteBook(body: any, isFavorite: boolean) {
     mutationKey: [keys.favoriteBook],
     mutationFn: (userId: string | undefined) =>
       patchToggleFavorite(userId, body, isFavorite),
-    onError: (error) => {
-      console.error('Error updating favorite status');
-    },
   });
 }
 
@@ -278,6 +278,33 @@ function useAllFavoriteByUser(userId: string | undefined) {
   });
 }
 
+function useCreateCollections(userId: string | undefined) {
+  return useMutation({
+    mutationKey: [keys.createCollections],
+    mutationFn: (name: string | undefined) => postCollections(userId, name),
+  });
+}
+
+function useCollections(userId: string | undefined) {
+  return useQuery({
+    queryKey: [keys.allCollections],
+    queryFn: () => getFindAllCollections(userId),
+    refetchOnWindowFocus: true,
+    retry: false,
+  });
+}
+
+function useDeleteCollections() {
+  return useMutation({
+    mutationKey: [keys.deleteCollections],
+    mutationFn: ([id, collectionId]: [string | undefined, string]) =>
+      deleteCollections(id, collectionId),
+    onError: async (error) => {
+      console.error('Error en el servidor:', error);
+    },
+  });
+}
+
 function useDeleteBook() {
   return useMutation({
     mutationKey: [keys.deleteBook],
@@ -328,6 +355,9 @@ export {
   useRelatedBooks,
   useMoreBooksAuthors,
   useFavoriteBook,
+  useCollections,
+  useCreateCollections,
+  useDeleteCollections,
 
   // Usuarios
   useUserRegister,
