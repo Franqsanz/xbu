@@ -25,6 +25,7 @@ const keys = {
   userFavoriteBooks: 'UserFavoriteBooks',
   createCollections: 'CreateCollections',
   allCollections: 'AllCollections',
+  collectionsDetail: 'CollectionsDetail',
   deleteCollections: 'DeleteCollections',
   deleteAccount: 'DeleteAccount',
 };

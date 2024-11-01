@@ -102,8 +102,6 @@ export default function Favorites() {
           Todavía no has añadido libros a tus favoritos.
         </Box>
         <Link
-          w='auto'
-          display='block'
           as={NavLink}
           to='/explore'
           bg='green.500'

@@ -150,8 +150,8 @@ export function Profile() {
           Aún no hay publicaciones
         </Box>
         <Link
-          w={{ base: '85%', md: '230px' }}
-          display='block'
+          // w={{ base: '85%', md: '230px' }}
+          // display='block'
           as={NavLink}
           to='/new-post'
           bg='green.500'

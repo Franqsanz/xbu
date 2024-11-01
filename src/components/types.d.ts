@@ -199,6 +199,7 @@ interface AuthProviderType {
 export type {
   MyChangeEvent,
   AboutType,
+  DisclosureType,
   LinkType,
   SelectBooksType,
   SelectType,

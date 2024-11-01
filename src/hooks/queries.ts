@@ -28,6 +28,7 @@ import {
   getBooksFilterPaginated,
   getFindAllBookFavorite,
   getFindAllCollections,
+  getFindOneCollection,
   deleteCollections,
   postCollections,
 } from '@services/api';
@@ -305,6 +306,15 @@ function useDeleteCollections() {
   });
 }
 
+function useCollectionDetail(collectionId: string | undefined) {
+  return useQuery({
+    queryKey: [keys.collectionsDetail, collectionId],
+    queryFn: () => getFindOneCollection(collectionId),
+    refetchOnWindowFocus: true,
+    retry: false,
+  });
+}
+
 function useDeleteBook() {
   return useMutation({
     mutationKey: [keys.deleteBook],
@@ -356,6 +366,7 @@ export {
   useMoreBooksAuthors,
   useFavoriteBook,
   useCollections,
+  useCollectionDetail,
   useCreateCollections,
   useDeleteCollections,
 

@@ -14,7 +14,8 @@ import { PrivateRoute } from '@components/nav/PrivateRoute';
 import { MyAccount } from '@pages/profile/account/MyAccount';
 import { Profile } from '@pages/profile/Profile';
 import { RouteWatcher } from '@hooks/RouteWatcher';
-import { MyCollections } from '@pages/profile/MyCollections';
+import { AllCollections } from '@pages/profile/collections/AllCollections';
+import { CollectionDetail } from '@pages/profile/collections/CollectionDetail';
 
 const PrivacyPolicies = lazy(() => import('@pages/PrivacyPolicies'));
 const Explore = lazy(() => import('@pages/Explore'));
@@ -128,7 +129,15 @@ export const routes = createBrowserRouter([
         path: '/my-collections',
         element: (
           <PrivateRoute>
-            <MyCollections />
+            <AllCollections />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/my-collections/:collectionId',
+        element: (
+          <PrivateRoute>
+            <CollectionDetail />
           </PrivateRoute>
         ),
       },

@@ -89,6 +89,10 @@ async function deleteCollections(id: string | undefined, collectionId: string) {
   });
 }
 
+async function getFindOneCollection(collectionsId: string | undefined) {
+  return await fetchData(`${API_URL}/users/my-collections/${collectionsId}`);
+}
+
 async function postBook(books: any) {
   return await fetchData(`${API_URL}/books`, {
     method: 'POST',
@@ -174,6 +178,7 @@ export {
   getFindAllCollections,
   postCollections,
   deleteCollections,
+  getFindOneCollection,
   postBook,
   deleteBook,
   updateBook,

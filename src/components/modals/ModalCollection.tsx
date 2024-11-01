@@ -17,10 +17,9 @@ import {
 
 import { useCreateCollections } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
+import { DisclosureType } from '@components/types';
 
-interface ModalCollectionType {
-  isOpen: boolean;
-  onClose: () => void;
+interface ModalCollectionType extends DisclosureType {
   refetch: () => void;
 }
 
@@ -33,17 +32,6 @@ export function ModalCollection({ isOpen, onClose, refetch }: ModalCollectionTyp
   const navigate = useNavigate();
   const { mutate, isPending, isSuccess } = useCreateCollections(uid);
 
-  function handleNameCollection(e: React.ChangeEvent<HTMLInputElement>) {
-    const { value } = e.target;
-
-    setName(value);
-  }
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    mutate(name);
-  }
-
   useEffect(() => {
     if (isSuccess) {
       onClose();
@@ -52,6 +40,20 @@ export function ModalCollection({ isOpen, onClose, refetch }: ModalCollectionTyp
       navigate('/my-collections');
     }
   }, [isSuccess, navigate, onClose]);
+
+  function handleNameCollection(e: React.ChangeEvent<HTMLInputElement>) {
+    const { value } = e.target;
+
+    setName(value);
+  }
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (!isPending) {
+      mutate(name);
+    }
+  }
 
   return (
     <>
@@ -83,7 +85,7 @@ export function ModalCollection({ isOpen, onClose, refetch }: ModalCollectionTyp
                   fontWeight='normal'
                   border='1px'
                   rounded='lg'
-                  isDisabled={!name}
+                  isDisabled={!name || isPending}
                   isLoading={isPending}
                   loadingText='Creando...'
                   _hover={{ outline: 'none', bg: 'green.600' }}

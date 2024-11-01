@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink, ScrollRestoration } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -7,35 +8,34 @@ import {
   Image,
   useColorModeValue,
   useDisclosure,
+  Spinner,
+  LinkBox,
+  LinkOverlay,
 } from '@chakra-ui/react';
-import { ScrollRestoration } from 'react-router-dom';
 import { TbPlaylistAdd } from 'react-icons/tb';
 
 import { ContainerTitle } from '@components/layout/ContainerTitle';
 import { MainHead } from '@components/layout/Head';
 import { collections } from '@assets/assets';
 import { MyContainer } from '@components/ui/MyContainer';
+import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { ModalCollection } from '@components/modals/ModalCollection';
-import { useCollections, useDeleteCollections } from '@hooks/queries';
+import { useCollections } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
 import { parseDate } from '@utils/utils';
 
-export function MyCollections() {
+export function AllCollections() {
   const bgColorButton = useColorModeValue('green.500', 'green.700');
   const grayColor = useColorModeValue('#E2E8F0', '#2D3748');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
-  const { data, refetch } = useCollections(uid);
-  const { mutate, isSuccess } = useDeleteCollections();
+  const { data, refetch, isPending: isPendingData } = useCollections(uid);
   let collectionsUI;
+  let spinnerUI;
 
-  function deleteCollection(id: string) {
-    mutate([uid, id]);
-  }
-
-  if (isSuccess) {
-    refetch();
+  if (isPendingData) {
+    spinnerUI = <Spinner />;
   }
 
   if (!data || !data?.collections || data?.collections.length === 0) {
@@ -65,50 +65,66 @@ export function MyCollections() {
     );
   } else {
     collectionsUI = (
-      <Flex gap='7' mt='14' flexWrap='wrap'>
+      <MySimpleGrid>
         {data?.collections.map(({ id, name, createdAt }) => (
-          <Flex
+          <LinkBox
             key={id}
-            w={{ base: 'full', sm: '200px' }}
-            h={{ base: '120px', sm: '170px' }}
-            boxShadow='2xl'
-            border='1px solid #A0AEC0'
-            rounded='lg'
-            p='2'
-            justify='center'
-            position='relative'
+            display='flex'
+            w={{ base: '160px', sm: '250px' }}
+            h={{ base: '200px', sm: '210px' }}
+            justifyContent='center'
+            m='5'
           >
+            {/* <LinkOverlay
+              as={NavLink}
+              to={`/my-collections/${id}`}
+              tabIndex={-1}
+              _hover={{ outline: 'none' }}
+            > */}
             <Flex
-              direction='column'
-              mb='3'
-              position='absolute'
-              bottom='0'
-              textAlign='center'
+              w={{ base: '127px', sm: '160px', md: '250px' }}
+              h={{ base: '200px', sm: '210px' }}
+              boxShadow='xl'
+              border='1px solid #A0AEC0'
+              rounded='lg'
+              // p='2'
+              // m='5'
+              justify='center'
+              position='relative'
             >
-              <Box mb='3'>
-                <Box mb='1'>{name}</Box>
-                <Box fontSize='xs'>{parseDate(createdAt)}</Box>
-              </Box>
-              <Button
-                w='full'
-                h='30px'
-                px='0'
-                m='auto'
-                fontSize='xs'
-                onClick={() => deleteCollection(id)}
-                fontWeight='normal'
-                bg='red.500'
-                color='white'
-                // loadingText='Eliminando...'
-                // isLoading={isPending}
-                _hover={{ color: 'none' }}
+              <Flex
+                direction='column'
+                mb='3'
+                position='absolute'
+                bottom='0'
+                textAlign='center'
+                gap='3'
               >
-                Eliminar
-              </Button>
+                <Box mb='4'>
+                  <Box mb='1' fontSize={{ base: 'sm', md: 'md' }}>
+                    {name}
+                  </Box>
+                  <Box fontSize='xs'>{parseDate(createdAt)}</Box>
+                </Box>
+                <Button
+                  w='100px'
+                  h='30px'
+                  px='0'
+                  m='auto'
+                  fontSize='xs'
+                  as={NavLink}
+                  to={`/my-collections/${id}`}
+                  fontWeight='normal'
+                  _hover={{ color: 'none' }}
+                >
+                  Abrir
+                </Button>
+              </Flex>
             </Flex>
-          </Flex>
+            {/* </LinkOverlay> */}
+          </LinkBox>
         ))}
-      </Flex>
+      </MySimpleGrid>
     );
   }
 
@@ -129,7 +145,8 @@ export function MyCollections() {
           align='center'
           fontSize='lg'
         >
-          {data?.totalCollections} Colecciones
+          {data?.totalCollections ?? 0}{' '}
+          {data?.totalCollections === 1 ? 'Colección' : 'Colecciones'}
           <Button
             fontWeight='500'
             onClick={onOpen}
