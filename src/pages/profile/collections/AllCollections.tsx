@@ -23,6 +23,7 @@ import { ModalCollection } from '@components/modals/ModalCollection';
 import { useCollections } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
 import { parseDate } from '@utils/utils';
+import { SkeletonACollections } from '@components/skeletons/SkeletonACollections';
 
 export function AllCollections() {
   const bgColorButton = useColorModeValue('green.500', 'green.700');
@@ -32,10 +33,9 @@ export function AllCollections() {
   const uid = currentUser?.uid;
   const { data, refetch, isPending: isPendingData } = useCollections(uid);
   let collectionsUI;
-  let spinnerUI;
 
   if (isPendingData) {
-    spinnerUI = <Spinner />;
+    return <SkeletonACollections />;
   }
 
   if (!data || !data?.collections || data?.collections.length === 0) {

@@ -12,13 +12,14 @@ import { MyContainer } from '@components/ui/MyContainer';
 import { useAuth } from '@contexts/AuthContext';
 import { MdOutlineExplore } from 'react-icons/md';
 import { FiArrowLeft } from 'react-icons/fi';
+import { SkeletonDCollection } from '@components/skeletons/SkeletonDCollection';
 
 export function CollectionDetail() {
   const { collectionId } = useParams();
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
-  const { data, isPending } = useCollectionDetail(collectionId);
+  const { data, isPending: isPendingData } = useCollectionDetail(collectionId);
   const { mutate, isSuccess, isPending: isPendingDelete } = useDeleteCollections();
   let asideAndCardsUI;
 
@@ -27,6 +28,10 @@ export function CollectionDetail() {
       navigate(`/my-collections`, { replace: true });
     }
   }, [isSuccess, navigate]);
+
+  if (isPendingData) {
+    return <SkeletonDCollection />;
+  }
 
   function deleteCollection(id: string) {
     mutate([uid, id]);
@@ -119,7 +124,7 @@ export function CollectionDetail() {
           justify='space-between'
           align='center'
         >
-          <Button fontWeight='normal' w='90px' onClick={handleGoBack}>
+          <Button fontWeight='normal' w='90px' size='sm' onClick={handleGoBack}>
             <Flex align='center' justify='center'>
               <Icon as={FiArrowLeft} boxSize='4' mr='1' />
               Volver
@@ -128,7 +133,7 @@ export function CollectionDetail() {
           <Flex gap='3'>
             <Button
               // onClick={() => deleteCollection(data?.id)}
-              fontSize='sm'
+              size='sm'
               fontWeight='normal'
               loadingText='Editando...'
               isLoading={isPendingDelete}
@@ -138,7 +143,7 @@ export function CollectionDetail() {
             </Button>
             <Button
               onClick={() => deleteCollection(data?.id)}
-              fontSize='sm'
+              size='sm'
               fontWeight='normal'
               bg='red.500'
               color='white'
