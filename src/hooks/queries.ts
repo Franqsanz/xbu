@@ -31,6 +31,7 @@ import {
   getFindOneCollection,
   deleteCollections,
   postCollections,
+  patchCollectionsName,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
@@ -286,6 +287,16 @@ function useCreateCollections(userId: string | undefined) {
   });
 }
 
+function useUpdateCollectionName(
+  userId: string | undefined,
+  collectionId: string | undefined,
+) {
+  return useMutation({
+    mutationKey: [keys.updateCollectionsName],
+    mutationFn: (name: string) => patchCollectionsName(userId, collectionId, name),
+  });
+}
+
 function useCollections(userId: string | undefined) {
   return useQuery({
     queryKey: [keys.allCollections],
@@ -368,6 +379,7 @@ export {
   useCollections,
   useCollectionDetail,
   useCreateCollections,
+  useUpdateCollectionName,
   useDeleteCollections,
 
   // Usuarios

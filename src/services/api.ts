@@ -83,6 +83,18 @@ async function postCollections(userId: string | undefined, body: any) {
   });
 }
 
+async function patchCollectionsName(
+  userId: string | undefined,
+  collectionId: string | undefined,
+  name: string,
+) {
+  return await fetchData(`${API_URL}/users/my-collections/${collectionId}`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ userId, name }),
+  });
+}
+
 async function deleteCollections(id: string | undefined, collectionId: string) {
   return await fetchData(`${API_URL}/users/${id}/my-collections/${collectionId}`, {
     method: 'DELETE',
@@ -177,6 +189,7 @@ export {
   patchToggleFavorite,
   getFindAllCollections,
   postCollections,
+  patchCollectionsName,
   deleteCollections,
   getFindOneCollection,
   postBook,

@@ -24,6 +24,7 @@ const keys = {
   userData: 'UserData',
   userFavoriteBooks: 'UserFavoriteBooks',
   createCollections: 'CreateCollections',
+  updateCollectionsName: 'UpdateCollectionsName',
   allCollections: 'AllCollections',
   collectionsDetail: 'CollectionsDetail',
   deleteCollections: 'DeleteCollections',

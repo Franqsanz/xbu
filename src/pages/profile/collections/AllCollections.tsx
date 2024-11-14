@@ -20,10 +20,11 @@ import { collections } from '@assets/assets';
 import { MyContainer } from '@components/ui/MyContainer';
 import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { ModalCollection } from '@components/modals/ModalCollection';
+import { SkeletonACollections } from '@components/skeletons/SkeletonACollections';
 import { useCollections } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
 import { parseDate } from '@utils/utils';
-import { SkeletonACollections } from '@components/skeletons/SkeletonACollections';
+import { MenuCollections } from '@components/profile/collections/MenuCollections';
 
 export function AllCollections() {
   const bgColorButton = useColorModeValue('green.500', 'green.700');
@@ -31,10 +32,10 @@ export function AllCollections() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
-  const { data, refetch, isPending: isPendingData } = useCollections(uid);
+  const { data, refetch, isPending } = useCollections(uid);
   let collectionsUI;
 
-  if (isPendingData) {
+  if (isPending) {
     return <SkeletonACollections />;
   }
 
@@ -80,7 +81,7 @@ export function AllCollections() {
               to={`/my-collections/${id}`}
               tabIndex={-1}
               _hover={{ outline: 'none' }}
-            > */}
+              > */}
             <Flex
               w={{ base: '127px', sm: '160px', md: '250px' }}
               h={{ base: '200px', sm: '210px' }}
@@ -92,6 +93,9 @@ export function AllCollections() {
               justify='center'
               position='relative'
             >
+              <Flex w='full' justify='flex-end'>
+                <MenuCollections id={id} name={name} refetch={refetch} />
+              </Flex>
               <Flex
                 direction='column'
                 mb='3'
@@ -111,9 +115,9 @@ export function AllCollections() {
                   h='30px'
                   px='0'
                   m='auto'
-                  fontSize='xs'
+                  size='xs'
                   as={NavLink}
-                  to={`/my-collections/${id}`}
+                  to={`/my-collections/collection/${id}`}
                   fontWeight='normal'
                   _hover={{ color: 'none' }}
                 >
@@ -133,7 +137,13 @@ export function AllCollections() {
       <MainHead title='Mis colecciones | XBuniverse' />
       <ContainerTitle title='Mis colecciones' />
       <ScrollRestoration />
-      <ModalCollection isOpen={isOpen} onClose={onClose} refetch={refetch} />
+      <ModalCollection
+        title='Crear Colección'
+        textButton='Crear'
+        isOpen={isOpen}
+        onClose={onClose}
+        refetch={refetch}
+      />
       <Flex m='0 auto'>
         <Flex
           w={{ base: '1315px', '2xl': '1580px' }}

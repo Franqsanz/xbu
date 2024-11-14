@@ -134,7 +134,7 @@ export const routes = createBrowserRouter([
         ),
       },
       {
-        path: '/my-collections/:collectionId',
+        path: '/my-collections/collection/:collectionId',
         element: (
           <PrivateRoute>
             <CollectionDetail />

@@ -1,6 +1,14 @@
 import React, { useEffect } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, Flex, Icon, Image, Link } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Image,
+  Link,
+  useDisclosure,
+} from '@chakra-ui/react';
 
 import { useCollectionDetail, useDeleteCollections } from '@hooks/queries';
 import { MainHead } from '@components/layout/Head';
@@ -13,19 +21,40 @@ import { useAuth } from '@contexts/AuthContext';
 import { MdOutlineExplore } from 'react-icons/md';
 import { FiArrowLeft } from 'react-icons/fi';
 import { SkeletonDCollection } from '@components/skeletons/SkeletonDCollection';
+import { useMyToast } from '@hooks/useMyToast';
+import { FaCheckCircle } from 'react-icons/fa';
+import { ModalCollection } from '@components/modals/ModalCollection';
 
 export function CollectionDetail() {
   const { collectionId } = useParams();
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
-  const { data, isPending: isPendingData } = useCollectionDetail(collectionId);
+  const myToast = useMyToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    data,
+    isPending: isPendingData,
+    refetch,
+  } = useCollectionDetail(collectionId);
   const { mutate, isSuccess, isPending: isPendingDelete } = useDeleteCollections();
   let asideAndCardsUI;
 
   useEffect(() => {
     if (isSuccess) {
       navigate(`/my-collections`, { replace: true });
+      myToast({
+        title: `Se elimino la colección ${data?.name}.`,
+        icon: FaCheckCircle,
+        iconColor: 'green.700',
+        bgColor: 'black',
+        width: '200px',
+        color: 'whitesmoke',
+        align: 'center',
+        padding: '1',
+        fntSize: 'md',
+        bxSize: 5,
+      });
     }
   }, [isSuccess, navigate]);
 
@@ -115,6 +144,16 @@ export function CollectionDetail() {
     <>
       <MainHead title={`${data?.name} | Mis colecciones | XBuniverse`} />
       <ContainerTitle title={data?.name} />
+      <ModalCollection
+        title='Editar Colección'
+        textButton='Guardar'
+        nameCollection={data?.name}
+        collectionId={collectionId}
+        isEditing={true}
+        isOpen={isOpen}
+        onClose={onClose}
+        refetch={refetch}
+      />
       <Flex m='0 auto'>
         <Flex
           w={{ base: '1315px', '2xl': '1580px' }}
@@ -132,11 +171,9 @@ export function CollectionDetail() {
           </Button>
           <Flex gap='3'>
             <Button
-              // onClick={() => deleteCollection(data?.id)}
+              onClick={onOpen}
               size='sm'
               fontWeight='normal'
-              loadingText='Editando...'
-              isLoading={isPendingDelete}
               _hover={{ color: 'none' }}
             >
               Editar nombre
