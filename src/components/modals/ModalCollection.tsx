@@ -101,7 +101,7 @@ export function ModalCollection({
     e.preventDefault();
 
     if (!isPending) {
-      if (isEditing && collectionId) {
+      if (isEditing) {
         mutate(name);
       } else {
         mutate(name);

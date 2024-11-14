@@ -283,7 +283,7 @@ function useAllFavoriteByUser(userId: string | undefined) {
 function useCreateCollections(userId: string | undefined) {
   return useMutation({
     mutationKey: [keys.createCollections],
-    mutationFn: (name: string | undefined) => postCollections(userId, name),
+    mutationFn: (name: string) => postCollections(userId, name),
   });
 }
 
