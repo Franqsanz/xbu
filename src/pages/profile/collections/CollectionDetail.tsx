@@ -145,7 +145,7 @@ export function CollectionDetail() {
       <MainHead title={`${data?.name} | Mis colecciones | XBuniverse`} />
       <ContainerTitle title={data?.name} />
       <ModalCollection
-        title='Editar Colección'
+        title='Editar colección'
         textButton='Guardar'
         nameCollection={data?.name}
         collectionId={collectionId}

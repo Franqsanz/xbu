@@ -138,7 +138,7 @@ export function AllCollections() {
       <ContainerTitle title='Mis colecciones' />
       <ScrollRestoration />
       <ModalCollection
-        title='Crear Colección'
+        title='Crear colección'
         textButton='Crear'
         isOpen={isOpen}
         onClose={onClose}
