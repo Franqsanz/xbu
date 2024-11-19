@@ -1,17 +1,26 @@
 import React, { useEffect } from 'react';
-import { Menu, MenuButton, MenuList, MenuItem, IconButton } from '@chakra-ui/react';
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { FiMoreVertical } from 'react-icons/fi';
 import { FaCheckCircle } from 'react-icons/fa';
 
 import { useDeleteCollections } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
 import { useMyToast } from '@hooks/useMyToast';
+import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 
 export function MenuCollections({ id, name, refetch }: any) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
   const myToast = useMyToast();
-  const { mutate, isSuccess } = useDeleteCollections();
+  const { mutate, isSuccess, isPending } = useDeleteCollections();
 
   useEffect(() => {
     if (isSuccess) {
@@ -37,6 +46,15 @@ export function MenuCollections({ id, name, refetch }: any) {
 
   return (
     <>
+      <ModalConfirmation
+        isOpen={isOpen}
+        title={name}
+        isStrong={true}
+        warningText='La colección será eliminada de manera permanente y no se podrá recuperar.'
+        onDeleteBook={() => deleteCollection(id)}
+        isPending={isPending}
+        onClose={onClose}
+      />
       <Menu>
         <MenuButton
           as={IconButton}
@@ -47,7 +65,7 @@ export function MenuCollections({ id, name, refetch }: any) {
           _active={{ bg: 'transparent' }}
         />
         <MenuList p='0' fontSize='sm'>
-          <MenuItem p='2' onClick={() => deleteCollection(id)}>
+          <MenuItem p='2' onClick={onOpen}>
             Eliminar colección
           </MenuItem>
         </MenuList>

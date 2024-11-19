@@ -75,12 +75,14 @@ export function useMyToast() {
           justify='space-between'
         >
           <Flex mt='1' p='2' justify='space-between' align={align}>
-            <Icon as={icon} boxSize={bxSize} mr='2' color={iconColor} />
+            <Icon as={icon} boxSize={bxSize} mr='3' color={iconColor} />
             <Flex w={{ base: 'full', md: width }} direction='column'>
               <Box fontWeight='semibold' fontSize={fntSize} color={color}>
                 {title}
               </Box>
-              <Box color={color}>{description}</Box>
+              <Box color={color} mt='1' fontSize='sm'>
+                {description}
+              </Box>
             </Flex>
           </Flex>
           <CloseButton size='sm' onClick={onClose} color='whitesmoke' />

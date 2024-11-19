@@ -24,6 +24,7 @@ import { SkeletonDCollection } from '@components/skeletons/SkeletonDCollection';
 import { useMyToast } from '@hooks/useMyToast';
 import { FaCheckCircle } from 'react-icons/fa';
 import { ModalCollection } from '@components/modals/ModalCollection';
+import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 
 export function CollectionDetail() {
   const { collectionId } = useParams();
@@ -31,7 +32,16 @@ export function CollectionDetail() {
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
   const myToast = useMyToast();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenEdit,
+    onOpen: onOpenEdit,
+    onClose: onCloseEdit,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenDelete,
+    onOpen: onOpenDelete,
+    onClose: onCloseDelete,
+  } = useDisclosure();
   const {
     data,
     isPending: isPendingData,
@@ -150,9 +160,18 @@ export function CollectionDetail() {
         nameCollection={data?.name}
         collectionId={collectionId}
         isEditing={true}
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenEdit}
+        onClose={onCloseEdit}
         refetch={refetch}
+      />
+      <ModalConfirmation
+        isOpen={isOpenDelete}
+        title={data?.name}
+        isStrong={true}
+        warningText='La colección será eliminada de manera permanente y no se podrá recuperar.'
+        onDeleteBook={() => deleteCollection(data?.id)}
+        isPending={isPendingDelete}
+        onClose={onCloseDelete}
       />
       <Flex m='0 auto'>
         <Flex
@@ -171,7 +190,7 @@ export function CollectionDetail() {
           </Button>
           <Flex gap='3'>
             <Button
-              onClick={onOpen}
+              onClick={onOpenEdit}
               size='sm'
               fontWeight='normal'
               _hover={{ color: 'none' }}
@@ -179,13 +198,11 @@ export function CollectionDetail() {
               Editar nombre
             </Button>
             <Button
-              onClick={() => deleteCollection(data?.id)}
+              onClick={onOpenDelete}
               size='sm'
               fontWeight='normal'
               bg='red.500'
               color='white'
-              loadingText='Eliminando...'
-              isLoading={isPendingDelete}
               _hover={{ color: 'none' }}
             >
               Eliminar colección

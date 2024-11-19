@@ -15,6 +15,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { FaCheckCircle } from 'react-icons/fa';
+import { IoWarningSharp } from 'react-icons/io5';
 
 import { useCreateCollections, useUpdateCollectionName } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
@@ -53,7 +54,7 @@ export function ModalCollection({
   const createMutation = useCreateCollections(uid);
 
   // Usa la mutation correspondiente según isEditing
-  const { mutate, isPending, isSuccess } = isEditing
+  const { mutate, isPending, isSuccess, isError } = isEditing
     ? updateMutation
     : createMutation;
 
@@ -63,6 +64,24 @@ export function ModalCollection({
       setName(nameCollection);
     }
   }, [isEditing, nameCollection]);
+
+  useEffect(() => {
+    if (isError) {
+      myToast({
+        title: 'Error al crear la colección',
+        description: 'El nombre no debe superar los 25 caracteres.',
+        icon: IoWarningSharp,
+        iconColor: 'red.400',
+        bgColor: 'black',
+        width: '200px',
+        color: 'whitesmoke',
+        align: 'center',
+        padding: '1',
+        fntSize: 'md',
+        bxSize: 6,
+      });
+    }
+  }, [isError]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -127,6 +146,7 @@ export function ModalCollection({
                     size='lg'
                     fontSize='sm'
                     name='name'
+                    maxLength={25}
                     bg={bgColorInput}
                   />
                 </FormControl>
