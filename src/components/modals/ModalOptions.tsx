@@ -22,7 +22,12 @@ export function ModalOptions({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size='xs'>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size={{ base: 'xs', md: 'sm' }}
+        isCentered
+      >
         <ModalOverlay backdropFilter='blur(7px)' />
         <ModalContent>
           <ModalBody py='5'>

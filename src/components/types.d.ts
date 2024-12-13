@@ -196,6 +196,19 @@ interface AuthProviderType {
   children: RNode;
 }
 
+interface Collection {
+  id: string;
+  name: string;
+  checked?: boolean;
+}
+
+interface ModalCollectionSelectorType extends DisclosureType {
+  userId: string | undefined;
+  bookId: string;
+  data: Collection[];
+  isPending: boolean;
+}
+
 export type {
   MyChangeEvent,
   AboutType,
@@ -223,4 +236,5 @@ export type {
   AuthContextType,
   AuthProviderType,
   ModalOptionsAndConfirType,
+  ModalCollectionSelectorType,
 };

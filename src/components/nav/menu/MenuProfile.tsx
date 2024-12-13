@@ -54,14 +54,21 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
             Perfil
           </MenuItem>
           <MenuItem as={NavLink} to='/new-post' _hover={{ textDecoration: 'none' }}>
-            Crear Publicación
+            Publicar
           </MenuItem>
           <MenuItem
             as={NavLink}
             to='/my-collections'
             _hover={{ textDecoration: 'none' }}
           >
-            Mis Colecciones
+            Mis colecciones
+          </MenuItem>
+          <MenuItem
+            as={NavLink}
+            to='/my-favorites'
+            _hover={{ textDecoration: 'none' }}
+          >
+            Mis favoritos
           </MenuItem>
           <MenuItem
             as={NavLink}

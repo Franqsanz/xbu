@@ -50,10 +50,6 @@ export const routes = createBrowserRouter([
         element: <MostViewed />,
       },
       {
-        path: '/my-favorites',
-        element: <Favorites />,
-      },
-      {
         path: '/new-post',
         element: (
           <PrivateRoute>
@@ -122,6 +118,14 @@ export const routes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyAccount />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/my-favorites',
+        element: (
+          <PrivateRoute>
+            <Favorites />
           </PrivateRoute>
         ),
       },

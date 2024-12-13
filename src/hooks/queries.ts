@@ -32,6 +32,8 @@ import {
   deleteCollections,
   postCollections,
   patchCollectionsName,
+  getCollectionsForUser,
+  patchToggleBookInCollection,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
@@ -287,6 +289,27 @@ function useCreateCollections(userId: string | undefined) {
   });
 }
 
+function useCollectionBooks() {
+  return useMutation({
+    mutationKey: [keys.collectionsBooks],
+    mutationFn: ({
+      userId,
+      collections,
+      bookId,
+      checked,
+    }: {
+      userId: string | undefined;
+      collections: Array<{
+        collectionId: string;
+        collectionName: string;
+        isInCollection: boolean;
+      }>;
+      bookId: string;
+      checked: boolean;
+    }) => patchToggleBookInCollection(userId, collections, bookId, checked),
+  });
+}
+
 function useUpdateCollectionName(
   userId: string | undefined,
   collectionId: string | undefined,
@@ -303,6 +326,18 @@ function useCollections(userId: string | undefined) {
     queryFn: () => getFindAllCollections(userId),
     refetchOnWindowFocus: true,
     retry: false,
+  });
+}
+
+function useCollectionsForUser(userId: string | undefined, bookId: string) {
+  return useQuery({
+    queryKey: [keys.allCollectionsForUser, userId, bookId],
+    queryFn: () => getCollectionsForUser(userId, bookId),
+    enabled: false,
+    refetchOnWindowFocus: false,
+    retry: false,
+    staleTime: 0,
+    gcTime: 0,
   });
 }
 
@@ -377,8 +412,10 @@ export {
   useMoreBooksAuthors,
   useFavoriteBook,
   useCollections,
+  useCollectionsForUser,
   useCollectionDetail,
   useCreateCollections,
+  useCollectionBooks,
   useUpdateCollectionName,
   useDeleteCollections,
 

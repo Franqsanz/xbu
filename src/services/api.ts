@@ -75,11 +75,39 @@ async function getFindAllCollections(userId: string | undefined) {
   return await fetchData(`${API_URL}/users/${userId}/my-collections`);
 }
 
+async function getCollectionsForUser(userId: string | undefined, bookId: string) {
+  return await fetchData(
+    `${API_URL}/users/${userId}/my-collections/summary/${bookId}`,
+  );
+}
+
 async function postCollections(userId: string | undefined, body: any) {
   return await fetchData(`${API_URL}/users/${userId}/my-collections`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ name: body }),
+  });
+}
+
+async function patchToggleBookInCollection(
+  userId: string | undefined,
+  collections: Array<{
+    collectionId: string;
+    collectionName: string;
+    isInCollection: boolean;
+  }>,
+  bookId: string,
+  checked: boolean,
+) {
+  return await fetchData(`${API_URL}/users/my-collections/books/toggle`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      userId,
+      collections,
+      bookId,
+      checked,
+    }),
   });
 }
 
@@ -187,8 +215,10 @@ export {
   getRelatedBooks,
   getMoreBooksAuthors,
   patchToggleFavorite,
+  getCollectionsForUser,
   getFindAllCollections,
   postCollections,
+  patchToggleBookInCollection,
   patchCollectionsName,
   deleteCollections,
   getFindOneCollection,

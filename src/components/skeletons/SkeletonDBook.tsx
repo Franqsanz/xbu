@@ -18,6 +18,7 @@ export function SkeletonDetailsBook() {
         <Flex gap='2'>
           <Skeleton w='40px' h='30px' rounded='lg'></Skeleton>
           <Skeleton w='40px' h='30px' rounded='lg'></Skeleton>
+          <Skeleton w='40px' h='30px' rounded='lg'></Skeleton>
         </Flex>
       </Flex>
       <Flex

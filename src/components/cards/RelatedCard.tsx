@@ -10,7 +10,8 @@ export function RelatedCard({ title, authors, pathUrl, refetchQueries }: CardTyp
   const handleEnterKey = useHandleEnterKey(pathUrl);
   const borderCard = useColorModeValue('gray.200', 'gray.600');
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
-  const bgRandomBookCardLink = useColorModeValue('gray.300', 'black');
+  const colorLink = useColorModeValue('green.900', 'green.50');
+  const bgRandomBookCardLink = useColorModeValue('green.50', 'green.900');
   const outlineCard = useColorModeValue('black', 'white');
 
   return (
@@ -65,6 +66,7 @@ export function RelatedCard({ title, authors, pathUrl, refetchQueries }: CardTyp
             bg={bgRandomBookCardLink}
             py='4'
             px='7'
+            color={colorLink}
             position={{ base: 'initial', md: 'absolute' }}
             bottom='0'
             tabIndex={-1}

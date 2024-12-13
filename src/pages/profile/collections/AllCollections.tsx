@@ -8,11 +8,10 @@ import {
   Image,
   useColorModeValue,
   useDisclosure,
-  Spinner,
-  LinkBox,
-  LinkOverlay,
+  Link,
 } from '@chakra-ui/react';
 import { TbPlaylistAdd } from 'react-icons/tb';
+import { FiArrowRight } from 'react-icons/fi';
 
 import { ContainerTitle } from '@components/layout/ContainerTitle';
 import { MainHead } from '@components/layout/Head';
@@ -28,6 +27,8 @@ import { MenuCollections } from '@components/profile/collections/MenuCollections
 
 export function AllCollections() {
   const bgColorButton = useColorModeValue('green.500', 'green.700');
+  const bgRandomBookCardLink = useColorModeValue('green.50', 'green.900');
+  const colorLink = useColorModeValue('green.900', 'green.50');
   const grayColor = useColorModeValue('#E2E8F0', '#2D3748');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { currentUser } = useAuth();
@@ -68,65 +69,54 @@ export function AllCollections() {
     collectionsUI = (
       <MySimpleGrid>
         {data?.collections.map(({ id, name, createdAt }) => (
-          <LinkBox
-            key={id}
-            display='flex'
-            w={{ base: '160px', sm: '250px' }}
-            h={{ base: '200px', sm: '210px' }}
-            justifyContent='center'
-            m='5'
-          >
-            {/* <LinkOverlay
-              as={NavLink}
-              to={`/my-collections/${id}`}
-              tabIndex={-1}
-              _hover={{ outline: 'none' }}
-              > */}
+          <>
             <Flex
               w={{ base: '127px', sm: '160px', md: '250px' }}
               h={{ base: '200px', sm: '210px' }}
               boxShadow='xl'
               border='1px solid #A0AEC0'
               rounded='lg'
-              // p='2'
-              // m='5'
+              direction='column'
+              justifyContent={{ base: 'space-between', md: 'flex-start' }}
               justify='center'
               position='relative'
             >
               <Flex w='full' justify='flex-end'>
                 <MenuCollections id={id} name={name} refetch={refetch} />
               </Flex>
-              <Flex
-                direction='column'
-                mb='3'
-                position='absolute'
-                bottom='0'
-                textAlign='center'
-                gap='3'
-              >
+              <Flex w='full' direction='column' textAlign='center' gap='3'>
                 <Box mb='4'>
-                  <Box mb='1' fontSize={{ base: 'sm', md: 'md' }}>
+                  <Box mb='1' fontSize={{ base: 'sm', md: 'lg' }}>
                     {name}
                   </Box>
-                  <Box fontSize='xs'>{parseDate(createdAt)}</Box>
+                  <Box fontSize='10px'>{parseDate(createdAt)}</Box>
                 </Box>
-                <Button
-                  w='100px'
-                  h='30px'
-                  px='0'
-                  m='auto'
-                  size='xs'
+                <Link
                   as={NavLink}
                   to={`/my-collections/collection/${id}`}
-                  fontWeight='normal'
-                  _hover={{ color: 'none' }}
+                  w='full'
+                  bg={bgRandomBookCardLink}
+                  py='4'
+                  px='7'
+                  color={colorLink}
+                  position={{ base: 'initial', md: 'absolute' }}
+                  bottom='0'
+                  roundedBottom='lg'
+                  tabIndex={-1}
+                  _hover={{ outline: 'none' }}
                 >
-                  Abrir
-                </Button>
+                  <Flex
+                    align='center'
+                    justify={{ base: 'center', md: 'flex-start' }}
+                    fontSize={{ base: 'sm', md: 'md' }}
+                  >
+                    Abrir
+                    <Icon as={FiArrowRight} ml='2' />
+                  </Flex>
+                </Link>
               </Flex>
             </Flex>
-            {/* </LinkOverlay> */}
-          </LinkBox>
+          </>
         ))}
       </MySimpleGrid>
     );

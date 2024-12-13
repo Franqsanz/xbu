@@ -23,11 +23,17 @@ import {
 import { BsTag } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from 'react-icons/md';
+import { FaRegBookmark } from 'react-icons/fa6';
 import LazyLoad from 'react-lazy-load';
 import Atropos from 'atropos/react';
 import 'atropos/css';
 
-import { useBook, useFavoriteBook, useDeleteBook } from '@hooks/queries';
+import {
+  useBook,
+  useFavoriteBook,
+  useDeleteBook,
+  useCollectionsForUser,
+} from '@hooks/queries';
 import { handleImageLoad } from '@utils/utils';
 import { MainHead } from '@components/layout/Head';
 import { MyTag } from '@components/ui/MyTag';
@@ -38,6 +44,7 @@ import { BooksSection } from '@components/BooksSection';
 import { ImageZoom } from '@components/ui/ImageZoom';
 import { ModalOptions } from '@components/modals/ModalOptions';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
+import { ModalCollectionSelector } from '@components/modals/ModalCollectionSelector';
 import { ModalForm } from '@components/modals/ModalForm';
 import { useAuth } from '@contexts/AuthContext';
 import { useMyToast } from '@hooks/useMyToast';
@@ -80,9 +87,15 @@ export default function Book() {
     onOpen: onOpenShare,
     onClose: onCloseShare,
   } = useDisclosure();
+  const {
+    isOpen: isOpenCollectionSelector,
+    onOpen: onOpenCollectionSelector,
+    onClose: onCloseCollectionSelector,
+  } = useDisclosure();
   let uiLink;
   let btnMoreOptions;
   let btnFavorite;
+  let btnCollection;
 
   const { data } = useBook(pathUrl, getToken);
   let bookObject = data;
@@ -94,6 +107,11 @@ export default function Book() {
     bookObject = data;
   }
 
+  const {
+    data: collections,
+    refetch,
+    isPending: isPendingCollections,
+  } = useCollectionsForUser(currentUser?.uid, bookObject.id);
   const [isFavorite, setIsFavorite] = useState<boolean>(bookObject.isFavorite);
   const { mutate: mutateFavorite, isSuccess: successFavorite } = useFavoriteBook(
     bookObject.id,
@@ -166,6 +184,28 @@ export default function Book() {
               as={isFavorite ? MdOutlineFavorite : MdOutlineFavoriteBorder}
               boxSize={5}
             />
+          </Flex>
+        </Button>
+      </Tooltip>
+    );
+
+    btnCollection = (
+      <Tooltip
+        label='Agregar a una colección'
+        fontSize='sm'
+        bg='black'
+        color='white'
+      >
+        <Button
+          mt={{ base: 1, md: 5 }}
+          size='sm'
+          onClick={() => {
+            refetch();
+            onOpenCollectionSelector();
+          }}
+        >
+          <Flex align='center' justify='center'>
+            <Icon as={FaRegBookmark} boxSize={4} />
           </Flex>
         </Button>
       </Tooltip>
@@ -260,6 +300,7 @@ export default function Book() {
         </Button>
         <Flex gap='2'>
           {btnFavorite}
+          {btnCollection}
           {btnMoreOptions}
         </Flex>
       </Flex>
@@ -271,6 +312,14 @@ export default function Book() {
           onOpenEdit();
           onCloseOptions();
         }}
+      />
+      <ModalCollectionSelector
+        userId={currentUser?.uid}
+        bookId={bookObject.id}
+        data={collections}
+        isPending={isPendingCollections}
+        isOpen={isOpenCollectionSelector}
+        onClose={onCloseCollectionSelector}
       />
       <ModalConfirmation
         isOpen={isOpenConfirmation}

@@ -1,5 +1,5 @@
 import { GrHome } from 'react-icons/gr';
-import { MdOutlineExplore, MdOutlineFavoriteBorder } from 'react-icons/md';
+import { MdOutlineExplore } from 'react-icons/md';
 import { ImEyePlus } from 'react-icons/im';
 import { RiAccountCircleLine, RiLoginCircleLine } from 'react-icons/ri';
 
@@ -9,11 +9,6 @@ const navLink: Array<LinkType> = [
   { name: 'Inicio', href: '/', icon: GrHome },
   { name: 'Explorar', href: 'explore', icon: MdOutlineExplore },
   { name: 'Más vistos', href: 'most-viewed', icon: ImEyePlus },
-  {
-    name: 'Mis favoritos',
-    href: 'my-favorites',
-    icon: MdOutlineFavoriteBorder,
-  },
 ];
 
 const accountLinks: Array<LinkType> = [
