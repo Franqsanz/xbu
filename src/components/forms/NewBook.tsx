@@ -519,7 +519,7 @@ export function FormNewBook() {
                   name='category'
                   size={{ base: 'md', md: 'lg' }}
                   variant='filled'
-                  colorScheme='green'
+                  tagColorScheme='green'
                   onChange={handleCategoryChange}
                   options={sortedCategories}
                   closeMenuOnSelect={false}

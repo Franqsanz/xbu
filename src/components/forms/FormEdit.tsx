@@ -519,7 +519,7 @@ export function FormEdit({
                   name='category'
                   size={{ base: 'md', md: 'lg' }}
                   variant='filled'
-                  colorScheme='green'
+                  tagColorScheme='green'
                   onChange={handleCategoryChange}
                   options={sortedCategories}
                   value={books.category.map((category) => {

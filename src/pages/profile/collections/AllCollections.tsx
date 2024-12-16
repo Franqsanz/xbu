@@ -67,11 +67,11 @@ export function AllCollections() {
     );
   } else {
     collectionsUI = (
-      <MySimpleGrid>
+      <MySimpleGrid gap={5}>
         {data?.collections.map(({ id, name, createdAt }) => (
           <>
             <Flex
-              w={{ base: '127px', sm: '160px', md: '250px' }}
+              w={{ base: 'full', md: '250px' }}
               h={{ base: '200px', sm: '210px' }}
               boxShadow='xl'
               border='1px solid #A0AEC0'
@@ -89,7 +89,9 @@ export function AllCollections() {
                   <Box mb='1' fontSize={{ base: 'sm', md: 'lg' }}>
                     {name}
                   </Box>
-                  <Box fontSize='10px'>{parseDate(createdAt)}</Box>
+                  <Box fontSize={{ base: '9px', sm: '10px' }}>
+                    {parseDate(createdAt)}
+                  </Box>
                 </Box>
                 <Link
                   as={NavLink}
@@ -147,16 +149,7 @@ export function AllCollections() {
         >
           {data?.totalCollections ?? 0}{' '}
           {data?.totalCollections === 1 ? 'Colección' : 'Colecciones'}
-          <Button
-            fontWeight='500'
-            onClick={onOpen}
-            size='sm'
-            border='1px'
-            bg={bgColorButton}
-            color='black'
-            _hover={{ bg: 'green.600' }}
-            _active={{ bg: 'green.600' }}
-          >
+          <Button fontWeight='500' onClick={onOpen} size='sm'>
             <Flex align='center' justify='center'>
               <Icon as={TbPlaylistAdd} fontSize='25' mr='1' />
               <Box as='span' display={{ base: 'none', md: 'block' }}>

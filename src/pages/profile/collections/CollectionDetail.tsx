@@ -1,5 +1,10 @@
 import React, { useEffect } from 'react';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import {
+  NavLink,
+  ScrollRestoration,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import {
   Box,
   Button,
@@ -154,6 +159,7 @@ export function CollectionDetail() {
     <>
       <MainHead title={`${data?.name} | Mis colecciones | XBuniverse`} />
       <ContainerTitle title={data?.name} />
+      <ScrollRestoration />
       <ModalCollection
         title='Editar colección'
         textButton='Guardar'

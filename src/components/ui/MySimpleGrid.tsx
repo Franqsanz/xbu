@@ -3,10 +3,11 @@ import { SimpleGrid, useColorModeValue } from '@chakra-ui/react';
 
 interface SimpleGridType {
   width?: string;
+  gap?: number;
   children: React.ReactNode;
 }
 
-export function MySimpleGrid({ width = '8xl', children }: SimpleGridType) {
+export function MySimpleGrid({ width = '8xl', gap, children }: SimpleGridType) {
   const colorCard = useColorModeValue('gray.900', 'gray.100');
 
   return (
@@ -21,6 +22,7 @@ export function MySimpleGrid({ width = '8xl', children }: SimpleGridType) {
         mt={{ base: 5, md: 12 }}
         pl={{ base: 0, md: 5 }}
         color={colorCard}
+        gap={gap}
       >
         {children}
       </SimpleGrid>

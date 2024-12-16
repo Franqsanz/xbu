@@ -51,16 +51,20 @@ export function SignIn() {
   }, [userId]);
 
   useEffect(() => {
-    if (!isPending && (!data || data.uid === null)) {
-      return navigate('/create-username', {
-        state: { token: window.localStorage.getItem('app_tk') },
-      });
+    function performNavigation() {
+      if (!isPending && (!data || data.uid === null)) {
+        navigate('/create-username', {
+          state: { token: window.localStorage.getItem('app_tk') },
+        });
+      }
+
+      if (data?.username) {
+        navigate(`/${data.username}`);
+      }
     }
 
-    if (data && data.username) {
-      return navigate(`/${data.username}`);
-    }
-  }, [data, isPending, error]);
+    performNavigation(); // Llama la función dentro del useEffect
+  }, [data, isPending, navigate]);
 
   async function DisconnectFirebaseAccount() {
     // const { currentUser } = useAuth();
