@@ -11,6 +11,7 @@ import {
   MenuItem,
   MenuGroup,
   MenuDivider,
+  Tag,
 } from '@chakra-ui/react';
 
 import { useAccountActions } from '@hooks/useAccountActions';
@@ -61,14 +62,20 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
             to='/my-collections'
             _hover={{ textDecoration: 'none' }}
           >
-            Mis colecciones
+            Mis colecciones{' '}
+            <Tag ml='2' fontSize='xs' colorScheme='green'>
+              Nuevo 😮
+            </Tag>
           </MenuItem>
           <MenuItem
             as={NavLink}
             to='/my-favorites'
             _hover={{ textDecoration: 'none' }}
           >
-            Mis favoritos
+            Mis favoritos{' '}
+            <Tag ml='2' fontSize='xs' colorScheme='green'>
+              Nuevo 😮
+            </Tag>
           </MenuItem>
           <MenuItem
             as={NavLink}

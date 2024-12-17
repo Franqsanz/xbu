@@ -17,10 +17,16 @@ export function SkeletonDCollection() {
           align='center'
         >
           <Skeleton w='100px' h='30px' rounded='lg' />
-          <Flex gap='3' mr='3'>
+          <Flex display={{ base: 'none', sm: 'flex' }} gap='3' mr='3'>
             <Skeleton w='140px' h='30px' rounded='lg' />
             <Skeleton w='150px' h='30px' rounded='lg' />
           </Flex>
+          <Skeleton
+            display={{ base: 'block', sm: 'none' }}
+            w='32px'
+            h='32px'
+            rounded='lg'
+          />
         </Flex>
       </Flex>
       <SkeletonContainer />

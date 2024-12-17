@@ -23,7 +23,7 @@ const MostViewed = lazy(() => import('@pages/MostViewed'));
 const Book = lazy(() => import('@pages/Book'));
 const FilteredData = lazy(() => import('@pages/FilteredData'));
 const NewBook = lazy(() => import('@pages/NewBook'));
-const Favorites = lazy(() => import('@pages/Favorites'));
+const Favorites = lazy(() => import('@pages/profile/Favorites'));
 
 export const routes = createBrowserRouter([
   {

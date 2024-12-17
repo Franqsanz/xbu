@@ -3,7 +3,7 @@ import { SimpleGrid, useColorModeValue } from '@chakra-ui/react';
 
 interface SimpleGridType {
   width?: string;
-  gap?: number;
+  gap?: number | object;
   children: React.ReactNode;
 }
 

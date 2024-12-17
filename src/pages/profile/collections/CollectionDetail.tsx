@@ -13,7 +13,15 @@ import {
   Image,
   Link,
   useDisclosure,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton,
 } from '@chakra-ui/react';
+import { MdOutlineExplore } from 'react-icons/md';
+import { FiArrowLeft, FiMoreVertical } from 'react-icons/fi';
+import { FaCheckCircle } from 'react-icons/fa';
 
 import { useCollectionDetail, useDeleteCollections } from '@hooks/queries';
 import { MainHead } from '@components/layout/Head';
@@ -23,11 +31,8 @@ import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { NoData } from '@assets/assets';
 import { MyContainer } from '@components/ui/MyContainer';
 import { useAuth } from '@contexts/AuthContext';
-import { MdOutlineExplore } from 'react-icons/md';
-import { FiArrowLeft } from 'react-icons/fi';
 import { SkeletonDCollection } from '@components/skeletons/SkeletonDCollection';
 import { useMyToast } from '@hooks/useMyToast';
-import { FaCheckCircle } from 'react-icons/fa';
 import { ModalCollection } from '@components/modals/ModalCollection';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 
@@ -157,9 +162,9 @@ export function CollectionDetail() {
 
   return (
     <>
+      <ScrollRestoration />
       <MainHead title={`${data?.name} | Mis colecciones | XBuniverse`} />
       <ContainerTitle title={data?.name} />
-      <ScrollRestoration />
       <ModalCollection
         title='Editar colección'
         textButton='Guardar'
@@ -194,7 +199,7 @@ export function CollectionDetail() {
               Volver
             </Flex>
           </Button>
-          <Flex gap='3'>
+          <Flex display={{ base: 'none', sm: 'flex' }} gap='3'>
             <Button
               onClick={onOpenEdit}
               size='sm'
@@ -214,6 +219,24 @@ export function CollectionDetail() {
               Eliminar colección
             </Button>
           </Flex>
+          <Box display={{ base: 'block', sm: 'none' }}>
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label='Options'
+                icon={<FiMoreVertical />}
+                size='sm'
+              />
+              <MenuList p='0' fontSize='sm'>
+                <MenuItem p='2' onClick={onOpenEdit}>
+                  Editar nombre
+                </MenuItem>
+                <MenuItem p='2' onClick={onOpenDelete}>
+                  Eliminar colección
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Box>
         </Flex>
       </Flex>
       <MyContainer>{asideAndCardsUI}</MyContainer>
