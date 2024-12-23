@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -119,6 +120,38 @@ export function ModalCollectionSelector({
     }
   }
 
+  function renderContent() {
+    if (isPending) {
+      return (
+        <Box m='auto' py='5'>
+          <Spinner size='lg' />
+        </Box>
+      );
+    }
+
+    if (!data || data.length === 0) {
+      return (
+        <>
+          <Flex direction='column' gap='2' textAlign='center' py='4'>
+            <Box>No hay colecciones disponibles.</Box>
+            <Box>Crea una colección primero.</Box>
+          </Flex>
+        </>
+      );
+    }
+
+    return data.map((collection) => (
+      <Checkbox
+        key={collection.id}
+        isChecked={selectedCollections[collection.id] || false}
+        onChange={() => handleCheckboxChange(collection.id)}
+        colorScheme='green'
+      >
+        {collection.name}
+      </Checkbox>
+    ));
+  }
+
   return (
     <>
       <Modal
@@ -134,22 +167,7 @@ export function ModalCollectionSelector({
           <ModalBody bg={bgColorBox} p='5'>
             <Box as='form' onSubmit={handleSubmit}>
               <VStack spacing='4' align='stretch' mb='7'>
-                {isPending ? (
-                  <Box m='auto' py='5'>
-                    <Spinner size='lg' />
-                  </Box>
-                ) : (
-                  data?.map((collection) => (
-                    <Checkbox
-                      key={collection.id}
-                      isChecked={selectedCollections[collection.id] || false}
-                      onChange={() => handleCheckboxChange(collection.id)}
-                      colorScheme='green'
-                    >
-                      {collection.name}
-                    </Checkbox>
-                  ))
-                )}
+                {renderContent()}
               </VStack>
               <Button
                 w='full'

@@ -28,7 +28,7 @@ export function SkeletonACollections() {
           align='center'
         >
           <Skeleton w='120px' h='20px' />
-          <Skeleton w='150px' h='30px' rounded='lg' />
+          <Skeleton w={{ base: '40px', md: '150px' }} h='30px' rounded='lg' />
         </Flex>
       </Flex>
       <MyContainer>

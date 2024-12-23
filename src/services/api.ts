@@ -130,7 +130,9 @@ async function deleteCollections(id: string | undefined, collectionId: string) {
 }
 
 async function getFindOneCollection(collectionsId: string | undefined) {
-  return await fetchData(`${API_URL}/users/my-collections/${collectionsId}`);
+  return await fetchData(
+    `${API_URL}/users/my-collections/collection/${collectionsId}`,
+  );
 }
 
 async function postBook(books: any) {

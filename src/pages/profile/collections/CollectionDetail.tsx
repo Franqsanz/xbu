@@ -58,7 +58,10 @@ export function CollectionDetail() {
     refetch,
   } = useCollectionDetail(collectionId);
   const { mutate, isSuccess, isPending: isPendingDelete } = useDeleteCollections();
+  const isCurrentUserAuthor = currentUser && currentUser.uid === data?.userId;
   let asideAndCardsUI;
+  let btnOptionsDesktop;
+  let btnOptionsMobile;
 
   useEffect(() => {
     if (isSuccess) {
@@ -160,6 +163,52 @@ export function CollectionDetail() {
     );
   }
 
+  if (currentUser && isCurrentUserAuthor) {
+    btnOptionsDesktop = (
+      <Flex display={{ base: 'none', sm: 'flex' }} gap='3'>
+        <Button
+          onClick={onOpenEdit}
+          size='sm'
+          fontWeight='normal'
+          _hover={{ color: 'none' }}
+        >
+          Editar nombre
+        </Button>
+        <Button
+          onClick={onOpenDelete}
+          size='sm'
+          fontWeight='normal'
+          bg='red.500'
+          color='white'
+          _hover={{ color: 'none' }}
+        >
+          Eliminar colección
+        </Button>
+      </Flex>
+    );
+
+    btnOptionsMobile = (
+      <Box display={{ base: 'block', sm: 'none' }}>
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label='Options'
+            icon={<FiMoreVertical />}
+            size='sm'
+          />
+          <MenuList p='0' fontSize='sm'>
+            <MenuItem p='2' onClick={onOpenEdit}>
+              Editar nombre
+            </MenuItem>
+            <MenuItem p='2' onClick={onOpenDelete}>
+              Eliminar colección
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Box>
+    );
+  }
+
   return (
     <>
       <ScrollRestoration />
@@ -199,44 +248,8 @@ export function CollectionDetail() {
               Volver
             </Flex>
           </Button>
-          <Flex display={{ base: 'none', sm: 'flex' }} gap='3'>
-            <Button
-              onClick={onOpenEdit}
-              size='sm'
-              fontWeight='normal'
-              _hover={{ color: 'none' }}
-            >
-              Editar nombre
-            </Button>
-            <Button
-              onClick={onOpenDelete}
-              size='sm'
-              fontWeight='normal'
-              bg='red.500'
-              color='white'
-              _hover={{ color: 'none' }}
-            >
-              Eliminar colección
-            </Button>
-          </Flex>
-          <Box display={{ base: 'block', sm: 'none' }}>
-            <Menu>
-              <MenuButton
-                as={IconButton}
-                aria-label='Options'
-                icon={<FiMoreVertical />}
-                size='sm'
-              />
-              <MenuList p='0' fontSize='sm'>
-                <MenuItem p='2' onClick={onOpenEdit}>
-                  Editar nombre
-                </MenuItem>
-                <MenuItem p='2' onClick={onOpenDelete}>
-                  Eliminar colección
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          </Box>
+          {btnOptionsDesktop}
+          {btnOptionsMobile}
         </Flex>
       </Flex>
       <MyContainer>{asideAndCardsUI}</MyContainer>

@@ -68,64 +68,59 @@ export function AllCollections() {
   } else {
     collectionsUI = (
       <MySimpleGrid gap={{ base: 3, sm: 5 }}>
-        {data?.collections
-          .sort(
-            (a, b) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-          )
-          .map(({ id, name, createdAt }) => (
-            <>
-              <Flex
-                key={id}
-                w={{ base: 'full', md: '250px' }}
-                h={{ base: '200px', sm: '210px' }}
-                boxShadow='xl'
-                border='1px solid #A0AEC0'
-                rounded='lg'
-                direction='column'
-                justifyContent={{ base: 'space-between', md: 'flex-start' }}
-                justify='center'
-                position='relative'
-              >
-                <Flex w='full' justify='flex-end'>
-                  <MenuCollections id={id} name={name} refetch={refetch} />
-                </Flex>
-                <Flex w='full' direction='column' textAlign='center' gap='3'>
-                  <Box mb='4'>
-                    <Box mb='1' fontSize={{ base: 'xs', sm: 'lg' }}>
-                      {name}
-                    </Box>
-                    <Box fontSize={{ base: '9px', sm: '10px' }}>
-                      {parseDate(createdAt)}
-                    </Box>
-                  </Box>
-                  <Link
-                    as={NavLink}
-                    to={`/my-collections/collection/${id}`}
-                    w='full'
-                    bg={bgRandomBookCardLink}
-                    py='4'
-                    px='7'
-                    color={colorLink}
-                    position={{ base: 'initial', md: 'absolute' }}
-                    bottom='0'
-                    roundedBottom='lg'
-                    tabIndex={-1}
-                    _hover={{ outline: 'none' }}
-                  >
-                    <Flex
-                      align='center'
-                      justify={{ base: 'center', md: 'flex-start' }}
-                      fontSize={{ base: 'sm', md: 'md' }}
-                    >
-                      Abrir
-                      <Icon as={FiArrowRight} ml='2' />
-                    </Flex>
-                  </Link>
-                </Flex>
+        {data?.collections.map(({ id, name, createdAt }) => (
+          <>
+            <Flex
+              key={id}
+              w={{ base: 'full', md: '250px' }}
+              h={{ base: '200px', sm: '210px' }}
+              boxShadow='xl'
+              border='1px solid #A0AEC0'
+              rounded='lg'
+              direction='column'
+              justifyContent={{ base: 'space-between', md: 'flex-start' }}
+              justify='center'
+              position='relative'
+            >
+              <Flex w='full' justify='flex-end'>
+                <MenuCollections id={id} name={name} refetch={refetch} />
               </Flex>
-            </>
-          ))}
+              <Flex w='full' direction='column' textAlign='center' gap='3'>
+                <Box mb='4'>
+                  <Box mb='1' fontSize={{ base: 'xs', sm: 'lg' }}>
+                    {name}
+                  </Box>
+                  <Box fontSize={{ base: '9px', sm: '10px' }}>
+                    {parseDate(createdAt)}
+                  </Box>
+                </Box>
+                <Link
+                  as={NavLink}
+                  to={`/my-collections/collection/${id}`}
+                  w='full'
+                  bg={bgRandomBookCardLink}
+                  py='4'
+                  px='7'
+                  color={colorLink}
+                  position={{ base: 'initial', md: 'absolute' }}
+                  bottom='0'
+                  roundedBottom='lg'
+                  tabIndex={-1}
+                  _hover={{ outline: 'none' }}
+                >
+                  <Flex
+                    align='center'
+                    justify={{ base: 'center', md: 'flex-start' }}
+                    fontSize={{ base: 'sm', md: 'md' }}
+                  >
+                    Abrir
+                    <Icon as={FiArrowRight} ml='2' />
+                  </Flex>
+                </Link>
+              </Flex>
+            </Flex>
+          </>
+        ))}
       </MySimpleGrid>
     );
   }
