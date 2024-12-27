@@ -67,12 +67,12 @@ export function AllCollections() {
     );
   } else {
     collectionsUI = (
-      <MySimpleGrid gap={{ base: 3, sm: 5 }}>
+      <MySimpleGrid overflow='hidden' gap={{ base: 3, sm: 5 }}>
         {data?.collections.map(({ id, name, createdAt }) => (
           <>
             <Flex
               key={id}
-              w={{ base: 'full', md: '250px' }}
+              w={{ base: 'full', xl: '250px' }}
               h={{ base: '200px', sm: '210px' }}
               boxShadow='xl'
               border='1px solid #A0AEC0'
