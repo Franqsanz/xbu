@@ -5,6 +5,7 @@ import {
   Flex,
   FormControl,
   Select,
+  Spinner,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { FiSearch } from 'react-icons/fi';
@@ -22,7 +23,7 @@ export default function Filter({ onClose }: Props) {
   const [value, setValue] = useState('');
   const [values, setValues] = useState([]);
   const navigate = useNavigate();
-  const { data } = useAllFilterOptions();
+  const { data, isPending } = useAllFilterOptions();
 
   const categories =
     data &&
@@ -50,6 +51,14 @@ export default function Filter({ onClose }: Props) {
     if (query === 'language') setValues(languages);
     if (query === 'category') setValues(categories);
   }, [query, data]);
+
+  if (isPending) {
+    return (
+      <Flex justify='center' align='center' py='5'>
+        <Spinner size='lg' />
+      </Flex>
+    );
+  }
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setQuery(e.target.value);

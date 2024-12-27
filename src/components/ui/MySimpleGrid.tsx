@@ -23,6 +23,7 @@ export function MySimpleGrid({ width = '8xl', gap, children }: SimpleGridType) {
         pl={{ base: 0, md: 5 }}
         color={colorCard}
         gap={gap}
+        overflow='hidden'
       >
         {children}
       </SimpleGrid>

@@ -139,7 +139,7 @@ export function AllCollections() {
       />
       <Flex m='0 auto'>
         <Flex
-          w={{ base: '1315px', '2xl': '1580px' }}
+          w={{ base: 'full', md: '1315px', '2xl': '1580px' }}
           mt='4'
           pb='3'
           px={{ base: '6', md: '20', sm: '10' }}
