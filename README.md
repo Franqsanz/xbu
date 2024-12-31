@@ -21,7 +21,9 @@ XBuniverse es un sitio web dedicado a los amantes de la lectura y la literatura.
 
 * **Explora Temáticas Específicas:** ¿Te apasiona la ciencia ficción? ¿O prefieres los thrillers? Filtra tus búsquedas por género, autor o año para encontrar exactamente lo que deseas.
 
-* Crea una cuenta en XBuniverse para compartir tus libros favoritos con otros amantes de la lectura.
+* **Agregar libros a favoritos**: Permite marcar libros como favoritos para un acceso rápido.
+
+* **Crear colecciones de libros**: Permite organizar libros en colecciones personalizadas según las preferencias del usuario.
 
 ¡Únete a XBuniverse y sumérgete en el fascinante mundo de la lectura! Explora y comparte.
 
@@ -57,4 +59,4 @@ pnpm run dev
 
 ## License
 
-[MIT © 2024](./LICENSE) Franco Andrés Sánchez
+[MIT © 2025](./LICENSE) Franco Andrés Sánchez

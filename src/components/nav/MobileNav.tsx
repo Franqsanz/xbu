@@ -30,6 +30,7 @@ import { ModalFilter } from '@components/modals/ModalFilter';
 import { MenuProfile } from '@components/nav/menu/MenuProfile';
 import { useAuth } from '@contexts/AuthContext';
 import { useCheckUser } from '@hooks/queries';
+import { currentYear } from '@utils/utils';
 
 export function MobileNav() {
   const { currentUser } = useAuth();
@@ -252,7 +253,7 @@ export function MobileNav() {
               </List> */}
               {linkRegister}
               <Box fontSize='10px' my='1'>
-                2024 XBuniverse
+                {currentYear} XBuniverse
               </Box>
             </DrawerFooter>
           </DrawerContent>

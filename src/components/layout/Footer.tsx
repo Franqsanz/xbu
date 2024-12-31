@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Box, Flex, useColorModeValue, Link } from '@chakra-ui/react';
+import { FaCheckCircle } from 'react-icons/fa';
+import { MdError } from 'react-icons/md';
 
 import { useNetworkState } from '@hooks/useNetworkState';
 import { useMyToast } from '@hooks/useMyToast';
-import { FaCheckCircle } from 'react-icons/fa';
-import { MdError } from 'react-icons/md';
+import { currentYear } from '@utils/utils';
 
 export function Footer() {
   const myToast = useMyToast();
@@ -83,7 +84,7 @@ export function Footer() {
             Políticas de Privacidad
           </Link>
           <Box display={{ base: 'none', md: 'block' }} fontSize='14px' my='2'>
-            2024 XBuniverse
+            {currentYear} XBuniverse
           </Box>
           <Flex
             mt={{ base: 4, md: 2 }}

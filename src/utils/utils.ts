@@ -33,6 +33,8 @@ const keys = {
   deleteAccount: 'DeleteAccount',
 };
 
+const currentYear = new Date().getFullYear();
+
 function handleImageLoad(e: React.SyntheticEvent) {
   const target = e.target as HTMLImageElement;
   target.style.filter = 'blur(0)';
@@ -105,6 +107,7 @@ function capitalizeWords(str: string) {
 
 export {
   keys,
+  currentYear,
   handleImageLoad,
   useHandleEnterKey,
   generatePathUrl,
