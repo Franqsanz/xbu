@@ -14,9 +14,19 @@ import { useDeleteCollections } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
 import { useMyToast } from '@hooks/useMyToast';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
+import { ModalCollection } from '@components/modals/ModalCollection';
 
 export function MenuCollections({ id, name, refetch }: any) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenEdit,
+    onOpen: onOpenEdit,
+    onClose: onCloseEdit,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenDelete,
+    onOpen: onOpenDelete,
+    onClose: onCloseDelete,
+  } = useDisclosure();
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
   const myToast = useMyToast();
@@ -25,6 +35,7 @@ export function MenuCollections({ id, name, refetch }: any) {
   useEffect(() => {
     if (isSuccess) {
       refetch();
+
       myToast({
         title: `Se elimino la colección ${name}.`,
         icon: FaCheckCircle,
@@ -46,14 +57,24 @@ export function MenuCollections({ id, name, refetch }: any) {
 
   return (
     <>
+      <ModalCollection
+        title='Editar colección'
+        textButton='Guardar'
+        nameCollection={name}
+        collectionId={id}
+        isEditing={true}
+        isOpen={isOpenEdit}
+        onClose={onCloseEdit}
+        refetch={refetch}
+      />
       <ModalConfirmation
-        isOpen={isOpen}
+        isOpen={isOpenDelete}
         title={name}
         isStrong={true}
         warningText='La colección será eliminada de manera permanente y no se podrá recuperar.'
         onDeleteBook={() => deleteCollection(id)}
         isPending={isPending}
-        onClose={onClose}
+        onClose={onCloseDelete}
       />
       <Menu>
         <MenuButton
@@ -65,7 +86,10 @@ export function MenuCollections({ id, name, refetch }: any) {
           _active={{ bg: 'transparent' }}
         />
         <MenuList p='0' fontSize='sm'>
-          <MenuItem p='2' onClick={onOpen}>
+          <MenuItem p='2' onClick={onOpenEdit}>
+            Editar nombre
+          </MenuItem>
+          <MenuItem p='2' onClick={onOpenDelete}>
             Eliminar colección
           </MenuItem>
         </MenuList>
