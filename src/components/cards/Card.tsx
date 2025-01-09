@@ -9,6 +9,7 @@ import {
   LinkBox,
   LinkOverlay,
   useBreakpointValue,
+  Button,
 } from '@chakra-ui/react';
 import { BsTag } from 'react-icons/bs';
 import { IoLanguageOutline } from 'react-icons/io5';
@@ -26,6 +27,8 @@ export function Card({
   category,
   pathUrl,
   views,
+  onDelete,
+  showDeleteButton,
 }: CardType) {
   const handleEnterKey = useHandleEnterKey(pathUrl);
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
@@ -35,6 +38,15 @@ export function Card({
     sm: '275px',
     md: '300px',
   });
+
+  function handleDelete(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (onDelete) {
+      onDelete();
+    }
+  }
 
   return (
     <>
@@ -164,6 +176,20 @@ export function Card({
                 />
               )}
             </Flex>
+            {showDeleteButton && (
+              <Box textAlign='center' mt='3' zIndex='1'>
+                <Button
+                  size='xs'
+                  fontWeight='normal'
+                  bg='red.500'
+                  color='white'
+                  _hover={{ color: 'none' }}
+                  onClick={handleDelete}
+                >
+                  Eliminar
+                </Button>
+              </Box>
+            )}
           </Flex>
         </LinkOverlay>
       </LinkBox>

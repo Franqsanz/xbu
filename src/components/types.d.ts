@@ -41,6 +41,8 @@ interface CardType {
     public_id: string;
   };
   views?: number;
+  onDelete?: () => any | unknown;
+  showDeleteButton?: boolean;
 }
 
 interface TitleType {

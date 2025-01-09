@@ -135,6 +135,22 @@ async function getFindOneCollection(collectionsId: string | undefined) {
   );
 }
 
+async function patchRemoveBookFromCollection(
+  userId: string | undefined,
+  collectionId: string,
+  bookId: string,
+) {
+  return await fetchData(`${API_URL}/users/my-collections/collection/remove-book`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      userId,
+      collectionId,
+      bookId,
+    }),
+  });
+}
+
 async function postBook(books: any) {
   return await fetchData(`${API_URL}/books`, {
     method: 'POST',
@@ -222,6 +238,7 @@ export {
   postCollections,
   patchToggleBookInCollection,
   patchCollectionsName,
+  patchRemoveBookFromCollection,
   deleteCollections,
   getFindOneCollection,
   postBook,

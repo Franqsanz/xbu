@@ -30,6 +30,7 @@ const keys = {
   allCollectionsForUser: 'AllCollectionsForUser',
   collectionsDetail: 'CollectionsDetail',
   deleteCollections: 'DeleteCollections',
+  deleteCollectionBook: 'DeleteCollectionBook',
   deleteAccount: 'DeleteAccount',
 };
 

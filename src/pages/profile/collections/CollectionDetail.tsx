@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   NavLink,
   ScrollRestoration,
@@ -23,7 +23,11 @@ import { MdOutlineExplore } from 'react-icons/md';
 import { FiArrowLeft, FiMoreVertical } from 'react-icons/fi';
 import { FaCheckCircle } from 'react-icons/fa';
 
-import { useCollectionDetail, useDeleteCollections } from '@hooks/queries';
+import {
+  useCollectionDetail,
+  useDeleteCollections,
+  useDeleteCollectionBook,
+} from '@hooks/queries';
 import { MainHead } from '@components/layout/Head';
 import { ContainerTitle } from '@components/layout/ContainerTitle';
 import { Card } from '@components/cards/Card';
@@ -36,7 +40,13 @@ import { useMyToast } from '@hooks/useMyToast';
 import { ModalCollection } from '@components/modals/ModalCollection';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 
+interface Book {
+  id: string;
+  title: string;
+}
+
 export function CollectionDetail() {
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const { collectionId } = useParams();
   const navigate = useNavigate();
   const { currentUser } = useAuth();
@@ -53,11 +63,21 @@ export function CollectionDetail() {
     onClose: onCloseDelete,
   } = useDisclosure();
   const {
+    isOpen: isOpenDeleteBook,
+    onOpen: onOpenDeleteBook,
+    onClose: onCloseDeleteBook,
+  } = useDisclosure();
+  const {
     data,
     isPending: isPendingData,
     refetch,
   } = useCollectionDetail(collectionId);
   const { mutate, isSuccess, isPending: isPendingDelete } = useDeleteCollections();
+  const {
+    mutate: deleteBook,
+    isSuccess: isSuccessDeleteBook,
+    isPending: isPendingDeleteBook,
+  } = useDeleteCollectionBook();
   const isCurrentUserAuthor = currentUser && currentUser.uid === data?.userId;
   let asideAndCardsUI;
   let btnOptionsDesktop;
@@ -66,6 +86,7 @@ export function CollectionDetail() {
   useEffect(() => {
     if (isSuccess) {
       navigate(`/my-collections`, { replace: true });
+
       myToast({
         title: `Se elimino la colección ${data?.name}.`,
         icon: FaCheckCircle,
@@ -81,6 +102,32 @@ export function CollectionDetail() {
     }
   }, [isSuccess, navigate]);
 
+  useEffect(() => {
+    if (isSuccessDeleteBook) {
+      refetch();
+
+      myToast({
+        title: `Se elimino ${selectedBook?.title} de la colección.`,
+        icon: FaCheckCircle,
+        iconColor: 'green.700',
+        bgColor: 'black',
+        width: '200px',
+        color: 'whitesmoke',
+        align: 'center',
+        padding: '1',
+        fntSize: 'md',
+        bxSize: 5,
+      });
+
+      onCloseDeleteBook();
+    }
+  }, [isSuccessDeleteBook]);
+
+  function handleOpenDelete(book) {
+    setSelectedBook(book);
+    onOpenDeleteBook();
+  }
+
   if (isPendingData) {
     return <SkeletonDCollection />;
   }
@@ -91,6 +138,10 @@ export function CollectionDetail() {
 
   function handleGoBack() {
     return navigate(-1);
+  }
+
+  function deleteCollectionBook(collectionId: string, bookId: string) {
+    deleteBook({ userId: uid, collectionId, bookId });
   }
 
   if (data?.books.length > 0) {
@@ -119,6 +170,8 @@ export function CollectionDetail() {
                 sourceLink={sourceLink}
                 pathUrl={pathUrl}
                 image={image}
+                showDeleteButton={true}
+                onDelete={() => handleOpenDelete({ id, title })}
               />
             </React.Fragment>
           ),
@@ -232,6 +285,19 @@ export function CollectionDetail() {
         onDeleteBook={() => deleteCollection(data?.id)}
         isPending={isPendingDelete}
         onClose={onCloseDelete}
+      />
+      <ModalConfirmation
+        isOpen={isOpenDeleteBook}
+        title={selectedBook?.title}
+        isStrong={true}
+        warningText='El libro será eliminado de la colección.'
+        onDeleteBook={() => {
+          if (collectionId && selectedBook?.id) {
+            deleteCollectionBook(collectionId, selectedBook.id);
+          }
+        }}
+        isPending={isPendingDeleteBook}
+        onClose={onCloseDeleteBook}
       />
       <Flex m='0 auto'>
         <Flex

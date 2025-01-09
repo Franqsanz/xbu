@@ -34,6 +34,7 @@ import {
   patchCollectionsName,
   getCollectionsForUser,
   patchToggleBookInCollection,
+  patchRemoveBookFromCollection,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
@@ -361,6 +362,24 @@ function useCollectionDetail(collectionId: string | undefined) {
   });
 }
 
+function useDeleteCollectionBook() {
+  return useMutation({
+    mutationKey: [keys.deleteCollectionBook],
+    mutationFn: ({
+      userId,
+      collectionId,
+      bookId,
+    }: {
+      userId: string | undefined;
+      collectionId: string;
+      bookId: string;
+    }) => patchRemoveBookFromCollection(userId, collectionId, bookId),
+    onError: async (error) => {
+      console.error('Error en el servidor:', error);
+    },
+  });
+}
+
 function useDeleteBook() {
   return useMutation({
     mutationKey: [keys.deleteBook],
@@ -418,6 +437,7 @@ export {
   useCollectionBooks,
   useUpdateCollectionName,
   useDeleteCollections,
+  useDeleteCollectionBook,
 
   // Usuarios
   useUserRegister,
