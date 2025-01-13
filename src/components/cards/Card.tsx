@@ -17,6 +17,7 @@ import { IoLanguageOutline } from 'react-icons/io5';
 import { CardType } from '@components/types';
 import { MyTag } from '@components/ui/MyTag';
 import { Views } from '@components/ui/Views';
+import { useAuth } from '@contexts/AuthContext';
 import { handleImageLoad, useHandleEnterKey, isSpanish } from '@utils/utils';
 
 export function Card({
@@ -27,12 +28,15 @@ export function Card({
   category,
   pathUrl,
   views,
+  userId,
   onDelete,
   showDeleteButton,
 }: CardType) {
   const handleEnterKey = useHandleEnterKey(pathUrl);
   const colorAuthorCard = useColorModeValue('gray.600', 'gray.300');
   const outlineCard = useColorModeValue('black', 'white');
+  const { currentUser } = useAuth();
+  const isCurrentUserAuthor = currentUser && currentUser.uid === userId;
   const height = useBreakpointValue({
     base: '183px',
     sm: '275px',
@@ -176,7 +180,7 @@ export function Card({
                 />
               )}
             </Flex>
-            {showDeleteButton && (
+            {showDeleteButton && isCurrentUserAuthor && (
               <Box textAlign='center' mt='3' zIndex='1'>
                 <Button
                   size='xs'

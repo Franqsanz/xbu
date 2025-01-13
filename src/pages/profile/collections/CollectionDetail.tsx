@@ -170,6 +170,7 @@ export function CollectionDetail() {
                 sourceLink={sourceLink}
                 pathUrl={pathUrl}
                 image={image}
+                userId={data?.userId}
                 showDeleteButton={true}
                 onDelete={() => handleOpenDelete({ id, title })}
               />

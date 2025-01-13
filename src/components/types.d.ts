@@ -42,6 +42,7 @@ interface CardType {
   };
   views?: number;
   onDelete?: () => any | unknown;
+  userId?: string;
   showDeleteButton?: boolean;
 }
 
