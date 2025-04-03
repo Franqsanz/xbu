@@ -73,6 +73,7 @@ export function FormEdit({
   const [cropData, setCropData] = useState<string | null>(null);
   const [previewImg, setPreviewImg] = useState<Blob | MediaSource | null>(null);
   const [crop, setCrop] = useState<any>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [books, setBooks] = useState<BookType>({
     id,
     title,
@@ -139,7 +140,13 @@ export function FormEdit({
   }
 
   function onSubmit() {
-    mutate(books.id);
+    setIsSubmitting(true);
+    try {
+      mutate(books.id);
+    } catch (error) {
+      console.error('Error al obtener los datos del usuario');
+      setIsSubmitting(false);
+    }
   }
 
   if (previewImg === null && !books.image?.url) {
@@ -585,9 +592,9 @@ export function FormEdit({
                   color='black'
                   _hover={{ bg: 'green.600' }}
                   _active={{ bg: 'green.600' }}
-                  isDisabled={disabled}
+                  isDisabled={disabled || isSubmitting || isPending}
                   loadingText='Guardando...'
-                  isLoading={isPending}
+                  isLoading={isSubmitting || isPending}
                 >
                   <Flex align='center' justify='center'>
                     <Icon as={AiOutlineSave} fontSize='25' mr='2' />

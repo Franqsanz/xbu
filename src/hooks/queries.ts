@@ -196,8 +196,8 @@ function useBook(pathUrl: string | undefined, token?: string | null) {
     queryKey: [keys.one, pathUrl],
     queryFn: () => getBook(pathUrl, token),
     refetchOnWindowFocus: false,
-    gcTime: 3000,
-    retry: false,
+    gcTime: 0,
+    retry: 1,
   });
 }
 

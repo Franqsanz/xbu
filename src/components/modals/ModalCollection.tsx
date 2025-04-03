@@ -130,7 +130,12 @@ export function ModalCollection({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size={{ base: 'xs', sm: 'md' }}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size={{ base: 'xs', sm: 'md' }}
+        isCentered
+      >
         <ModalOverlay backdropFilter='blur(7px)' />
         <ModalContent overflow='hidden'>
           <ModalHeader bg={bgColorBox}>{title}</ModalHeader>

@@ -63,6 +63,7 @@ export function FormNewBook() {
   const [cropData, setCropData] = useState<string | null>(null);
   const [previewImg, setPreviewImg] = useState<Blob | MediaSource | null>(null);
   const [crop, setCrop] = useState<any>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [books, setBooks] = useState<BookType>({
     title: '',
     authors: [],
@@ -125,11 +126,13 @@ export function FormNewBook() {
   }
 
   async function onSubmit() {
+    setIsSubmitting(true);
     try {
       await refetch();
       mutate(books);
     } catch (error) {
       console.error('Error al obtener los datos del usuario');
+      setIsSubmitting(false);
     }
   }
 
@@ -574,9 +577,9 @@ export function FormNewBook() {
                   border='1px'
                   bg={bgColorButton}
                   color='black'
-                  isDisabled={disabled}
+                  isDisabled={disabled || isSubmitting || isPending}
                   loadingText='Publicando...'
-                  isLoading={isPending}
+                  isLoading={isSubmitting || isPending}
                   _hover={{ bg: 'green.600' }}
                   _active={{ bg: 'green.600' }}
                 >

@@ -29,7 +29,12 @@ export function ModalConfirmation({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size={{ base: 'xs', md: 'md' }}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size={{ base: 'xs', md: 'md' }}
+        isCentered
+      >
         <ModalOverlay backdropFilter='blur(7px)' />
         <ModalContent>
           <ModalHeader>Eliminar</ModalHeader>
