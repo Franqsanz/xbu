@@ -22,9 +22,9 @@ import { useAuth } from '@contexts/AuthContext';
 import { useCheckUser } from '@hooks/queries';
 
 export function DesktopNav() {
-  const { currentUser } = useAuth();
+  const { currentUser, userData } = useAuth();
   const uid = currentUser?.uid;
-  const { data, refetch } = useCheckUser(uid);
+  const { refetch } = useCheckUser(uid);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
@@ -36,12 +36,12 @@ export function DesktopNav() {
     }
   }, [uid, refetch]);
 
-  if (data) {
+  if (userData) {
     profileMenu = (
       <MenuProfile
-        displayName={data.name}
-        photoURL={data.picture}
-        username={data.username}
+        displayName={userData.name}
+        photoURL={userData.picture}
+        username={userData.username}
       />
     );
   } else {

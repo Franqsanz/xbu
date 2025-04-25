@@ -1,12 +1,10 @@
 import React, { lazy } from 'react';
 import { ScrollRestoration, createBrowserRouter } from 'react-router-dom';
 
-import { Home } from '@pages/Home';
 import { Login } from '@pages/Login';
 import { CreateUser } from '@pages/CreateUser';
 import { CatchError } from '@utils/CatchError';
 import { ErrorPage } from '@pages/404';
-import { Layout } from '@pages/layout/Layout';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { SkeletonDetailsBook } from '@components/skeletons/SkeletonDBook';
 import { PrivateRoute } from '@components/nav/PrivateRoute';
@@ -17,6 +15,8 @@ import { RouteWatcher } from '@hooks/RouteWatcher';
 import { AllCollections } from '@pages/profile/collections/AllCollections';
 import { CollectionDetail } from '@pages/profile/collections/CollectionDetail';
 
+const Layout = lazy(() => import('@pages/layout/Layout'));
+const Home = lazy(() => import('@pages/Home'));
 const PrivacyPolicies = lazy(() => import('@pages/PrivacyPolicies'));
 const Explore = lazy(() => import('@pages/Explore'));
 const MostViewed = lazy(() => import('@pages/MostViewed'));

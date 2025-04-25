@@ -193,6 +193,7 @@ interface AuthContextType {
   currentUser: User | null;
   loading: boolean;
   token: string;
+  userData: any;
 }
 
 interface AuthProviderType {

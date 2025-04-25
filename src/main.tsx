@@ -11,7 +11,7 @@ import '@smastrom/react-rating/style.css';
 import theme from '../theme';
 import { routes } from './routes';
 import { AuthProvider } from '@contexts/AuthContext';
-import { API_URL } from './config';
+// import { API_URL } from './config';
 
 const queryClient = new QueryClient();
 

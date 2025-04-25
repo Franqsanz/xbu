@@ -25,13 +25,10 @@ import {
   ImgBook,
   BookReading,
 } from '@assets/assets';
-import { useUserData } from '@hooks/queries';
 
-export function Home() {
+export default function Home() {
   const { colorMode } = useColorMode();
-  const { currentUser } = useAuth();
-  const uid = currentUser?.uid;
-  const { data } = useUserData(uid);
+  const { userData } = useAuth();
   const bgButton = useColorModeValue('green.500', 'green.700');
   const bContainer = useColorModeValue('gray.50', 'none');
   const height = useBreakpointValue({
@@ -57,11 +54,11 @@ export function Home() {
         backgroundImage={colorMode === 'dark' ? PatternPadBlack : PatternPadWhite}
         backgroundAttachment='fixed'
       >
-        <Box py={{ base: 10, md: '20vh' }} pt={{ base: 24, lg: 28 }}>
+        <Box py={{ base: 10, md: '20vh' }} pt={{ base: 24, lg: 28, '2xl': 48 }}>
           <Box
             textAlign='center'
             as='h1'
-            fontSize={{ base: '3.35rem', md: '9xl' }}
+            fontSize={{ base: '3.35rem', md: '7xl', lg: '9xl' }}
             bgGradient='linear-gradient(to-l, green.500, #e9f501)'
             bgClip='text'
           >
@@ -70,29 +67,29 @@ export function Home() {
           <Box maxW='2xl' m='auto'>
             <Box
               color='green.800'
-              fontSize={{ base: '3xl', md: '5xl' }}
+              fontSize={{ base: '3xl', lg: '5xl' }}
               fontWeight='bold'
               my='3'
-              textAlign={{ base: 'center', md: 'left' }}
+              textAlign={{ base: 'center', lg: 'left' }}
             >
               ¡Explora!
             </Box>
             <Text
-              px={{ base: 5, md: 0 }}
-              fontSize={{ base: 'md', md: 'lg' }}
-              textAlign={{ base: 'center', md: 'left' }}
+              px={{ base: 5, lg: 0 }}
+              fontSize={{ base: 'md', lg: 'lg' }}
+              textAlign={{ base: 'center', lg: 'left' }}
             >
               Comparte tus libros favoritos con la comunidad.
             </Text>
             <Flex
               mt='14'
               textAlign='center'
-              direction={{ base: 'column', md: 'row' }}
+              direction={{ base: 'column', lg: 'row' }}
               align='center'
             >
               <Link
-                w={{ base: '250px', md: '200px' }}
-                to={!data ? '/login' : `/${data.username}`}
+                w={{ base: '250px', lg: '200px' }}
+                to={!userData ? '/login' : `/${userData.username}`}
                 as={NavLink}
                 border='1px'
                 bg={bgButton}
@@ -105,10 +102,10 @@ export function Home() {
                   bg: 'green.600',
                 }}
               >
-                {!data ? 'Ingresar' : 'Perfil'}
+                {!userData ? 'Ingresar' : 'Perfil'}
               </Link>
               <Link
-                w={{ base: '250px', md: '200px' }}
+                w={{ base: '250px', lg: '200px' }}
                 to='/explore'
                 as={NavLink}
                 border='1px'
@@ -116,9 +113,9 @@ export function Home() {
                 bg={bgButton}
                 color='black'
                 borderRadius='lg'
-                mt={{ base: 5, md: 0 }}
+                mt={{ base: 5, lg: 0 }}
                 p='3'
-                ml={{ base: 0, md: 5 }}
+                ml={{ base: 0, lg: 5 }}
                 fontSize='xl'
                 _hover={{
                   outline: 'none',
@@ -138,21 +135,21 @@ export function Home() {
         as='section'
         w='full'
         justify='center'
-        align='flex-start'
+        align={{ base: 'center', lg: 'flex-start' }}
         maxW='5xl'
         m='auto'
         pt='28'
         px='10'
-        direction={{ base: 'column', md: 'row' }}
+        direction={{ base: 'column', lg: 'row' }}
       >
         <LazyLoad height={height} offset={0}>
           <Image src={ImgBook} w='500px' alt='' decoding='async' />
         </LazyLoad>
-        <Stack maxW='md' direction='column' ml={{ base: 0, md: 5 }} spacing='4'>
+        <Stack maxW='md' direction='column' ml={{ base: 0, lg: 5 }} spacing='4'>
           <Heading
             mb='5'
-            mt={{ base: 14, md: 0 }}
-            fontSize={{ base: '3xl', sm: '4xl' }}
+            mt={{ base: 14, lg: 0 }}
+            fontSize={{ base: '3xl', lg: '4xl' }}
             fontFamily='Poppins, sans-serif'
           >
             ¿Qué es XBuniverse?
@@ -181,23 +178,23 @@ export function Home() {
         as='section'
         w='full'
         justify='center'
-        align='flex-start'
+        align={{ base: 'center', lg: 'flex-start' }}
         maxWidth='5xl'
         m='auto'
-        py={{ base: 10, md: 28 }}
+        py={{ base: 10, lg: 28 }}
         px='10'
-        direction={{ base: 'column', md: 'row' }}
+        direction={{ base: 'column', lg: 'row' }}
       >
         <Stack
           maxW='md'
           direction='column'
-          ml={{ base: 0, md: 3 }}
-          mr={{ base: 0, md: 7 }}
+          ml={{ base: 0, lg: 3 }}
+          mr={{ base: 0, lg: 7 }}
           mb='3'
         >
           <Heading
             mb='5'
-            mt={{ base: 10, md: 0 }}
+            mt={{ base: 10, lg: 0 }}
             fontSize={{ base: '3xl', sm: '4xl' }}
             fontFamily='Poppins, sans-serif'
           >
