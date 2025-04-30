@@ -32,7 +32,6 @@ function AuthProvider({ children }: AuthProviderType) {
 
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
-      setLoading(false);
       updateToken(user);
 
       if (user) {
@@ -51,6 +50,8 @@ function AuthProvider({ children }: AuthProviderType) {
       } else {
         setUserData(null);
       }
+
+      setLoading(false);
 
       const intervalToken = setInterval(
         () => {
