@@ -72,7 +72,11 @@ export function CollectionDetail() {
     isPending: isPendingData,
     refetch,
   } = useCollectionDetail(collectionId);
-  const { mutate, isSuccess, isPending: isPendingDelete } = useDeleteCollections();
+  const {
+    mutate: deleteCol,
+    isSuccess: isSuccessCol,
+    isPending: isPendingDelete,
+  } = useDeleteCollections();
   const {
     mutate: deleteBook,
     isSuccess: isSuccessDeleteBook,
@@ -84,7 +88,7 @@ export function CollectionDetail() {
   let btnOptionsMobile;
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccessCol) {
       navigate(`/my-collections`, { replace: true });
 
       myToast({
@@ -100,7 +104,7 @@ export function CollectionDetail() {
         bxSize: 5,
       });
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccessCol, navigate]);
 
   useEffect(() => {
     if (isSuccessDeleteBook) {
@@ -132,8 +136,8 @@ export function CollectionDetail() {
     return <SkeletonDCollection />;
   }
 
-  function deleteCollection(id: string) {
-    mutate([uid, id]);
+  function deleteCollection(collectionId: string | undefined) {
+    deleteCol([uid, collectionId]);
   }
 
   function handleGoBack() {
@@ -283,7 +287,7 @@ export function CollectionDetail() {
         title={data?.name}
         isStrong={true}
         warningText='La colección será eliminada de manera permanente y no se podrá recuperar.'
-        onDeleteBook={() => deleteCollection(data?.id)}
+        onDeleteBook={() => deleteCollection(collectionId)}
         isPending={isPendingDelete}
         onClose={onCloseDelete}
       />

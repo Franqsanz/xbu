@@ -1,6 +1,24 @@
-export async function fetchData(url: string, options = {}): Promise<any> {
+export async function fetchData(
+  url: string,
+  options: {
+    method?: string;
+    headers?: Record<string, string>;
+    body?: any;
+    credentials?: any;
+  } = {},
+): Promise<any> {
   try {
-    const res = await fetch(url, options);
+    const headers = options.headers || {};
+
+    headers['X-Api-Key'] = import.meta.env.VITE_XB_API_KEY;
+
+    // Actualizar las options
+    const updatedOptions = {
+      ...options,
+      headers,
+    };
+
+    const res = await fetch(url, updatedOptions);
 
     if (res.ok) {
       return await res.json();
@@ -18,6 +36,6 @@ export async function fetchData(url: string, options = {}): Promise<any> {
       throw error;
     }
 
-    throw new Error('Error desconocido'); // Re-lanza el error para que pueda ser manejado en el código que llama a fetchData
+    throw new Error('Error desconocido');
   }
 }

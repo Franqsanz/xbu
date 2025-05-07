@@ -6,7 +6,12 @@ export function SplashScreen() {
   const tkColor = useColorModeValue('gray.300', 'black');
 
   return (
-    <Flex direction='column' justify='center' align='center' h='100vh'>
+    <Flex
+      direction='column'
+      justify='center'
+      align='center'
+      h={{ base: '80vh', md: '100vh' }}
+    >
       <Box
         fontSize='6xl'
         bgGradient='linear-gradient(to-l, green.500, #e9f501)'

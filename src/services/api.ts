@@ -23,7 +23,7 @@ async function getBook(pathUrl: string | undefined, token?: string | null) {
 
   return await fetchData(`${API_URL}/books/path/${pathUrl}`, {
     method: 'GET',
-    headers,
+    headers: Object.fromEntries(headers),
   });
 }
 
@@ -64,7 +64,7 @@ async function patchToggleFavorite(
   body: any,
   isFavorite: boolean,
 ) {
-  return await fetchData(`${API_URL}/books/favorite`, {
+  return await fetchData(`${API_URL}/users/favorites`, {
     method: 'PATCH',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ userId, id: body, isFavorite }),
@@ -72,17 +72,15 @@ async function patchToggleFavorite(
 }
 
 async function getFindAllCollections(userId: string | undefined) {
-  return await fetchData(`${API_URL}/users/${userId}/my-collections`);
+  return await fetchData(`${API_URL}/users/${userId}/collections`);
 }
 
 async function getCollectionsForUser(userId: string | undefined, bookId: string) {
-  return await fetchData(
-    `${API_URL}/users/${userId}/my-collections/summary/${bookId}`,
-  );
+  return await fetchData(`${API_URL}/users/${userId}/collections/summary/${bookId}`);
 }
 
 async function postCollections(userId: string | undefined, body: any) {
-  return await fetchData(`${API_URL}/users/${userId}/my-collections`, {
+  return await fetchData(`${API_URL}/users/${userId}/collections`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ name: body }),
@@ -99,7 +97,7 @@ async function patchToggleBookInCollection(
   bookId: string,
   checked: boolean,
 ) {
-  return await fetchData(`${API_URL}/users/my-collections/books/toggle`, {
+  return await fetchData(`${API_URL}/users/collections/books/toggle`, {
     method: 'PATCH',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
@@ -116,23 +114,24 @@ async function patchCollectionsName(
   collectionId: string | undefined,
   name: string,
 ) {
-  return await fetchData(`${API_URL}/users/my-collections/${collectionId}`, {
+  return await fetchData(`${API_URL}/users/collections/${collectionId}`, {
     method: 'PATCH',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ userId, name }),
   });
 }
 
-async function deleteCollections(id: string | undefined, collectionId: string) {
-  return await fetchData(`${API_URL}/users/${id}/my-collections/${collectionId}`, {
+async function deleteCollections(
+  id: string | undefined,
+  collectionId: string | undefined,
+) {
+  return await fetchData(`${API_URL}/users/${id}/collections/${collectionId}`, {
     method: 'DELETE',
   });
 }
 
 async function getFindOneCollection(collectionsId: string | undefined) {
-  return await fetchData(
-    `${API_URL}/users/my-collections/collection/${collectionsId}`,
-  );
+  return await fetchData(`${API_URL}/users/collections/collection/${collectionsId}`);
 }
 
 async function patchRemoveBookFromCollection(
@@ -140,7 +139,7 @@ async function patchRemoveBookFromCollection(
   collectionId: string,
   bookId: string,
 ) {
-  return await fetchData(`${API_URL}/users/my-collections/collection/remove-book`, {
+  return await fetchData(`${API_URL}/users/collections/collection/remove-book`, {
     method: 'PATCH',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
@@ -197,7 +196,7 @@ async function getUserAndBooks(
   page: number | undefined,
 ) {
   return await fetchData(
-    `${API_URL}/users/${userId}/${username}/my-books?limit=10&page=${page}`,
+    `${API_URL}/users/${userId}/${username}/books?limit=10&page=${page}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -210,7 +209,7 @@ async function getUserAndBooks(
 
 async function getFindAllBookFavorite(userId: string | undefined, page: number) {
   return await fetchData(
-    `${API_URL}/users/${userId}/my-favorites?limit=10&page=${page}`,
+    `${API_URL}/users/${userId}/favorites?limit=10&page=${page}`,
   );
 }
 

@@ -345,7 +345,7 @@ function useCollectionsForUser(userId: string | undefined, bookId: string) {
 function useDeleteCollections() {
   return useMutation({
     mutationKey: [keys.deleteCollections],
-    mutationFn: ([id, collectionId]: [string | undefined, string]) =>
+    mutationFn: ([id, collectionId]: [string | undefined, string | undefined]) =>
       deleteCollections(id, collectionId),
     onError: async (error) => {
       console.error('Error en el servidor:', error);
