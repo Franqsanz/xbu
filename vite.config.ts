@@ -48,11 +48,6 @@ export default defineConfig({
                 cleanupNumericValues: false,
                 removeViewBox: false,
               },
-              cleanupIDs: {
-                minify: false,
-                remove: false,
-              },
-              convertPathData: false,
             },
           },
           'sortAttrs',

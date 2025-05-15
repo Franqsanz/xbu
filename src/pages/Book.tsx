@@ -279,7 +279,7 @@ export default function Book() {
       <Flex
         as='section'
         w='full'
-        maxW='1195px'
+        maxW={{ base: '1165px', '2xl': '1430px' }}
         m='auto'
         px={{ base: 5, xl: 0 }}
         pt='4'
@@ -355,7 +355,7 @@ export default function Book() {
       <Flex
         as='section'
         w='full'
-        maxW='1220px'
+        maxW={{ base: '1190px', '2xl': '1470px' }}
         m='auto'
         mb={{ base: 25, md: 32 }}
         align='flex-start'
@@ -396,7 +396,7 @@ export default function Book() {
         </Box>
         <Flex
           w='full'
-          maxW='920px'
+          maxW={{ base: '920px', '2xl': '1130px' }}
           direction='column'
           justify='center'
           px='5'
@@ -626,7 +626,7 @@ export default function Book() {
               bxSize='5'
             />
             <Box
-              w='290px'
+              w={{ base: '290px', '2xl': '305px' }}
               h='650px'
               overflowX='hidden'
               mt='14'
