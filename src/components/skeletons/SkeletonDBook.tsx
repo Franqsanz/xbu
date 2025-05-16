@@ -6,7 +6,7 @@ export function SkeletonDetailsBook() {
     <>
       <Flex
         w='full'
-        maxW='1170px'
+        maxW={{ base: '1170px', '2xl': '1425px' }}
         m='auto'
         px={{ base: 5, xl: 0 }}
         pt='7'
@@ -23,7 +23,7 @@ export function SkeletonDetailsBook() {
       </Flex>
       <Flex
         w='full'
-        maxW='1170px'
+        maxW={{ base: '1170px', '2xl': '1440px' }}
         m='auto'
         mb='300px'
         align='flex-start'
@@ -45,7 +45,7 @@ export function SkeletonDetailsBook() {
         </Box>
         <Flex
           w='full'
-          maxW='920px'
+          maxW={{ base: '920px', '2xl': '1120px' }}
           direction='column'
           justify='center'
           px='5'
@@ -53,7 +53,7 @@ export function SkeletonDetailsBook() {
           mt='1rem'
           mb='2'
         >
-          <Skeleton w='140px' h='30px' rounded='lg' mb='4'></Skeleton>
+          <Skeleton w='140px' h='30px' rounded='lg' mb='4' mt='1'></Skeleton>
           <SkeletonText
             w={{ base: '200px', lg: '600px' }}
             mb='5'
