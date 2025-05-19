@@ -33,7 +33,7 @@ export function FormCreateUser() {
   }
 
   if (isSuccess) {
-    navigate(`/${data.username}`);
+    navigate(`/profile/${data.username}`);
   }
 
   return (

@@ -11,6 +11,7 @@ import {
   Icon,
   useColorModeValue,
   Spinner,
+  Text,
 } from '@chakra-ui/react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { useInView } from 'react-intersection-observer';
@@ -29,6 +30,7 @@ import { NoData } from '@assets/assets';
 import { SkeletonProfile } from '@components/skeletons/SkeletonProfile';
 import { MyContainer } from '@components/ui/MyContainer';
 import { MobileResultBar } from '@components/ui/MobileResultBar';
+import { FiArrowLeft } from 'react-icons/fi';
 // import { logOut } from '../../services/firebase/auth';
 
 export function Profile() {
@@ -60,6 +62,47 @@ export function Profile() {
 
   if (isPending) {
     return <SkeletonProfile />;
+  }
+
+  if (error?.message === 'Error en la solicitud: 404') {
+    return (
+      <Flex
+        direction='column'
+        align='center'
+        justify='center'
+        textAlign='center'
+        minH={{ base: '60vh', md: '50vh' }}
+        gap='8'
+      >
+        <Box fontSize={{ base: 'xl', md: '3xl' }} px={{ base: '3', md: '0' }}>
+          Este perfil no existe.
+          <Text mt='2' fontSize='md'>
+            Es posible que el enlace que seleccionaste esté roto o que se haya
+            eliminado el perfil.
+          </Text>
+        </Box>
+        <Link
+          to='/'
+          as={NavLink}
+          border='1px'
+          borderColor='green.500'
+          borderRadius='lg'
+          p='3'
+          fontSize='xl'
+          _hover={{
+            outline: 'none',
+            bg: 'green.500',
+            color: 'black',
+            borderColor: 'black',
+          }}
+        >
+          <Flex align='center'>
+            <Icon as={FiArrowLeft} mr='2' />
+            Volver al inicio
+          </Flex>
+        </Link>
+      </Flex>
+    );
   }
 
   if (error) {

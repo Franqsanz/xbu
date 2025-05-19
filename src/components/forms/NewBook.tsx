@@ -187,7 +187,7 @@ export function FormNewBook() {
       bxSize: 5,
     });
 
-    navigate(`/${data.username}`, { replace: true });
+    navigate(`/profile/${data.username}`, { replace: true });
   } else if (error) {
     myToast({
       title: 'Ha ocurrido un error',

@@ -59,7 +59,7 @@ export function SignIn() {
       }
 
       if (data?.username) {
-        navigate(`/${data.username}`);
+        navigate(`/profile/${data.username}`);
       }
     }
 

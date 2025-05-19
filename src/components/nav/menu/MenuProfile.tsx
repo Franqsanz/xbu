@@ -49,7 +49,7 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
           <MenuDivider />
           <MenuItem
             as={NavLink}
-            to={`/${username}`}
+            to={`/profile/${username}`}
             _hover={{ textDecoration: 'none' }}
           >
             Perfil

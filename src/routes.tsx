@@ -106,7 +106,7 @@ export const routes = createBrowserRouter([
         ],
       },
       {
-        path: '/:username/:userId?',
+        path: '/profile/:username/:userId?',
         element: (
           <PrivateRoute>
             <Profile />

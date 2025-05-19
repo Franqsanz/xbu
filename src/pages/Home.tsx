@@ -89,7 +89,7 @@ export default function Home() {
             >
               <Link
                 w={{ base: '250px', lg: '200px' }}
-                to={!userData ? '/login' : `/${userData.username}`}
+                to={!userData ? '/login' : `/profile/${userData.username}`}
                 as={NavLink}
                 border='1px'
                 bg={bgButton}
