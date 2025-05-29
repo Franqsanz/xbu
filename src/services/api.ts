@@ -72,15 +72,15 @@ async function patchToggleFavorite(
 }
 
 async function getFindAllCollections(userId: string | undefined) {
-  return await fetchData(`${API_URL}/users/${userId}/collections`);
+  return await fetchData(`${API_URL}/users/collections/${userId}`);
 }
 
 async function getCollectionsForUser(userId: string | undefined, bookId: string) {
-  return await fetchData(`${API_URL}/users/${userId}/collections/summary/${bookId}`);
+  return await fetchData(`${API_URL}/users/collections/${userId}/summary/${bookId}`);
 }
 
 async function postCollections(userId: string | undefined, body: any) {
-  return await fetchData(`${API_URL}/users/${userId}/collections`, {
+  return await fetchData(`${API_URL}/users/collections/${userId}`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ name: body }),
@@ -114,7 +114,7 @@ async function patchCollectionsName(
   collectionId: string | undefined,
   name: string,
 ) {
-  return await fetchData(`${API_URL}/users/collections/${collectionId}`, {
+  return await fetchData(`${API_URL}/users/collections/collection/${collectionId}`, {
     method: 'PATCH',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ userId, name }),
@@ -125,9 +125,12 @@ async function deleteCollections(
   id: string | undefined,
   collectionId: string | undefined,
 ) {
-  return await fetchData(`${API_URL}/users/${id}/collections/${collectionId}`, {
-    method: 'DELETE',
-  });
+  return await fetchData(
+    `${API_URL}/users/collections/${id}/collection/${collectionId}`,
+    {
+      method: 'DELETE',
+    },
+  );
 }
 
 async function getFindOneCollection(collectionsId: string | undefined) {
@@ -139,7 +142,7 @@ async function patchRemoveBookFromCollection(
   collectionId: string,
   bookId: string,
 ) {
-  return await fetchData(`${API_URL}/users/collections/collection/remove-book`, {
+  return await fetchData(`${API_URL}/users/collections/remove`, {
     method: 'PATCH',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
@@ -209,7 +212,7 @@ async function getUserAndBooks(
 
 async function getFindAllBookFavorite(userId: string | undefined, page: number) {
   return await fetchData(
-    `${API_URL}/users/${userId}/favorites?limit=10&page=${page}`,
+    `${API_URL}/users/favorites/${userId}?limit=10&page=${page}`,
   );
 }
 
