@@ -188,6 +188,16 @@ async function postRegister(token: string, body: any) {
   });
 }
 
+async function postLogout(token: string | undefined) {
+  return await fetchData(`${API_URL}/auth/logout`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'content-type': 'application/json',
+    },
+  });
+}
+
 async function getCheckUser(id: string | undefined) {
   return await fetchData(`${API_URL}/users/check-user/${id}`);
 }
@@ -248,6 +258,7 @@ export {
   updateBook,
   // Usuarios
   postRegister,
+  postLogout,
   getCheckUser,
   getUserAndBooks,
   getFindAllBookFavorite,

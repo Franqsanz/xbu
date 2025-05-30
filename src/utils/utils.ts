@@ -17,6 +17,7 @@ const keys = {
   mostViewed: 'MostViewed',
   favoriteBook: 'FavoriteBook',
   userRegister: 'UserRegister',
+  userLogout: 'UserLogout',
   updateBook: 'UpdateBook',
   deleteBook: 'DeleteBook',
   profile: 'Profile',

@@ -35,6 +35,7 @@ import {
   getCollectionsForUser,
   patchToggleBookInCollection,
   patchRemoveBookFromCollection,
+  postLogout,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
@@ -220,6 +221,16 @@ function useUserRegister(body: any) {
     onError: async (error) => {
       console.error('Error en el servidor:', error);
       await logOut();
+    },
+  });
+}
+
+function useUserLogout() {
+  return useMutation({
+    mutationKey: [keys.userLogout],
+    mutationFn: (token: string | undefined) => postLogout(token),
+    onError: async (error) => {
+      console.error('Error en el servidor:', error);
     },
   });
 }
@@ -441,6 +452,7 @@ export {
 
   // Usuarios
   useUserRegister,
+  useUserLogout,
   useCheckUser,
   useUserData,
   useProfile,

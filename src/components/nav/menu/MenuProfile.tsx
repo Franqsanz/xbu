@@ -22,6 +22,16 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
   const { logOut } = useAccountActions();
   const colorBorder = useColorModeValue('black', 'white');
 
+  async function handleLogout() {
+    try {
+      await logOut();
+
+      navigate('/login', { replace: true });
+    } catch (err) {
+      console.error('Error en logout:', err);
+    }
+  }
+
   return (
     <Menu isLazy>
       <Button
@@ -94,10 +104,7 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
             fontWeight='normal'
             borderRadius='0'
             justifyContent='left'
-            onClick={async () => {
-              await logOut();
-              navigate('/login', { replace: true });
-            }}
+            onClick={handleLogout}
           >
             Cerrar Sesión
           </MenuItem>
