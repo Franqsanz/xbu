@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { ScrollRestoration } from 'react-router-dom';
 import {
   Flex,
@@ -25,25 +25,23 @@ import { MobileResultBar } from '@components/ui/MobileResultBar';
 
 export function AllBooks() {
   const { ref, inView } = useInView();
-  const { data, isPending, error, fetchNextPage, isFetchingNextPage } =
+  const { data, isLoading, error, fetchNextPage, isFetchingNextPage, hasNextPage } =
     useBooksPaginate();
   let fetchingNextPageUI;
 
-  useScrollYRestoration(isPending); // Restablece la posición del scroll al volver de la vista del libro
+  useScrollYRestoration(isLoading); // Restablece la posición del scroll al volver de la vista del libro
+
+  const books = useMemo(() => {
+    return data?.pages.flatMap((page) => page.results) || [];
+  }, [data]);
 
   useEffect(() => {
-    let isMounted = true;
-
-    if (inView && isMounted) {
+    if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-    return () => {
-      isMounted = false;
-    };
-  }, [inView, fetchNextPage]);
-
-  if (isPending) {
+  if (isLoading) {
     return <SkeletonAllBooks showTags={false} />;
   }
 
@@ -80,7 +78,7 @@ export function AllBooks() {
       <MobileResultBar data={data} />
       <MyContainer>
         <Aside>
-          <ResultLength data={data.pages[0].info.totalBooks} />
+          <ResultLength data={data?.pages[0].info.totalBooks} />
           <Box mt='5'>
             <Flex textAlign={{ base: 'center', lg: 'left' }} direction='column'>
               <Text>
@@ -99,37 +97,33 @@ export function AllBooks() {
           </Box>
         </Aside>
         <MySimpleGrid>
-          {data?.pages.map((page, index) => (
-            <React.Fragment key={index}>
-              {page.results.map(
-                ({
-                  id,
-                  title,
-                  language,
-                  synopsis,
-                  authors,
-                  category,
-                  sourceLink,
-                  image,
-                  pathUrl,
-                }: CardType) => (
-                  <React.Fragment key={id}>
-                    <Card
-                      id={id}
-                      category={category}
-                      language={language}
-                      title={title}
-                      authors={authors}
-                      synopsis={synopsis}
-                      sourceLink={sourceLink}
-                      pathUrl={pathUrl}
-                      image={image}
-                    />
-                  </React.Fragment>
-                ),
-              )}
-            </React.Fragment>
-          ))}
+          {books.map(
+            ({
+              id,
+              title,
+              language,
+              synopsis,
+              authors,
+              category,
+              sourceLink,
+              image,
+              pathUrl,
+            }: CardType) => (
+              <React.Fragment key={id}>
+                <Card
+                  id={id}
+                  category={category}
+                  language={language}
+                  title={title}
+                  authors={authors}
+                  synopsis={synopsis}
+                  sourceLink={sourceLink}
+                  pathUrl={pathUrl}
+                  image={image}
+                />
+              </React.Fragment>
+            ),
+          )}
         </MySimpleGrid>
       </MyContainer>
       <Box ref={ref}>{fetchingNextPageUI}</Box>

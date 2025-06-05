@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import {
   Alert,
@@ -42,15 +42,20 @@ export function Profile() {
   const { username } = useParams();
   const {
     data: profileData,
-    isPending,
+    isLoading,
     error,
     fetchNextPage,
     isFetchingNextPage,
+    hasNextPage,
   } = useProfile(username, uid, getToken);
   const { data: userData, refetch } = useCheckUser(uid);
   const createdAt = parseDate(userData?.createdAt);
   let asideAndCardsUI;
   let fetchingNextPageUI;
+
+  const profile = useMemo(() => {
+    return profileData?.pages.flatMap((page) => page.results) || [];
+  }, [profileData]);
 
   useEffect(() => {
     refetch();
@@ -58,9 +63,9 @@ export function Profile() {
 
   useEffect(() => {
     if (inView) fetchNextPage();
-  }, [inView]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if (isPending) {
+  if (isLoading) {
     return <SkeletonProfile />;
   }
 
@@ -133,37 +138,33 @@ export function Profile() {
           {asideFilter}  */}
         </Aside>
         <MySimpleGrid>
-          {profileData?.pages.map((page, index) => (
-            <React.Fragment key={index}>
-              {page.results.map(
-                ({
-                  id,
-                  category,
-                  language,
-                  title,
-                  authors,
-                  synopsis,
-                  sourceLink,
-                  pathUrl,
-                  image,
-                }: CardType) => (
-                  <React.Fragment key={id}>
-                    <Card
-                      id={id}
-                      category={category}
-                      language={language}
-                      title={title}
-                      authors={authors}
-                      synopsis={synopsis}
-                      sourceLink={sourceLink}
-                      pathUrl={pathUrl}
-                      image={image}
-                    />
-                  </React.Fragment>
-                ),
-              )}
-            </React.Fragment>
-          ))}
+          {profile.map(
+            ({
+              id,
+              title,
+              language,
+              synopsis,
+              authors,
+              category,
+              sourceLink,
+              image,
+              pathUrl,
+            }: CardType) => (
+              <React.Fragment key={id}>
+                <Card
+                  id={id}
+                  category={category}
+                  language={language}
+                  title={title}
+                  authors={authors}
+                  synopsis={synopsis}
+                  sourceLink={sourceLink}
+                  pathUrl={pathUrl}
+                  image={image}
+                />
+              </React.Fragment>
+            ),
+          )}
         </MySimpleGrid>
       </>
     );

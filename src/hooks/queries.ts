@@ -149,7 +149,7 @@ function useFilter(query: string | undefined, param: string | undefined) {
 }
 
 function useMostViewedBooks(query) {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: [keys.mostViewed, query],
     queryFn: () => getMostViewedBooks(query),
     refetchOnWindowFocus: false,

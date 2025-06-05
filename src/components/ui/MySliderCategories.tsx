@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, Suspense, lazy } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Box, Button, Flex, useColorModeValue } from '@chakra-ui/react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
-import { SkeletonTags } from '@components/skeletons/SkeletonTags';
-
-const Categories = lazy(() => import('@components/Categories'));
+import { Categories } from '@components/Categories';
 
 export function MySliderCategories() {
   const bgArrows = useColorModeValue('white', 'black');
@@ -88,9 +86,7 @@ export function MySliderCategories() {
             left='-1px'
             bgGradient={`linear(270deg, #ffffff00 0%, ${gradientColor} 60%)`}
           ></Box>
-          <Suspense fallback={<SkeletonTags />}>
-            <Categories />
-          </Suspense>
+          <Categories />
           <Box
             position='sticky'
             p='2'

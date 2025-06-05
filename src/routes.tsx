@@ -9,6 +9,7 @@ import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { SkeletonDetailsBook } from '@components/skeletons/SkeletonDBook';
 import { PrivateRoute } from '@components/nav/PrivateRoute';
 
+import { Explore } from '@pages/Explore';
 import { MyAccount } from '@pages/profile/account/MyAccount';
 import { Profile } from '@pages/profile/Profile';
 import { RouteWatcher } from '@hooks/RouteWatcher';
@@ -18,7 +19,6 @@ import { CollectionDetail } from '@pages/profile/collections/CollectionDetail';
 const Layout = lazy(() => import('@pages/layout/Layout'));
 const Home = lazy(() => import('@pages/Home'));
 const PrivacyPolicies = lazy(() => import('@pages/PrivacyPolicies'));
-const Explore = lazy(() => import('@pages/Explore'));
 const MostViewed = lazy(() => import('@pages/MostViewed'));
 const Book = lazy(() => import('@pages/Book'));
 const FilteredData = lazy(() => import('@pages/FilteredData'));

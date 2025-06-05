@@ -6,9 +6,10 @@ import { BsTag } from 'react-icons/bs';
 import { MyTag } from '@components/ui/MyTag';
 import { useAllFilterOptions } from '@hooks/queries';
 import { useCategoryStore } from '@store/useCategoryStore';
+import { SkeletonTags } from '@components/skeletons/SkeletonTags';
 
-export default function Categories() {
-  const { data } = useAllFilterOptions();
+export function Categories() {
+  const { data, isLoading } = useAllFilterOptions();
   const location = useLocation();
   const selectedCategory = useCategoryStore((state) => state.selectedCategory);
   const setSelectedCategory = useCategoryStore((state) => state.setSelectedCategory);
@@ -41,6 +42,10 @@ export default function Categories() {
       setSelectedCategory(null);
     }
   }, [location, isCategoryActive, setSelectedCategory]);
+
+  if (isLoading) {
+    return <SkeletonTags />;
+  }
 
   return (
     <>

@@ -49,8 +49,8 @@ import { ModalForm } from '@components/modals/ModalForm';
 import { useAuth } from '@contexts/AuthContext';
 import { useMyToast } from '@hooks/useMyToast';
 import { Rating } from '@smastrom/react-rating';
+import { Categories } from '@components/Categories';
 
-const Categories = lazy(() => import('@components/Categories'));
 const MoreBooksAuthors = lazy(() => import('@components/cards/MoreBooksAuthors'));
 const RelatedBooks = lazy(() => import('@components/cards/RelatedBooks'));
 const MoreBooks = lazy(() => import('@components/cards/MoreBooks'));

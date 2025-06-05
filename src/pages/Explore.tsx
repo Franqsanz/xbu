@@ -5,7 +5,7 @@ import { ContainerTitle } from '@components/layout/ContainerTitle';
 import { MySliderCategories } from '@components/ui/MySliderCategories';
 import { MainHead } from '@components/layout/Head';
 
-export default function Explore() {
+export function Explore() {
   return (
     <>
       <MainHead

@@ -1,11 +1,24 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Box, Flex, Link } from '@chakra-ui/react';
+import { Box, Flex, Link, Spinner } from '@chakra-ui/react';
 
 import { useMostViewedBooks } from '@hooks/queries';
 
 export function MostViewed() {
-  const { data } = useMostViewedBooks('summary');
+  const { data, isLoading } = useMostViewedBooks('summary');
+
+  if (isLoading) {
+    return (
+      <>
+        <Box mt='10' fontSize='2xl' fontWeight='bold'>
+          Más Vistos
+        </Box>
+        <Flex align='center' justify='center' h='25vh' direction='column' mt='3'>
+          <Spinner size='lg' thickness='3px' />
+        </Flex>
+      </>
+    );
+  }
 
   return (
     <>
