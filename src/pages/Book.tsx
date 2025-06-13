@@ -57,7 +57,7 @@ const MoreBooks = lazy(() => import('@components/cards/MoreBooks'));
 
 export default function Book() {
   const shareUrl = window.location.href;
-  const location = useLocation();
+  const { pathname } = useLocation();
   const getToken = window.localStorage.getItem('app_tk');
   const { pathUrl } = useParams();
   const { currentUser } = useAuth();
@@ -67,6 +67,7 @@ export default function Book() {
   const bgButton = useColorModeValue('white', 'black');
   const navigate = useNavigate();
   const myToast = useMyToast();
+  const { data } = useBook(pathUrl, getToken);
   const {
     isOpen: isOpenOptions,
     onOpen: onOpenOptions,
@@ -92,7 +93,6 @@ export default function Book() {
     onOpen: onOpenCollectionSelector,
     onClose: onCloseCollectionSelector,
   } = useDisclosure();
-  const { data } = useBook(pathUrl, getToken);
   let uiLink;
   let btnMoreOptions;
   let btnFavorite;
@@ -117,6 +117,10 @@ export default function Book() {
   const isCurrentUserAuthor = currentUser && currentUser.uid === data.userId;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  useEffect(() => {
     if (successFavorite) {
       myToast({
         title: isFavorite ? 'Se agrego a favoritos' : 'Se quito de favoritos',
@@ -135,7 +139,7 @@ export default function Book() {
 
   useEffect(() => {
     setIsFavorite(data.isFavorite);
-  }, [data.isFavorite, location.pathname]);
+  }, [data.isFavorite, pathname]);
 
   if (currentUser && isCurrentUserAuthor) {
     btnMoreOptions = (
