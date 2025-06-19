@@ -579,19 +579,33 @@ export default function Book() {
                   duration={200}
                   shadow={false}
                 >
-                  <ImageZoom
-                    w='290px'
-                    h='420px'
-                    src={data.image.url}
-                    alt={`Imagen de "${data.title}"`}
-                    rounded='lg'
-                    border='1px solid #A0AEC0'
-                    boxShadow='lg'
-                    decoding='async'
-                    filter='blur(10px)'
-                    transition='filter 0.5s ease-in-out'
-                    onLoad={handleImageLoad}
-                  />
+                  <Box position='relative' data-atropos-offset='0'>
+                    <ImageZoom
+                      w='290px'
+                      h='420px'
+                      src={data.image.url}
+                      alt={`Imagen de "${data.title}"`}
+                      rounded='lg'
+                      border='1px solid #A0AEC0'
+                      boxShadow='lg'
+                      decoding='async'
+                      filter='blur(10px)'
+                      transition='filter 0.5s ease-in-out'
+                      onLoad={handleImageLoad}
+                    />
+                    <Box
+                      position='absolute'
+                      top='8%'
+                      left='15%'
+                      width='25%'
+                      height='70%'
+                      background='linear-gradient(135deg, rgba(255, 255, 255, 0.446) 0%, rgba(255,255,255,0.05) 40%, transparent 70%)'
+                      borderRadius='lg'
+                      pointerEvents='none'
+                      data-atropos-offset='5'
+                      opacity={0.8}
+                    />
+                  </Box>
                 </Atropos>
               </LazyLoad>
             </Flex>
