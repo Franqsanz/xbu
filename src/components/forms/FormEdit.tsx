@@ -61,7 +61,7 @@ export function FormEdit({
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<BookType>();
+  } = useForm<BookType>({ mode: 'onBlur' });
   let previewImgUI;
   const { url, public_id } = image;
   const navigate = useNavigate();
@@ -141,10 +141,10 @@ export function FormEdit({
 
   function onSubmit() {
     setIsSubmitting(true);
+
     try {
       mutate(books.id);
     } catch (error) {
-      console.error('Error al obtener los datos del usuario');
       setIsSubmitting(false);
     }
   }
@@ -264,7 +264,9 @@ export function FormEdit({
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.title && (
-                  <FormErrorMessage>{errors.title.message}</FormErrorMessage>
+                  <FormErrorMessage mt='-3' mb={{ base: 5, md: 4 }}>
+                    {errors.title.message}
+                  </FormErrorMessage>
                 )}
               </FormControl>
               <FormControl isInvalid={!!errors.authors}>
@@ -295,7 +297,9 @@ export function FormEdit({
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.authors && (
-                  <FormErrorMessage>{errors.authors.message}</FormErrorMessage>
+                  <FormErrorMessage mt='-3' mb={{ base: 5, md: 4 }}>
+                    {errors.authors.message}
+                  </FormErrorMessage>
                 )}
               </FormControl>
               <FormControl isInvalid={!!errors.synopsis}>
@@ -319,11 +323,13 @@ export function FormEdit({
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.synopsis && (
-                  <FormErrorMessage>{errors.synopsis.message}</FormErrorMessage>
+                  <FormErrorMessage mt='-3' mb={{ base: 5, md: 4 }}>
+                    {errors.synopsis.message}
+                  </FormErrorMessage>
                 )}
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor='sinopsis' mt='2'>
+                <FormLabel htmlFor='imagen' mt='2'>
                   Subir Imagen
                 </FormLabel>
                 <Button
@@ -348,6 +354,7 @@ export function FormEdit({
                   ref={fileInputRef}
                   type='file'
                   size='lg'
+                  id='imagen'
                   onChange={handleImageChange}
                 />
               </FormControl>
@@ -416,7 +423,10 @@ export function FormEdit({
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.sourceLink && (
-                  <FormErrorMessage mb={{ base: 5, md: 0 }}>
+                  <FormErrorMessage
+                    mt={{ base: 1.5, md: '-3' }}
+                    mb={{ base: 5, md: 2 }}
+                  >
                     {errors.sourceLink.message}
                   </FormErrorMessage>
                 )}
@@ -429,7 +439,7 @@ export function FormEdit({
                   </Box>
                 </FormLabel>
                 <Select
-                  id='languaje'
+                  inputId='language'
                   name='language'
                   size={{ base: 'md', md: 'lg' }}
                   variant='filled'
@@ -470,7 +480,10 @@ export function FormEdit({
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.numberPages && (
-                  <FormErrorMessage mb={{ base: 5, md: 0 }}>
+                  <FormErrorMessage
+                    mt={{ base: 1.5, md: '-3' }}
+                    mb={{ base: 5, md: 2 }}
+                  >
                     {errors.numberPages.message}
                   </FormErrorMessage>
                 )}
@@ -505,7 +518,10 @@ export function FormEdit({
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.year && (
-                  <FormErrorMessage mb={{ base: 5, md: 0 }}>
+                  <FormErrorMessage
+                    mt={{ base: 1.5, md: '-3' }}
+                    mb={{ base: 5, md: 2 }}
+                  >
                     {errors.year.message}
                   </FormErrorMessage>
                 )}
@@ -522,7 +538,7 @@ export function FormEdit({
                 </Flex>
                 <Select
                   isMulti
-                  id='categoria'
+                  inputId='categoria'
                   name='category'
                   size={{ base: 'md', md: 'lg' }}
                   variant='filled'
@@ -547,8 +563,8 @@ export function FormEdit({
                   </Box>
                 </FormLabel>
                 <Select
-                  id='formato'
-                  name='format'
+                  inputId='formato'
+                  name='formato'
                   size={{ base: 'md', md: 'lg' }}
                   variant='filled'
                   onChange={(selectedOption) =>
@@ -564,7 +580,7 @@ export function FormEdit({
               </FormControl>
               <FormControl mt={{ base: 5, md: 8 }}>
                 <Flex align='center' mb='9px'>
-                  <FormLabel htmlFor='categoria' m='0'>
+                  <FormLabel htmlFor='calificacion' m='0'>
                     Calificación{' '}
                     <Box display='inline' fontSize='xs'>
                       (Opcional)
@@ -572,6 +588,9 @@ export function FormEdit({
                   </FormLabel>
                 </Flex>
                 <Rating
+                  visibleLabelId='calificacion'
+                  resetLabel='calificacion'
+                  invisibleLabel='calificacion'
                   style={{ maxWidth: 190 }}
                   value={books.rating}
                   onChange={handleRatingChange}

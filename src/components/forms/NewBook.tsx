@@ -48,7 +48,7 @@ export function FormNewBook() {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<BookType>();
+  } = useForm<BookType>({ mode: 'onBlur' });
   let previewImgUI;
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -127,11 +127,11 @@ export function FormNewBook() {
 
   async function onSubmit() {
     setIsSubmitting(true);
+
     try {
       await refetch();
       mutate(books);
     } catch (error) {
-      console.error('Error al obtener los datos del usuario');
       setIsSubmitting(false);
     }
   }
@@ -260,7 +260,9 @@ export function FormNewBook() {
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.title && (
-                  <FormErrorMessage>{errors.title.message}</FormErrorMessage>
+                  <FormErrorMessage mt='-3' mb={{ base: 5, md: 4 }}>
+                    {errors.title.message}
+                  </FormErrorMessage>
                 )}
               </FormControl>
               <FormControl isInvalid={!!errors.authors}>
@@ -291,7 +293,9 @@ export function FormNewBook() {
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.authors && (
-                  <FormErrorMessage>{errors.authors.message}</FormErrorMessage>
+                  <FormErrorMessage mt='-3' mb={{ base: 5, md: 4 }}>
+                    {errors.authors.message}
+                  </FormErrorMessage>
                 )}
               </FormControl>
               <FormControl isInvalid={!!errors.synopsis}>
@@ -316,11 +320,13 @@ export function FormNewBook() {
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.synopsis && (
-                  <FormErrorMessage>{errors.synopsis.message}</FormErrorMessage>
+                  <FormErrorMessage mt='-3' mb={{ base: 5, md: 4 }}>
+                    {errors.synopsis.message}
+                  </FormErrorMessage>
                 )}
               </FormControl>
               <FormControl isRequired>
-                <FormLabel htmlFor='sinopsis' mt='2'>
+                <FormLabel htmlFor='imagen' mt='2'>
                   Subir Imagen
                 </FormLabel>
                 <Button
@@ -345,6 +351,7 @@ export function FormNewBook() {
                   ref={fileInputRef}
                   type='file'
                   size='lg'
+                  id='imagen'
                   onChange={handleImageChange}
                 />
               </FormControl>
@@ -413,7 +420,10 @@ export function FormNewBook() {
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.sourceLink && (
-                  <FormErrorMessage mb={{ base: 5, md: 0 }}>
+                  <FormErrorMessage
+                    mt={{ base: 1.5, md: '-3' }}
+                    mb={{ base: 5, md: 2 }}
+                  >
                     {errors.sourceLink.message}
                   </FormErrorMessage>
                 )}
@@ -426,7 +436,7 @@ export function FormNewBook() {
                   </Box>
                 </FormLabel>
                 <Select
-                  id='languaje'
+                  inputId='language'
                   name='language'
                   size={{ base: 'md', md: 'lg' }}
                   variant='filled'
@@ -466,7 +476,10 @@ export function FormNewBook() {
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.numberPages && (
-                  <FormErrorMessage mb={{ base: 5, md: 0 }}>
+                  <FormErrorMessage
+                    mt={{ base: 1.5, md: '-3' }}
+                    mb={{ base: 5, md: 2 }}
+                  >
                     {errors.numberPages.message}
                   </FormErrorMessage>
                 )}
@@ -501,7 +514,10 @@ export function FormNewBook() {
                   _focus={{ bg: 'transparent' }}
                 />
                 {errors.year && (
-                  <FormErrorMessage mb={{ base: 5, md: 0 }}>
+                  <FormErrorMessage
+                    mt={{ base: 1.5, md: '-3' }}
+                    mb={{ base: 5, md: 0 }}
+                  >
                     {errors.year.message}
                   </FormErrorMessage>
                 )}
@@ -518,7 +534,7 @@ export function FormNewBook() {
                 </Flex>
                 <Select
                   isMulti
-                  id='categoria'
+                  inputId='categoria'
                   name='category'
                   size={{ base: 'md', md: 'lg' }}
                   variant='filled'
@@ -540,8 +556,8 @@ export function FormNewBook() {
                   </Box>
                 </FormLabel>
                 <Select
-                  id='formato'
-                  name='format'
+                  inputId='formato'
+                  name='formato'
                   size={{ base: 'md', md: 'lg' }}
                   variant='filled'
                   onChange={(selectedOption) =>
@@ -556,7 +572,7 @@ export function FormNewBook() {
               </FormControl>
               <FormControl mt={{ base: 5, md: 8 }}>
                 <Flex align='center' mb='9px'>
-                  <FormLabel htmlFor='categoria' m='0'>
+                  <FormLabel htmlFor='calificacion' m='0'>
                     Calificación{' '}
                     <Box display='inline' fontSize='xs'>
                       (Opcional)
@@ -564,6 +580,9 @@ export function FormNewBook() {
                   </FormLabel>
                 </Flex>
                 <Rating
+                  visibleLabelId='calificacion'
+                  resetLabel='calificacion'
+                  invisibleLabel='calificacion'
                   style={{ maxWidth: 190 }}
                   value={books.rating}
                   onChange={handleRatingChange}
