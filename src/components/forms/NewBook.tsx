@@ -59,7 +59,7 @@ export function FormNewBook() {
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
   const { fileInputRef, handleButtonClick } = useFileInputRef();
-  const { mutate, isPending, isSuccess, error } = useMutatePost();
+  const { mutateAsync, isPending, isSuccess, error } = useMutatePost();
   const [cropData, setCropData] = useState<string | null>(null);
   const [previewImg, setPreviewImg] = useState<Blob | MediaSource | null>(null);
   const [crop, setCrop] = useState<any>('');
@@ -130,7 +130,7 @@ export function FormNewBook() {
 
     try {
       await refetch();
-      mutate(books);
+      await mutateAsync(books);
     } catch (error) {
       setIsSubmitting(false);
     }

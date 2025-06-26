@@ -93,7 +93,7 @@ export function FormEdit({
     rating,
   });
 
-  const { mutate, isPending, isSuccess, error } = useUpdateBook(books);
+  const { mutateAsync, isPending, isSuccess, error } = useUpdateBook(books);
   useGenerateSlug(books.title, setBooks); // Genera el pathUrl (Slug)
 
   function allFieldsBook(book: BookType): boolean {
@@ -139,11 +139,11 @@ export function FormEdit({
     getCrop(crop, setPreviewImg, books, setBooks, onClose);
   }
 
-  function onSubmit() {
+  async function onSubmit() {
     setIsSubmitting(true);
 
     try {
-      mutate(books.id);
+      await mutateAsync(books.id);
     } catch (error) {
       setIsSubmitting(false);
     }
