@@ -82,10 +82,7 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
             to='/my-favorites'
             _hover={{ textDecoration: 'none' }}
           >
-            Mis favoritos{' '}
-            <Tag ml='2' fontSize='xs' colorScheme='green'>
-              Nuevo 😮
-            </Tag>
+            Mis favoritos
           </MenuItem>
           <MenuItem
             as={NavLink}

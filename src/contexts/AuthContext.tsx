@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+} from 'react';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 
 import { useQueryClient } from '@tanstack/react-query';
@@ -15,57 +21,88 @@ function AuthProvider({ children }: AuthProviderType) {
   const auth = getAuth();
   const [userData, setUserData] = useState<any | null>(null);
   const queryClient = useQueryClient();
+  const tokenIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    // Renovación del token
-    async function updateToken(user) {
+    async function updateToken(user: User | null) {
       if (user) {
         try {
           const token = await user.getIdToken(true);
           window.localStorage.setItem('app_tk', token);
           setToken(token);
         } catch (error) {
-          console.error('Error al actualizar el token:', error);
+          // Si hay error de red, intentar usar el token del localStorage
+          const storedToken = window.localStorage.getItem('app_tk');
+          if (storedToken) {
+            setToken(storedToken);
+          }
         }
+      } else {
+        // Si no hay usuario, limpiar token
+        window.localStorage.removeItem('app_tk');
+        setToken('');
       }
+    }
+
+    // Limpiar intervalo anterior si existe
+    if (tokenIntervalRef.current) {
+      clearInterval(tokenIntervalRef.current);
     }
 
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
-      updateToken(user);
+      await updateToken(user);
 
       if (user) {
         const uid = user?.uid;
 
-        await queryClient.prefetchQuery({
-          queryKey: ['UserData', uid],
-          queryFn: () => getCheckUser(uid),
-        });
+        try {
+          await queryClient.prefetchQuery({
+            queryKey: ['UserData', uid],
+            queryFn: () => getCheckUser(uid),
+          });
 
-        // Obtenemos los datos de la caché
-        const data = queryClient.getQueryData(['UserData', uid]);
+          // Obtenemos los datos de la caché
+          const data = queryClient.getQueryData(['UserData', uid]);
 
-        // Si los datos están disponibles, los asignamos a userData
-        if (data) setUserData(data);
+          // Si los datos están disponibles, los asignamos a userData
+          if (data) setUserData(data);
+        } catch (error) {
+          console.error('Error al cargar datos del usuario:', error);
+        }
       } else {
         setUserData(null);
       }
 
       setLoading(false);
-
-      const intervalToken = setInterval(
-        () => {
-          const currentUser = auth.currentUser;
-          updateToken(currentUser);
-        },
-        40 * 60 * 1000, // 40 minutos
-      );
-
-      return () => clearInterval(intervalToken);
     });
 
-    return () => unsubscribe();
-  }, [queryClient]);
+    // Configurar intervalo para renovar token (solo una vez)
+    tokenIntervalRef.current = setInterval(
+      async () => {
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+          await updateToken(currentUser);
+        }
+      },
+      40 * 60 * 1000, // 40 minutos
+    );
+
+    return () => {
+      unsubscribe();
+      if (tokenIntervalRef.current) {
+        clearInterval(tokenIntervalRef.current);
+      }
+    };
+  }, [queryClient, auth]);
+
+  // Cargar token del localStorage al iniciar
+  useEffect(() => {
+    const storedToken = window.localStorage.getItem('app_tk');
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
 
   const value: AuthContextType = {
     currentUser,
