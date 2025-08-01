@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Flex, Box, useColorModeValue, Link, Icon } from '@chakra-ui/react';
+import { Flex, Box, useColorModeValue, Link, Icon, Text } from '@chakra-ui/react';
 import { FiArrowRight } from 'react-icons/fi';
 
 import { CardType } from '@components/types';
@@ -35,16 +35,17 @@ export function RelatedCard({ title, authors, pathUrl, refetchQueries }: CardTyp
         <Flex direction={{ base: 'column', md: 'row' }}>
           <Flex direction='column'>
             <Box p='4'>
-              <Box
+              <Text
                 as='h1'
                 fontSize='lg'
-                lineHeight='8'
+                lineHeight='7'
                 fontWeight='800'
                 mb='2'
                 textTransform='uppercase'
+                noOfLines={3}
               >
                 {title}
-              </Box>
+              </Text>
               {authors.map((author, index) => (
                 <Box
                   key={index}
