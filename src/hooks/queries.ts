@@ -35,6 +35,8 @@ import {
   getCollectionsForUser,
   patchToggleBookInCollection,
   patchRemoveBookFromCollection,
+  postComment,
+  getFindAllComments,
   postLogout,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
@@ -69,7 +71,6 @@ function useMutatePost() {
       return { previousPost }; // <--- Contexto
     },
     onError: (err, variables, context) => {
-      console.log(err);
       // Revertir los datos en caché si la mutación falla
       if (context?.previousPost !== null) {
         queryClient.setQueryData([keys.postBook], context?.previousPost);
@@ -219,7 +220,7 @@ function useUserRegister(body: any) {
     mutationKey: [keys.userRegister],
     mutationFn: (token: string) => postRegister(token, body),
     onError: async (error) => {
-      console.error('Error en el servidor:', error);
+      console.error('Error en el servidor');
       await logOut();
     },
   });
@@ -230,7 +231,7 @@ function useUserLogout() {
     mutationKey: [keys.userLogout],
     mutationFn: (token: string | undefined) => postLogout(token),
     onError: async (error) => {
-      console.error('Error en el servidor:', error);
+      console.error('Error en el servidor');
     },
   });
 }
@@ -359,7 +360,7 @@ function useDeleteCollections() {
     mutationFn: ([id, collectionId]: [string | undefined, string | undefined]) =>
       deleteCollections(id, collectionId),
     onError: async (error) => {
-      console.error('Error en el servidor:', error);
+      console.error('Error en el servidor');
     },
   });
 }
@@ -386,7 +387,7 @@ function useDeleteCollectionBook() {
       bookId: string;
     }) => patchRemoveBookFromCollection(userId, collectionId, bookId),
     onError: async (error) => {
-      console.error('Error en el servidor:', error);
+      console.error('Error en el servidor');
     },
   });
 }
@@ -396,7 +397,7 @@ function useDeleteBook() {
     mutationKey: [keys.deleteBook],
     mutationFn: (id: string | undefined) => deleteBook(id),
     onError: async (error) => {
-      console.error('Error en el servidor:', error);
+      console.error('Error en el servidor');
     },
   });
 }
@@ -408,8 +409,39 @@ function useUpdateBook(book: any) {
     mutationKey: [keys.updateBook],
     mutationFn: (id: string | undefined) => updateBook(id, book),
     onError: async (error) => {
-      console.error('Error en el servidor:', error);
+      console.error('Error en el servidor');
       await logOut();
+    },
+  });
+}
+
+function useFindAllComments(bookId: string) {
+  return useQuery({
+    queryKey: [keys.allComments, bookId],
+    queryFn: () => getFindAllComments(bookId),
+    // enabled: false,
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
+}
+
+function usePostComment() {
+  return useMutation({
+    mutationKey: ['postComment'],
+    mutationFn: ({
+      text,
+      author,
+      bookId,
+    }: {
+      text: string;
+      author: {
+        userId: string | undefined;
+        username: string | null | undefined;
+      };
+      bookId: string;
+    }) => postComment(text, author, bookId),
+    onError: async (error) => {
+      console.error('Error en el servidor');
     },
   });
 }
@@ -421,7 +453,7 @@ function useDeleteAccount() {
     mutationKey: [keys.deleteAccount],
     mutationFn: (id: string | undefined) => deleteAccount(id),
     onError: async (error) => {
-      console.error('Error en el servidor:', error);
+      console.error('Error en el servidor');
       // await logOut();
     },
   });
@@ -449,6 +481,8 @@ export {
   useUpdateCollectionName,
   useDeleteCollections,
   useDeleteCollectionBook,
+  useFindAllComments,
+  usePostComment,
 
   // Usuarios
   useUserRegister,

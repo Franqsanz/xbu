@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { useParams, useNavigate, NavLink, useLocation } from 'react-router-dom';
 import {
   Box,
@@ -25,6 +25,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from 'react-icons/md';
 import { FaRegBookmark } from 'react-icons/fa6';
 import LazyLoad from 'react-lazy-load';
+import { Rating } from '@smastrom/react-rating';
 import Atropos from 'atropos/react';
 import 'atropos/css';
 
@@ -48,8 +49,8 @@ import { ModalCollectionSelector } from '@components/modals/ModalCollectionSelec
 import { ModalForm } from '@components/modals/ModalForm';
 import { useAuth } from '@contexts/AuthContext';
 import { useMyToast } from '@hooks/useMyToast';
-import { Rating } from '@smastrom/react-rating';
 import { Categories } from '@components/Categories';
+import { Comments } from '@components/comments/Comments';
 
 const MoreBooksAuthors = lazy(() => import('@components/cards/MoreBooksAuthors'));
 const RelatedBooks = lazy(() => import('@components/cards/RelatedBooks'));
@@ -557,6 +558,7 @@ export default function Book() {
             title='Más libros en XBuniverse'
             booksComponent={<MoreBooks id={data.id} />}
           />
+          <Comments bookId={data.id} />
         </Flex>
         <Flex
           display={{ base: 'none', lg: 'block' }}

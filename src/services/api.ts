@@ -226,6 +226,31 @@ async function getFindAllBookFavorite(userId: string | undefined, page: number) 
   );
 }
 
+async function getFindAllComments(bookId: string) {
+  return await fetchData(
+    `${API_URL}/users/comments/book-comments/${bookId}?limit=10&offset=0`,
+  );
+}
+
+async function postComment(
+  text: string,
+  author: {
+    userId: string | undefined;
+    username: string | null | undefined;
+  },
+  bookId: string,
+) {
+  return await fetchData(`${API_URL}/users/comments/comment`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      text,
+      author,
+      bookId,
+    }),
+  });
+}
+
 async function deleteAccount(id: string | undefined) {
   return await fetchData(`${API_URL}/users/${id}`, {
     method: 'DELETE',
@@ -256,6 +281,8 @@ export {
   postBook,
   deleteBook,
   updateBook,
+  getFindAllComments,
+  postComment,
   // Usuarios
   postRegister,
   postLogout,

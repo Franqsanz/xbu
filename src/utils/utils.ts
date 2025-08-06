@@ -32,6 +32,8 @@ const keys = {
   collectionsDetail: 'CollectionsDetail',
   deleteCollections: 'DeleteCollections',
   deleteCollectionBook: 'DeleteCollectionBook',
+  postComment: 'PostComment',
+  allComments: 'AllComments',
   deleteAccount: 'DeleteAccount',
 };
 
