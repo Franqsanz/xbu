@@ -228,7 +228,7 @@ async function getFindAllBookFavorite(userId: string | undefined, page: number) 
 
 async function getFindAllComments(bookId: string) {
   return await fetchData(
-    `${API_URL}/users/comments/book-comments/${bookId}?limit=10&offset=0`,
+    `${API_URL}/users/comments/book-comments/${bookId}?limit=5&offset=0`,
   );
 }
 

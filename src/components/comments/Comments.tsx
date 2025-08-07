@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, Divider } from '@chakra-ui/react';
 
 import { CommentForm } from '@components/comments/CommentForm';
 import { CommentsList } from '@components/comments/CommentsList';
@@ -11,10 +11,12 @@ type CommentType = {
 export function Comments({ bookId }: CommentType) {
   return (
     <>
+      <Box mt='10' mb='5'>
+        <Divider borderColor='gray.400' />
+      </Box>
       <Box
         p='2'
         mb='3'
-        mt='5'
         fontSize={{ base: 'xl', md: '2xl' }}
         textAlign={{ base: 'center', lg: 'left' }}
         ml={{ base: 0, lg: 2 }}
