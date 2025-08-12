@@ -3,12 +3,23 @@ import { Box, Divider } from '@chakra-ui/react';
 
 import { CommentForm } from '@components/comments/CommentForm';
 import { CommentsList } from '@components/comments/CommentsList';
+import { useFindAllComments } from '@hooks/queries';
 
 type CommentType = {
   bookId: string;
 };
 
 export function Comments({ bookId }: CommentType) {
+  const {
+    data,
+    isPending,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useFindAllComments(bookId);
+
   return (
     <>
       <Box mt='10' mb='5'>
@@ -23,8 +34,16 @@ export function Comments({ bookId }: CommentType) {
       >
         Comentarios
       </Box>
-      <CommentForm bookId={bookId} />
-      <CommentsList bookId={bookId} />
+      <CommentForm bookId={bookId} refetch={() => refetch()} />
+      <CommentsList
+        commentsData={data}
+        isPending={isPending}
+        isError={isError}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        refetch={refetch}
+      />
     </>
   );
 }

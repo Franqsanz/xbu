@@ -7,9 +7,10 @@ import { useAuth } from '@contexts/AuthContext';
 
 type CommentType = {
   bookId: string;
+  refetch: () => void;
 };
 
-export function CommentForm({ bookId }: CommentType) {
+export function CommentForm({ bookId, refetch }: CommentType) {
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const [comment, setComment] = useState('');
   const { currentUser } = useAuth();
@@ -22,16 +23,22 @@ export function CommentForm({ bookId }: CommentType) {
     setComment(value);
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    mutateAsync({
-      text: comment,
-      author: {
-        userId: uid,
-        username: userName,
-      },
-      bookId,
-    });
+    try {
+      await mutateAsync({
+        text: comment,
+        author: {
+          userId: uid,
+          username: userName,
+        },
+        bookId,
+      });
+      setComment(''); // Solo limpia si fue exitoso
+      refetch(); // Llama al refetch
+    } catch (error) {
+      console.error('Error al enviar comentario');
+    }
   }
 
   return (
@@ -44,6 +51,7 @@ export function CommentForm({ bookId }: CommentType) {
             value={comment}
             bg={bgColorInput}
             rounded='lg'
+            rows={8}
             onChange={handleNameCollection}
             _focus={{ bg: 'transparent' }}
           />
@@ -58,6 +66,7 @@ export function CommentForm({ bookId }: CommentType) {
             textAlign='center'
             isDisabled={!comment}
             isLoading={isPending}
+            loadingText={isPending ? 'Comentando...' : 'Comentar'}
             _hover={{ outline: 'none', bg: 'green.600' }}
           >
             <Flex align='center'>

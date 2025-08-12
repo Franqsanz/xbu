@@ -33,6 +33,7 @@ const keys = {
   deleteCollections: 'DeleteCollections',
   deleteCollectionBook: 'DeleteCollectionBook',
   postComment: 'PostComment',
+  postReactions: 'PostReactions',
   allComments: 'AllComments',
   deleteAccount: 'DeleteAccount',
 };

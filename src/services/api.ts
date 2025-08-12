@@ -226,9 +226,9 @@ async function getFindAllBookFavorite(userId: string | undefined, page: number) 
   );
 }
 
-async function getFindAllComments(bookId: string) {
+async function getFindAllComments(bookId: string, page: number) {
   return await fetchData(
-    `${API_URL}/users/comments/book-comments/${bookId}?limit=5&offset=0`,
+    `${API_URL}/users/comments/book-comments/${bookId}?limit=5&page=${page}`,
   );
 }
 
@@ -249,6 +249,21 @@ async function postComment(
       bookId,
     }),
   });
+}
+
+async function postReactions(
+  commentId: string,
+  userId: string | undefined,
+  type: string,
+) {
+  return await fetchData(
+    `${API_URL}/users/comments/comment/${commentId}/${userId}/reaction`,
+    {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ type }),
+    },
+  );
 }
 
 async function deleteAccount(id: string | undefined) {
@@ -283,6 +298,7 @@ export {
   updateBook,
   getFindAllComments,
   postComment,
+  postReactions,
   // Usuarios
   postRegister,
   postLogout,

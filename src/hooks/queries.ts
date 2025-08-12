@@ -38,6 +38,7 @@ import {
   postComment,
   getFindAllComments,
   postLogout,
+  postReactions,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
@@ -416,11 +417,15 @@ function useUpdateBook(book: any) {
 }
 
 function useFindAllComments(bookId: string) {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: [keys.allComments, bookId],
-    queryFn: () => getFindAllComments(bookId),
-    // enabled: false,
-    refetchOnWindowFocus: false,
+    queryFn: ({ pageParam }) => getFindAllComments(bookId, pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.info.nextPage === null) return;
+
+      return lastPage.info.nextPage;
+    },
     retry: false,
   });
 }
@@ -440,6 +445,24 @@ function usePostComment() {
       };
       bookId: string;
     }) => postComment(text, author, bookId),
+    onError: async (error) => {
+      console.error('Error en el servidor');
+    },
+  });
+}
+
+function usePostReactions() {
+  return useMutation({
+    mutationKey: [keys.postReactions],
+    mutationFn: ({
+      commentId,
+      userId,
+      type,
+    }: {
+      commentId: string;
+      userId: string | undefined;
+      type: string;
+    }) => postReactions(commentId, userId, type),
     onError: async (error) => {
       console.error('Error en el servidor');
     },
@@ -483,6 +506,7 @@ export {
   useDeleteCollectionBook,
   useFindAllComments,
   usePostComment,
+  usePostReactions,
 
   // Usuarios
   useUserRegister,

@@ -213,6 +213,16 @@ interface ModalCollectionSelectorType extends DisclosureType {
   isPending: boolean;
 }
 
+interface CommentType {
+  commentsData?: any;
+  isPending: boolean;
+  isError: boolean;
+  fetchNextPage: () => void;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
+  refetch: () => void;
+}
+
 export type {
   MyChangeEvent,
   AboutType,
@@ -241,4 +251,5 @@ export type {
   AuthProviderType,
   ModalOptionsAndConfirType,
   ModalCollectionSelectorType,
+  CommentType,
 };
