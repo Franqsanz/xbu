@@ -39,6 +39,7 @@ import {
   getFindAllComments,
   postLogout,
   postReactions,
+  deleteComment,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
@@ -469,6 +470,22 @@ function usePostReactions() {
   });
 }
 
+function useDeleteComment() {
+  return useMutation({
+    mutationKey: [keys.deleteComment],
+    mutationFn: ({
+      commentId,
+      userId,
+    }: {
+      commentId: string;
+      userId: string | undefined;
+    }) => deleteComment(commentId, userId),
+    onError: async (error) => {
+      console.error('Error en el servidor');
+    },
+  });
+}
+
 function useDeleteAccount() {
   // const { logOut } = useAccountActions();
 
@@ -507,6 +524,7 @@ export {
   useFindAllComments,
   usePostComment,
   usePostReactions,
+  useDeleteComment,
 
   // Usuarios
   useUserRegister,

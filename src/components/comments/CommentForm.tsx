@@ -1,9 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, Flex, Textarea, useColorModeValue } from '@chakra-ui/react';
-import { FaRegComment } from 'react-icons/fa';
+import { FaCheckCircle, FaRegComment } from 'react-icons/fa';
+import { IoWarningSharp } from 'react-icons/io5';
 
 import { usePostComment } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
+import { useMyToast } from '@hooks/useMyToast';
 
 type CommentType = {
   bookId: string;
@@ -16,7 +18,8 @@ export function CommentForm({ bookId, refetch }: CommentType) {
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
   const userName = currentUser?.displayName;
-  const { mutateAsync, isPending, isError } = usePostComment();
+  const myToast = useMyToast();
+  const { mutateAsync, isPending } = usePostComment();
 
   function handleNameCollection(e: ChangeEvent<HTMLTextAreaElement>) {
     const { value } = e.target;
@@ -34,10 +37,35 @@ export function CommentForm({ bookId, refetch }: CommentType) {
         },
         bookId,
       });
-      setComment(''); // Solo limpia si fue exitoso
-      refetch(); // Llama al refetch
+
+      // myToast({
+      //   title: 'se ha enviado el comentario.',
+      //   icon: FaCheckCircle,
+      //   iconColor: 'green.700',
+      //   bgColor: 'black',
+      //   width: '230px',
+      //   color: 'whitesmoke',
+      //   align: 'center',
+      //   padding: '1',
+      //   fntSize: 'md',
+      //   bxSize: 5,
+      // });
+
+      setComment('');
+      refetch();
     } catch (error) {
-      console.error('Error al enviar comentario');
+      myToast({
+        title: 'Error al enviar el comentario.',
+        icon: IoWarningSharp,
+        iconColor: 'red.400',
+        bgColor: 'black',
+        width: '230px',
+        color: 'whitesmoke',
+        align: 'center',
+        padding: '1',
+        fntSize: 'md',
+        bxSize: 5,
+      });
     }
   }
 

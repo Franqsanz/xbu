@@ -26,7 +26,6 @@ import { parseDate } from '@utils/utils';
 import { MenuCollections } from '@components/profile/collections/MenuCollections';
 
 export function AllCollections() {
-  const bgColorButton = useColorModeValue('green.500', 'green.700');
   const bgRandomBookCardLink = useColorModeValue('green.50', 'green.900');
   const colorLink = useColorModeValue('green.900', 'green.50');
   const grayColor = useColorModeValue('#E2E8F0', '#2D3748');

@@ -1,17 +1,28 @@
+import { useState } from 'react';
 import {
   Avatar,
   Box,
   Button,
   Center,
   Flex,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Text,
   useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { BiLike, BiDislike } from 'react-icons/bi';
+import { FiMoreVertical } from 'react-icons/fi';
+import { FaCheckCircle } from 'react-icons/fa';
 
-import { usePostReactions } from '@hooks/queries';
+import { useDeleteComment, usePostReactions } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
 import { CommentType } from '@components/types';
+import { useMyToast } from '@hooks/useMyToast';
+import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 
 export function CommentsList({
   commentsData,
@@ -22,12 +33,20 @@ export function CommentsList({
   isFetchingNextPage,
   refetch,
 }: CommentType) {
+  const [commentToDelete, setCommentToDelete] = useState<string | null>(null);
   const borderCard = useColorModeValue('gray.200', 'gray.600');
   const colorDate = useColorModeValue('gray.600', 'gray.300');
   const emptyStateColor = useColorModeValue('gray.600', 'gray.400');
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
-  const { mutateAsync } = usePostReactions();
+  const myToast = useMyToast();
+  const {
+    isOpen: isOpenDelete,
+    onOpen: onOpenDelete,
+    onClose: onCloseDelete,
+  } = useDisclosure();
+  const { mutateAsync: postReactions } = usePostReactions();
+  const { mutateAsync: deleteComment } = useDeleteComment();
 
   const allComments = commentsData?.pages.flatMap((page) => page.results) || [];
   const totalComments =
@@ -56,10 +75,17 @@ export function CommentsList({
     return (
       <Center mt='5' p='8'>
         <Flex direction='column' align='center' gap='3'>
-          <Text color='red.500' fontSize='sm'>
-            Error al obtener los comentarios
-          </Text>
-          <Button size='sm' variant='outline' onClick={refetch}>
+          <Text color='red.500'>Error al obtener los comentarios</Text>
+          <Button
+            bg='green.500'
+            color='black'
+            p='3'
+            border='1px'
+            rounded='lg'
+            textAlign='center'
+            onClick={refetch}
+            _hover={{ outline: 'none', bg: 'green.600' }}
+          >
             Reintentar
           </Button>
         </Flex>
@@ -95,7 +121,7 @@ export function CommentsList({
 
   async function handleLike(commentId: string) {
     try {
-      await mutateAsync({
+      await postReactions({
         commentId,
         userId: uid,
         type: 'like',
@@ -108,7 +134,7 @@ export function CommentsList({
 
   async function handleDisLike(commentId: string) {
     try {
-      await mutateAsync({
+      await postReactions({
         commentId,
         userId: uid,
         type: 'dislike',
@@ -119,8 +145,43 @@ export function CommentsList({
     }
   }
 
+  async function handleDeleteComment(commentId: string) {
+    try {
+      await deleteComment({ commentId, userId: uid });
+
+      myToast({
+        title: 'Se elimino el comentario.',
+        icon: FaCheckCircle,
+        iconColor: 'green.700',
+        bgColor: 'black',
+        width: '200px',
+        color: 'whitesmoke',
+        align: 'center',
+        padding: '1',
+        fntSize: 'md',
+        bxSize: 5,
+      });
+
+      refetch();
+    } catch (error) {
+      console.error('Error al eliminar comentario');
+    }
+  }
+
   return (
     <>
+      <ModalConfirmation
+        isOpen={isOpenDelete}
+        title='este comentario'
+        isStrong={false}
+        warningText='El comentario será eliminado de manera permanente.'
+        onDeleteBook={() => {
+          if (commentToDelete) handleDeleteComment(commentToDelete);
+          onCloseDelete();
+        }}
+        isPending={isPending}
+        onClose={onCloseDelete}
+      />
       <Flex flexDirection='column' gap='5' mt='10' px='2'>
         {totalComments > 0 && (
           <Text fontSize='sm' mb='2' px='3'>
@@ -149,9 +210,35 @@ export function CommentsList({
                     {author.username}
                   </Box>
                 </Flex>
-                <Box as='span' fontSize='xs' color={colorDate}>
-                  {formatDate(createdAt)}
-                </Box>
+                <Flex gap='2' align='center'>
+                  <Box as='span' fontSize='xs' color={colorDate}>
+                    {formatDate(createdAt)}
+                  </Box>
+                  {author.userId === uid && (
+                    <Menu>
+                      <MenuButton
+                        as={IconButton}
+                        aria-label='Options'
+                        icon={<FiMoreVertical />}
+                        bg='transparent'
+                        _hover={{ bg: 'transparent' }}
+                        _active={{ bg: 'transparent' }}
+                      />
+                      <MenuList p='0' fontSize='sm'>
+                        <MenuItem p='2'>Editar</MenuItem>
+                        <MenuItem
+                          p='2'
+                          onClick={() => {
+                            setCommentToDelete(_id);
+                            onOpenDelete();
+                          }}
+                        >
+                          Eliminar
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  )}
+                </Flex>
               </Flex>
               <Text fontSize='sm' px='6' py='3' whiteSpace='pre-wrap'>
                 {text}

@@ -266,6 +266,15 @@ async function postReactions(
   );
 }
 
+async function deleteComment(commentId: string, userId: string | undefined) {
+  return await fetchData(
+    `${API_URL}/users/comments/comment/${commentId}/${userId}`,
+    {
+      method: 'DELETE',
+    },
+  );
+}
+
 async function deleteAccount(id: string | undefined) {
   return await fetchData(`${API_URL}/users/${id}`, {
     method: 'DELETE',
@@ -299,6 +308,7 @@ export {
   getFindAllComments,
   postComment,
   postReactions,
+  deleteComment,
   // Usuarios
   postRegister,
   postLogout,
