@@ -55,7 +55,7 @@ export function CommentForm({ bookId, refetch }: CommentType) {
       refetch();
     } catch (error) {
       myToast({
-        title: 'Error al enviar el comentario.',
+        title: 'Error al enviar el comentario',
         icon: IoWarningSharp,
         iconColor: 'red.400',
         bgColor: 'black',

@@ -251,6 +251,21 @@ async function postComment(
   });
 }
 
+async function updateComment(
+  commentId: string,
+  userId: string | undefined,
+  text: string,
+) {
+  return await fetchData(
+    `${API_URL}/users/comments/comment/${commentId}/${userId}`,
+    {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ text }),
+    },
+  );
+}
+
 async function postReactions(
   commentId: string,
   userId: string | undefined,
@@ -308,7 +323,9 @@ export {
   getFindAllComments,
   postComment,
   postReactions,
+  updateComment,
   deleteComment,
+
   // Usuarios
   postRegister,
   postLogout,

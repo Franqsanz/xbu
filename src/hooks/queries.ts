@@ -40,6 +40,7 @@ import {
   postLogout,
   postReactions,
   deleteComment,
+  updateComment,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
@@ -470,6 +471,24 @@ function usePostReactions() {
   });
 }
 
+function useUpdateComment() {
+  return useMutation({
+    mutationKey: [keys.updateComment],
+    mutationFn: ({
+      commentId,
+      userId,
+      text,
+    }: {
+      commentId: string;
+      userId: string | undefined;
+      text: string;
+    }) => updateComment(commentId, userId, text),
+    onError: (error) => {
+      console.error('Error updating comment');
+    },
+  });
+}
+
 function useDeleteComment() {
   return useMutation({
     mutationKey: [keys.deleteComment],
@@ -524,6 +543,7 @@ export {
   useFindAllComments,
   usePostComment,
   usePostReactions,
+  useUpdateComment,
   useDeleteComment,
 
   // Usuarios
