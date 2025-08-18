@@ -17,7 +17,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { BiLike, BiDislike } from 'react-icons/bi';
-import { FiMoreVertical } from 'react-icons/fi';
+import { FiMoreHorizontal } from 'react-icons/fi';
 import { FaCheckCircle } from 'react-icons/fa';
 import { AiOutlineSave } from 'react-icons/ai';
 import { IoWarningSharp } from 'react-icons/io5';
@@ -106,7 +106,7 @@ export function CommentsList({
     return (
       <Center mt='5' p='8'>
         <Flex direction='column' align='center' gap='3'>
-          <Text color='red.500'>Error al obtener los comentarios</Text>
+          <Text color={emptyStateColor}>Error al obtener los comentarios</Text>
           <Button
             bg='green.500'
             color='black'
@@ -136,9 +136,9 @@ export function CommentsList({
     return (
       <Center mt='5' p='8'>
         <Flex direction='column' align='center' gap='2'>
-          <Text fontSize='lg' color={emptyStateColor}>
+          <Box as='span' fontSize='lg'>
             📝
-          </Text>
+          </Box>
           <Text fontSize='md' color={emptyStateColor} textAlign='center'>
             No hay comentarios aún
           </Text>
@@ -288,33 +288,40 @@ export function CommentsList({
               borderColor={borderCard}
               rounded='lg'
             >
-              <Flex justify='space-between' p='3'>
-                <Flex gap='2' align='center'>
+              <Flex justify='space-between' p={{ base: 2, sm: 3 }}>
+                <Flex gap='2' align={{ base: 'start', sm: 'center' }}>
                   <Avatar
                     name={author.username}
                     size={{ base: 'xs', md: 'sm' }}
                     referrerPolicy='no-referrer'
                   />
-                  <Box as='span' fontSize='sm'>
+                  <Box as='span' fontSize={{ base: 'xs', sm: 'sm' }}>
                     {author.username}
                   </Box>
                 </Flex>
-                <Flex gap='2' align='center'>
-                  <Box as='span' fontSize='xs' color={colorDate}>
-                    {formatDate(createdAt)}
-                  </Box>
-                  {isEdited && (
-                    <Box as='span' fontSize='xs' color={colorDate}>
-                      (Editado)
+                <Flex gap='1' align={{ base: 'start', sm: 'center' }}>
+                  <Flex
+                    gap='0'
+                    fontSize={{ base: '10px', sm: 'xs' }}
+                    flexDirection={{ base: 'column', sm: 'row' }}
+                  >
+                    <Box as='span' color={colorDate}>
+                      {formatDate(createdAt)}
                     </Box>
-                  )}
+                    {isEdited && (
+                      <Box as='span' color={colorDate}>
+                        (Editado)
+                      </Box>
+                    )}
+                  </Flex>
                   {author.userId === uid && (
                     <Menu>
                       <MenuButton
                         as={IconButton}
                         aria-label='Options'
-                        icon={<FiMoreVertical />}
+                        icon={<FiMoreHorizontal />}
                         bg='transparent'
+                        alignItems={{ base: 'flex-start', sm: 'center' }}
                         _hover={{ bg: 'transparent' }}
                         _active={{ bg: 'transparent' }}
                       />
@@ -338,7 +345,7 @@ export function CommentsList({
               </Flex>
               {/* Contenido del comentario - Editable o solo texto */}
               {editingCommentId === _id ? (
-                <Box px='6' py='3'>
+                <Box px={{ base: 3, sm: 6 }} py='3'>
                   <Textarea
                     ref={textareaRef}
                     value={editText}
@@ -359,9 +366,14 @@ export function CommentsList({
                       if (e.key === 'Enter' && e.ctrlKey) saveEdit(_id);
                     }}
                   />
-                  <HStack spacing='2' justify='flex-end'>
+                  <HStack
+                    spacing='2'
+                    justify='flex-end'
+                    flexDirection={{ base: 'column-reverse', sm: 'row' }}
+                  >
                     <Button
-                      size='sm'
+                      w={{ base: 'full', md: 'auto' }}
+                      size='md'
                       border='1px'
                       borderColor={borderCard}
                       onClick={cancelEdit}
@@ -369,7 +381,8 @@ export function CommentsList({
                       Cancelar
                     </Button>
                     <Button
-                      size='sm'
+                      w={{ base: 'full', md: 'auto' }}
+                      size='md'
                       bg='green.500'
                       color='black'
                       border='1px'
@@ -386,7 +399,12 @@ export function CommentsList({
                   </HStack>
                 </Box>
               ) : (
-                <Text fontSize='sm' px='6' py='3' whiteSpace='pre-wrap'>
+                <Text
+                  fontSize='sm'
+                  px={{ base: 3, sm: 6 }}
+                  py='3'
+                  whiteSpace='pre-wrap'
+                >
                   {text}
                 </Text>
               )}

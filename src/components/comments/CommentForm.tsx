@@ -79,7 +79,7 @@ export function CommentForm({ bookId, refetch }: CommentType) {
             value={comment}
             bg={bgColorInput}
             rounded='lg'
-            rows={8}
+            h={{ base: '120px', md: '170px' }}
             onChange={handleNameCollection}
             _focus={{ bg: 'transparent' }}
           />
