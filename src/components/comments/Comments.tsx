@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Divider } from '@chakra-ui/react';
 
 import { CommentForm } from '@components/comments/CommentForm';
@@ -36,6 +35,7 @@ export function Comments({ bookId }: CommentType) {
       </Box>
       <CommentForm bookId={bookId} refetch={() => refetch()} />
       <CommentsList
+        bookId={bookId}
         commentsData={data}
         isPending={isPending}
         isError={isError}

@@ -45,9 +45,8 @@ import {
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
 import { BookType } from '@components/types';
+import { queryClient } from '../config';
 // import { useAuth } from '@contexts/AuthContext';
-
-const queryClient = new QueryClient();
 
 function useMutatePost() {
   return useMutation({
@@ -455,18 +454,110 @@ function usePostComment() {
 
 function usePostReactions() {
   return useMutation({
-    mutationKey: [keys.postReactions],
     mutationFn: ({
+      bookId,
       commentId,
       userId,
       type,
     }: {
+      bookId: string;
       commentId: string;
       userId: string | undefined;
-      type: string;
+      type: 'like' | 'dislike';
     }) => postReactions(commentId, userId, type),
-    onError: async (error) => {
-      console.error('Error en el servidor');
+
+    onMutate: async ({ bookId, commentId, userId, type }) => {
+      await queryClient.cancelQueries({ queryKey: [keys.allComments, bookId] });
+
+      const previousData = queryClient.getQueryData([keys.allComments, bookId]);
+
+      queryClient.setQueryData([keys.allComments, bookId], (old: any) => {
+        if (!old) return old;
+
+        return {
+          ...old,
+          pages: old.pages.map((page: any) => ({
+            ...page,
+            results: page.results.map((comment: any) => {
+              if (comment._id !== commentId) return comment;
+
+              // Encontrar el comentario y determinar el estado actual del usuario
+              const currentUserReaction = comment.reactions?.find(
+                (reaction: any) => reaction.userId === userId,
+              );
+
+              let newLikesCount = comment.likesCount;
+              let newDislikesCount = comment.dislikesCount;
+              let newReactions = comment.reactions || [];
+
+              if (type === 'like') {
+                if (currentUserReaction?.type === 'like') {
+                  // Usuario ya dio like, remover like
+                  newLikesCount--;
+                  newReactions = newReactions.filter(
+                    (r: any) => r.userId !== userId,
+                  );
+                } else if (currentUserReaction?.type === 'dislike') {
+                  // Usuario tenía dislike, cambiar a like
+                  newDislikesCount--;
+                  newLikesCount++;
+                  newReactions = newReactions.map((r: any) =>
+                    r.userId === userId ? { ...r, type: 'like' } : r,
+                  );
+                } else {
+                  // Usuario no había reaccionado, agregar like
+                  newLikesCount++;
+                  newReactions.push({ userId, type: 'like' });
+                }
+              } else {
+                // type === 'dislike'
+                if (currentUserReaction?.type === 'dislike') {
+                  // Usuario ya dio dislike, remover dislike
+                  newDislikesCount--;
+                  newReactions = newReactions.filter(
+                    (r: any) => r.userId !== userId,
+                  );
+                } else if (currentUserReaction?.type === 'like') {
+                  // Usuario tenía like, cambiar a dislike
+                  newLikesCount--;
+                  newDislikesCount++;
+                  newReactions = newReactions.map((r: any) =>
+                    r.userId === userId ? { ...r, type: 'dislike' } : r,
+                  );
+                } else {
+                  // Usuario no había reaccionado, agregar dislike
+                  newDislikesCount++;
+                  newReactions.push({ userId, type: 'dislike' });
+                }
+              }
+
+              return {
+                ...comment,
+                likesCount: newLikesCount,
+                dislikesCount: newDislikesCount,
+                reactions: newReactions,
+              };
+            }),
+          })),
+        };
+      });
+
+      return { previousData };
+    },
+
+    onError: (error, variables, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(
+          [keys.allComments, variables.bookId],
+          context.previousData,
+        );
+      }
+    },
+
+    onSettled: (data, error, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [keys.allComments, variables.bookId],
+      });
     },
   });
 }

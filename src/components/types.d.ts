@@ -214,6 +214,7 @@ interface ModalCollectionSelectorType extends DisclosureType {
 }
 
 interface CommentType {
+  bookId: string;
   commentsData?: any;
   isPending: boolean;
   isError: boolean;
@@ -221,6 +222,20 @@ interface CommentType {
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
   refetch: () => void;
+}
+
+interface ReactionsType {
+  likesCount: number;
+  dislikesCount: number;
+  onLike: () => void;
+  onDislike: () => void;
+}
+
+interface EditorType {
+  initialText: string;
+  isUpdating: boolean;
+  onCancel: () => void;
+  onSave: (newText: string) => void;
 }
 
 export type {
@@ -252,4 +267,6 @@ export type {
   ModalOptionsAndConfirType,
   ModalCollectionSelectorType,
   CommentType,
+  ReactionsType,
+  EditorType,
 };

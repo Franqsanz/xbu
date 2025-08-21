@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, Flex, Textarea, useColorModeValue } from '@chakra-ui/react';
-import { FaCheckCircle, FaRegComment } from 'react-icons/fa';
+import { FaRegComment } from 'react-icons/fa';
 import { IoWarningSharp } from 'react-icons/io5';
 
 import { usePostComment } from '@hooks/queries';
@@ -37,19 +37,6 @@ export function CommentForm({ bookId, refetch }: CommentType) {
         },
         bookId,
       });
-
-      // myToast({
-      //   title: 'se ha enviado el comentario.',
-      //   icon: FaCheckCircle,
-      //   iconColor: 'green.700',
-      //   bgColor: 'black',
-      //   width: '230px',
-      //   color: 'whitesmoke',
-      //   align: 'center',
-      //   padding: '1',
-      //   fntSize: 'md',
-      //   bxSize: 5,
-      // });
 
       setComment('');
       refetch();

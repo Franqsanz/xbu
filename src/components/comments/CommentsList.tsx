@@ -1,25 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import {
   Avatar,
   Box,
   Button,
   Center,
   Flex,
-  HStack,
   IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   Text,
-  Textarea,
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
-import { BiLike, BiDislike } from 'react-icons/bi';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { FaCheckCircle } from 'react-icons/fa';
-import { AiOutlineSave } from 'react-icons/ai';
 import { IoWarningSharp } from 'react-icons/io5';
 
 import {
@@ -31,8 +27,12 @@ import { useAuth } from '@contexts/AuthContext';
 import { CommentType } from '@components/types';
 import { useMyToast } from '@hooks/useMyToast';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
+import { CommentEditor } from '@components/comments/CommentEditor';
+import { CommentReactions } from '@components/comments/CommentReactions';
+import { formatDate } from '@utils/utils';
 
 export function CommentsList({
+  bookId,
   commentsData,
   isPending,
   isError,
@@ -43,7 +43,6 @@ export function CommentsList({
 }: CommentType) {
   const [commentToDelete, setCommentToDelete] = useState<string | null>(null);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
-  const [editText, setEditText] = useState<string>('');
   const borderCard = useColorModeValue('gray.200', 'gray.600');
   const colorDate = useColorModeValue('gray.600', 'gray.300');
   const emptyStateColor = useColorModeValue('gray.600', 'gray.400');
@@ -55,7 +54,6 @@ export function CommentsList({
     onOpen: onOpenDelete,
     onClose: onCloseDelete,
   } = useDisclosure();
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { mutateAsync: postReactions } = usePostReactions();
   const { mutateAsync: updateComment, isPending: isUpdating } = useUpdateComment();
   const { mutateAsync: deleteComment, isPending: isDeleting } = useDeleteComment();
@@ -66,41 +64,6 @@ export function CommentsList({
   const currentPage =
     commentsData?.pages[commentsData.pages.length - 1]?.info?.currentPage || 1;
   const totalPages = commentsData?.pages[0]?.info?.totalPages || 1;
-
-  function autoResize(textarea: HTMLTextAreaElement) {
-    textarea.style.height = 'auto';
-    textarea.style.height = textarea.scrollHeight + 'px';
-  }
-
-  useEffect(() => {
-    if (editingCommentId && textareaRef.current) {
-      setTimeout(() => {
-        textareaRef.current?.focus();
-        const length = textareaRef.current?.value.length || 0;
-        textareaRef.current?.setSelectionRange(length, length);
-
-        if (textareaRef.current) {
-          autoResize(textareaRef.current);
-        }
-      }, 0);
-    }
-  }, [editingCommentId]);
-
-  function formatDate(dateString: string | Date): string {
-    const date = new Date(dateString);
-
-    if (isNaN(date.getTime())) {
-      return 'Fecha inválida';
-    }
-
-    const formatted = new Intl.DateTimeFormat('es-ES', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    }).format(date);
-
-    return formatted.replace(/(\d{4})$/, ', $1');
-  }
 
   if (isError) {
     return (
@@ -150,30 +113,8 @@ export function CommentsList({
     );
   }
 
-  async function handleLike(commentId: string) {
-    try {
-      await postReactions({
-        commentId,
-        userId: uid,
-        type: 'like',
-      });
-      refetch();
-    } catch (error) {
-      console.error('Error al enviar like');
-    }
-  }
-
-  async function handleDisLike(commentId: string) {
-    try {
-      await postReactions({
-        commentId,
-        userId: uid,
-        type: 'dislike',
-      });
-      refetch();
-    } catch (error) {
-      console.error('Error al enviar dislike');
-    }
+  async function handleReaction(commentId: string, type: 'like' | 'dislike') {
+    await postReactions({ bookId, commentId, userId: uid, type });
   }
 
   async function handleDeleteComment(commentId: string) {
@@ -199,22 +140,16 @@ export function CommentsList({
     }
   }
 
-  function startEdit(commentId: string, currentText: string) {
-    setEditingCommentId(commentId);
-    setEditText(currentText);
-  }
-
   function cancelEdit() {
     setEditingCommentId(null);
-    setEditText('');
   }
 
-  async function saveEdit(commentId: string) {
+  async function saveEdit(commentId: string, newText: string) {
     try {
       await updateComment({
         commentId,
         userId: uid,
-        text: editText.trim(),
+        text: newText.trim(),
       });
 
       myToast({
@@ -231,7 +166,6 @@ export function CommentsList({
       });
 
       setEditingCommentId(null);
-      setEditText('');
       refetch();
     } catch (error) {
       myToast({
@@ -292,6 +226,7 @@ export function CommentsList({
                 <Flex gap='2' align={{ base: 'start', sm: 'center' }}>
                   <Avatar
                     name={author.username}
+                    src={author.avatar as string}
                     size={{ base: 'xs', md: 'sm' }}
                     referrerPolicy='no-referrer'
                   />
@@ -301,7 +236,7 @@ export function CommentsList({
                 </Flex>
                 <Flex gap='1' align={{ base: 'start', sm: 'center' }}>
                   <Flex
-                    gap='0'
+                    gap='1'
                     fontSize={{ base: '10px', sm: 'xs' }}
                     flexDirection={{ base: 'column', sm: 'row' }}
                   >
@@ -326,7 +261,7 @@ export function CommentsList({
                         _active={{ bg: 'transparent' }}
                       />
                       <MenuList p='0' fontSize='sm'>
-                        <MenuItem p='2' onClick={() => startEdit(_id, text)}>
+                        <MenuItem p='2' onClick={() => setEditingCommentId(_id)}>
                           Editar
                         </MenuItem>
                         <MenuItem
@@ -343,61 +278,13 @@ export function CommentsList({
                   )}
                 </Flex>
               </Flex>
-              {/* Contenido del comentario - Editable o solo texto */}
               {editingCommentId === _id ? (
-                <Box px={{ base: 3, sm: 6 }} py='3'>
-                  <Textarea
-                    ref={textareaRef}
-                    value={editText}
-                    resize='none'
-                    overflow='hidden'
-                    minH='100px'
-                    fontSize='sm'
-                    mb='3'
-                    onChange={(e) => {
-                      setEditText(e.target.value);
-
-                      if (textareaRef.current) {
-                        autoResize(textareaRef.current);
-                      }
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Escape') cancelEdit();
-                      if (e.key === 'Enter' && e.ctrlKey) saveEdit(_id);
-                    }}
-                  />
-                  <HStack
-                    spacing='2'
-                    justify='flex-end'
-                    flexDirection={{ base: 'column-reverse', sm: 'row' }}
-                  >
-                    <Button
-                      w={{ base: 'full', md: 'auto' }}
-                      size='md'
-                      border='1px'
-                      borderColor={borderCard}
-                      onClick={cancelEdit}
-                    >
-                      Cancelar
-                    </Button>
-                    <Button
-                      w={{ base: 'full', md: 'auto' }}
-                      size='md'
-                      bg='green.500'
-                      color='black'
-                      border='1px'
-                      rounded='lg'
-                      leftIcon={<AiOutlineSave />}
-                      onClick={() => saveEdit(_id)}
-                      isLoading={isUpdating}
-                      loadingText='Guardando...'
-                      isDisabled={!editText.trim() || editText === text}
-                      _hover={{ outline: 'none', bg: 'green.600' }}
-                    >
-                      Guardar
-                    </Button>
-                  </HStack>
-                </Box>
+                <CommentEditor
+                  initialText={text}
+                  isUpdating={isUpdating}
+                  onCancel={cancelEdit}
+                  onSave={(newText) => saveEdit(_id, newText)}
+                />
               ) : (
                 <Text
                   fontSize='sm'
@@ -408,30 +295,13 @@ export function CommentsList({
                   {text}
                 </Text>
               )}
-              {/* Botones de like/dislike - ocultos durante edición */}
               {editingCommentId !== _id && (
-                <Flex justify='flex-end' align='center' gap='2' p='3'>
-                  <Button
-                    gap='2'
-                    fontWeight='normal'
-                    alignItems='center'
-                    fontSize='sm'
-                    onClick={() => handleLike(_id)}
-                  >
-                    <BiLike />
-                    {likesCount}
-                  </Button>
-                  <Button
-                    gap='2'
-                    fontWeight='normal'
-                    alignItems='center'
-                    fontSize='sm'
-                    onClick={() => handleDisLike(_id)}
-                  >
-                    <BiDislike />
-                    {dislikesCount}
-                  </Button>
-                </Flex>
+                <CommentReactions
+                  likesCount={likesCount}
+                  dislikesCount={dislikesCount}
+                  onLike={() => handleReaction(_id, 'like')}
+                  onDislike={() => handleReaction(_id, 'dislike')}
+                />
               )}
             </Flex>
           ),

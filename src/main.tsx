@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import * as Sentry from '@sentry/react';
 import { HelmetProvider } from 'react-helmet-async';
@@ -11,9 +11,8 @@ import '@smastrom/react-rating/style.css';
 import theme from '../theme';
 import { routes } from './routes';
 import { AuthProvider } from '@contexts/AuthContext';
+import { queryClient } from './config';
 // import { API_URL } from './config';
-
-const queryClient = new QueryClient();
 
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DNS,

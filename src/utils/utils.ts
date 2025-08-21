@@ -96,6 +96,22 @@ function parseDate(fechaISO: string) {
   return formatoFecha.format(fecha);
 }
 
+function formatDate(dateString: string | Date): string {
+  const date = new Date(dateString);
+
+  if (isNaN(date.getTime())) {
+    return 'Fecha inválida';
+  }
+
+  const formatted = new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(date);
+
+  return formatted.replace(/(\d{1,2} \w+)\s(\d{4})/, '$1, $2');
+}
+
 function sortArrayByLabel<T extends { label: string }>(array: T[]): T[] {
   return array.slice().sort((a, b) => a.label.localeCompare(b.label));
 }
@@ -120,6 +136,7 @@ export {
   generatePathUrl,
   isSpanish,
   parseDate,
+  formatDate,
   sortArrayByLabel,
   capitalizeWords,
 };
