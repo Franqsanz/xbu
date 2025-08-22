@@ -1,4 +1,4 @@
-import { Box, Divider } from '@chakra-ui/react';
+import { Box, Divider, Flex, Tag } from '@chakra-ui/react';
 
 import { CommentForm } from '@components/comments/CommentForm';
 import { CommentsList } from '@components/comments/CommentsList';
@@ -27,19 +27,21 @@ export function Comments({ bookId }: CommentType) {
       <Box mt='10' mb='5'>
         <Divider borderColor='gray.400' />
       </Box>
-
-      <Box
+      <Flex
         p='2'
         mb='3'
+        align='center'
+        gap='3'
         fontSize={{ base: 'xl', md: '2xl' }}
         textAlign={{ base: 'center', lg: 'left' }}
         ml={{ base: 0, lg: 2 }}
       >
-        Comentarios
-      </Box>
-
+        Comentarios{' '}
+        <Tag fontSize='xs' colorScheme='green'>
+          Nuevo
+        </Tag>
+      </Flex>
       {currentUser && <CommentForm bookId={bookId} refetch={() => refetch()} />}
-
       <CommentsList
         bookId={bookId}
         commentsData={data}

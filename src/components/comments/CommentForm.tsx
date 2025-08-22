@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { Button, Flex, Textarea, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, Flex, Textarea, useColorModeValue } from '@chakra-ui/react';
 import { FaRegComment } from 'react-icons/fa';
 import { IoWarningSharp } from 'react-icons/io5';
 
@@ -15,6 +15,8 @@ type CommentType = {
 export function CommentForm({ bookId, refetch }: CommentType) {
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const [comment, setComment] = useState('');
+  const maxChars = 1500;
+
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
   const userName = currentUser?.displayName;
@@ -23,7 +25,7 @@ export function CommentForm({ bookId, refetch }: CommentType) {
 
   function handleNameCollection(e: ChangeEvent<HTMLTextAreaElement>) {
     const { value } = e.target;
-    setComment(value);
+    if (value.length <= maxChars) setComment(value); // limita a 1500 caracteres
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -57,42 +59,41 @@ export function CommentForm({ bookId, refetch }: CommentType) {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <Flex flexDirection='column' alignItems='end' gap='3' p='2'>
-          <Textarea
-            placeholder='Deja un comentario...'
-            name='comment'
-            value={comment}
-            bg={bgColorInput}
-            rounded='lg'
-            h={{ base: '120px', md: '170px' }}
-            onChange={handleNameCollection}
-            _focus={{ bg: 'transparent' }}
-          />
-          <Button
-            type='submit'
-            w={{ base: '100%', md: '165px' }}
-            bg='green.500'
-            color='black'
-            p='3'
-            border='1px'
-            rounded='lg'
-            textAlign='center'
-            isDisabled={!comment}
-            isLoading={isPending}
-            loadingText={isPending ? 'Comentando...' : 'Comentar'}
-            _hover={{ outline: 'none', bg: 'green.600' }}
-          >
-            <Flex align='center'>
-              <FaRegComment
-                style={{ marginRight: '6px', transform: 'scaleX(-1)' }}
-              />
-              Comentar
-            </Flex>
-          </Button>
-        </Flex>
-      </form>
-    </>
+    <form onSubmit={handleSubmit}>
+      <Flex flexDirection='column' alignItems='end' gap='2' p='2'>
+        <Textarea
+          placeholder='Deja un comentario...'
+          name='comment'
+          value={comment}
+          bg={bgColorInput}
+          rounded='lg'
+          h={{ base: '120px', md: '170px' }}
+          onChange={handleNameCollection}
+          _focus={{ bg: 'transparent' }}
+        />
+        <Box as='span' fontSize='xs' alignSelf='end' mb='2'>
+          {comment.length} / {maxChars}
+        </Box>
+        <Button
+          type='submit'
+          w={{ base: '100%', md: '165px' }}
+          bg='green.500'
+          color='black'
+          p='3'
+          border='1px'
+          rounded='lg'
+          textAlign='center'
+          isDisabled={!comment || comment.length >= maxChars}
+          isLoading={isPending}
+          loadingText={isPending ? 'Comentando...' : 'Comentar'}
+          _hover={{ outline: 'none', bg: 'green.600' }}
+        >
+          <Flex align='center'>
+            <FaRegComment style={{ marginRight: '6px', transform: 'scaleX(-1)' }} />
+            Comentar
+          </Flex>
+        </Button>
+      </Flex>
+    </form>
   );
 }

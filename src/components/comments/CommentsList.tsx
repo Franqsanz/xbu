@@ -29,7 +29,7 @@ import { useMyToast } from '@hooks/useMyToast';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 import { CommentEditor } from '@components/comments/CommentEditor';
 import { CommentReactions } from '@components/comments/CommentReactions';
-import { formatDate } from '@utils/utils';
+import { parseDate } from '@utils/utils';
 
 export function CommentsList({
   bookId,
@@ -105,9 +105,11 @@ export function CommentsList({
           <Text fontSize='md' color={emptyStateColor} textAlign='center'>
             No hay comentarios aún
           </Text>
-          <Text fontSize='sm' color={emptyStateColor} textAlign='center'>
-            ¡Sé el primero en comentar!
-          </Text>
+          {currentUser && (
+            <Text fontSize='sm' color={emptyStateColor} textAlign='center'>
+              ¡Sé el primero en comentar!
+            </Text>
+          )}
         </Flex>
       </Center>
     );
@@ -241,7 +243,7 @@ export function CommentsList({
                     flexDirection={{ base: 'column', sm: 'row' }}
                   >
                     <Box as='span' color={colorDate}>
-                      {formatDate(createdAt)}
+                      {parseDate(createdAt, 'short')}
                     </Box>
                     {isEdited && (
                       <Box as='span' color={colorDate}>

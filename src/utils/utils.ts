@@ -79,37 +79,27 @@ function isSpanish(language) {
   return spanishLanguage.includes(lowerCaseLanguage);
 }
 
-function parseDate(fechaISO: string) {
-  const fecha = new Date(fechaISO);
+function parseDate(
+  dateInput: string | Date,
+  options?: 'long' | 'short',
+): string | null {
+  const date = new Date(dateInput);
 
-  // Verificar si la fecha es válida
-  if (isNaN(fecha.getTime())) return null;
+  if (isNaN(date.getTime())) return null;
 
-  const opciones: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
+  let formato: Intl.DateTimeFormatOptions;
 
-  const formatoFecha = new Intl.DateTimeFormat('es-ES', opciones);
-
-  return formatoFecha.format(fecha);
-}
-
-function formatDate(dateString: string | Date): string {
-  const date = new Date(dateString);
-
-  if (isNaN(date.getTime())) {
-    return 'Fecha inválida';
+  if (options === 'short') {
+    formato = { day: 'numeric', month: 'short', year: 'numeric' };
+  } else {
+    formato = { day: 'numeric', month: 'long', year: 'numeric' };
   }
 
-  const formatted = new Intl.DateTimeFormat('es-ES', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  }).format(date);
+  const formatted = new Intl.DateTimeFormat('es-ES', formato).format(date);
 
-  return formatted.replace(/(\d{1,2} \w+)\s(\d{4})/, '$1, $2');
+  return options === 'short'
+    ? formatted.replace(/(\d{1,2} \w+)\s(\d{4})/, '$1, $2')
+    : formatted;
 }
 
 function sortArrayByLabel<T extends { label: string }>(array: T[]): T[] {
@@ -136,7 +126,6 @@ export {
   generatePathUrl,
   isSpanish,
   parseDate,
-  formatDate,
   sortArrayByLabel,
   capitalizeWords,
 };
