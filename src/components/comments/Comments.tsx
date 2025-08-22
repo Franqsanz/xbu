@@ -3,12 +3,15 @@ import { Box, Divider } from '@chakra-ui/react';
 import { CommentForm } from '@components/comments/CommentForm';
 import { CommentsList } from '@components/comments/CommentsList';
 import { useFindAllComments } from '@hooks/queries';
+import { useAuth } from '@contexts/AuthContext';
 
 type CommentType = {
   bookId: string;
 };
 
 export function Comments({ bookId }: CommentType) {
+  const { currentUser } = useAuth();
+
   const {
     data,
     isPending,
@@ -24,6 +27,7 @@ export function Comments({ bookId }: CommentType) {
       <Box mt='10' mb='5'>
         <Divider borderColor='gray.400' />
       </Box>
+
       <Box
         p='2'
         mb='3'
@@ -33,7 +37,9 @@ export function Comments({ bookId }: CommentType) {
       >
         Comentarios
       </Box>
-      <CommentForm bookId={bookId} refetch={() => refetch()} />
+
+      {currentUser && <CommentForm bookId={bookId} refetch={() => refetch()} />}
+
       <CommentsList
         bookId={bookId}
         commentsData={data}

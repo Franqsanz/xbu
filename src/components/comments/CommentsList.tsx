@@ -295,7 +295,7 @@ export function CommentsList({
                   {text}
                 </Text>
               )}
-              {editingCommentId !== _id && (
+              {editingCommentId !== _id && currentUser && (
                 <CommentReactions
                   likesCount={likesCount}
                   dislikesCount={dislikesCount}
