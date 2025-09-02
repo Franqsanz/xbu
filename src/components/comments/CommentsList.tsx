@@ -10,6 +10,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Spinner,
   Text,
   useColorModeValue,
   useDisclosure,
@@ -90,7 +91,7 @@ export function CommentsList({
   if (isPending) {
     return (
       <Center mt='5' p='8'>
-        <Text color={emptyStateColor}>Cargando comentarios...</Text>
+        <Spinner size='lg' />
       </Center>
     );
   }

@@ -23,7 +23,7 @@ export function CommentForm({ bookId, refetch }: CommentType) {
   const myToast = useMyToast();
   const { mutateAsync, isPending } = usePostComment();
 
-  function handleNameCollection(e: ChangeEvent<HTMLTextAreaElement>) {
+  function handleComment(e: ChangeEvent<HTMLTextAreaElement>) {
     const { value } = e.target;
     if (value.length <= maxChars) setComment(value); // limita a 1500 caracteres
   }
@@ -68,7 +68,7 @@ export function CommentForm({ bookId, refetch }: CommentType) {
           bg={bgColorInput}
           rounded='lg'
           h={{ base: '120px', md: '170px' }}
-          onChange={handleNameCollection}
+          onChange={handleComment}
           _focus={{ bg: 'transparent' }}
         />
         <Box as='span' fontSize='xs' alignSelf='end' mb='2'>

@@ -25,6 +25,8 @@ XBuniverse es un sitio web dedicado a los amantes de la lectura y la literatura.
 
 * **Crear colecciones de libros**: Permite organizar libros en colecciones personalizadas según las preferencias del usuario.
 
+* **Crear comentarios:** Permite a los usuarios dejar comentarios en cada libro, con la posibilidad de editarlos, eliminarlos y gestionar reacciones (likes/dislikes) tanto en comentarios propios como de otros usuarios.
+
 ¡Únete a XBuniverse y sumérgete en el fascinante mundo de la lectura! Explora y comparte.
 
 ---

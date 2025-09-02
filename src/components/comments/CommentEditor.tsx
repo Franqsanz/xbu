@@ -1,5 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import { Box, Button, HStack, Textarea, useColorModeValue } from '@chakra-ui/react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Textarea,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { AiOutlineSave } from 'react-icons/ai';
 
 import { EditorType } from '@components/types';
@@ -13,6 +20,12 @@ export function CommentEditor({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const borderCard = useColorModeValue('gray.200', 'gray.600');
   const [text, setText] = useState(initialText);
+  const maxChars = 1500;
+
+  function handleComment(e: ChangeEvent<HTMLTextAreaElement>) {
+    setText(e.target.value);
+    if (textareaRef.current) autoResize(textareaRef.current);
+  }
 
   function autoResize(textarea: HTMLTextAreaElement) {
     textarea.style.height = 'auto';
@@ -34,7 +47,7 @@ export function CommentEditor({
   }, []);
 
   return (
-    <Box px={{ base: 3, sm: 6 }} py='3'>
+    <Flex direction='column' px={{ base: 3, sm: 6 }} py='3'>
       <Textarea
         ref={textareaRef}
         value={text}
@@ -43,15 +56,15 @@ export function CommentEditor({
         minH='100px'
         fontSize='sm'
         mb='3'
-        onChange={(e) => {
-          setText(e.target.value);
-          if (textareaRef.current) autoResize(textareaRef.current);
-        }}
+        onChange={handleComment}
         onKeyDown={(e) => {
           if (e.key === 'Escape') onCancel();
           if (e.key === 'Enter' && e.ctrlKey) onSave(text.trim());
         }}
       />
+      <Box as='span' fontSize='xs' alignSelf='end' mb='2'>
+        {text.length} / {maxChars}
+      </Box>
       <HStack
         spacing='2'
         justify='flex-end'
@@ -83,6 +96,6 @@ export function CommentEditor({
           Guardar
         </Button>
       </HStack>
-    </Box>
+    </Flex>
   );
 }
