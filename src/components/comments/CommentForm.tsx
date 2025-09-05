@@ -9,10 +9,9 @@ import { useMyToast } from '@hooks/useMyToast';
 
 type CommentType = {
   bookId: string;
-  refetch: () => void;
 };
 
-export function CommentForm({ bookId, refetch }: CommentType) {
+export function CommentForm({ bookId }: CommentType) {
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const [comment, setComment] = useState('');
   const maxChars = 1500;
@@ -41,7 +40,6 @@ export function CommentForm({ bookId, refetch }: CommentType) {
       });
 
       setComment('');
-      refetch();
     } catch (error) {
       myToast({
         title: 'Error al enviar el comentario',

@@ -44,7 +44,7 @@ import {
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
-import { BookType } from '@components/types';
+import { BookType, CommentType } from '@components/types';
 import { queryClient } from '../config';
 // import { useAuth } from '@contexts/AuthContext';
 
@@ -433,7 +433,7 @@ function useFindAllComments(bookId: string) {
 
 function usePostComment() {
   return useMutation({
-    mutationKey: ['postComment'],
+    mutationKey: [keys.postComment],
     mutationFn: ({
       text,
       author,
@@ -446,8 +446,80 @@ function usePostComment() {
       };
       bookId: string;
     }) => postComment(text, author, bookId),
-    onError: async (error) => {
-      console.error('Error en el servidor');
+
+    onMutate: async (newComment) => {
+      const { bookId } = newComment;
+
+      await queryClient.cancelQueries({
+        queryKey: [keys.allComments, bookId],
+      });
+
+      const previousComments = queryClient.getQueryData([keys.allComments, bookId]);
+
+      // Crear un comentario optimista con ID temporal
+      const optimisticComment = {
+        id: `temp-${Date.now()}`,
+        text: newComment.text,
+        author: {
+          userId: newComment.author.userId,
+          username: newComment.author.username,
+        },
+        bookId: newComment.bookId,
+        createdAt: new Date().toISOString(),
+      };
+
+      queryClient.setQueryData([keys.allComments, bookId], (oldData: any) => {
+        if (!oldData || !oldData.pages || oldData.pages.length === 0) {
+          return {
+            pages: [
+              {
+                info: {
+                  totalBooks: 1,
+                  totalPages: 1,
+                  currentPage: 1,
+                  nextPage: null,
+                },
+                results: [optimisticComment],
+              },
+            ],
+            pageParams: [0],
+          };
+        }
+
+        // Si hay datos, agregar el comentario a la primera página
+        const updatedPages = [...oldData.pages];
+
+        updatedPages[0] = {
+          ...updatedPages[0],
+          results: [optimisticComment, ...updatedPages[0].results],
+        };
+
+        const newData = {
+          ...oldData,
+          pages: updatedPages,
+        };
+
+        return newData;
+      });
+
+      return { previousComments, bookId };
+    },
+
+    onError: (err, newComment, context) => {
+      // Revertir al estado anterior si hay error
+      if (context) {
+        queryClient.setQueryData(
+          [keys.allComments, context.bookId],
+          context.previousComments,
+        );
+      }
+    },
+
+    onSettled: async (data, error, variables) => {
+      // Invalidar y refrescar los comentarios después de la mutación
+      await queryClient.invalidateQueries({
+        queryKey: [keys.allComments, variables.bookId],
+      });
     },
   });
 }

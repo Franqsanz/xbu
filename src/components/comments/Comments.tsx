@@ -41,7 +41,7 @@ export function Comments({ bookId }: CommentType) {
           Nuevo
         </Tag>
       </Flex>
-      {currentUser && <CommentForm bookId={bookId} refetch={() => refetch()} />}
+      {currentUser && <CommentForm bookId={bookId} />}
       <CommentsList
         bookId={bookId}
         commentsData={data}
