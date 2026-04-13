@@ -71,7 +71,7 @@ export function FormEdit({
   const bgColorButton = useColorModeValue('green.500', 'green.700');
   const { fileInputRef, handleButtonClick } = useFileInputRef();
   const [cropData, setCropData] = useState<string | null>(null);
-  const [previewImg, setPreviewImg] = useState<Blob | MediaSource | null>(null);
+  const [previewImg, setPreviewImg] = useState<Blob | null>(null);
   const [crop, setCrop] = useState<any>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [books, setBooks] = useState<BookType>({
@@ -94,7 +94,7 @@ export function FormEdit({
   });
 
   const { mutateAsync, isPending, isSuccess, error } = useUpdateBook(books);
-  useGenerateSlug(books.title, setBooks); // Genera el pathUrl (Slug)
+  useGenerateSlug(books.title, setBooks);
 
   function allFieldsBook(book: BookType): boolean {
     return (
@@ -141,7 +141,6 @@ export function FormEdit({
 
   async function onSubmit() {
     setIsSubmitting(true);
-
     try {
       await mutateAsync(books.id);
     } catch (error) {
@@ -178,7 +177,7 @@ export function FormEdit({
           h='360px'
           m='auto'
           rounded='lg'
-          src={previewImg ? URL.createObjectURL(previewImg) : ''}
+          src={URL.createObjectURL(previewImg)}
           alt='Preview'
         />
       </Box>
@@ -190,7 +189,7 @@ export function FormEdit({
           h='360px'
           m='auto'
           rounded='lg'
-          src={books.image?.url as string}
+          src={books.image.url as string}
           alt='Preview'
         />
       </Box>
@@ -211,7 +210,6 @@ export function FormEdit({
       fntSize: 'md',
       bxSize: 5,
     });
-
     navigate('/explore', { replace: true });
   } else if (error) {
     myToast({
@@ -596,12 +594,7 @@ export function FormEdit({
                   onChange={handleRatingChange}
                 />
               </FormControl>
-              <Box
-                // justify='space-evenly'
-                // direction='column'
-                // gap='4'
-                mt={{ base: 10, md: '22rem' }}
-              >
+              <Box mt={{ base: 10, md: '22rem' }}>
                 <Button
                   type='submit'
                   w='full'
@@ -620,20 +613,6 @@ export function FormEdit({
                     Guardar
                   </Flex>
                 </Button>
-                {/* <Button
-                    // w='full'
-                    size='lg'
-                    // border='1px'
-                    // bg={bgColorButton}
-                    // color='black'
-                    // _hover={{ bg: 'green.600' }}
-                    // _active={{ bg: 'green.600' }}
-                >
-                  <Flex align='center' justify='center'>
-                    <Icon as={AiOutlineSave} fontSize='25' mr='2' />
-                    Cancelar
-                  </Flex>
-                </Button> */}
               </Box>
             </Box>
           </Flex>

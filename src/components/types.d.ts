@@ -82,7 +82,7 @@ interface BookType {
   pathUrl?: string;
   image: {
     // url: string | number[];
-    url: Blob | null;
+    url: string | Blob | null;
     public_id: string;
   };
   userId?: string | undefined;

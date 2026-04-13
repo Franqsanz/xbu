@@ -31,7 +31,7 @@ export function ModalForm({
   const bgColorBox = useColorModeValue('white', 'gray.900');
 
   const img = {
-    url: image?.url || [],
+    url: image?.url || null,
     public_id: image?.public_id || '',
   };
 
