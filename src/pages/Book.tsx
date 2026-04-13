@@ -59,7 +59,6 @@ const MoreBooks = lazy(() => import('@components/cards/MoreBooks'));
 export default function Book() {
   const shareUrl = window.location.href;
   const { pathname } = useLocation();
-  const getToken = window.localStorage.getItem('app_tk');
   const { pathUrl } = useParams();
   const { currentUser } = useAuth();
   const grayColor = useColorModeValue('gray.200', 'gray.600');
@@ -68,7 +67,7 @@ export default function Book() {
   const bgButton = useColorModeValue('white', 'black');
   const navigate = useNavigate();
   const myToast = useMyToast();
-  const { data } = useBook(pathUrl, getToken);
+  const { data } = useBook(pathUrl);
   const {
     isOpen: isOpenOptions,
     onOpen: onOpenOptions,

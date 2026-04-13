@@ -17,8 +17,6 @@ export function FormCreateUser() {
   const [username, setUsername] = useState<string>('');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
   const navigate = useNavigate();
-  const location = useLocation();
-  const { token } = location.state;
   const { mutateAsync, data, isPending, isSuccess } = useUserRegister(username);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -29,7 +27,7 @@ export function FormCreateUser() {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    mutateAsync(token);
+    mutateAsync();
   }
 
   if (isSuccess) {

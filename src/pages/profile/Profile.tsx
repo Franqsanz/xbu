@@ -36,7 +36,6 @@ import { FiArrowLeft } from 'react-icons/fi';
 export function Profile() {
   const bgCover = useColorModeValue('gray.100', 'gray.700');
   const { ref, inView } = useInView();
-  const getToken = window.localStorage.getItem('app_tk');
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
   const { username } = useParams();
@@ -47,7 +46,7 @@ export function Profile() {
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
-  } = useProfile(username, uid, getToken);
+  } = useProfile(username, uid);
   const { data: userData, refetch } = useCheckUser(uid);
   const createdAt = parseDate(userData?.createdAt);
   let asideAndCardsUI;

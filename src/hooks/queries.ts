@@ -668,15 +668,9 @@ function useDeleteComment() {
 }
 
 function useDeleteAccount() {
-  // const { logOut } = useAccountActions();
-
   return useMutation({
     mutationKey: [keys.deleteAccount],
     mutationFn: (id: string | undefined) => deleteAccount(id),
-    onError: async (error) => {
-      console.error('Error en el servidor');
-      // await logOut();
-    },
   });
 }
 

@@ -18,17 +18,14 @@ import { useAccountActions } from '@hooks/useAccountActions';
 import { MenuType } from '@components/types';
 
 export function MenuProfile({ displayName, photoURL, username }: MenuType) {
-  const navigate = useNavigate();
   const { logOut } = useAccountActions();
   const colorBorder = useColorModeValue('black', 'white');
 
   async function handleLogout() {
     try {
       await logOut();
-
-      navigate('/login', { replace: true });
     } catch (err) {
-      console.error('Error en logout:', err);
+      // silent fail
     }
   }
 

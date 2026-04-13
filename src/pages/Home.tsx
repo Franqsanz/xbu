@@ -25,10 +25,12 @@ import {
   ImgBook,
   BookReading,
 } from '@assets/assets';
+import { useLogin } from '@hooks/queries';
 
 export default function Home() {
   const { colorMode } = useColorMode();
   const { userData } = useAuth();
+  const { mutate } = useLogin();
   const bgButton = useColorModeValue('green.500', 'green.700');
   const bContainer = useColorModeValue('gray.50', 'none');
   const height = useBreakpointValue({
@@ -127,6 +129,7 @@ export default function Home() {
                   <Icon as={FiArrowRight} ml='2' />
                 </Flex>
               </Link>
+              {/* <button onClick={testCookie}>test</button> */}
             </Flex>
           </Box>
         </Box>

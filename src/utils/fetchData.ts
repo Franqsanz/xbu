@@ -12,10 +12,16 @@ export async function fetchData(
 
     headers['X-Api-Key'] = import.meta.env.VITE_XB_API_KEY;
 
-    // Actualizar las options
+    // Agregar content-type si hay body y no es FormData
+    if (options.body && !(options.body instanceof FormData)) {
+      headers['content-type'] = 'application/json';
+    }
+
+    // Actualizar las options con credentials globales
     const updatedOptions = {
       ...options,
       headers,
+      credentials: 'include' as const,
     };
 
     const res = await fetch(url, updatedOptions);

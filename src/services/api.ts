@@ -247,9 +247,17 @@ async function postLogout() {
 }
 
 async function getCheckUser() {
-  return await fetchData(`${API_URL}/users/check-user`, {
-    credentials: 'include',
-  });
+  try {
+    return await fetchData(`${API_URL}/users/check-user`, {
+      credentials: 'include',
+    });
+  } catch (error) {
+    // Si el usuario es nuevo (404), retorna objeto vacío en lugar de error
+    if (error instanceof Error && error.message.includes('404')) {
+      return { uid: null, username: null };
+    }
+    throw error;
+  }
 }
 
 async function getUserAndBooks(

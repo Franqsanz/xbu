@@ -1,97 +1,99 @@
 import React, { useState, useEffect } from 'react';
 import { Button, useColorModeValue } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { GrGoogle } from 'react-icons/gr';
+import { FcGoogle } from 'react-icons/fc';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-// import Cookies from 'js-cookie';
 
 import { logIn } from './config';
 import { useCheckUser } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
 import { useAccountActions } from '@hooks/useAccountActions';
+import { postLogin } from '@services/api';
 
 export function SignIn() {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const { logOut } = useAccountActions();
-  const [userId, setUserId] = useState('');
-  const { data, isPending, error, refetch } = useCheckUser(userId);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const { data, isPending, refetch } = useCheckUser();
+
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
 
   async function SignInWithGoogle() {
     try {
+      setIsAuthenticating(true);
       const result = await signInWithPopup(logIn, provider);
 
       if (result) {
-        const token = await result.user.getIdToken(true);
-        await window.localStorage.setItem('app_tk', token);
-        // Cookies.set('app_tk', token);
-        // document.cookie = `app_tk=${token}; SameSite=None; path=/;`;
+        const idToken = await result.user.getIdToken(true);
+        await postLogin(idToken);
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+        await refetch();
       }
     } catch (error) {
+      setIsAuthenticating(false);
       await DisconnectFirebaseAccount();
-      console.warn(error);
     }
   }
 
   useEffect(() => {
-    if (currentUser) {
-      function checkUserData() {
-        setUserId(currentUser?.uid as string);
-      }
-      checkUserData();
-    }
-  }, [currentUser]);
-
-  useEffect(() => {
-    if (userId) {
-      refetch();
-    }
-  }, [userId]);
-
-  useEffect(() => {
-    function performNavigation() {
-      if (!isPending && (!data || data.uid === null)) {
+    if (!isPending && data) {
+      if (data.uid === null || !data.username) {
         navigate('/create-username', {
-          state: { token: window.localStorage.getItem('app_tk') },
+          state: { userId: currentUser?.uid },
         });
-      }
-
-      if (data?.username) {
-        navigate(`/profile/${data.username}`);
+      } else if (data.username) {
+        setIsAuthenticating(false);
+        window.location.href = `/profile/${data.username}`;
       }
     }
-
-    performNavigation(); // Llama la función dentro del useEffect
-  }, [data, isPending, navigate]);
+  }, [data, isPending, navigate, currentUser]);
 
   async function DisconnectFirebaseAccount() {
-    // const { currentUser } = useAuth();
-
     try {
       await logOut();
-      // await currentUser?.delete(); // Elimina la cuenta de Firebase
     } catch (error) {
-      console.error('Error al desconectar la cuenta de Firebase:', error);
+      // silent fail
     }
   }
 
   return (
     <>
       <Button
-        fontWeight='normal'
-        leftIcon={<GrGoogle size='20px' />}
-        bg={useColorModeValue('#EA4335', '#EE685D')}
-        color={useColorModeValue('white', 'black')}
-        borderRadius='lg'
-        p='6'
+        w='full'
+        h='48px'
+        fontWeight='500'
         fontSize='md'
-        _hover={{ bg: '#D23C2F' }}
-        _active={{ bg: '#BB352A' }}
+        leftIcon={<FcGoogle size='24px' />}
+        bg={useColorModeValue('#ffffff', '#1F2937')}
+        color={useColorModeValue('#202124', '#E5E7EB')}
+        border='1px solid'
+        borderColor={useColorModeValue('#E0E0E0', '#404854')}
+        borderRadius='8px'
+        transition='all 0.2s ease'
+        boxShadow={useColorModeValue(
+          '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
+          '0 1px 2px rgba(0,0,0,0.3)',
+        )}
+        _hover={{
+          bg: useColorModeValue('#F8F9FA', '#2D3748'),
+          boxShadow: useColorModeValue(
+            '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.25)',
+            '0 1px 3px rgba(0,0,0,0.4)',
+          ),
+          transform: 'translateY(-1px)',
+        }}
+        _active={{
+          transform: 'translateY(0)',
+          boxShadow: useColorModeValue(
+            '0 1px 2px 0 rgba(60,64,67,0.2)',
+            '0 1px 2px rgba(0,0,0,0.2)',
+          ),
+        }}
         onClick={SignInWithGoogle}
         loadingText='Redirigiendo...'
-        isLoading={!isPending}
+        isLoading={isAuthenticating}
       >
         Continuar con Google
       </Button>
