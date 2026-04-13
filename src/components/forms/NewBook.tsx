@@ -54,8 +54,7 @@ export function FormNewBook() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const myToast = useMyToast();
   const { currentUser } = useAuth();
-  const userId = currentUser?.uid;
-  const { data, refetch } = useCheckUser(userId);
+  const { data, refetch } = useCheckUser();
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
   const { fileInputRef, handleButtonClick } = useFileInputRef();

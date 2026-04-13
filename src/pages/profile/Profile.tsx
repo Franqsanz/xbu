@@ -47,7 +47,7 @@ export function Profile() {
     isFetchingNextPage,
     hasNextPage,
   } = useProfile(username, uid);
-  const { data: userData, refetch } = useCheckUser(uid);
+  const { data: userData, refetch } = useCheckUser();
   const createdAt = parseDate(userData?.createdAt);
   let asideAndCardsUI;
   let fetchingNextPageUI;

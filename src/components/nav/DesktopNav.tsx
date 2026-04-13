@@ -24,7 +24,7 @@ import { useCheckUser } from '@hooks/queries';
 export function DesktopNav() {
   const { currentUser, userData } = useAuth();
   const uid = currentUser?.uid;
-  const { refetch } = useCheckUser(uid);
+  const { refetch } = useCheckUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');

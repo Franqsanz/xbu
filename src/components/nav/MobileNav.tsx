@@ -35,7 +35,7 @@ import { currentYear } from '@utils/utils';
 export function MobileNav() {
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
-  const { data, refetch } = useCheckUser(uid);
+  const { data, refetch } = useCheckUser();
   const containerRef = useRef<HTMLDivElement>(null);
   const { colorMode, toggleColorMode } = useColorMode();
   const {
