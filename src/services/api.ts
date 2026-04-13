@@ -10,20 +10,14 @@ async function getAllSearchBooks(book: string) {
 }
 
 async function getBooksPaginate(page: number | undefined) {
-  return await fetchData(`${API_URL}/books?limit=10&page=${page}`);
+  return await fetchData(`${API_URL}/books?limit=10&page=${page}`, {
+    credentials: 'include',
+  });
 }
 
-async function getBook(pathUrl: string | undefined, token?: string | null) {
-  const headers = new Headers();
-  headers.append('content-type', 'application/json');
-
-  if (token) {
-    headers.append('Authorization', `Bearer ${token}`);
-  }
-
+async function getBook(pathUrl: string | undefined) {
   return await fetchData(`${API_URL}/books/path/${pathUrl}`, {
     method: 'GET',
-    headers: Object.fromEntries(headers),
   });
 }
 
@@ -56,7 +50,9 @@ async function getMoreBooksAuthors(id: string | undefined) {
 }
 
 async function getAllFilterOptions() {
-  return await fetchData(`${API_URL}/books/options`);
+  return await fetchData(`${API_URL}/books/options`, {
+    credentials: 'include',
+  });
 }
 
 async function patchToggleFavorite(
@@ -66,23 +62,28 @@ async function patchToggleFavorite(
 ) {
   return await fetchData(`${API_URL}/users/favorites`, {
     method: 'PATCH',
-    headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ userId, id: body, isFavorite }),
   });
 }
 
 async function getFindAllCollections(userId: string | undefined) {
-  return await fetchData(`${API_URL}/users/collections/${userId}`);
+  return await fetchData(`${API_URL}/users/collections/${userId}`, {
+    credentials: 'include',
+  });
 }
 
 async function getCollectionsForUser(userId: string | undefined, bookId: string) {
-  return await fetchData(`${API_URL}/users/collections/${userId}/summary/${bookId}`);
+  return await fetchData(
+    `${API_URL}/users/collections/${userId}/summary/${bookId}`,
+    {
+      credentials: 'include',
+    },
+  );
 }
 
 async function postCollections(userId: string | undefined, body: any) {
   return await fetchData(`${API_URL}/users/collections/${userId}`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ name: body }),
   });
 }
@@ -99,7 +100,6 @@ async function patchToggleBookInCollection(
 ) {
   return await fetchData(`${API_URL}/users/collections/books/toggle`, {
     method: 'PATCH',
-    headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
       userId,
       collections,
@@ -116,7 +116,6 @@ async function patchCollectionsName(
 ) {
   return await fetchData(`${API_URL}/users/collections/collection/${collectionId}`, {
     method: 'PATCH',
-    headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ userId, name }),
   });
 }
@@ -144,7 +143,6 @@ async function patchRemoveBookFromCollection(
 ) {
   return await fetchData(`${API_URL}/users/collections/remove`, {
     method: 'PATCH',
-    headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
       userId,
       collectionId,
@@ -154,18 +152,69 @@ async function patchRemoveBookFromCollection(
 }
 
 async function postBook(books: any) {
+  const formData = new FormData();
+
+  if (books.image.blob instanceof Blob) {
+    formData.append('image', books.image.blob, 'image.webp');
+  }
+
+  const bookData = {
+    title: books.title,
+    authors: books.authors,
+    synopsis: books.synopsis,
+    year: books.year,
+    category: books.category,
+    numberPages: books.numberPages,
+    sourceLink: books.sourceLink,
+    language: books.language,
+    format: books.format,
+    pathUrl: books.pathUrl,
+    userId: books.userId,
+    rating: books.rating,
+    image: {
+      public_id: '',
+    },
+  };
+
+  formData.append('bookData', JSON.stringify(bookData));
+
   return await fetchData(`${API_URL}/books`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(books),
+    body: formData,
   });
 }
 
 async function updateBook(id: string | undefined, books: any) {
+  const formData = new FormData();
+
+  if (books.image.blob instanceof Blob) {
+    formData.append('image', books.image.blob, 'image.webp');
+  }
+
+  const bookData = {
+    title: books.title,
+    authors: books.authors,
+    synopsis: books.synopsis,
+    year: books.year,
+    category: books.category,
+    numberPages: books.numberPages,
+    sourceLink: books.sourceLink,
+    language: books.language,
+    format: books.format,
+    pathUrl: books.pathUrl,
+    userId: books.userId,
+    rating: books.rating,
+    image: {
+      url: books.image.url,
+      public_id: books.image.public_id || '',
+    },
+  };
+
+  formData.append('bookData', JSON.stringify(bookData));
+
   return await fetchData(`${API_URL}/books/${id}`, {
     method: 'PATCH',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(books),
+    body: formData,
   });
 }
 
@@ -177,45 +226,41 @@ async function deleteBook(id: string | undefined) {
 
 // Usuarios
 
-async function postRegister(token: string, body: any) {
+async function postLogin(token: string) {
+  return await fetchData(`${API_URL}/auth/login`, {
+    method: 'POST',
+    body: JSON.stringify({ idToken: token }),
+  });
+}
+
+async function postRegister(body: any) {
   return await fetchData(`${API_URL}/auth/register`, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'content-type': 'application/json',
-    },
     body: JSON.stringify({ username: body }),
   });
 }
 
-async function postLogout(token: string | undefined) {
+async function postLogout() {
   return await fetchData(`${API_URL}/auth/logout`, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'content-type': 'application/json',
-    },
   });
 }
 
-async function getCheckUser(id: string | undefined) {
-  return await fetchData(`${API_URL}/users/check-user/${id}`);
+async function getCheckUser() {
+  return await fetchData(`${API_URL}/users/check-user`, {
+    credentials: 'include',
+  });
 }
 
 async function getUserAndBooks(
   username: string | undefined,
   userId: string | undefined,
-  token: string | null,
   page: number | undefined,
 ) {
   return await fetchData(
     `${API_URL}/users/${userId}/${username}/books?limit=10&page=${page}`,
     {
       method: 'GET',
-      credentials: 'include',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     },
   );
 }
@@ -242,7 +287,6 @@ async function postComment(
 ) {
   return await fetchData(`${API_URL}/users/comments/comment`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
       text,
       author,
@@ -260,7 +304,6 @@ async function updateComment(
     `${API_URL}/users/comments/comment/${commentId}/${userId}`,
     {
       method: 'PATCH',
-      headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ text }),
     },
   );
@@ -275,7 +318,6 @@ async function postReactions(
     `${API_URL}/users/comments/comment/${commentId}/${userId}/reaction`,
     {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ type }),
     },
   );
@@ -327,6 +369,7 @@ export {
   deleteComment,
 
   // Usuarios
+  postLogin,
   postRegister,
   postLogout,
   getCheckUser,

@@ -81,7 +81,8 @@ interface BookType {
   format: string;
   pathUrl?: string;
   image: {
-    url: string | number[];
+    // url: string | number[];
+    url: Blob | null;
     public_id: string;
   };
   userId?: string | undefined;
@@ -192,7 +193,6 @@ interface MenuType {
 interface AuthContextType {
   currentUser: User | null;
   loading: boolean;
-  token: string;
   userData: any;
 }
 

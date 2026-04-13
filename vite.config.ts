@@ -85,16 +85,23 @@ export default defineConfig({
   },
   server: {
     port: 1010,
+    proxy: {
+      '/api': {
+        target: 'https://xbu-api.onrender.com',
+        changeOrigin: true,
+        secure: true,
+      },
+    },
   },
-  esbuild: {
-    drop: ['console', 'debugger'],
-  },
+  // esbuild: {
+  //   drop: ['console', 'debugger'],
+  // },
   build: {
     outDir: './dist',
     chunkSizeWarningLimit: 1500,
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
+        manualChunks: (id: any) => {
           // if (id.includes('commonjsHelpers')) return 'commonjsHelpers';
           if (id.includes('node_modules')) return 'vendor';
         },

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import pako from 'pako';
+
 import { MyChangeEvent } from '@components/types';
 
 function handleInputChange(
@@ -96,32 +96,54 @@ async function handleImage(e, setCropData, onOpen) {
   onOpen();
 }
 
+// async function getCrop(crop, setPreviewImg, books, setBooks, onClose) {
+//   if (typeof crop !== "undefined") {
+//     const croppedCanvas = crop.getCroppedCanvas();
+//     croppedCanvas.toBlob((blob) => {
+//       setPreviewImg(blob);
+
+//       if (blob) {
+//         const reader = new FileReader();
+//         reader.onload = function () {
+//           const arrayBuffer = reader.result as ArrayBuffer;
+//           const uint8Array = new Uint8Array(arrayBuffer);
+//           const compressedArrayBuffer = pako.deflate(uint8Array);
+//           const byteArray = [...new Uint8Array(compressedArrayBuffer)];
+//           const publicId = books.image.public_id;
+//           const pId = publicId.replace("xbu/", "");
+
+//           setBooks((prevBooks) => ({
+//             ...prevBooks,
+//             image: {
+//               url: byteArray,
+//               public_id: pId,
+//             },
+//           }));
+//         };
+//         reader.readAsArrayBuffer(blob);
+
+//         onClose();
+//       }
+//     }, "image/webp");
+//   }
+// }
+
 async function getCrop(crop, setPreviewImg, books, setBooks, onClose) {
   if (typeof crop !== 'undefined') {
     const croppedCanvas = crop.getCroppedCanvas();
     croppedCanvas.toBlob((blob) => {
       setPreviewImg(blob);
-
       if (blob) {
-        const reader = new FileReader();
-        reader.onload = function () {
-          const arrayBuffer = reader.result as ArrayBuffer;
-          const uint8Array = new Uint8Array(arrayBuffer);
-          const compressedArrayBuffer = pako.deflate(uint8Array);
-          const byteArray = [...new Uint8Array(compressedArrayBuffer)];
-          const publicId = books.image.public_id;
-          const pId = publicId.replace('xbu/', '');
+        const publicId = books.image.public_id;
+        const pId = publicId.replace('xbu/', '');
 
-          setBooks((prevBooks) => ({
-            ...prevBooks,
-            image: {
-              url: byteArray,
-              public_id: pId,
-            },
-          }));
-        };
-        reader.readAsArrayBuffer(blob);
-
+        setBooks((prevBooks) => ({
+          ...prevBooks,
+          image: {
+            blob: blob,
+            public_id: pId,
+          },
+        }));
         onClose();
       }
     }, 'image/webp');

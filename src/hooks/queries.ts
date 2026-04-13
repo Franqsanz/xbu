@@ -3,7 +3,6 @@ import {
   useSuspenseQuery,
   useMutation,
   useInfiniteQuery,
-  QueryClient,
 } from '@tanstack/react-query';
 
 import {
@@ -41,6 +40,7 @@ import {
   postReactions,
   deleteComment,
   updateComment,
+  postLogin,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { keys } from '@utils/utils';
@@ -195,10 +195,10 @@ function useMoreBooksAuthors(id: string | undefined) {
   });
 }
 
-function useBook(pathUrl: string | undefined, token?: string | null) {
+function useBook(pathUrl: string | undefined) {
   return useSuspenseQuery({
     queryKey: [keys.one, pathUrl],
-    queryFn: () => getBook(pathUrl, token),
+    queryFn: () => getBook(pathUrl),
     refetchOnWindowFocus: false,
     gcTime: 0,
     retry: 1,
@@ -215,14 +215,20 @@ function useFavoriteBook(body: any, isFavorite: boolean) {
 
 // Usuarios
 
+function useLogin() {
+  return useMutation({
+    mutationKey: ['login'],
+    mutationFn: (token: string) => postLogin(token),
+  });
+}
+
 function useUserRegister(body: any) {
   const { logOut } = useAccountActions();
 
   return useMutation({
     mutationKey: [keys.userRegister],
-    mutationFn: (token: string) => postRegister(token, body),
+    mutationFn: () => postRegister(body),
     onError: async (error) => {
-      console.error('Error en el servidor');
       await logOut();
     },
   });
@@ -231,17 +237,14 @@ function useUserRegister(body: any) {
 function useUserLogout() {
   return useMutation({
     mutationKey: [keys.userLogout],
-    mutationFn: (token: string | undefined) => postLogout(token),
-    onError: async (error) => {
-      console.error('Error en el servidor');
-    },
+    mutationFn: () => postLogout(),
   });
 }
 
-function useCheckUser(id: string | undefined) {
+function useCheckUser() {
   return useQuery({
-    queryKey: [keys.checkUser, id],
-    queryFn: () => getCheckUser(id),
+    queryKey: [keys.checkUser],
+    queryFn: getCheckUser,
     gcTime: 0,
     enabled: false,
     refetchOnWindowFocus: false,
@@ -249,31 +252,27 @@ function useCheckUser(id: string | undefined) {
   });
 }
 
-function useUserData(id: string | undefined) {
+function useUserData() {
   return useQuery({
-    queryKey: [keys.userData, id],
-    queryFn: () => getCheckUser(id),
+    queryKey: [keys.userData],
+    queryFn: getCheckUser,
     gcTime: 0,
     staleTime: 0,
     retry: false,
   });
 }
 
-function useProfile(
-  username: string | undefined,
-  userId: string | undefined,
-  token: string | null,
-) {
+function useProfile(username: string | undefined, userId: string | undefined) {
   return useInfiniteQuery({
-    queryKey: [keys.profile, username, userId, token],
-    queryFn: ({ pageParam }) => getUserAndBooks(username, userId, token, pageParam),
+    queryKey: [keys.profile, username, userId],
+    queryFn: ({ pageParam }) => getUserAndBooks(username, userId, pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       if (lastPage.info.nextPage === null) return;
 
       return lastPage.info.nextPage;
     },
-    enabled: !!token,
+    enabled: !!userId,
     gcTime: 0,
     staleTime: 0,
     retry: false,
@@ -710,6 +709,7 @@ export {
   useDeleteComment,
 
   // Usuarios
+  useLogin,
   useUserRegister,
   useUserLogout,
   useCheckUser,

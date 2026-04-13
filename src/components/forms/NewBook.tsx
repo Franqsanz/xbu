@@ -76,7 +76,7 @@ export function FormNewBook() {
     format: '',
     pathUrl: '',
     image: {
-      url: [],
+      url: null as Blob | null,
       public_id: '',
     },
     userId: currentUser?.uid,
