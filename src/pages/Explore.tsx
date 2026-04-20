@@ -9,7 +9,7 @@ export function Explore() {
   return (
     <>
       <MainHead
-        title='Explorar | XBuniverse'
+        title='Explorar | XBuReads'
         description='¡Explora cientos de libros!'
       />
       <ContainerTitle title='Explorar' />

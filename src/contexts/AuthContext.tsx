@@ -1,59 +1,68 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-
 import { useQueryClient } from '@tanstack/react-query';
+
 import { AuthContextType, AuthProviderType } from '@components/types';
 import { getCheckUser } from '@services/api';
 import { SplashScreen } from '@components/ui/SplashScreen';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+type AuthState = {
+  currentUser: User | null;
+  userData: any | null;
+  loading: boolean;
+};
+
 function AuthProvider({ children }: AuthProviderType) {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState<any | null>(null);
+  const [authState, setAuthState] = useState<AuthState>({
+    currentUser: null,
+    userData: null,
+    loading: true,
+  });
+
   const auth = getAuth();
   const queryClient = useQueryClient();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setCurrentUser(user);
+      let userData = null;
 
       if (user) {
-        const uid = user?.uid;
-
         try {
-          await queryClient.prefetchQuery({
+          const uid = user.uid;
+
+          userData = await queryClient.fetchQuery({
             queryKey: ['UserData', uid],
             queryFn: getCheckUser,
+            staleTime: 1000 * 60 * 5,
           });
-
-          const data = queryClient.getQueryData(['UserData', uid]);
-          if (data) setUserData(data);
         } catch (error) {
-          // silent fail on user data load
+          // si falla (ej: 401), lo tratamos como no logueado
+          userData = null;
         }
-      } else {
-        setUserData(null);
       }
 
-      setLoading(false);
+      // 🔥 UN SOLO setState → evita múltiples renders
+      setAuthState({
+        currentUser: user,
+        userData,
+        loading: false,
+      });
     });
 
-    return () => {
-      unsubscribe();
-    };
-  }, [queryClient, auth]);
+    return () => unsubscribe();
+  }, [auth, queryClient]);
 
   const value: AuthContextType = {
-    currentUser,
-    loading,
-    userData,
+    currentUser: authState.currentUser,
+    userData: authState.userData,
+    loading: authState.loading,
   };
 
   return (
     <AuthContext.Provider value={value}>
-      {loading ? <SplashScreen /> : children}
+      {authState.loading ? <SplashScreen /> : children}
     </AuthContext.Provider>
   );
 }

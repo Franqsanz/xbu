@@ -19,7 +19,7 @@ export default function MostViewed() {
 
   return (
     <>
-      <MainHead title='Top 10 Más vistos | XBuniverse' />
+      <MainHead title='Top 10 Más vistos | XBuReads' />
       <ContainerTitle title='Top 10 Más vistos' />
       <MySliderCategories />
       <Flex

@@ -131,7 +131,7 @@ export default function Favorites() {
 
   return (
     <>
-      <MainHead title='Mis favoritos | XBuniverse' />
+      <MainHead title='Mis favoritos | XBuReads' />
       <ContainerTitle title='Mis favoritos' />
       <ScrollRestoration />
       <MySliderCategories />

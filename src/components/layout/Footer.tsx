@@ -84,7 +84,7 @@ export function Footer() {
             Políticas de Privacidad
           </Link>
           <Box display={{ base: 'none', md: 'block' }} fontSize='14px' my='2'>
-            {currentYear} XBuniverse
+            {currentYear} XBuReads
           </Box>
           <Flex
             mt={{ base: 4, md: 2 }}

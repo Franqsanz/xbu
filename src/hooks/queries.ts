@@ -246,20 +246,16 @@ function useCheckUser() {
     queryKey: [keys.checkUser],
     queryFn: getCheckUser,
     gcTime: 0,
-    enabled: false,
+    staleTime: 0,
     refetchOnWindowFocus: false,
-    retry: false,
+    retry: 1,
   });
 }
 
 function useUserData() {
-  return useQuery({
-    queryKey: [keys.userData],
-    queryFn: getCheckUser,
-    gcTime: 0,
-    staleTime: 0,
-    retry: false,
-  });
+  // Alias para compatibilidad hacia atrás
+  // Nota: Considerar eliminar esta función y usar useCheckUser directamente
+  return useCheckUser();
 }
 
 function useProfile(username: string | undefined, userId: string | undefined) {

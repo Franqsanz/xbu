@@ -4,33 +4,42 @@ export async function fetchData(
     method?: string;
     headers?: Record<string, string>;
     body?: any;
-    credentials?: any;
+    credentials?: RequestCredentials;
   } = {},
 ): Promise<any> {
   try {
-    const headers = options.headers || {};
+    const headers: Record<string, string> = {
+      ...(options.headers || {}),
+      'X-Api-Key': import.meta.env.VITE_XB_API_KEY,
+    };
 
-    headers['X-Api-Key'] = import.meta.env.VITE_XB_API_KEY;
-
-    // Agregar content-type si hay body y no es FormData
     if (options.body && !(options.body instanceof FormData)) {
-      headers['content-type'] = 'application/json';
+      headers['Content-Type'] = 'application/json';
     }
 
-    // Actualizar las options con credentials globales
-    const updatedOptions = {
+    const updatedOptions: RequestInit = {
       ...options,
       headers,
-      credentials: 'include' as const,
+      credentials: 'include',
     };
 
     const res = await fetch(url, updatedOptions);
 
-    if (res.ok) {
-      return await res.json();
-    } else {
+    if (res.status === 401) {
+      return null;
+    }
+
+    if (!res.ok) {
       throw new Error(`Error en la solicitud: ${res.status}`);
     }
+
+    const contentType = res.headers.get('content-type');
+
+    if (contentType && contentType.includes('application/json')) {
+      return await res.json();
+    }
+
+    return null;
   } catch (error) {
     if (error instanceof Error) {
       if (error.message === 'Failed to fetch') {
@@ -38,10 +47,8 @@ export async function fetchData(
       } else {
         console.error('Error en la solicitud:', error.message);
       }
-
-      throw error;
     }
 
-    throw new Error('Error desconocido');
+    throw error;
   }
 }

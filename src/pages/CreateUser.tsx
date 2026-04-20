@@ -6,7 +6,7 @@ import { MainHead } from '@components/layout/Head';
 export function CreateUser() {
   return (
     <>
-      <MainHead title='Elegir nombre de usuario | XBuniverse' />
+      <MainHead title='Elegir nombre de usuario | XBuReads' />
       <FormCreateUser />
     </>
   );

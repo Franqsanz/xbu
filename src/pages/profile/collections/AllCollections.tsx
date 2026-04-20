@@ -127,7 +127,7 @@ export function AllCollections() {
   return (
     <>
       <ScrollRestoration />
-      <MainHead title='Mis colecciones | XBuniverse' />
+      <MainHead title='Mis colecciones | XBuReads' />
       <ContainerTitle title='Mis colecciones' />
       <ModalCollection
         title='Crear colección'

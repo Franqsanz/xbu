@@ -12,21 +12,20 @@ import {
   MenuGroup,
   MenuDivider,
   Tag,
+  useDisclosure,
 } from '@chakra-ui/react';
 
 import { useAccountActions } from '@hooks/useAccountActions';
+import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 import { MenuType } from '@components/types';
 
 export function MenuProfile({ displayName, photoURL, username }: MenuType) {
-  const { logOut } = useAccountActions();
+  const { logOut, isLoggingOut } = useAccountActions();
   const colorBorder = useColorModeValue('black', 'white');
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   async function handleLogout() {
-    try {
-      await logOut();
-    } catch (err) {
-      // silent fail
-    }
+    await logOut();
   }
 
   return (
@@ -98,12 +97,23 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
             fontWeight='normal'
             borderRadius='0'
             justifyContent='left'
-            onClick={handleLogout}
+            onClick={onOpen}
           >
             Cerrar Sesión
           </MenuItem>
         </MenuGroup>
       </MenuList>
+      <ModalConfirmation
+        isOpen={isOpen}
+        onClose={onClose}
+        onDeleteBook={handleLogout}
+        headerText='Cerrar sesión'
+        bodyText='¿Está seguro que desea cerrar sesión?'
+        buttonText='Cerrar sesión'
+        loadingText='Cerrando sesión...'
+        buttonColor='orange.500'
+        isPending={isLoggingOut}
+      />
     </Menu>
   );
 }

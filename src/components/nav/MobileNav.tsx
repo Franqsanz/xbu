@@ -68,7 +68,9 @@ export function MobileNav() {
   useOutsideClick({
     ref: containerRef,
     handler: () => {
-      onCloseSearch();
+      if (isOpenSearch) {
+        onCloseSearch();
+      }
     },
   });
 
@@ -147,7 +149,7 @@ export function MobileNav() {
               fontWeight='bold'
             >
               <Link as={NavLink} to='/'>
-                XBuniverse
+                XBuReads
               </Link>
             </Box>
           </Flex>
@@ -253,7 +255,7 @@ export function MobileNav() {
               </List> */}
               {linkRegister}
               <Box fontSize='10px' my='1'>
-                {currentYear} XBuniverse
+                {currentYear} XBuReads
               </Box>
             </DrawerFooter>
           </DrawerContent>

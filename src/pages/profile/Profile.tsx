@@ -182,7 +182,7 @@ export function Profile() {
           fontSize={{ base: 'lg', lg: '3xl' }}
           textAlign={{ base: 'center', md: 'left' }}
         >
-          Bienvenido a XBuniverse
+          Bienvenido a XBuReads
         </Box>
         <Image src={NoData} maxW='full' w={{ base: '200px', md: '400px' }} mt='5' />
         <Box
@@ -225,7 +225,7 @@ export function Profile() {
   return (
     <>
       <MainHead
-        title={`${userData?.name} | XBuniverse`}
+        title={`${userData?.name} | XBuReads`}
         urlImage={userData?.picture}
       />
       <Flex

@@ -299,7 +299,7 @@ export default function FilteredData() {
   return (
     <>
       <ScrollRestoration />
-      <MainHead title={`${param} | XBuniverse`} />
+      <MainHead title={`${param} | XBuReads`} />
       <ContainerTitle title={`${param}`} />
       <MySliderCategories />
       <MobileResultBar data={dataPaginated}>{buttonFilter}</MobileResultBar>

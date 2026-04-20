@@ -267,7 +267,7 @@ export default function Book() {
   return (
     <>
       <MainHead
-        title={`${data.title} | XBuniverse`}
+        title={`${data.title} | XBuReads`}
         description={data.synopsis}
         urlImage={data.image.url}
       />
@@ -554,7 +554,7 @@ export default function Book() {
             booksComponent={<RelatedBooks id={data.id} />}
           />
           <BooksSection
-            title='Más libros en XBuniverse'
+            title='Más libros en XBuReads'
             booksComponent={<MoreBooks id={data.id} />}
           />
           <Comments bookId={data.id} />

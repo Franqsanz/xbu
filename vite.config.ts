@@ -87,7 +87,7 @@ export default defineConfig({
     port: 1010,
     proxy: {
       '/api': {
-        target: 'https://xbu-api.onrender.com',
+        target: 'https://api.xbureads.com',
         changeOrigin: true,
         secure: true,
       },

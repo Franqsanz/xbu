@@ -5,8 +5,8 @@ describe("HomePage", () => {
     cy.visit("/");
   });
 
-  it('Debería mostrar el título "XBuniverse"', () => {
-    cy.get("h1").should("contain", "XBuniverse");
+  it('Debería mostrar el título "XBuReads"', () => {
+    cy.get("h1").should("contain", "XBuReads");
   });
 
   it("Debe navegar a la página Explorar de al hacer click en el enlace", () => {

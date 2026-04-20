@@ -158,6 +158,11 @@ interface ModalOptionsAndConfirType extends Omit<Partial<BookType>>, DisclosureT
   id?: string;
   title?: string;
   authors?: string[];
+  headerText?: string;
+  bodyText?: string;
+  buttonText?: string;
+  loadingText?: string;
+  buttonColor?: string;
   synopsis?: string;
   year?: string;
   category?: string[];

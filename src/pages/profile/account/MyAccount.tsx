@@ -12,7 +12,7 @@ export function MyAccount() {
 
   return (
     <>
-      <MainHead title={`Mi Cuenta | XBuniverse`} />
+      <MainHead title={`Mi Cuenta | XBuReads`} />
       <ContainerTitle title='Mi Cuenta' />
       <Flex justify='center' h='230px' mt='70px'>
         <Button

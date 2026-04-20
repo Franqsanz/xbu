@@ -18,14 +18,14 @@ export function useAccountActions() {
       await logoutMutation.mutateAsync();
       queryClient.clear();
       await signOut(logIn);
-      navigate('/login', { replace: true });
+      window.location.href = '/explore';
     } catch (err) {
       try {
         await signOut(logIn);
         queryClient.clear();
-        navigate('/login', { replace: true });
+        window.location.href = '/explore';
       } catch (err) {
-        navigate('/login', { replace: true });
+        window.location.href = '/explore';
       }
     }
   }
@@ -44,6 +44,7 @@ export function useAccountActions() {
   return {
     logOut,
     deleteAccount,
+    isLoggingOut: logoutMutation.isPending,
     isPending: deleteAccountMutation.isPending,
     error: deleteAccountMutation.error,
   };

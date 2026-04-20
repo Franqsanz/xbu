@@ -270,7 +270,7 @@ export function CollectionDetail() {
   return (
     <>
       <ScrollRestoration />
-      <MainHead title={`${data?.name} | Mis colecciones | XBuniverse`} />
+      <MainHead title={`${data?.name} | Mis colecciones | XBuReads`} />
       <ContainerTitle title={data?.name} />
       <ModalCollection
         title='Editar colección'

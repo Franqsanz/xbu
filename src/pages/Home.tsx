@@ -25,12 +25,10 @@ import {
   ImgBook,
   BookReading,
 } from '@assets/assets';
-import { useLogin } from '@hooks/queries';
 
 export default function Home() {
   const { colorMode } = useColorMode();
   const { userData } = useAuth();
-  const { mutate } = useLogin();
   const bgButton = useColorModeValue('green.500', 'green.700');
   const bContainer = useColorModeValue('gray.50', 'none');
   const height = useBreakpointValue({
@@ -42,9 +40,9 @@ export default function Home() {
   return (
     <>
       <MainHead
-        title='XBuniverse'
+        title='XBuReads'
         description='Comparte tus libros favoritos con la comunidad.'
-        urlImage='https://xbu.netlify.app/ogImage.png'
+        urlImage='https://www.xbureads.com/ogImage.png'
       />
       <Container
         as='section'
@@ -64,7 +62,7 @@ export default function Home() {
             bgGradient='linear-gradient(to-l, green.500, #e9f501)'
             bgClip='text'
           >
-            XBuniverse
+            XBuReads
           </Box>
           <Box maxW='2xl' m='auto'>
             <Box
@@ -155,13 +153,13 @@ export default function Home() {
             fontSize={{ base: '3xl', lg: '4xl' }}
             fontFamily='Poppins, sans-serif'
           >
-            ¿Qué es XBuniverse?
+            ¿Qué es XBuReads?
           </Heading>
           <Text fontSize='lg'>
-            XBuniverse es una plataforma en línea que permite a los usuarios
-            compartir y descubrir libros de su elección. Cualquier persona puede
-            crear una cuenta y comenzar a compartir sus libros favoritos con otros
-            usuarios de la comunidad.
+            XBuReads es una plataforma en línea que permite a los usuarios compartir
+            y descubrir libros de su elección. Cualquier persona puede crear una
+            cuenta y comenzar a compartir sus libros favoritos con otros usuarios de
+            la comunidad.
           </Text>
           <Text fontSize='lg'>
             Además de compartir libros, también puedes explorar una amplia selección
@@ -172,7 +170,7 @@ export default function Home() {
             a compartir y explorar libros en cuestión de minutos.
           </Text>
           <Text fontSize='lg' fontWeight='500'>
-            ¡Regístrate ahora en XBuniverse y únete a esta comunidad de amantes de la
+            ¡Regístrate ahora en XBuReads y únete a esta comunidad de amantes de la
             lectura!
           </Text>
         </Stack>
@@ -204,7 +202,7 @@ export default function Home() {
             Explora cientos de libros
           </Heading>
           <Text fontSize='lg'>
-            XBuniverse te ofrece una amplia selección de libros para que puedas
+            XBuReads te ofrece una amplia selección de libros para que puedas
             sumergirte en diferentes géneros literarios y descubrir historias
             emocionantes, conocimientos fascinantes y aventuras inolvidables.
           </Text>

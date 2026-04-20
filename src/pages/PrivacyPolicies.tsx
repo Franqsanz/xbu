@@ -7,14 +7,14 @@ import { MainHead } from '@components/layout/Head';
 export default function PrivacyPolicies() {
   return (
     <>
-      <MainHead title='Políticas de Privacidad | XBuniverse' />
+      <MainHead title='Políticas de Privacidad | XBuReads' />
       <ContainerTitle title='Políticas de Privacidad' />
       <Flex as='section' maxW='1000px' p='5' m='auto' direction='column'>
         <Box as='h2' fontSize='xl' py='5'>
-          Política de Privacidad de XBuniverse
+          Política de Privacidad de XBuReads
         </Box>
         <Text>
-          XBuniverse se compromete a proteger tu privacidad y a mantener seguros tus
+          XBuReads se compromete a proteger tu privacidad y a mantener seguros tus
           datos personales. Esta Política de Privacidad describe cómo recopilamos,
           utilizamos y protegemos la información que recopilamos de nuestros
           usuarios.

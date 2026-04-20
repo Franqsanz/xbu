@@ -1,6 +1,6 @@
-<h1 align="center">XBuniverse</h1>
+<h1 align="center">XBuReads</h1>
 
-![XBuniverse](public/dispositivos.png)
+![XBuReads](public/dispositivos.png)
 <p align="center">
   <a aria-label="License" href="LICENSE">
     <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg">
@@ -13,9 +13,9 @@
   </a>
 </p>
 
-## ¿Qué es XBuniverse?
+## ¿Qué es XBuReads?
 
-XBuniverse es un sitio web dedicado a los amantes de la lectura y la literatura. Es un espacio diseñado para compartir y descubrir libros de diversas temáticas.
+XBuReads es un sitio web dedicado a los amantes de la lectura y la literatura. Es un espacio diseñado para compartir y descubrir libros de diversas temáticas.
 
 * **Explora una amplia selección de libros:** Accede a una extensa biblioteca de títulos que abarcan géneros literarios como ficción, no ficción, ciencia ficción, misterio, romance y muchos más.
 
@@ -27,11 +27,11 @@ XBuniverse es un sitio web dedicado a los amantes de la lectura y la literatura.
 
 * **Crear comentarios:** Permite a los usuarios dejar comentarios en cada libro, con la posibilidad de editarlos, eliminarlos y gestionar reacciones (likes/dislikes) tanto en comentarios propios como de otros usuarios.
 
-¡Únete a XBuniverse y sumérgete en el fascinante mundo de la lectura! Explora y comparte.
+¡Únete a XBuReads y sumérgete en el fascinante mundo de la lectura! Explora y comparte.
 
 ---
 
-![XBuniverse sreenshot](public/screenshot.jpg)
+![XBuReads sreenshot](public/screenshot.jpg)
 
 ## Contribuir
 

@@ -24,8 +24,17 @@ export function ModalConfirmation({
   warningText,
   isPending,
   isStrong,
+  headerText = 'Eliminar',
+  bodyText,
+  buttonText = 'Eliminar',
+  loadingText = 'Eliminando...',
+  buttonColor = 'red.500',
 }: ModalOptionsAndConfirType) {
   const colorIconWar = useColorModeValue('yellow.700', 'yellow.300');
+
+  // Generar el bodyText por defecto si no se proporciona
+  const defaultBodyText = `¿Está seguro que desea ${headerText.toLowerCase()} ${isStrong ? `"${title}"` : title}?`;
+  const finalBodyText = bodyText || defaultBodyText;
 
   return (
     <>
@@ -37,20 +46,26 @@ export function ModalConfirmation({
       >
         <ModalOverlay backdropFilter='blur(7px)' />
         <ModalContent>
-          <ModalHeader>Eliminar</ModalHeader>
+          <ModalHeader>{headerText}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            ¿Está seguro que desea eliminar{' '}
-            {isStrong ? <strong>"{title}"</strong> : title}?
-            <Alert
-              mt='7'
-              status='warning'
-              rounded='lg'
-              fontSize={{ base: 'xs', md: 'sm' }}
-            >
-              <Icon as={IoWarningOutline} boxSize='7' mr='3' color={colorIconWar} />
-              {warningText}
-            </Alert>
+            {finalBodyText}
+            {warningText && (
+              <Alert
+                mt='7'
+                status='warning'
+                rounded='lg'
+                fontSize={{ base: 'xs', md: 'sm' }}
+              >
+                <Icon
+                  as={IoWarningOutline}
+                  boxSize='7'
+                  mr='3'
+                  color={colorIconWar}
+                />
+                {warningText}
+              </Alert>
+            )}
           </ModalBody>
           <ModalFooter gap='3'>
             <Button
@@ -58,13 +73,13 @@ export function ModalConfirmation({
               onClick={onDeleteBook}
               fontWeight='normal'
               fontSize='sm'
-              bg='red.500'
+              bg={buttonColor}
               color='white'
-              loadingText='Eliminando...'
+              loadingText={loadingText}
               isLoading={isPending}
               _hover={{ color: 'none' }}
             >
-              Eliminar
+              {buttonText}
             </Button>
             <Button
               w='full'

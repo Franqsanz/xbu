@@ -1,11 +1,17 @@
 import React from 'react';
-import { useBreakpointValue } from '@chakra-ui/react';
-
+import { Box } from '@chakra-ui/react';
 import { MobileNav } from '@components/nav/MobileNav';
 import { DesktopNav } from '@components/nav/DesktopNav';
 
 export function Nav() {
-  const isMobile = useBreakpointValue({ base: true, lg: false });
-
-  return <>{isMobile ? <MobileNav /> : <DesktopNav />}</>;
+  return (
+    <>
+      <Box display={{ base: 'block', lg: 'none' }}>
+        <MobileNav />
+      </Box>
+      <Box display={{ base: 'none', lg: 'block' }}>
+        <DesktopNav />
+      </Box>
+    </>
+  );
 }
