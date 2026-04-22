@@ -43,10 +43,10 @@ import {
   postLogin,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
+import { useAuth } from '@contexts/AuthContext';
 import { keys } from '@utils/utils';
 import { BookType, CommentType } from '@components/types';
 import { queryClient } from '../config';
-// import { useAuth } from '@contexts/AuthContext';
 
 function useMutatePost() {
   return useMutation({
@@ -242,6 +242,8 @@ function useUserLogout() {
 }
 
 function useCheckUser() {
+  const { currentUser } = useAuth();
+
   return useQuery({
     queryKey: [keys.checkUser],
     queryFn: getCheckUser,
@@ -249,6 +251,7 @@ function useCheckUser() {
     staleTime: 0,
     refetchOnWindowFocus: false,
     retry: 1,
+    enabled: currentUser !== null,
   });
 }
 

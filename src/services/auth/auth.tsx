@@ -27,9 +27,15 @@ export function SignIn() {
 
       if (result) {
         const idToken = await result.user.getIdToken(true);
-        await postLogin(idToken);
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        await refetch();
+        const loginResponse = await postLogin(idToken);
+
+        // Verifica que el login fue exitoso antes de continuar
+        if (loginResponse?.auth === true) {
+          await refetch();
+        } else {
+          setIsAuthenticating(false);
+          await DisconnectFirebaseAccount();
+        }
       }
     } catch (error) {
       setIsAuthenticating(false);

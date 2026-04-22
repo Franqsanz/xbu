@@ -12,7 +12,11 @@ import theme from '../theme';
 import { routes } from './routes';
 import { AuthProvider } from '@contexts/AuthContext';
 import { queryClient } from './config';
+// import { initializeAuth } from '@utils/authSetup';
 // import { API_URL } from './config';
+
+// Inicializa los mecanismos de autenticación
+// initializeAuth();
 
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DNS,
