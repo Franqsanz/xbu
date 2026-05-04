@@ -86,7 +86,30 @@ export async function fetchData(
       credentials: 'include',
     };
 
-    let res = await fetch(url, updatedOptions);
+    // Agregar timeout de 5 segundos para POST /auth/login
+    const isLoginRequest = url.includes('/auth/login') && options.method === 'POST';
+    let res: Response;
+
+    if (isLoginRequest) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+      try {
+        res = await fetch(url, {
+          ...updatedOptions,
+          signal: controller.signal,
+        });
+        clearTimeout(timeoutId);
+      } catch (error: any) {
+        clearTimeout(timeoutId);
+        if (error.name === 'AbortError') {
+          throw new Error('Request timeout: took longer than 5 seconds');
+        }
+        throw error;
+      }
+    } else {
+      res = await fetch(url, updatedOptions);
+    }
 
     // Manejo de 401 - intenta refrescar el token SOLO si hay usuario logeado
     if (res.status === 401) {

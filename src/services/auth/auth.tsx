@@ -1,68 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button, useColorModeValue } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
-import { logIn } from './config';
-import { useCheckUser } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
-import { useAccountActions } from '@hooks/useAccountActions';
-import { postLogin } from '@services/api';
+import { useFirebaseLogin } from '@hooks/useFirebaseLogin';
 
 export function SignIn() {
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
-  const { logOut } = useAccountActions();
-  const [isAuthenticating, setIsAuthenticating] = useState(false);
-  const { data, isPending, refetch } = useCheckUser();
+  const { currentUser, userData } = useAuth();
+  const { isPending, login, showErrorToast } = useFirebaseLogin();
 
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: 'select_account' });
-
-  async function SignInWithGoogle() {
-    try {
-      setIsAuthenticating(true);
-      const result = await signInWithPopup(logIn, provider);
-
-      if (result) {
-        const idToken = await result.user.getIdToken(true);
-        const loginResponse = await postLogin(idToken);
-
-        // Verifica que el login fue exitoso antes de continuar
-        if (loginResponse?.auth === true) {
-          await refetch();
-        } else {
-          setIsAuthenticating(false);
-          await DisconnectFirebaseAccount();
-        }
-      }
-    } catch (error) {
-      setIsAuthenticating(false);
-      await DisconnectFirebaseAccount();
+  async function handleSignInClick() {
+    const success = await login();
+    if (!success) {
+      showErrorToast();
     }
+    // Si success = true, AuthContext se encarga del resto automáticamente
   }
 
+  // Redirigir cuando el usuario está logueado y tiene datos
   useEffect(() => {
-    if (!isPending && data) {
-      if (data.uid === null || !data.username) {
+    if (currentUser && userData) {
+      // Usuario logueado y datos cargados
+      if (!userData.username) {
+        // No tiene username, ir a crear uno
         navigate('/create-username', {
-          state: { userId: currentUser?.uid },
+          state: { userId: currentUser.uid },
         });
-      } else if (data.username) {
-        setIsAuthenticating(false);
-        window.location.href = `/profile/${data.username}`;
+      } else {
+        // Tiene username, ir al perfil
+        window.location.href = `/profile/${userData.username}`;
       }
     }
-  }, [data, isPending, navigate, currentUser]);
-
-  async function DisconnectFirebaseAccount() {
-    try {
-      await logOut();
-    } catch (error) {
-      // silent fail
-    }
-  }
+  }, [currentUser, userData, navigate]);
 
   return (
     <>
@@ -97,9 +68,10 @@ export function SignIn() {
             '0 1px 2px rgba(0,0,0,0.2)',
           ),
         }}
-        onClick={SignInWithGoogle}
+        onClick={handleSignInClick}
         loadingText='Redirigiendo...'
-        isLoading={isAuthenticating}
+        isLoading={isPending}
+        isDisabled={isPending}
       >
         Continuar con Google
       </Button>
