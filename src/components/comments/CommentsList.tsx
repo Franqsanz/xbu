@@ -14,7 +14,9 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
+  Link,
 } from '@chakra-ui/react';
+import { NavLink } from 'react-router-dom';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IoWarningSharp } from 'react-icons/io5';
@@ -233,9 +235,14 @@ export function CommentsList({
                     size={{ base: 'xs', md: 'sm' }}
                     referrerPolicy='no-referrer'
                   />
-                  <Box as='span' fontSize={{ base: 'xs', sm: 'sm' }}>
-                    {author.username}
-                  </Box>
+                  <Link
+                    as={NavLink}
+                    to={`/profile/${author.username}`}
+                    _hover={{ textDecoration: 'underline' }}
+                    fontSize={{ base: 'xs', sm: 'sm' }}
+                  >
+                    {author.name}
+                  </Link>
                 </Flex>
                 <Flex gap='1' align={{ base: 'start', sm: 'center' }}>
                   <Flex

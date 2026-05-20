@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import {
   Alert,
@@ -12,6 +12,7 @@ import {
   useColorModeValue,
   Spinner,
   Text,
+  Button,
 } from '@chakra-ui/react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { useInView } from 'react-intersection-observer';
@@ -20,7 +21,13 @@ import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { Card } from '@components/cards/Card';
 import { Aside } from '@components/aside/Aside';
 import { MainHead } from '@components/layout/Head';
-import { useProfile, useCheckUser } from '@hooks/queries';
+import {
+  useProfile,
+  useCheckUser,
+  useFollowUser,
+  useUnfollowUser,
+  useFollowStats,
+} from '@hooks/queries';
 import { parseDate } from '@utils/utils';
 import { CardType } from '@components/types';
 import { ResultLength } from '@components/aside/ResultLength';
@@ -31,7 +38,6 @@ import { SkeletonProfile } from '@components/skeletons/SkeletonProfile';
 import { MyContainer } from '@components/ui/MyContainer';
 import { MobileResultBar } from '@components/ui/MobileResultBar';
 import { FiArrowLeft } from 'react-icons/fi';
-// import { logOut } from '../../services/firebase/auth';
 
 export function Profile() {
   const bgCover = useColorModeValue('gray.100', 'gray.700');
@@ -39,6 +45,7 @@ export function Profile() {
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
   const { username } = useParams();
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
   const {
     data: profileData,
     isLoading,
@@ -48,13 +55,33 @@ export function Profile() {
     hasNextPage,
   } = useProfile(username, uid);
   const { data: userData, refetch } = useCheckUser();
-  const createdAt = parseDate(userData?.createdAt);
+
+  const profileUser = profileData?.pages[0]?.user;
+  const isOwnProfile = uid === profileUser?.uid;
+
+  const { mutate: follow, isPending: isFollowing } = useFollowUser();
+  const { mutate: unfollow, isPending: isUnfollowing } = useUnfollowUser();
+  const { data: followStats } = useFollowStats(profileUser?.uid);
+
+  const createdAt = profileUser?.createdAt ? parseDate(profileUser.createdAt) : '';
   let asideAndCardsUI;
   let fetchingNextPageUI;
 
   const profile = useMemo(() => {
     return profileData?.pages.flatMap((page) => page.results) || [];
   }, [profileData]);
+
+  function handleFollow() {
+    if (profileUser?.uid) {
+      follow(profileUser.uid);
+    }
+  }
+
+  function handleUnfollow() {
+    if (profileUser?.uid) {
+      unfollow(profileUser.uid);
+    }
+  }
 
   useEffect(() => {
     refetch();
@@ -168,50 +195,80 @@ export function Profile() {
       </>
     );
   } else {
-    asideAndCardsUI = (
-      <Flex
-        w='full'
-        direction='column'
-        justify='center'
-        align='center'
-        mt='5'
-        mb='20'
-      >
-        <Box
-          my={{ base: 2, md: 7 }}
-          fontSize={{ base: 'lg', lg: '3xl' }}
-          textAlign={{ base: 'center', md: 'left' }}
+    if (isOwnProfile) {
+      asideAndCardsUI = (
+        <Flex
+          w='full'
+          direction='column'
+          justify='center'
+          align='center'
+          mt='5'
+          mb='20'
         >
-          Bienvenido a XBuReads
-        </Box>
-        <Image src={NoData} maxW='full' w={{ base: '200px', md: '400px' }} mt='5' />
-        <Box
-          my='7'
-          fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
-          textAlign={{ base: 'center', md: 'left' }}
+          <Box
+            my={{ base: 2, md: 7 }}
+            fontSize={{ base: 'lg', lg: '3xl' }}
+            textAlign={{ base: 'center', md: 'left' }}
+          >
+            Bienvenido a XBuReads
+          </Box>
+          <Image
+            src={NoData}
+            maxW='full'
+            w={{ base: '200px', md: '400px' }}
+            mt='5'
+          />
+          <Box
+            my='7'
+            fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
+            textAlign={{ base: 'center', md: 'left' }}
+          >
+            Aún no hay publicaciones
+          </Box>
+          <Link
+            as={NavLink}
+            to='/new-post'
+            bg='green.500'
+            color='black'
+            p='3'
+            border='1px'
+            rounded='lg'
+            textAlign='center'
+            _hover={{ outline: 'none', bg: 'green.600' }}
+          >
+            <Flex align='center' justify='center'>
+              <Icon as={AiOutlineCloudUpload} fontSize='25' mr='2' />
+              Crear publicación
+            </Flex>
+          </Link>
+        </Flex>
+      );
+    } else {
+      asideAndCardsUI = (
+        <Flex
+          w='full'
+          direction='column'
+          justify='center'
+          align='center'
+          mt='5'
+          mb='20'
         >
-          Aún no hay publicaciones
-        </Box>
-        <Link
-          // w={{ base: '85%', md: '230px' }}
-          // display='block'
-          as={NavLink}
-          to='/new-post'
-          bg='green.500'
-          color='black'
-          p='3'
-          border='1px'
-          rounded='lg'
-          textAlign='center'
-          _hover={{ outline: 'none', bg: 'green.600' }}
-        >
-          <Flex align='center' justify='center'>
-            <Icon as={AiOutlineCloudUpload} fontSize='25' mr='2' />
-            Crear publicación
-          </Flex>
-        </Link>
-      </Flex>
-    );
+          <Image
+            src={NoData}
+            maxW='full'
+            w={{ base: '200px', md: '400px' }}
+            mt='5'
+          />
+          <Box
+            my='7'
+            fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
+            textAlign={{ base: 'center', md: 'left' }}
+          >
+            Este usuario no tiene publicaciones
+          </Box>
+        </Flex>
+      );
+    }
   }
 
   if (isFetchingNextPage) {
@@ -225,25 +282,25 @@ export function Profile() {
   return (
     <>
       <MainHead
-        title={`${userData?.name} | XBuReads`}
-        urlImage={userData?.picture}
+        title={`${profileUser?.name} | XBuReads`}
+        urlImage={profileUser?.picture}
       />
       <Flex
         as='section'
         justify='center'
         align='center'
         direction='column'
-        h={{ base: '230px', md: '260px' }}
+        h={{ base: '280px', md: '330px' }}
         bg={bgCover}
       >
         <Image
-          src={userData?.picture}
-          alt={`Imagen de perfil de ${userData?.name}`}
+          src={profileUser?.picture}
+          alt={`Imagen de perfil de ${profileUser?.name}`}
           referrerPolicy='no-referrer'
           borderRadius='full'
         />
         <Box as='h1' fontSize={{ base: 'xl', md: '3xl' }} mt='3' textAlign='center'>
-          {userData?.name}
+          {profileUser?.name}
         </Box>
         <Flex
           direction='column'
@@ -255,6 +312,42 @@ export function Profile() {
             Se unió el
           </Box>{' '}
           {createdAt}
+        </Flex>
+        <Flex gap='3' mt='4' align='center'>
+          <Flex gap='2' fontSize={{ base: 'xs', md: 'sm' }}>
+            <Box fontWeight='bold'>{followStats?.followersCount || 0}</Box>
+            <Box>seguidores</Box>
+          </Flex>
+          <Box>•</Box>
+          <Flex gap='2' fontSize={{ base: 'xs', md: 'sm' }}>
+            <Box fontWeight='bold'>{followStats?.followingCount || 0}</Box>
+            <Box>siguiendo</Box>
+          </Flex>
+          {!isOwnProfile && (
+            <Button
+              size='sm'
+              colorScheme={profileData?.pages[0]?.isFollowing ? 'red' : 'green'}
+              onClick={
+                profileData?.pages[0]?.isFollowing ? handleUnfollow : handleFollow
+              }
+              isLoading={isFollowing || isUnfollowing}
+              mt='2'
+              onMouseEnter={() => setIsButtonHovered(true)}
+              onMouseLeave={() => setIsButtonHovered(false)}
+              variant={
+                profileData?.pages[0]?.isFollowing && isButtonHovered
+                  ? 'solid'
+                  : 'solid'
+              }
+              fontWeight='normal'
+            >
+              {profileData?.pages[0]?.isFollowing && isButtonHovered
+                ? 'Dejar de seguir'
+                : profileData?.pages[0]?.isFollowing
+                  ? 'Siguiendo'
+                  : 'Seguir'}
+            </Button>
+          )}
         </Flex>
       </Flex>
       <Flex justify='center'>

@@ -258,7 +258,7 @@ async function getUserAndBooks(
   page: number | undefined,
 ) {
   return await fetchData(
-    `${API_URL}/users/${userId}/${username}/books?limit=10&page=${page}`,
+    `${API_URL}/users/profile/${username}/books?limit=10&page=${page}`,
     {
       method: 'GET',
     },
@@ -338,6 +338,32 @@ async function deleteAccount(id: string | undefined) {
   });
 }
 
+async function followUser(targetUserId: string) {
+  return await fetchData(`${API_URL}/users/follow/${targetUserId}`, {
+    method: 'POST',
+  });
+}
+
+async function unfollowUser(targetUserId: string) {
+  return await fetchData(`${API_URL}/users/follow/${targetUserId}`, {
+    method: 'DELETE',
+  });
+}
+
+async function getFollowers(userId: string) {
+  return await fetchData(`${API_URL}/users/${userId}/followers`, {});
+}
+
+async function getFollowing(userId: string) {
+  return await fetchData(`${API_URL}/users/${userId}/following`, {});
+}
+
+async function getFollowStats(userId: string) {
+  return await fetchData(`${API_URL}/users/${userId}/follow-stats`, {
+    // credentials: 'include',
+  });
+}
+
 export {
   getAllBooks,
   getAllSearchBooks,
@@ -376,4 +402,9 @@ export {
   getUserAndBooks,
   getFindAllBookFavorite,
   deleteAccount,
+  followUser,
+  unfollowUser,
+  getFollowers,
+  getFollowing,
+  getFollowStats,
 };

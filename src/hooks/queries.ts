@@ -41,6 +41,9 @@ import {
   deleteComment,
   updateComment,
   postLogin,
+  followUser,
+  unfollowUser,
+  getFollowStats,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { useAuth } from '@contexts/AuthContext';
@@ -263,7 +266,7 @@ function useUserData() {
 
 function useProfile(username: string | undefined, userId: string | undefined) {
   return useInfiniteQuery({
-    queryKey: [keys.profile, username, userId],
+    queryKey: [keys.profile, username],
     queryFn: ({ pageParam }) => getUserAndBooks(username, userId, pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
@@ -271,7 +274,7 @@ function useProfile(username: string | undefined, userId: string | undefined) {
 
       return lastPage.info.nextPage;
     },
-    enabled: !!userId,
+    enabled: !!username,
     gcTime: 0,
     staleTime: 0,
     retry: false,
@@ -673,6 +676,45 @@ function useDeleteAccount() {
   });
 }
 
+function useFollowUser() {
+  return useMutation({
+    mutationKey: [keys.followUser],
+    mutationFn: (targetUserId: string) => followUser(targetUserId),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [keys.followStats],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.profile],
+      });
+    },
+  });
+}
+
+function useUnfollowUser() {
+  return useMutation({
+    mutationKey: [keys.unfollowUser],
+    mutationFn: (targetUserId: string) => unfollowUser(targetUserId),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [keys.followStats],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.profile],
+      });
+    },
+  });
+}
+
+function useFollowStats(userId: string | undefined) {
+  return useQuery({
+    queryKey: [keys.followStats, userId],
+    queryFn: () => getFollowStats(userId!),
+    enabled: !!userId,
+    refetchOnWindowFocus: false,
+  });
+}
+
 export {
   useMutatePost,
   useAllFilterOptions,
@@ -712,4 +754,7 @@ export {
   useUpdateBook,
   useDeleteBook,
   useDeleteAccount,
+  useFollowUser,
+  useUnfollowUser,
+  useFollowStats,
 };

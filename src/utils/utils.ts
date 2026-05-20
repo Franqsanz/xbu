@@ -38,6 +38,9 @@ const keys = {
   deleteComment: 'DeleteComment',
   allComments: 'AllComments',
   deleteAccount: 'DeleteAccount',
+  followUser: 'FollowUser',
+  unfollowUser: 'UnfollowUser',
+  followStats: 'FollowStats',
 };
 
 const currentYear = new Date().getFullYear();
