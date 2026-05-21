@@ -290,7 +290,7 @@ export function Profile() {
         justify='center'
         align='center'
         direction='column'
-        h={{ base: '280px', md: '330px' }}
+        h={{ base: '330px', md: '400px' }}
         bg={bgCover}
       >
         <Image
@@ -298,6 +298,8 @@ export function Profile() {
           alt={`Imagen de perfil de ${profileUser?.name}`}
           referrerPolicy='no-referrer'
           borderRadius='full'
+          w={{ base: '80px', md: '120px' }}
+          h={{ base: '80px', md: '120px' }}
         />
         <Box as='h1' fontSize={{ base: 'xl', md: '3xl' }} mt='3' textAlign='center'>
           {profileUser?.name}
@@ -313,32 +315,39 @@ export function Profile() {
           </Box>{' '}
           {createdAt}
         </Flex>
-        <Flex gap='3' mt='4' align='center'>
-          <Flex gap='2' fontSize={{ base: 'xs', md: 'sm' }}>
-            <Box fontWeight='bold'>{followStats?.followersCount || 0}</Box>
-            <Box>seguidores</Box>
-          </Flex>
-          <Box>•</Box>
-          <Flex gap='2' fontSize={{ base: 'xs', md: 'sm' }}>
-            <Box fontWeight='bold'>{followStats?.followingCount || 0}</Box>
-            <Box>siguiendo</Box>
+        <Flex direction='column' align='center' gap='2' mt='4'>
+          <Flex gap='3' align='center'>
+            <Flex gap='2' fontSize={{ base: 'xs', md: 'sm' }}>
+              <Box fontWeight='bold'>{followStats?.followersCount || 0}</Box>
+              <Box>seguidores</Box>
+            </Flex>
+            <Box>•</Box>
+            <Flex gap='2' fontSize={{ base: 'xs', md: 'sm' }}>
+              <Box fontWeight='bold'>{followStats?.followingCount || 0}</Box>
+              <Box>siguiendo</Box>
+            </Flex>
           </Flex>
           {!isOwnProfile && (
             <Button
               size='sm'
-              colorScheme={profileData?.pages[0]?.isFollowing ? 'red' : 'green'}
+              w={{ base: '85%', md: '250px' }}
+              bg={
+                !profileData?.pages[0]?.isFollowing
+                  ? 'green.500'
+                  : isButtonHovered
+                    ? 'red.500'
+                    : 'black'
+              }
+              color={!profileData?.pages[0]?.isFollowing ? 'black' : 'white'}
+              _hover={{
+                bg: profileData?.pages[0]?.isFollowing ? 'red.500' : 'green.600',
+              }}
               onClick={
                 profileData?.pages[0]?.isFollowing ? handleUnfollow : handleFollow
               }
               isLoading={isFollowing || isUnfollowing}
-              mt='2'
               onMouseEnter={() => setIsButtonHovered(true)}
               onMouseLeave={() => setIsButtonHovered(false)}
-              variant={
-                profileData?.pages[0]?.isFollowing && isButtonHovered
-                  ? 'solid'
-                  : 'solid'
-              }
               fontWeight='normal'
             >
               {profileData?.pages[0]?.isFollowing && isButtonHovered
