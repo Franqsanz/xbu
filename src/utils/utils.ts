@@ -41,6 +41,8 @@ const keys = {
   followUser: 'FollowUser',
   unfollowUser: 'UnfollowUser',
   followStats: 'FollowStats',
+  followers: 'Followers',
+  following: 'Following',
 };
 
 const currentYear = new Date().getFullYear();

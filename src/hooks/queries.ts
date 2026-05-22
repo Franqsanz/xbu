@@ -44,6 +44,8 @@ import {
   followUser,
   unfollowUser,
   getFollowStats,
+  getFollowers,
+  getFollowing,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { useAuth } from '@contexts/AuthContext';
@@ -687,6 +689,12 @@ function useFollowUser() {
       await queryClient.invalidateQueries({
         queryKey: [keys.profile],
       });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.followers],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.following],
+      });
     },
   });
 }
@@ -702,6 +710,12 @@ function useUnfollowUser() {
       await queryClient.invalidateQueries({
         queryKey: [keys.profile],
       });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.followers],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.following],
+      });
     },
   });
 }
@@ -711,6 +725,42 @@ function useFollowStats(userId: string | undefined) {
     queryKey: [keys.followStats, userId],
     queryFn: () => getFollowStats(userId!),
     enabled: !!userId,
+    refetchOnWindowFocus: false,
+  });
+}
+
+function useFollowers(userId: string | undefined, enabled: boolean = true) {
+  return useInfiniteQuery({
+    queryKey: [keys.followers, userId],
+    queryFn: ({ pageParam }) => getFollowers(userId!, pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      const loaded = allPages.reduce(
+        (acc, page) => acc + (page.followers?.length || 0),
+        0,
+      );
+      if (loaded >= lastPage.totalFollowers) return undefined;
+      return allPages.length;
+    },
+    enabled: !!userId && enabled,
+    refetchOnWindowFocus: false,
+  });
+}
+
+function useFollowing(userId: string | undefined, enabled: boolean = true) {
+  return useInfiniteQuery({
+    queryKey: [keys.following, userId],
+    queryFn: ({ pageParam }) => getFollowing(userId!, pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      const loaded = allPages.reduce(
+        (acc, page) => acc + (page.following?.length || 0),
+        0,
+      );
+      if (loaded >= lastPage.totalFollowing) return undefined;
+      return allPages.length;
+    },
+    enabled: !!userId && enabled,
     refetchOnWindowFocus: false,
   });
 }
@@ -757,4 +807,6 @@ export {
   useFollowUser,
   useUnfollowUser,
   useFollowStats,
+  useFollowers,
+  useFollowing,
 };

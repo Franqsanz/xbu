@@ -350,12 +350,20 @@ async function unfollowUser(targetUserId: string) {
   });
 }
 
-async function getFollowers(userId: string) {
-  return await fetchData(`${API_URL}/users/${userId}/followers`, {});
+async function getFollowers(userId: string, page: number = 0, limit: number = 10) {
+  const offset = page * limit;
+  return await fetchData(
+    `${API_URL}/users/${userId}/followers?limit=${limit}&offset=${offset}`,
+    {},
+  );
 }
 
-async function getFollowing(userId: string) {
-  return await fetchData(`${API_URL}/users/${userId}/following`, {});
+async function getFollowing(userId: string, page: number = 0, limit: number = 10) {
+  const offset = page * limit;
+  return await fetchData(
+    `${API_URL}/users/${userId}/following?limit=${limit}&offset=${offset}`,
+    {},
+  );
 }
 
 async function getFollowStats(userId: string) {

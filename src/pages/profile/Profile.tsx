@@ -26,7 +26,6 @@ import {
   useCheckUser,
   useFollowUser,
   useUnfollowUser,
-  useFollowStats,
 } from '@hooks/queries';
 import { parseDate } from '@utils/utils';
 import { CardType } from '@components/types';
@@ -38,6 +37,7 @@ import { SkeletonProfile } from '@components/skeletons/SkeletonProfile';
 import { MyContainer } from '@components/ui/MyContainer';
 import { MobileResultBar } from '@components/ui/MobileResultBar';
 import { FiArrowLeft } from 'react-icons/fi';
+import { ModalFollowList } from '@components/modals/ModalFollowList';
 
 export function Profile() {
   const bgCover = useColorModeValue('gray.100', 'gray.700');
@@ -46,6 +46,10 @@ export function Profile() {
   const uid = currentUser?.uid;
   const { username } = useParams();
   const [isButtonHovered, setIsButtonHovered] = useState(false);
+  const [followModal, setFollowModal] = useState<{
+    isOpen: boolean;
+    initialTab: 'followers' | 'following';
+  }>({ isOpen: false, initialTab: 'followers' });
   const {
     data: profileData,
     isLoading,
@@ -61,7 +65,8 @@ export function Profile() {
 
   const { mutate: follow, isPending: isFollowing } = useFollowUser();
   const { mutate: unfollow, isPending: isUnfollowing } = useUnfollowUser();
-  const { data: followStats } = useFollowStats(profileUser?.uid);
+  const followersCount = profileData?.pages[0]?.followersCount ?? 0;
+  const followingCount = profileData?.pages[0]?.followingCount ?? 0;
 
   const createdAt = profileUser?.createdAt ? parseDate(profileUser.createdAt) : '';
   let asideAndCardsUI;
@@ -86,6 +91,11 @@ export function Profile() {
   useEffect(() => {
     refetch();
   }, []);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => window.scrollTo(0, 0), 0);
+    return () => window.clearTimeout(id);
+  }, [username]);
 
   useEffect(() => {
     if (inView) fetchNextPage();
@@ -317,13 +327,31 @@ export function Profile() {
         </Flex>
         <Flex direction='column' align='center' gap='2' mt='4'>
           <Flex gap='3' align='center'>
-            <Flex gap='2' fontSize={{ base: 'xs', md: 'sm' }}>
-              <Box fontWeight='bold'>{followStats?.followersCount || 0}</Box>
+            <Flex
+              as='button'
+              gap='2'
+              fontSize={{ base: 'xs', md: 'sm' }}
+              cursor='pointer'
+              _hover={{ textDecoration: 'underline' }}
+              onClick={() =>
+                setFollowModal({ isOpen: true, initialTab: 'followers' })
+              }
+            >
+              <Box fontWeight='bold'>{followersCount}</Box>
               <Box>seguidores</Box>
             </Flex>
             <Box>•</Box>
-            <Flex gap='2' fontSize={{ base: 'xs', md: 'sm' }}>
-              <Box fontWeight='bold'>{followStats?.followingCount || 0}</Box>
+            <Flex
+              as='button'
+              gap='2'
+              fontSize={{ base: 'xs', md: 'sm' }}
+              cursor='pointer'
+              _hover={{ textDecoration: 'underline' }}
+              onClick={() =>
+                setFollowModal({ isOpen: true, initialTab: 'following' })
+              }
+            >
+              <Box fontWeight='bold'>{followingCount}</Box>
               <Box>siguiendo</Box>
             </Flex>
           </Flex>
@@ -367,6 +395,14 @@ export function Profile() {
       <MobileResultBar data={profileData} />
       <MyContainer>{asideAndCardsUI}</MyContainer>
       <Box ref={ref}>{fetchingNextPageUI}</Box>
+      <ModalFollowList
+        isOpen={followModal.isOpen}
+        onClose={() => setFollowModal((prev) => ({ ...prev, isOpen: false }))}
+        userId={profileUser?.uid}
+        initialTab={followModal.initialTab}
+        followersCount={followersCount}
+        followingCount={followingCount}
+      />
     </>
   );
 }
