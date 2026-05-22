@@ -66,6 +66,7 @@ export function DesktopNav() {
     <>
       <Flex
         as='header'
+        display={{ base: 'none', lg: 'flex' }}
         w='100%'
         align='center'
         justify='space-between'

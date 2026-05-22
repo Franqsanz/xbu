@@ -117,6 +117,7 @@ export function MobileNav() {
     <>
       <Flex
         as='header'
+        display={{ base: 'flex', lg: 'none' }}
         w='full'
         justify='start'
         p='2'
