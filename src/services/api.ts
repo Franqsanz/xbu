@@ -282,6 +282,8 @@ async function postComment(
   author: {
     userId: string | undefined;
     username: string | null | undefined;
+    name?: string;
+    avatar?: string;
   },
   bookId: string,
 ) {

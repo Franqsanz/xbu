@@ -16,9 +16,8 @@ export function CommentForm({ bookId }: CommentType) {
   const [comment, setComment] = useState('');
   const maxChars = 1500;
 
-  const { currentUser } = useAuth();
+  const { currentUser, userData } = useAuth();
   const uid = currentUser?.uid;
-  const userName = currentUser?.displayName;
   const myToast = useMyToast();
   const { mutateAsync, isPending } = usePostComment();
 
@@ -34,7 +33,9 @@ export function CommentForm({ bookId }: CommentType) {
         text: comment,
         author: {
           userId: uid,
-          username: userName,
+          name: userData?.name,
+          username: userData?.username,
+          avatar: userData?.picture,
         },
         bookId,
       });

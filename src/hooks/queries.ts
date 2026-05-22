@@ -447,6 +447,8 @@ function usePostComment() {
       author: {
         userId: string | undefined;
         username: string | null | undefined;
+        name?: string;
+        avatar?: string;
       };
       bookId: string;
     }) => postComment(text, author, bookId),
@@ -466,7 +468,9 @@ function usePostComment() {
         text: newComment.text,
         author: {
           userId: newComment.author.userId,
+          name: newComment.author.name,
           username: newComment.author.username,
+          avatar: newComment.author.avatar,
         },
         bookId: newComment.bookId,
         createdAt: new Date().toISOString(),
@@ -523,6 +527,9 @@ function usePostComment() {
       // Invalidar y refrescar los comentarios después de la mutación
       await queryClient.invalidateQueries({
         queryKey: [keys.allComments, variables.bookId],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.feed],
       });
     },
   });
@@ -653,6 +660,9 @@ function useUpdateComment() {
     onError: (error) => {
       console.error('Error updating comment');
     },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: [keys.feed] });
+    },
   });
 }
 
@@ -668,6 +678,9 @@ function useDeleteComment() {
     }) => deleteComment(commentId, userId),
     onError: async (error) => {
       console.error('Error en el servidor');
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: [keys.feed] });
     },
   });
 }
