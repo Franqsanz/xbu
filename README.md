@@ -1,6 +1,8 @@
 <h1 align="center">XBuReads</h1>
 
-![XBuReads](public/dispositivos.png)
+<p align="center">
+  <img src="public/dispositivos.png" alt="XBuReads" width="550" />
+</p>
 <p align="center">
   <a aria-label="License" href="LICENSE">
     <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg">
@@ -27,11 +29,15 @@ XBuReads es un sitio web dedicado a los amantes de la lectura y la literatura. E
 
 * **Crear comentarios:** Permite a los usuarios dejar comentarios en cada libro, con la posibilidad de editarlos, eliminarlos y gestionar reacciones (likes/dislikes) tanto en comentarios propios como de otros usuarios.
 
+* **Sistema de seguimiento:** Permite seguir y dejar de seguir a otros lectores, ver listas de seguidores y seguidos en un modal con scroll infinito, y consultar las estadísticas desde el perfil de cualquier usuario.
+
+* **Feed de actividad social:** Al iniciar sesión, la home se transforma en un feed cronológico con los libros publicados y comentarios de los usuarios que seguís. Si no seguís a nadie, ofrece un acceso directo a Explorar.
+
 ¡Únete a XBuReads y sumérgete en el fascinante mundo de la lectura! Explora y comparte.
 
 ---
 
-![XBuReads sreenshot](public/screenshot.jpg)
+![XBuReads screenshot](public/screenshot.jpg)
 
 ## Contribuir
 
