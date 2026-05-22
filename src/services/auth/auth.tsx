@@ -29,8 +29,8 @@ export function SignIn() {
           state: { userId: currentUser.uid },
         });
       } else {
-        // Tiene username, ir al perfil
-        window.location.href = `/profile/${userData.username}`;
+        // Tiene username, ir al feed (home)
+        window.location.href = '/';
       }
     }
   }, [currentUser, userData, navigate]);

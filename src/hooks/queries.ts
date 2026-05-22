@@ -46,6 +46,7 @@ import {
   getFollowStats,
   getFollowers,
   getFollowing,
+  getFeed,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { useAuth } from '@contexts/AuthContext';
@@ -747,6 +748,20 @@ function useFollowers(userId: string | undefined, enabled: boolean = true) {
   });
 }
 
+function useFeed(enabled: boolean = true) {
+  return useInfiniteQuery({
+    queryKey: [keys.feed],
+    queryFn: ({ pageParam }) => getFeed(pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.info.nextPage === null) return undefined;
+      return lastPage.info.nextPage;
+    },
+    enabled,
+    refetchOnWindowFocus: false,
+  });
+}
+
 function useFollowing(userId: string | undefined, enabled: boolean = true) {
   return useInfiniteQuery({
     queryKey: [keys.following, userId],
@@ -809,4 +824,5 @@ export {
   useFollowStats,
   useFollowers,
   useFollowing,
+  useFeed,
 };

@@ -113,7 +113,7 @@ export function DesktopNav() {
                       }}
                       _hover={{ color: 'green.500' }}
                     >
-                      {name}
+                      {href === '/' && userData ? 'Feed' : name}
                     </Link>
                   </ListItem>
                 ))}

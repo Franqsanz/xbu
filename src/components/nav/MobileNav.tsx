@@ -218,7 +218,7 @@ export function MobileNav() {
                       }}
                     >
                       <Icon as={icon} boxSize='5' mr='5' />
-                      {name}
+                      {href === '/' && currentUser ? 'Feed' : name}
                     </Link>
                   </ListItem>
                 ))}

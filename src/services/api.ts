@@ -372,6 +372,14 @@ async function getFollowStats(userId: string) {
   });
 }
 
+async function getFeed(page: number = 0, limit: number = 10) {
+  const offset = page * limit;
+  return await fetchData(
+    `${API_URL}/users/me/feed?limit=${limit}&offset=${offset}`,
+    { credentials: 'include' },
+  );
+}
+
 export {
   getAllBooks,
   getAllSearchBooks,
@@ -415,4 +423,5 @@ export {
   getFollowers,
   getFollowing,
   getFollowStats,
+  getFeed,
 };
