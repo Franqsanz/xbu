@@ -4,14 +4,13 @@ import { CommentForm } from '@components/comments/CommentForm';
 import { CommentsList } from '@components/comments/CommentsList';
 import { useFindAllComments } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
+import { LazyOnView } from '@components/ui/LazyOnView';
 
 type CommentType = {
   bookId: string;
 };
 
-export function Comments({ bookId }: CommentType) {
-  const { currentUser } = useAuth();
-
+function CommentsContent({ bookId }: CommentType) {
   const {
     data,
     isPending,
@@ -21,6 +20,23 @@ export function Comments({ bookId }: CommentType) {
     isFetchingNextPage,
     refetch,
   } = useFindAllComments(bookId);
+
+  return (
+    <CommentsList
+      bookId={bookId}
+      commentsData={data}
+      isPending={isPending}
+      isError={isError}
+      fetchNextPage={fetchNextPage}
+      hasNextPage={hasNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+      refetch={refetch}
+    />
+  );
+}
+
+export function Comments({ bookId }: CommentType) {
+  const { currentUser } = useAuth();
 
   return (
     <>
@@ -42,16 +58,9 @@ export function Comments({ bookId }: CommentType) {
         </Tag>
       </Flex>
       {currentUser && <CommentForm bookId={bookId} />}
-      <CommentsList
-        bookId={bookId}
-        commentsData={data}
-        isPending={isPending}
-        isError={isError}
-        fetchNextPage={fetchNextPage}
-        hasNextPage={hasNextPage}
-        isFetchingNextPage={isFetchingNextPage}
-        refetch={refetch}
-      />
+      <LazyOnView minH='200px'>
+        <CommentsContent bookId={bookId} />
+      </LazyOnView>
     </>
   );
 }

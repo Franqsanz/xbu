@@ -51,6 +51,7 @@ import { useAuth } from '@contexts/AuthContext';
 import { useMyToast } from '@hooks/useMyToast';
 import { Categories } from '@components/Categories';
 import { Comments } from '@components/comments/Comments';
+import { LazyOnView } from '@components/ui/LazyOnView';
 
 const MoreBooksAuthors = lazy(() => import('@components/cards/MoreBooksAuthors'));
 const RelatedBooks = lazy(() => import('@components/cards/RelatedBooks'));
@@ -546,16 +547,28 @@ export default function Book() {
           <BooksSection
             title='Más libros del autor'
             data={data.authors[0]}
-            booksComponent={<MoreBooksAuthors id={data.id} />}
+            booksComponent={
+              <LazyOnView minH='200px'>
+                <MoreBooksAuthors id={data.id} />
+              </LazyOnView>
+            }
           />
           <BooksSection
             title='Libros relacionados con'
             data={data.category[0]}
-            booksComponent={<RelatedBooks id={data.id} />}
+            booksComponent={
+              <LazyOnView minH='200px'>
+                <RelatedBooks id={data.id} />
+              </LazyOnView>
+            }
           />
           <BooksSection
             title='Más libros en XBuReads'
-            booksComponent={<MoreBooks id={data.id} />}
+            booksComponent={
+              <LazyOnView minH='200px'>
+                <MoreBooks id={data.id} />
+              </LazyOnView>
+            }
           />
           <Comments bookId={data.id} />
         </Flex>
