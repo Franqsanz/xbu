@@ -89,7 +89,7 @@ export function Feed() {
       </Heading>
       {activities.map((activity, index) => (
         <FeedItem
-          key={`${activity.type}-${activity.comment?.id || activity.book.id}-${index}`}
+          key={`${activity.type}-${activity.comment?.id || activity.book?.id || activity.target?.uid}-${index}`}
           activity={activity}
         />
       ))}

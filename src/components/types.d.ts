@@ -268,10 +268,11 @@ interface FeedBook {
 }
 
 interface FeedActivity {
-  type: 'book' | 'comment' | 'status';
+  type: 'book' | 'comment' | 'status' | 'follow' | 'favorite' | 'collection';
   createdAt: string;
   actor: FeedActor;
-  book: FeedBook;
+  book?: FeedBook;
+  target?: FeedActor;
   comment?: { id: string; text: string };
   status?: BookStatusValue;
 }

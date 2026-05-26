@@ -219,6 +219,9 @@ function useFavoriteBook(body: any, isFavorite: boolean) {
     mutationKey: [keys.favoriteBook],
     mutationFn: (userId: string | undefined) =>
       patchToggleFavorite(userId, body, isFavorite),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: [keys.feed] });
+    },
   });
 }
 
@@ -329,6 +332,9 @@ function useCollectionBooks() {
       bookId: string;
       checked: boolean;
     }) => patchToggleBookInCollection(userId, collections, bookId, checked),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: [keys.feed] });
+    },
   });
 }
 
@@ -397,6 +403,9 @@ function useDeleteCollectionBook() {
     }) => patchRemoveBookFromCollection(userId, collectionId, bookId),
     onError: async (error) => {
       console.error('Error en el servidor');
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: [keys.feed] });
     },
   });
 }
@@ -712,6 +721,9 @@ function useFollowUser() {
       await queryClient.invalidateQueries({
         queryKey: [keys.following],
       });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.feed],
+      });
     },
   });
 }
@@ -732,6 +744,9 @@ function useUnfollowUser() {
       });
       await queryClient.invalidateQueries({
         queryKey: [keys.following],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.feed],
       });
     },
   });
