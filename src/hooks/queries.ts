@@ -214,11 +214,16 @@ function useBook(pathUrl: string | undefined) {
   });
 }
 
-function useFavoriteBook(body: any, isFavorite: boolean) {
+function useFavoriteBook(bookId: any) {
   return useMutation({
     mutationKey: [keys.favoriteBook],
-    mutationFn: (userId: string | undefined) =>
-      patchToggleFavorite(userId, body, isFavorite),
+    mutationFn: ({
+      userId,
+      isFavorite,
+    }: {
+      userId: string | undefined;
+      isFavorite: boolean;
+    }) => patchToggleFavorite(userId, bookId, isFavorite),
     onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: [keys.feed] });
     },

@@ -108,7 +108,6 @@ export default function Book() {
   const [isFavorite, setIsFavorite] = useState<boolean>(data.isFavorite);
   const { mutate: mutateFavorite, isSuccess: successFavorite } = useFavoriteBook(
     data.id,
-    isFavorite,
   );
   const {
     mutate: mutateDelete,
@@ -164,7 +163,10 @@ export default function Book() {
     const newFavoriteStatus = !isFavorite;
     setIsFavorite(newFavoriteStatus);
 
-    return await mutateFavorite(currentUser?.uid);
+    return mutateFavorite({
+      userId: currentUser?.uid,
+      isFavorite: newFavoriteStatus,
+    });
   }
 
   if (currentUser) {
