@@ -5,6 +5,7 @@ import { Login } from '@pages/Login';
 import { CreateUser } from '@pages/CreateUser';
 import { CatchError } from '@utils/CatchError';
 import { ErrorPage } from '@pages/404';
+import { ErrorBoundary } from '@pages/ErrorBoundary';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { SkeletonDetailsBook } from '@components/skeletons/SkeletonDBook';
 import { PrivateRoute } from '@components/nav/PrivateRoute';
@@ -35,7 +36,7 @@ export const routes = createBrowserRouter([
         <Layout />
       </>
     ),
-    errorElement: <div>Error 500 o Error Boundary</div>,
+    errorElement: <ErrorBoundary />,
     children: [
       {
         index: true,
