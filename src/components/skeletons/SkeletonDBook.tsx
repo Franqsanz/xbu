@@ -29,7 +29,7 @@ export function SkeletonDetailsBook() {
         align='flex-start'
         direction={{ base: 'column', lg: 'row' }}
       >
-        <Box m='auto' mt='5'>
+        <Box m='auto' mt='5' pb={{ base: '20', lg: '0' }}>
           <Skeleton
             w={{ base: '230px', lg: '290px' }}
             h={{ base: '340px', lg: '420px' }}
@@ -38,10 +38,21 @@ export function SkeletonDetailsBook() {
           <Skeleton
             display={{ base: 'none', lg: 'block' }}
             w='290px'
+            h='52px'
+            rounded='lg'
+            mt='20'
+            mb='6'
+          ></Skeleton>
+          <Skeleton
+            display={{ base: 'none', lg: 'block' }}
+            w='290px'
             h='600px'
             rounded='lg'
-            mt='10'
+            mt='2'
           ></Skeleton>
+        </Box>
+        <Box display={{ base: 'block', lg: 'none' }} px='5' mt='2' mb='6' w='full'>
+          <Skeleton h='52px' rounded='lg' />
         </Box>
         <Flex
           w='full'

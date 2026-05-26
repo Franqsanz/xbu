@@ -47,6 +47,9 @@ import {
   getFollowers,
   getFollowing,
   getFeed,
+  getBookStatus,
+  patchBookStatus,
+  deleteBookStatus,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { useAuth } from '@contexts/AuthContext';
@@ -761,6 +764,41 @@ function useFollowers(userId: string | undefined, enabled: boolean = true) {
   });
 }
 
+type BookStatusValue = 'read' | 'reading' | 'want_to_read';
+
+function useBookStatus(bookId: string | undefined) {
+  return useQuery({
+    queryKey: [keys.bookStatus, bookId],
+    queryFn: () => getBookStatus(bookId!),
+    enabled: !!bookId,
+    refetchOnWindowFocus: false,
+  });
+}
+
+function useSetBookStatus(bookId: string) {
+  return useMutation({
+    mutationFn: (status: BookStatusValue) => patchBookStatus(bookId, status),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [keys.bookStatus, bookId],
+      });
+      await queryClient.invalidateQueries({ queryKey: [keys.feed] });
+    },
+  });
+}
+
+function useDeleteBookStatus(bookId: string) {
+  return useMutation({
+    mutationFn: () => deleteBookStatus(bookId),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [keys.bookStatus, bookId],
+      });
+      await queryClient.invalidateQueries({ queryKey: [keys.feed] });
+    },
+  });
+}
+
 function useFeed(enabled: boolean = true) {
   return useInfiniteQuery({
     queryKey: [keys.feed],
@@ -838,4 +876,7 @@ export {
   useFollowers,
   useFollowing,
   useFeed,
+  useBookStatus,
+  useSetBookStatus,
+  useDeleteBookStatus,
 };

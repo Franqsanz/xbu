@@ -23,22 +23,7 @@ import { NavLink } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 
 import { useFollowers, useFollowing } from '@hooks/queries';
-
-type FollowUser = {
-  uid: string;
-  username: string;
-  name: string;
-  picture: string;
-};
-
-type ModalFollowListProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  userId: string | undefined;
-  initialTab: 'followers' | 'following';
-  followersCount: number;
-  followingCount: number;
-};
+import { FollowUser, ModalFollowListProps } from '@components/types';
 
 function FollowList({
   users,

@@ -44,6 +44,7 @@ const keys = {
   followers: 'Followers',
   following: 'Following',
   feed: 'Feed',
+  bookStatus: 'BookStatus',
 };
 
 const currentYear = new Date().getFullYear();

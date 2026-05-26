@@ -52,6 +52,7 @@ import { useMyToast } from '@hooks/useMyToast';
 import { Categories } from '@components/Categories';
 import { Comments } from '@components/comments/Comments';
 import { LazyOnView } from '@components/ui/LazyOnView';
+import { BookStatusSelector } from '@components/BookStatusSelector';
 
 const MoreBooksAuthors = lazy(() => import('@components/cards/MoreBooksAuthors'));
 const RelatedBooks = lazy(() => import('@components/cards/RelatedBooks'));
@@ -361,7 +362,7 @@ export default function Book() {
           as='figure'
           display={{ base: 'block', lg: 'none' }}
           m='auto'
-          pb='16'
+          pb='20'
           zIndex='0'
         >
           <LazyLoad width={230} height={340} offset={0} threshold={0.99}>
@@ -390,6 +391,19 @@ export default function Book() {
             bxSize='5'
           />
         </Box>
+        {currentUser && (
+          <Box
+            display={{ base: 'block', lg: 'none' }}
+            position='relative'
+            zIndex='1'
+            px='5'
+            mt='2'
+            mb='6'
+            w='full'
+          >
+            <BookStatusSelector bookId={data.id} w='100%' />
+          </Box>
+        )}
         <Flex
           w='full'
           maxW={{ base: '920px', '2xl': '1130px' }}
@@ -628,7 +642,7 @@ export default function Book() {
               h='420px'
               src={data.image.url}
               position='absolute'
-              bottom='710px'
+              top='30px'
               left='6px'
               opacity='50%'
               rounded='lg'
@@ -645,11 +659,19 @@ export default function Book() {
               views={data.views}
               bxSize='5'
             />
+            {currentUser && (
+              <Box mt='20' mb='6'>
+                <BookStatusSelector
+                  bookId={data.id}
+                  w={{ base: '290px', '2xl': '305px' }}
+                />
+              </Box>
+            )}
             <Box
               w={{ base: '290px', '2xl': '305px' }}
               h='650px'
               overflowX='hidden'
-              mt='14'
+              mt={currentUser ? '2' : '14'}
               p='0 1.25rem 0 0.90rem'
               border='1px'
               borderColor={grayColor}

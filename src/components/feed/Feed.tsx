@@ -16,7 +16,8 @@ import { useInView } from 'react-intersection-observer';
 import { FiArrowRight } from 'react-icons/fi';
 
 import { useFeed } from '@hooks/queries';
-import { FeedItem, FeedActivity } from '@components/feed/FeedItem';
+import { FeedItem } from '@components/feed/FeedItem';
+import { FeedActivity } from '@components/types';
 import { SkeletonFeed } from '@components/skeletons/SkeletonFeed';
 import { NoData } from '@assets/assets';
 

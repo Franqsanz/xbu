@@ -243,6 +243,66 @@ interface EditorType {
   onSave: (newText: string) => void;
 }
 
+type BookStatusValue = 'read' | 'reading' | 'want_to_read';
+
+interface BookStatusSelectorProps {
+  bookId: string;
+  w?: string | Record<string, string>;
+}
+
+interface FeedActor {
+  uid: string;
+  username: string;
+  name: string;
+  picture?: string;
+}
+
+interface FeedBook {
+  id: string;
+  title: string;
+  pathUrl: string;
+  image: { url: string };
+  authors: string[];
+  category: string[];
+  synopsis: string;
+}
+
+interface FeedActivity {
+  type: 'book' | 'comment' | 'status';
+  createdAt: string;
+  actor: FeedActor;
+  book: FeedBook;
+  comment?: { id: string; text: string };
+  status?: BookStatusValue;
+}
+
+interface FeedItemProps {
+  activity: FeedActivity;
+}
+
+interface FollowUser {
+  uid: string;
+  username: string;
+  name: string;
+  picture: string;
+}
+
+interface ModalFollowListProps {
+  isOpen: boolean;
+  onClose: () => void;
+  userId: string | undefined;
+  initialTab: 'followers' | 'following';
+  followersCount: number;
+  followingCount: number;
+}
+
+interface LazyOnViewProps {
+  children: RNode;
+  placeholder?: RNode;
+  minH?: string | number | Record<string, string | number>;
+  rootMargin?: string;
+}
+
 export type {
   MyChangeEvent,
   AboutType,
@@ -274,4 +334,13 @@ export type {
   CommentType,
   ReactionsType,
   EditorType,
+  BookStatusValue,
+  BookStatusSelectorProps,
+  FeedActor,
+  FeedBook,
+  FeedActivity,
+  FeedItemProps,
+  FollowUser,
+  ModalFollowListProps,
+  LazyOnViewProps,
 };

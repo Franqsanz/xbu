@@ -4,40 +4,29 @@ import {
   Flex,
   Image,
   Link,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
+import { FiBookmark, FiBookOpen, FiCheck } from 'react-icons/fi';
 
 import { parseDate } from '@utils/utils';
+import { FeedActivity, FeedItemProps } from '@components/types';
 
-type FeedActor = {
-  uid: string;
-  username: string;
-  name: string;
-  picture?: string;
-};
-
-type FeedBook = {
-  id: string;
-  title: string;
-  pathUrl: string;
-  image: { url: string };
-  authors: string[];
-  category: string[];
-  synopsis: string;
-};
-
-export type FeedActivity = {
-  type: 'book' | 'comment';
-  createdAt: string;
-  actor: FeedActor;
-  book: FeedBook;
-  comment?: { id: string; text: string };
-};
-
-type FeedItemProps = {
-  activity: FeedActivity;
+const STATUS_META: Record<
+  NonNullable<FeedActivity['status']>,
+  { label: string; icon: typeof FiCheck; colorScheme: string }
+> = {
+  read: { label: 'Leído', icon: FiCheck, colorScheme: 'green' },
+  reading: { label: 'Leyendo', icon: FiBookOpen, colorScheme: 'blue' },
+  want_to_read: {
+    label: 'Quiere leer',
+    icon: FiBookmark,
+    colorScheme: 'yellow',
+  },
 };
 
 export function FeedItem({ activity }: FeedItemProps) {
@@ -46,8 +35,10 @@ export function FeedItem({ activity }: FeedItemProps) {
   const subTextColor = useColorModeValue('gray.600', 'gray.400');
   const commentBg = useColorModeValue('gray.50', 'gray.900');
 
-  const { actor, book, type, comment, createdAt } = activity;
-  const actionText = type === 'book' ? 'publicó un libro' : 'comentó en';
+  const { actor, book, type, comment, status, createdAt } = activity;
+  const actionText =
+    type === 'book' ? 'publicó un libro' : type === 'comment' ? 'comentó en' : '';
+  const statusMeta = type === 'status' && status ? STATUS_META[status] : null;
   const formattedDate = parseDate(createdAt, 'short') || '';
 
   return (
@@ -73,9 +64,22 @@ export function FeedItem({ activity }: FeedItemProps) {
             >
               {actor.name}
             </Link>
-            <Text fontSize='sm' color={subTextColor}>
-              {actionText}
-            </Text>
+            {actionText && (
+              <Text fontSize='sm' color={subTextColor}>
+                {actionText}
+              </Text>
+            )}
+            {statusMeta && (
+              <Tag
+                size='sm'
+                colorScheme={statusMeta.colorScheme}
+                variant='subtle'
+                rounded='full'
+              >
+                <TagLeftIcon as={statusMeta.icon} />
+                <TagLabel fontWeight='semibold'>{statusMeta.label}</TagLabel>
+              </Tag>
+            )}
           </Flex>
           <Text fontSize='xs' color={subTextColor}>
             {formattedDate}

@@ -1,13 +1,7 @@
-import { ReactNode } from 'react';
 import { Box, Center, Spinner } from '@chakra-ui/react';
 import { useInView } from 'react-intersection-observer';
 
-type LazyOnViewProps = {
-  children: ReactNode;
-  placeholder?: ReactNode;
-  minH?: string | number | Record<string, string | number>;
-  rootMargin?: string;
-};
+import { LazyOnViewProps } from '@components/types';
 
 const defaultPlaceholder = <Spinner size='lg' />;
 
