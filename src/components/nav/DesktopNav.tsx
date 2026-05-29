@@ -77,7 +77,7 @@ export function DesktopNav() {
         boxShadow='sm'
         backdropFilter='auto'
         backdropBlur='12px'
-        zIndex='1'
+        zIndex='100'
       >
         <Flex
           as='nav'
