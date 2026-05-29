@@ -399,6 +399,15 @@ async function deleteBookStatus(bookId: string) {
   });
 }
 
+async function getBooksByStatus(
+  status: 'read' | 'reading' | 'want_to_read',
+  page: number,
+) {
+  return await fetchData(
+    `${API_URL}/users/me/book-status?status=${status}&limit=10&page=${page}`,
+  );
+}
+
 export {
   getAllBooks,
   getAllSearchBooks,
@@ -446,4 +455,5 @@ export {
   getBookStatus,
   patchBookStatus,
   deleteBookStatus,
+  getBooksByStatus,
 };

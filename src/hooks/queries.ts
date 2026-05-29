@@ -50,6 +50,7 @@ import {
   getBookStatus,
   patchBookStatus,
   deleteBookStatus,
+  getBooksByStatus,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { useAuth } from '@contexts/AuthContext';
@@ -803,6 +804,9 @@ function useSetBookStatus(bookId: string) {
         queryKey: [keys.bookStatus, bookId],
       });
       await queryClient.invalidateQueries({ queryKey: [keys.feed] });
+      // removeQueries en vez de invalidate: borra la cache para que al volver a
+      // /my-library el fetch sea fresh y no haya flash de datos stale.
+      queryClient.removeQueries({ queryKey: [keys.booksByStatus] });
     },
   });
 }
@@ -815,6 +819,7 @@ function useDeleteBookStatus(bookId: string) {
         queryKey: [keys.bookStatus, bookId],
       });
       await queryClient.invalidateQueries({ queryKey: [keys.feed] });
+      queryClient.removeQueries({ queryKey: [keys.booksByStatus] });
     },
   });
 }
@@ -830,6 +835,25 @@ function useFeed(enabled: boolean = true) {
     },
     enabled,
     refetchOnWindowFocus: false,
+  });
+}
+
+function useBooksByStatus(
+  status: 'read' | 'reading' | 'want_to_read',
+  enabled: boolean = true,
+) {
+  return useInfiniteQuery({
+    queryKey: [keys.booksByStatus, status],
+    queryFn: ({ pageParam }) => getBooksByStatus(status, pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.info.nextPage === null) return undefined;
+      return lastPage.info.nextPage;
+    },
+    enabled,
+    refetchOnWindowFocus: false,
+    refetchOnMount: 'always',
+    staleTime: 0,
   });
 }
 
@@ -899,4 +923,5 @@ export {
   useBookStatus,
   useSetBookStatus,
   useDeleteBookStatus,
+  useBooksByStatus,
 };

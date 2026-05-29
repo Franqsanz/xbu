@@ -25,6 +25,7 @@ const Book = lazy(() => import('@pages/Book'));
 const FilteredData = lazy(() => import('@pages/FilteredData'));
 const NewBook = lazy(() => import('@pages/NewBook'));
 const Favorites = lazy(() => import('@pages/profile/Favorites'));
+const MyLibrary = lazy(() => import('@pages/profile/MyLibrary'));
 
 export const routes = createBrowserRouter([
   {
@@ -127,6 +128,14 @@ export const routes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Favorites />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/my-library',
+        element: (
+          <PrivateRoute>
+            <MyLibrary />
           </PrivateRoute>
         ),
       },
