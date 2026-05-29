@@ -45,6 +45,7 @@ const keys = {
   following: 'Following',
   feed: 'Feed',
   bookStatus: 'BookStatus',
+  booksByStatus: 'BooksByStatus',
 };
 
 const currentYear = new Date().getFullYear();
