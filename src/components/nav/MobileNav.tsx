@@ -128,7 +128,7 @@ export function MobileNav() {
         backdropFilter='auto'
         backdropBlur='12px'
         direction='column'
-        zIndex='1'
+        zIndex='100'
       >
         <Flex as='nav' w='100%' justify='space-between' align='center'>
           <Flex align='center'>

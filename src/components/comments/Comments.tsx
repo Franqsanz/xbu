@@ -58,7 +58,7 @@ export function Comments({ bookId }: CommentType) {
         </Tag>
       </Flex>
       {currentUser && <CommentForm bookId={bookId} />}
-      <LazyOnView minH='200px'>
+      <LazyOnView minH='200px' rootMargin='0px 0px 600px 0px'>
         <CommentsContent bookId={bookId} />
       </LazyOnView>
     </>
