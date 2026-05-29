@@ -286,6 +286,7 @@ interface FollowUser {
   username: string;
   name: string;
   picture: string;
+  isFollowing: boolean;
 }
 
 interface ModalFollowListProps {

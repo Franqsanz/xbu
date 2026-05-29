@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   Avatar,
   Box,
+  Button,
   Center,
   Flex,
   Modal,
@@ -22,8 +23,95 @@ import {
 import { NavLink } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 
-import { useFollowers, useFollowing } from '@hooks/queries';
+import {
+  useFollowers,
+  useFollowing,
+  useFollowUser,
+  useUnfollowUser,
+} from '@hooks/queries';
+import { useAuth } from '@contexts/AuthContext';
 import { FollowUser, ModalFollowListProps } from '@components/types';
+
+function FollowItem({
+  user,
+  onItemClick,
+  currentUserUid,
+}: {
+  user: FollowUser;
+  onItemClick: () => void;
+  currentUserUid: string | undefined;
+}) {
+  const hoverBg = useColorModeValue('gray.100', 'gray.700');
+  const [isFollowing, setIsFollowing] = useState(user.isFollowing);
+  const [isHovered, setIsHovered] = useState(false);
+  const { mutate: follow, isPending: isFollowingPending } = useFollowUser();
+  const { mutate: unfollow, isPending: isUnfollowingPending } = useUnfollowUser();
+
+  const isSelf = currentUserUid === user.uid;
+  const showButton = !!currentUserUid && !isSelf;
+  const isPending = isFollowingPending || isUnfollowingPending;
+
+  function handleClick(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isPending) return;
+
+    if (isFollowing) {
+      setIsFollowing(false);
+      unfollow(user.uid, { onError: () => setIsFollowing(true) });
+    } else {
+      setIsFollowing(true);
+      follow(user.uid, { onError: () => setIsFollowing(false) });
+    }
+  }
+
+  return (
+    <Flex
+      as={NavLink}
+      to={`/profile/${user.username}`}
+      onClick={onItemClick}
+      align='center'
+      gap={{ base: 2, md: 3 }}
+      p={{ base: 2, md: 3 }}
+      rounded='md'
+      _hover={{ bg: hoverBg }}
+    >
+      <Avatar src={user.picture} name={user.name} size={{ base: 'sm', md: 'md' }} />
+      <Flex direction='column' overflow='hidden' flex='1'>
+        <Text
+          fontWeight='semibold'
+          fontSize={{ base: 'sm', md: 'md' }}
+          noOfLines={1}
+        >
+          {user.name}
+        </Text>
+        <Text fontSize={{ base: 'xs', md: 'sm' }} color='gray.500' noOfLines={1}>
+          {user.username}
+        </Text>
+      </Flex>
+      {showButton && (
+        <Button
+          size='xs'
+          minW='90px'
+          fontWeight='normal'
+          bg={!isFollowing ? 'green.500' : isHovered ? 'red.500' : 'black'}
+          color={!isFollowing ? 'black' : 'white'}
+          _hover={{ bg: isFollowing ? 'red.500' : 'green.600' }}
+          onClick={handleClick}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          isLoading={isPending}
+        >
+          {isFollowing && isHovered
+            ? 'Dejar de seguir'
+            : isFollowing
+              ? 'Siguiendo'
+              : 'Seguir'}
+        </Button>
+      )}
+    </Flex>
+  );
+}
 
 function FollowList({
   users,
@@ -34,6 +122,7 @@ function FollowList({
   fetchNextPage,
   emptyText,
   onItemClick,
+  currentUserUid,
 }: {
   users: FollowUser[];
   total: number;
@@ -43,9 +132,9 @@ function FollowList({
   fetchNextPage: () => void;
   emptyText: string;
   onItemClick: () => void;
+  currentUserUid: string | undefined;
 }) {
   const { ref, inView } = useInView();
-  const hoverBg = useColorModeValue('gray.100', 'gray.700');
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -74,35 +163,12 @@ function FollowList({
   return (
     <Flex direction='column'>
       {users.map((user) => (
-        <Flex
+        <FollowItem
           key={user.uid}
-          as={NavLink}
-          to={`/profile/${user.username}`}
-          onClick={onItemClick}
-          align='center'
-          gap={{ base: 2, md: 3 }}
-          p={{ base: 2, md: 3 }}
-          rounded='md'
-          _hover={{ bg: hoverBg }}
-        >
-          <Avatar
-            src={user.picture}
-            name={user.name}
-            size={{ base: 'sm', md: 'md' }}
-          />
-          <Flex direction='column' overflow='hidden'>
-            <Text
-              fontWeight='semibold'
-              fontSize={{ base: 'sm', md: 'md' }}
-              noOfLines={1}
-            >
-              {user.name}
-            </Text>
-            <Text fontSize={{ base: 'xs', md: 'sm' }} color='gray.500' noOfLines={1}>
-              {user.username}
-            </Text>
-          </Flex>
-        </Flex>
+          user={user}
+          onItemClick={onItemClick}
+          currentUserUid={currentUserUid}
+        />
       ))}
       <Box ref={ref} py='3' textAlign='center'>
         {isFetchingNextPage && <Spinner size='md' />}
@@ -121,6 +187,7 @@ export function ModalFollowList({
 }: ModalFollowListProps) {
   const [tabIndex, setTabIndex] = useState(initialTab === 'followers' ? 0 : 1);
   const bgColorBox = useColorModeValue('white', 'gray.900');
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     if (isOpen) {
@@ -180,6 +247,7 @@ export function ModalFollowList({
                   fetchNextPage={followersQuery.fetchNextPage}
                   emptyText='Aún no tiene seguidores'
                   onItemClick={onClose}
+                  currentUserUid={currentUser?.uid}
                 />
               </TabPanel>
               <TabPanel maxH='60vh' overflowY='auto' px='3'>
@@ -192,6 +260,7 @@ export function ModalFollowList({
                   fetchNextPage={followingQuery.fetchNextPage}
                   emptyText='No sigue a nadie todavía'
                   onItemClick={onClose}
+                  currentUserUid={currentUser?.uid}
                 />
               </TabPanel>
             </TabPanels>
