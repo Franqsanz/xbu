@@ -54,9 +54,11 @@ import {
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { useAuth } from '@contexts/AuthContext';
+import { useMyToast } from '@hooks/useMyToast';
 import { keys } from '@utils/utils';
 import { BookType, CommentType } from '@components/types';
 import { queryClient } from '../config';
+import { FaExclamationCircle } from 'react-icons/fa';
 
 function useMutatePost() {
   return useMutation({
@@ -216,6 +218,7 @@ function useBook(pathUrl: string | undefined) {
 }
 
 function useFavoriteBook(bookId: any) {
+  const myToast = useMyToast();
   return useMutation({
     mutationKey: [keys.favoriteBook],
     mutationFn: ({
@@ -227,6 +230,20 @@ function useFavoriteBook(bookId: any) {
     }) => patchToggleFavorite(userId, bookId, isFavorite),
     onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: [keys.feed] });
+    },
+    onError: () => {
+      myToast({
+        title: 'No se pudo actualizar favoritos',
+        icon: FaExclamationCircle,
+        iconColor: 'red.400',
+        bgColor: 'black',
+        width: '230px',
+        color: 'whitesmoke',
+        align: 'center',
+        padding: '1',
+        fntSize: 'md',
+        bxSize: 5,
+      });
     },
   });
 }
@@ -417,11 +434,24 @@ function useDeleteCollectionBook() {
 }
 
 function useDeleteBook() {
+  const myToast = useMyToast();
   return useMutation({
     mutationKey: [keys.deleteBook],
     mutationFn: (id: string | undefined) => deleteBook(id),
-    onError: async (error) => {
-      console.error('Error en el servidor');
+    onError: () => {
+      myToast({
+        title: 'No se pudo eliminar el libro',
+        description: 'Intentá de nuevo en unos segundos.',
+        icon: FaExclamationCircle,
+        iconColor: 'red.400',
+        bgColor: 'black',
+        width: '260px',
+        color: 'whitesmoke',
+        align: 'center',
+        padding: '1',
+        fntSize: 'md',
+        bxSize: 5,
+      });
     },
   });
 }

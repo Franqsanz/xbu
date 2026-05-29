@@ -52,6 +52,7 @@ import { useMyToast } from '@hooks/useMyToast';
 import { Categories } from '@components/Categories';
 import { Comments } from '@components/comments/Comments';
 import { LazyOnView } from '@components/ui/LazyOnView';
+import { SectionErrorBoundary } from '@components/ui/SectionErrorBoundary';
 import { BookStatusSelector } from '@components/BookStatusSelector';
 
 const MoreBooksAuthors = lazy(() => import('@components/cards/MoreBooksAuthors'));
@@ -564,26 +565,32 @@ export default function Book() {
             title='Más libros del autor'
             data={data.authors[0]}
             booksComponent={
-              <LazyOnView minH='200px'>
-                <MoreBooksAuthors id={data.id} />
-              </LazyOnView>
+              <SectionErrorBoundary message='No se pudieron cargar más libros del autor.'>
+                <LazyOnView minH='200px'>
+                  <MoreBooksAuthors id={data.id} />
+                </LazyOnView>
+              </SectionErrorBoundary>
             }
           />
           <BooksSection
             title='Libros relacionados con'
             data={data.category[0]}
             booksComponent={
-              <LazyOnView minH='200px'>
-                <RelatedBooks id={data.id} />
-              </LazyOnView>
+              <SectionErrorBoundary message='No se pudieron cargar los libros relacionados.'>
+                <LazyOnView minH='200px'>
+                  <RelatedBooks id={data.id} />
+                </LazyOnView>
+              </SectionErrorBoundary>
             }
           />
           <BooksSection
             title='Más libros en XBuReads'
             booksComponent={
-              <LazyOnView minH='200px'>
-                <MoreBooks id={data.id} />
-              </LazyOnView>
+              <SectionErrorBoundary message='No se pudieron cargar más libros.'>
+                <LazyOnView minH='200px'>
+                  <MoreBooks id={data.id} />
+                </LazyOnView>
+              </SectionErrorBoundary>
             }
           />
           <Comments bookId={data.id} />

@@ -1,6 +1,16 @@
 import { API_URL } from '../config';
 import { logIn } from '@services/auth/config';
 
+export class HttpError extends Error {
+  status: number;
+
+  constructor(status: number, message?: string) {
+    super(message ?? `HTTP ${status}`);
+    this.name = 'HttpError';
+    this.status = status;
+  }
+}
+
 interface PendingRequest {
   resolve: (value: any) => void;
   reject: (reason?: any) => void;
@@ -155,7 +165,7 @@ export async function fetchData(
     }
 
     if (!res.ok) {
-      throw new Error(`Error en la solicitud: ${res.status}`);
+      throw new HttpError(res.status, `Error en la solicitud: ${res.status}`);
     }
 
     const contentType = res.headers.get('content-type');
