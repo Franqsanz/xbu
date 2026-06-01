@@ -86,7 +86,9 @@ interface BookType {
     public_id: string;
   };
   userId?: string | undefined;
-  rating: number;
+  rating?: number;
+  averageRating?: number;
+  ratingsCount?: number;
 }
 
 interface ModalCropperType extends DisclosureType {

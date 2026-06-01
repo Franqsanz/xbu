@@ -22,11 +22,13 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IoWarningSharp } from 'react-icons/io5';
+
 import { Rating } from '@smastrom/react-rating';
 
 import { categories, formats, languages } from '../../constant/constants';
 import { BookType, MyChangeEvent } from '@components/types';
 import { useMutatePost, useCheckUser } from '@hooks/queries';
+import { putMyBookRating } from '@services/api';
 import { ModalCropper } from '@components/modals/ModalCropper';
 import { sortArrayByLabel } from '@utils/utils';
 import { useGenerateSlug } from '@hooks/useGenerateSlug';
@@ -79,14 +81,14 @@ export function FormNewBook() {
       public_id: '',
     },
     userId: currentUser?.uid,
-    rating: 0,
   });
+  const [rating, setRating] = useState<number>(0);
   useGenerateSlug(books.title, setBooks); // Genera el pathUrl (Slug)
 
   function allFieldsBook(book: BookType): boolean {
     return (
       Object.entries(book)
-        .filter(([key]) => key !== 'sourceLink' && key !== 'rating')
+        .filter(([key]) => key !== 'sourceLink')
         .every(([, value]) => value) && book.category.length > 0
     );
   }
@@ -113,13 +115,6 @@ export function FormNewBook() {
     handleImage(e, setCropData, onOpen);
   }
 
-  function handleRatingChange(newRating: number) {
-    setBooks((books) => ({
-      ...books,
-      rating: newRating,
-    }));
-  }
-
   function getCropData() {
     getCrop(crop, setPreviewImg, books, setBooks, onClose);
   }
@@ -129,7 +124,34 @@ export function FormNewBook() {
 
     try {
       await refetch();
-      await mutateAsync(books);
+      const created = await mutateAsync(books);
+      // Esperar a que el rating del creador termine ANTES de navegar,
+      // así cuando entre al detalle ya está reflejado.
+      if (rating > 0 && created?.id) {
+        try {
+          await putMyBookRating(created.id, rating);
+        } catch (err) {
+          console.error('No se pudo guardar el rating inicial:', err);
+        }
+      }
+
+      myToast({
+        title: 'Guardado',
+        description: '¡Publicación exitosa!',
+        icon: FaCheckCircle,
+        iconColor: 'green.700',
+        bgColor: 'black',
+        width: '300px',
+        color: 'white',
+        align: 'center',
+        padding: '1',
+        fntSize: 'md',
+        bxSize: 5,
+      });
+
+      if (data?.username) {
+        navigate(`/profile/${data.username}`, { replace: true });
+      }
     } catch (error) {
       setIsSubmitting(false);
     }
@@ -171,23 +193,7 @@ export function FormNewBook() {
     );
   }
 
-  if (isSuccess) {
-    myToast({
-      title: 'Guardado',
-      description: '¡Publicación exitosa!',
-      icon: FaCheckCircle,
-      iconColor: 'green.700',
-      bgColor: 'black',
-      width: '300px',
-      color: 'white',
-      align: 'center',
-      padding: '1',
-      fntSize: 'md',
-      bxSize: 5,
-    });
-
-    navigate(`/profile/${data.username}`, { replace: true });
-  } else if (error) {
+  if (error) {
     myToast({
       title: 'Ha ocurrido un error',
       description: 'No se ha podido realizar la publicación.',
@@ -572,7 +578,7 @@ export function FormNewBook() {
               <FormControl mt={{ base: 5, md: 8 }}>
                 <Flex align='center' mb='9px'>
                   <FormLabel htmlFor='calificacion' m='0'>
-                    Calificación{' '}
+                    Tu calificación{' '}
                     <Box display='inline' fontSize='xs'>
                       (Opcional)
                     </Box>
@@ -583,8 +589,8 @@ export function FormNewBook() {
                   resetLabel='calificacion'
                   invisibleLabel='calificacion'
                   style={{ maxWidth: 190 }}
-                  value={books.rating}
-                  onChange={handleRatingChange}
+                  value={rating}
+                  onChange={setRating}
                 />
               </FormControl>
               <Box mt={{ base: 10, md: '22rem' }}>

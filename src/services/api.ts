@@ -170,7 +170,6 @@ async function postBook(books: any) {
     format: books.format,
     pathUrl: books.pathUrl,
     userId: books.userId,
-    rating: books.rating,
     image: {
       public_id: '',
     },
@@ -203,7 +202,6 @@ async function updateBook(id: string | undefined, books: any) {
     format: books.format,
     pathUrl: books.pathUrl,
     userId: books.userId,
-    rating: books.rating,
     image: {
       url: books.image.url,
       public_id: books.image.public_id || '',
@@ -408,6 +406,27 @@ async function getBooksByStatus(
   );
 }
 
+async function getMyBookRating(bookId: string) {
+  return await fetchData(`${API_URL}/books/${bookId}/rating/me`);
+}
+
+async function getBookRatingStats(bookId: string) {
+  return await fetchData(`${API_URL}/books/${bookId}/rating/stats`);
+}
+
+async function putMyBookRating(bookId: string, rating: number) {
+  return await fetchData(`${API_URL}/books/${bookId}/rating/me`, {
+    method: 'PUT',
+    body: JSON.stringify({ rating }),
+  });
+}
+
+async function deleteMyBookRating(bookId: string) {
+  return await fetchData(`${API_URL}/books/${bookId}/rating/me`, {
+    method: 'DELETE',
+  });
+}
+
 export {
   getAllBooks,
   getAllSearchBooks,
@@ -456,4 +475,8 @@ export {
   patchBookStatus,
   deleteBookStatus,
   getBooksByStatus,
+  getMyBookRating,
+  getBookRatingStats,
+  putMyBookRating,
+  deleteMyBookRating,
 };

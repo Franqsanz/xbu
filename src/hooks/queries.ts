@@ -51,6 +51,10 @@ import {
   patchBookStatus,
   deleteBookStatus,
   getBooksByStatus,
+  getMyBookRating,
+  getBookRatingStats,
+  putMyBookRating,
+  deleteMyBookRating,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { useAuth } from '@contexts/AuthContext';
@@ -868,6 +872,57 @@ function useFeed(enabled: boolean = true) {
   });
 }
 
+function useMyBookRating(bookId: string | undefined, enabled: boolean = true) {
+  return useQuery({
+    queryKey: [keys.myBookRating, bookId],
+    queryFn: () => getMyBookRating(bookId!),
+    enabled: !!bookId && enabled,
+    refetchOnWindowFocus: false,
+  });
+}
+
+function useBookRatingStats(
+  bookId: string | undefined,
+  initialData?: { averageRating: number; ratingsCount: number },
+) {
+  return useQuery({
+    queryKey: [keys.bookRatingStats, bookId],
+    queryFn: () => getBookRatingStats(bookId!),
+    enabled: !!bookId,
+    refetchOnWindowFocus: false,
+    initialData,
+    staleTime: 60_000,
+  });
+}
+
+function useSetMyBookRating(bookId: string) {
+  return useMutation({
+    mutationFn: (rating: number) => putMyBookRating(bookId, rating),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [keys.myBookRating, bookId],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.bookRatingStats, bookId],
+      });
+    },
+  });
+}
+
+function useDeleteMyBookRating(bookId: string) {
+  return useMutation({
+    mutationFn: () => deleteMyBookRating(bookId),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [keys.myBookRating, bookId],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.bookRatingStats, bookId],
+      });
+    },
+  });
+}
+
 function useBooksByStatus(
   status: 'read' | 'reading' | 'want_to_read',
   enabled: boolean = true,
@@ -954,4 +1009,8 @@ export {
   useSetBookStatus,
   useDeleteBookStatus,
   useBooksByStatus,
+  useMyBookRating,
+  useBookRatingStats,
+  useSetMyBookRating,
+  useDeleteMyBookRating,
 };

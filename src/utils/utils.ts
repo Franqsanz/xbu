@@ -46,6 +46,8 @@ const keys = {
   feed: 'Feed',
   bookStatus: 'BookStatus',
   booksByStatus: 'BooksByStatus',
+  myBookRating: 'MyBookRating',
+  bookRatingStats: 'BookRatingStats',
 };
 
 const currentYear = new Date().getFullYear();

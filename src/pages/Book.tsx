@@ -25,7 +25,6 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from 'react-icons/md';
 import { FaRegBookmark } from 'react-icons/fa6';
 import LazyLoad from 'react-lazy-load';
-import { Rating } from '@smastrom/react-rating';
 import Atropos from 'atropos/react';
 import 'atropos/css';
 
@@ -50,6 +49,7 @@ import { ModalForm } from '@components/modals/ModalForm';
 import { useAuth } from '@contexts/AuthContext';
 import { useMyToast } from '@hooks/useMyToast';
 import { Categories } from '@components/Categories';
+import { BookRating } from '@components/BookRating';
 import { Comments } from '@components/comments/Comments';
 import { LazyOnView } from '@components/ui/LazyOnView';
 import { SectionErrorBoundary } from '@components/ui/SectionErrorBoundary';
@@ -349,7 +349,6 @@ export default function Book() {
           url: data.image.url,
           public_id: data.image.public_id,
         }}
-        rating={data.rating}
         onClose={onCloseEdit}
       />
       <Flex
@@ -454,7 +453,11 @@ export default function Book() {
             ))}
           </Flex>
           <Box mt='3'>
-            <Rating style={{ maxWidth: 140 }} value={data.rating} readOnly />
+            <BookRating
+              bookId={data.id}
+              averageRating={data.averageRating ?? 0}
+              ratingsCount={data.ratingsCount ?? 0}
+            />
           </Box>
           <Box mt='6'>
             <Box p='2' fontSize='lg' bg={grayColor} roundedTop='lg'>

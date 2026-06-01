@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   FormControl,
@@ -23,9 +23,12 @@ import { BiImageAdd } from 'react-icons/bi';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IoWarningSharp } from 'react-icons/io5';
 
+import { Rating } from '@smastrom/react-rating';
+
 import { categories, formats, languages } from '../../constant/constants';
 import { BookType, MyChangeEvent } from '@components/types';
-import { useUpdateBook } from '@hooks/queries';
+import { useUpdateBook, useMyBookRating } from '@hooks/queries';
+import { putMyBookRating, deleteMyBookRating } from '@services/api';
 import { ModalCropper } from '@components/modals/ModalCropper';
 import { sortArrayByLabel } from '@utils/utils';
 import { MyPopover } from '@components/ui/MyPopover';
@@ -39,7 +42,6 @@ import {
 } from '@components/forms/utils/utilsForm';
 import { useMyToast } from '@hooks/useMyToast';
 import { useGenerateSlug } from '@hooks/useGenerateSlug';
-import { Rating } from '@smastrom/react-rating';
 const Cropper = lazy(() => import('react-cropper'));
 
 export function FormEdit({
@@ -55,7 +57,6 @@ export function FormEdit({
   format,
   pathUrl,
   image,
-  rating,
 }: BookType) {
   const {
     handleSubmit,
@@ -90,18 +91,23 @@ export function FormEdit({
       url,
       public_id,
     },
-    rating,
   });
 
   const { mutateAsync, isPending, isSuccess, error } = useUpdateBook(books);
   useGenerateSlug(books.title, setBooks);
 
+  const { data: myRatingData } = useMyBookRating(id, !!id);
+  const serverRating = (myRatingData?.rating ?? 0) as number;
+  const [rating, setRating] = useState<number>(0);
+
+  useEffect(() => {
+    setRating(serverRating);
+  }, [serverRating]);
+
   function allFieldsBook(book: BookType): boolean {
     return (
       Object.entries(book)
-        .filter(
-          ([key]) => key !== 'sourceLink' && key !== 'pathUrl' && key !== 'rating',
-        )
+        .filter(([key]) => key !== 'sourceLink' && key !== 'pathUrl')
         .every(([, value]) => value) && book.category.length > 0
     );
   }
@@ -128,13 +134,6 @@ export function FormEdit({
     handleImage(e, setCropData, onOpen);
   }
 
-  function handleRatingChange(newRating: number) {
-    setBooks((books) => ({
-      ...books,
-      rating: newRating,
-    }));
-  }
-
   function getCropData() {
     getCrop(crop, setPreviewImg, books, setBooks, onClose);
   }
@@ -143,6 +142,18 @@ export function FormEdit({
     setIsSubmitting(true);
     try {
       await mutateAsync(books.id);
+      // Sincronizar el rating del creador en bookRatings si cambió
+      if (id && rating !== serverRating) {
+        try {
+          if (rating > 0) {
+            await putMyBookRating(id, rating);
+          } else if (serverRating > 0) {
+            await deleteMyBookRating(id);
+          }
+        } catch (err) {
+          console.error('No se pudo actualizar tu rating:', err);
+        }
+      }
     } catch (error) {
       setIsSubmitting(false);
     }
@@ -579,7 +590,7 @@ export function FormEdit({
               <FormControl mt={{ base: 5, md: 8 }}>
                 <Flex align='center' mb='9px'>
                   <FormLabel htmlFor='calificacion' m='0'>
-                    Calificación{' '}
+                    Tu calificación{' '}
                     <Box display='inline' fontSize='xs'>
                       (Opcional)
                     </Box>
@@ -590,8 +601,8 @@ export function FormEdit({
                   resetLabel='calificacion'
                   invisibleLabel='calificacion'
                   style={{ maxWidth: 190 }}
-                  value={books.rating}
-                  onChange={handleRatingChange}
+                  value={rating}
+                  onChange={setRating}
                 />
               </FormControl>
               <Box mt={{ base: 10, md: '22rem' }}>

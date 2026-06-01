@@ -26,7 +26,6 @@ export function ModalForm({
   year,
   category,
   format,
-  rating,
 }: ModalOptionsAndConfirType) {
   const bgColorBox = useColorModeValue('white', 'gray.900');
 
@@ -60,7 +59,6 @@ export function ModalForm({
               year={year || ''}
               category={category || []}
               format={format || ''}
-              rating={rating || 0}
             />
           </ModalBody>
         </ModalContent>
