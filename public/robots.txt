@@ -1,2 +1,11 @@
 User-agent: *
-Disallow:
+Disallow: /my-account
+Disallow: /my-account/edit
+Disallow: /my-favorites
+Disallow: /my-library
+Disallow: /my-collections
+Disallow: /new-post
+Disallow: /login
+Disallow: /create-username
+
+Sitemap: https://api.xbureads.com/sitemap.xml
