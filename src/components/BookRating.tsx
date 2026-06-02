@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import {
+  Box,
   Flex,
   IconButton,
+  Spinner,
   Text,
   Tooltip,
   useColorModeValue,
@@ -137,12 +139,25 @@ export function BookRating({
   return (
     <Flex direction='column' gap='1'>
       <Flex align='center' gap='2'>
-        <Rating
-          style={{ maxWidth: 140 }}
-          value={displayValue}
-          onChange={handleChange}
-          isDisabled={isPending}
-        />
+        <Box position='relative'>
+          <Rating
+            style={{ maxWidth: 140, opacity: isPending ? 0.4 : 1 }}
+            value={displayValue}
+            onChange={handleChange}
+            isDisabled={isPending}
+          />
+          {isPending && (
+            <Flex
+              position='absolute'
+              inset='0'
+              align='center'
+              justify='center'
+              pointerEvents='none'
+            >
+              <Spinner size='sm' thickness='2px' speed='0.6s' color='green.500' />
+            </Flex>
+          )}
+        </Box>
         {showAsMine && (
           <Tooltip label='Quitar mi voto' fontSize='xs'>
             <IconButton

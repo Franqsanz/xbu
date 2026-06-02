@@ -16,8 +16,10 @@ import {
   FiBookOpen,
   FiCheck,
   FiHeart,
+  FiStar,
   FiUserPlus,
 } from 'react-icons/fi';
+import { Rating } from '@smastrom/react-rating';
 
 import { parseDate } from '@utils/utils';
 import { FeedActivity, FeedItemProps } from '@components/types';
@@ -55,15 +57,20 @@ export function FeedItem({ activity }: FeedItemProps) {
   const subTextColor = useColorModeValue('gray.600', 'gray.400');
   const commentBg = useColorModeValue('gray.50', 'gray.900');
 
-  const { actor, book, type, comment, status, target, createdAt } = activity;
+  const { actor, book, type, comment, status, target, createdAt, rating } = activity;
 
   let actionText = '';
   if (type === 'book') actionText = 'publicó un libro';
   else if (type === 'comment') actionText = 'comentó en';
   else if (type === 'follow') actionText = 'siguió a';
+  else if (type === 'rating') actionText = 'calificó';
 
   const statusMeta = type === 'status' && status ? STATUS_META[status] : null;
   const simpleBadge = SIMPLE_BADGE[type];
+  const ratingBadge =
+    type === 'rating' && typeof rating === 'number'
+      ? { label: `${rating}/5`, icon: FiStar, colorScheme: 'yellow' }
+      : null;
   const formattedDate = parseDate(createdAt, 'short') || '';
 
   return (
@@ -124,6 +131,17 @@ export function FeedItem({ activity }: FeedItemProps) {
               >
                 <TagLeftIcon as={simpleBadge.icon} />
                 <TagLabel fontWeight='semibold'>{simpleBadge.label}</TagLabel>
+              </Tag>
+            )}
+            {ratingBadge && (
+              <Tag
+                size='sm'
+                colorScheme={ratingBadge.colorScheme}
+                variant='subtle'
+                rounded='full'
+              >
+                <TagLeftIcon as={ratingBadge.icon} />
+                <TagLabel fontWeight='semibold'>{ratingBadge.label}</TagLabel>
               </Tag>
             )}
           </Flex>
@@ -223,6 +241,11 @@ export function FeedItem({ activity }: FeedItemProps) {
                 <Text fontSize='sm' color={subTextColor} noOfLines={2} mt='2'>
                   {book.synopsis}
                 </Text>
+              )}
+              {type === 'rating' && typeof rating === 'number' && (
+                <Box mt='2'>
+                  <Rating style={{ maxWidth: 100 }} value={rating} readOnly />
+                </Box>
               )}
             </Flex>
           </Flex>

@@ -270,13 +270,21 @@ interface FeedBook {
 }
 
 interface FeedActivity {
-  type: 'book' | 'comment' | 'status' | 'follow' | 'favorite' | 'collection';
+  type:
+    | 'book'
+    | 'comment'
+    | 'status'
+    | 'follow'
+    | 'favorite'
+    | 'collection'
+    | 'rating';
   createdAt: string;
   actor: FeedActor;
   book?: FeedBook;
   target?: FeedActor;
   comment?: { id: string; text: string };
   status?: BookStatusValue;
+  rating?: number;
 }
 
 interface FeedItemProps {

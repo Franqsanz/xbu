@@ -1,5 +1,4 @@
 import React, { Suspense, lazy, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   FormControl,
   Button,
@@ -65,7 +64,6 @@ export function FormEdit({
   } = useForm<BookType>({ mode: 'onBlur' });
   let previewImgUI;
   const { url, public_id } = image;
-  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const myToast = useMyToast();
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
@@ -93,8 +91,9 @@ export function FormEdit({
     },
   });
 
-  const { mutateAsync, isPending, isSuccess, error } = useUpdateBook(books);
-  useGenerateSlug(books.title, setBooks);
+  const { mutateAsync, isPending, error } = useUpdateBook(books);
+  // Solo regenera el slug si el título cambia respecto al original
+  useGenerateSlug(books.title, setBooks, title);
 
   const { data: myRatingData } = useMyBookRating(id, !!id);
   const serverRating = (myRatingData?.rating ?? 0) as number;
@@ -154,6 +153,26 @@ export function FormEdit({
           console.error('No se pudo actualizar tu rating:', err);
         }
       }
+
+      myToast({
+        title: 'Guardado',
+        description: 'Modificaciones guardadas exitosamente.',
+        icon: FaCheckCircle,
+        iconColor: 'green.700',
+        bgColor: 'black',
+        width: '300px',
+        color: 'white',
+        align: 'center',
+        padding: '1',
+        fntSize: 'md',
+        bxSize: 5,
+      });
+
+      // Recarga completa al detalle del libro (con el slug actualizado si cambió).
+      // Esto cierra el modal y garantiza vista fresca sin cache stale.
+      if (books.pathUrl) {
+        window.location.href = `/book/view/${books.pathUrl}`;
+      }
     } catch (error) {
       setIsSubmitting(false);
     }
@@ -207,22 +226,7 @@ export function FormEdit({
     );
   }
 
-  if (isSuccess) {
-    myToast({
-      title: 'Guardado',
-      description: 'Modificaciones guardadas exitosamente.',
-      icon: FaCheckCircle,
-      iconColor: 'green.700',
-      bgColor: 'black',
-      width: '300px',
-      color: 'white',
-      align: 'center',
-      padding: '1',
-      fntSize: 'md',
-      bxSize: 5,
-    });
-    navigate('/explore', { replace: true });
-  } else if (error) {
+  if (error) {
     myToast({
       title: 'Ha ocurrido un error',
       description: 'No se ha podido guardar las modificaciones.',

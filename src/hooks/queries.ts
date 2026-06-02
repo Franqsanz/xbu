@@ -905,6 +905,7 @@ function useSetMyBookRating(bookId: string) {
       await queryClient.invalidateQueries({
         queryKey: [keys.bookRatingStats, bookId],
       });
+      await queryClient.invalidateQueries({ queryKey: [keys.feed] });
     },
   });
 }
@@ -919,6 +920,7 @@ function useDeleteMyBookRating(bookId: string) {
       await queryClient.invalidateQueries({
         queryKey: [keys.bookRatingStats, bookId],
       });
+      await queryClient.invalidateQueries({ queryKey: [keys.feed] });
     },
   });
 }
