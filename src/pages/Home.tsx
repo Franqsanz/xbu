@@ -20,7 +20,7 @@ export default function Home() {
           w='full'
           maxW='4xl'
           m='auto'
-          px={{ base: 4, md: 6 }}
+          px={{ base: 6, md: 6 }}
           py={{ base: 6, md: 10 }}
         >
           <Feed />
