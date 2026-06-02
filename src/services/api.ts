@@ -427,6 +427,28 @@ async function deleteMyBookRating(bookId: string) {
   });
 }
 
+async function getCheckUsername(username: string) {
+  return await fetchData(
+    `${API_URL}/users/check-username?u=${encodeURIComponent(username)}`,
+  );
+}
+
+async function patchMyProfile(
+  updates: { name?: string; username?: string; bio?: string },
+  image?: Blob | null,
+) {
+  const formData = new FormData();
+  if (image) {
+    formData.append('image', image, 'avatar.webp');
+  }
+  formData.append('profile', JSON.stringify(updates));
+
+  return await fetchData(`${API_URL}/users/me`, {
+    method: 'PATCH',
+    body: formData,
+  });
+}
+
 export {
   getAllBooks,
   getAllSearchBooks,
@@ -479,4 +501,6 @@ export {
   getBookRatingStats,
   putMyBookRating,
   deleteMyBookRating,
+  getCheckUsername,
+  patchMyProfile,
 };

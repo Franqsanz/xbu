@@ -26,6 +26,7 @@ const FilteredData = lazy(() => import('@pages/FilteredData'));
 const NewBook = lazy(() => import('@pages/NewBook'));
 const Favorites = lazy(() => import('@pages/profile/Favorites'));
 const MyLibrary = lazy(() => import('@pages/profile/MyLibrary'));
+const EditProfile = lazy(() => import('@pages/profile/account/EditProfile'));
 
 export const routes = createBrowserRouter([
   {
@@ -120,6 +121,14 @@ export const routes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyAccount />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/my-account/edit',
+        element: (
+          <PrivateRoute>
+            <EditProfile />
           </PrivateRoute>
         ),
       },

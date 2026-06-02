@@ -55,6 +55,8 @@ import {
   getBookRatingStats,
   putMyBookRating,
   deleteMyBookRating,
+  getCheckUsername,
+  patchMyProfile,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { useAuth } from '@contexts/AuthContext';
@@ -944,6 +946,32 @@ function useBooksByStatus(
   });
 }
 
+function useCheckUsername(username: string, enabled: boolean = true) {
+  return useQuery({
+    queryKey: [keys.checkUsername, username],
+    queryFn: () => getCheckUsername(username),
+    enabled: enabled && username.length >= 3,
+    refetchOnWindowFocus: false,
+    retry: false,
+    staleTime: 30_000,
+  });
+}
+
+function usePatchMyProfile() {
+  return useMutation({
+    mutationKey: [keys.patchProfile],
+    mutationFn: (params: {
+      updates: { name?: string; username?: string; bio?: string };
+      image?: Blob | null;
+    }) => patchMyProfile(params.updates, params.image),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: [keys.userData] });
+      await queryClient.invalidateQueries({ queryKey: [keys.profile] });
+      await queryClient.invalidateQueries({ queryKey: [keys.feed] });
+    },
+  });
+}
+
 function useFollowing(userId: string | undefined, enabled: boolean = true) {
   return useInfiniteQuery({
     queryKey: [keys.following, userId],
@@ -1015,4 +1043,6 @@ export {
   useBookRatingStats,
   useSetMyBookRating,
   useDeleteMyBookRating,
+  useCheckUsername,
+  usePatchMyProfile,
 };

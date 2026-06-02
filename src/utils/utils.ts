@@ -48,6 +48,8 @@ const keys = {
   booksByStatus: 'BooksByStatus',
   myBookRating: 'MyBookRating',
   bookRatingStats: 'BookRatingStats',
+  checkUsername: 'CheckUsername',
+  patchProfile: 'PatchProfile',
 };
 
 const currentYear = new Date().getFullYear();
