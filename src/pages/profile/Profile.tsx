@@ -29,19 +29,26 @@ import {
 } from '@hooks/queries';
 import { parseDate } from '@utils/utils';
 import { CardType } from '@components/types';
-import { ResultLength } from '@components/aside/ResultLength';
 import { useAuth } from '@contexts/AuthContext';
 import { NoData } from '@assets/assets';
 // import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { SkeletonProfile } from '@components/skeletons/SkeletonProfile';
 import { MyContainer } from '@components/ui/MyContainer';
 import { MobileResultBar } from '@components/ui/MobileResultBar';
-import { FiArrowLeft, FiEdit2 } from 'react-icons/fi';
+import {
+  FiArrowLeft,
+  FiBookOpen,
+  FiCheckCircle,
+  FiEdit2,
+  FiMessageSquare,
+  FiStar,
+} from 'react-icons/fi';
 import { ModalFollowList } from '@components/modals/ModalFollowList';
 
 export function Profile() {
   const bgCover = useColorModeValue('gray.100', 'gray.700');
   const subColor = useColorModeValue('gray.600', 'gray.300');
+  const statBorderColor = useColorModeValue('gray.300', 'gray.600');
   const { ref, inView } = useInView();
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
@@ -69,6 +76,33 @@ export function Profile() {
   const { mutate: unfollow, isPending: isUnfollowing } = useUnfollowUser();
   const followersCount = profileData?.pages[0]?.followersCount ?? 0;
   const followingCount = profileData?.pages[0]?.followingCount ?? 0;
+  const totalBooks = profileData?.pages[0]?.info?.totalBooks ?? 0;
+  const readCount = profileData?.pages[0]?.readCount ?? 0;
+  const commentsCount = profileData?.pages[0]?.commentsCount ?? 0;
+  const topCategories: Array<{ name: string; count: number }> =
+    profileData?.pages[0]?.topCategories ?? [];
+  const booksStats: {
+    totalViews: number;
+    mostViewed: {
+      id: string;
+      title: string;
+      pathUrl: string;
+      views: number;
+    } | null;
+    averageRating: number;
+    ratingsCount: number;
+  } = profileData?.pages[0]?.booksStats ?? {
+    totalViews: 0,
+    mostViewed: null,
+    averageRating: 0,
+    ratingsCount: 0,
+  };
+
+  function formatCount(n: number) {
+    if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+    if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
+    return n.toString();
+  }
 
   const createdAt = profileUser?.createdAt ? parseDate(profileUser.createdAt) : '';
   let asideAndCardsUI;
@@ -171,9 +205,50 @@ export function Profile() {
     asideAndCardsUI = (
       <>
         <Aside>
-          <ResultLength data={profileData?.pages[0].info.totalBooks} />
-          {/* {aboutCategoriesUI}
-          {asideFilter}  */}
+          <Flex direction='column' gap='6' mt={{ base: '0', xl: '52px' }}>
+            <Box fontSize='xl' fontWeight='bold'>
+              Estadísticas
+            </Box>
+            <Box>
+              <Text fontSize='xs' color={subColor}>
+                Total de vistas
+              </Text>
+              <Box fontSize='2xl' fontWeight='bold'>
+                {formatCount(booksStats.totalViews)}
+              </Box>
+            </Box>
+            {booksStats.ratingsCount > 0 && (
+              <Box>
+                <Text fontSize='xs' color={subColor}>
+                  Rating promedio
+                </Text>
+                <Flex align='center' gap='2'>
+                  <Box fontSize='2xl' fontWeight='bold'>
+                    {booksStats.averageRating}
+                  </Box>
+                  <Icon as={FiStar} color='yellow.400' />
+                  <Text fontSize='sm' color={subColor}>
+                    ({booksStats.ratingsCount})
+                  </Text>
+                </Flex>
+              </Box>
+            )}
+            {booksStats.mostViewed && (
+              <Box>
+                <Text fontSize='xs' color={subColor}>
+                  Más visto
+                </Text>
+                <Link
+                  as={NavLink}
+                  to={`/book/view/${booksStats.mostViewed.pathUrl}`}
+                  fontWeight='bold'
+                  _hover={{ textDecoration: 'underline' }}
+                >
+                  {booksStats.mostViewed.title}
+                </Link>
+              </Box>
+            )}
+          </Flex>
         </Aside>
         <MySimpleGrid>
           {profile.map(
@@ -303,16 +378,22 @@ export function Profile() {
         align='center'
         minH={{ base: '330px', md: '320px' }}
         py={{ base: 8, md: 10 }}
-        px={{ base: 5, md: 10 }}
         bg={bgCover}
       >
         <Flex
           w='full'
-          maxW='900px'
+          maxW={{ base: '1260px', '2xl': '1560px' }}
+          m='0 auto'
+          px={{ base: 5, md: 10, '2xl': 16 }}
           direction={{ base: 'column', md: 'row' }}
           align={{ base: 'center', md: 'flex-start' }}
           gap={{ base: 4, md: 8 }}
         >
+          <Box
+            display={{ base: 'none', xl: 'block' }}
+            w={{ xl: '220px', '2xl': '260px' }}
+            flexShrink={0}
+          />
           <Image
             src={profileUser?.picture}
             alt={`Imagen de perfil de ${profileUser?.name}`}
@@ -326,9 +407,10 @@ export function Profile() {
           <Flex
             direction='column'
             align={{ base: 'center', md: 'flex-start' }}
-            flex='1'
             textAlign={{ base: 'center', md: 'left' }}
             gap='2'
+            maxW={{ base: 'full', md: '400px', '2xl': '500px' }}
+            minW={0}
           >
             <Box>
               <Box as='h1' fontSize={{ base: 'xl', md: '3xl' }} lineHeight='1.1'>
@@ -340,17 +422,19 @@ export function Profile() {
                 </Text>
               )}
             </Box>
-
             {profileUser?.bio && (
               <Text
-                fontSize={{ base: 'sm', md: 'md' }}
+                fontSize={{ base: 'xs', md: 'sm' }}
                 whiteSpace='pre-wrap'
-                maxW='560px'
+                wordBreak='break-word'
+                w='full'
               >
                 {profileUser.bio}
               </Text>
             )}
-
+            <Text fontSize={{ base: 'xs', md: 'sm' }} color={subColor}>
+              Se unió el {createdAt}
+            </Text>
             <Flex
               wrap='wrap'
               justify={{ base: 'center', md: 'flex-start' }}
@@ -384,10 +468,7 @@ export function Profile() {
                 <Box fontWeight='bold'>{followingCount}</Box>
                 <Box>siguiendo</Box>
               </Flex>
-              <Box>·</Box>
-              <Box>se unió el {createdAt}</Box>
             </Flex>
-
             <Box mt='2'>
               {isOwnProfile ? (
                 <Button
@@ -438,6 +519,115 @@ export function Profile() {
                 </Button>
               )}
             </Box>
+            <Flex
+              display={{ base: 'flex', md: 'none' }}
+              wrap='wrap'
+              justify='center'
+              align='center'
+              gap='2'
+              mt='2'
+              fontSize='xs'
+              color={subColor}
+            >
+              <Flex gap='1'>
+                <Box fontWeight='bold'>{totalBooks}</Box>
+                <Box>libros</Box>
+              </Flex>
+              <Box>·</Box>
+              <Flex gap='1'>
+                <Box fontWeight='bold'>{readCount}</Box>
+                <Box>leídos</Box>
+              </Flex>
+              <Box>·</Box>
+              <Flex gap='1'>
+                <Box fontWeight='bold'>{commentsCount}</Box>
+                <Box>comentarios</Box>
+              </Flex>
+            </Flex>
+            {topCategories.length > 0 && (
+              <Flex
+                display={{ base: 'flex', md: 'none' }}
+                wrap='wrap'
+                justify='center'
+                gap='2'
+                mt='2'
+              >
+                {topCategories.map((c) => (
+                  <Flex
+                    key={c.name}
+                    align='center'
+                    gap='1'
+                    px='2'
+                    py='1'
+                    borderRadius='full'
+                    border='1px solid'
+                    borderColor={statBorderColor}
+                    fontSize='xs'
+                  >
+                    <Box>{c.name}</Box>
+                    <Text color={subColor} fontWeight='bold'>
+                      {c.count}
+                    </Text>
+                  </Flex>
+                ))}
+              </Flex>
+            )}
+          </Flex>
+          <Flex
+            display={{ base: 'none', md: 'flex' }}
+            ml='auto'
+            mr='10'
+            gap={{ md: 8, '2xl': 16 }}
+            alignSelf='stretch'
+          >
+            <Flex
+              direction='column'
+              gap='4'
+              borderLeft='1px solid'
+              borderColor={statBorderColor}
+              pl='8'
+              flexShrink={0}
+              fontSize='md'
+            >
+              <Flex align='center' gap='2'>
+                <Icon as={FiBookOpen} color={subColor} />
+                <Box fontWeight='bold'>{totalBooks}</Box>
+                <Text color={subColor}>publicados</Text>
+              </Flex>
+              <Flex align='center' gap='2'>
+                <Icon as={FiCheckCircle} color={subColor} />
+                <Box fontWeight='bold'>{readCount}</Box>
+                <Text color={subColor}>leídos</Text>
+              </Flex>
+              <Flex align='center' gap='2'>
+                <Icon as={FiMessageSquare} color={subColor} />
+                <Box fontWeight='bold'>{commentsCount}</Box>
+                <Text color={subColor}>comentarios</Text>
+              </Flex>
+            </Flex>
+            {topCategories.length > 0 && (
+              <Flex
+                direction='column'
+                gap='2'
+                borderLeft='1px solid'
+                borderColor={statBorderColor}
+                pl='8'
+                flexShrink={0}
+                fontSize='sm'
+              >
+                <Text fontSize='sm' fontWeight='bold' mb='1'>
+                  Géneros favoritos
+                </Text>
+                {topCategories.map((c) => (
+                  <Flex key={c.name} align='center' justify='space-between' gap='4'>
+                    <Box>{c.name}</Box>
+                    <Text color={subColor} fontWeight='bold'>
+                      {c.count}
+                    </Text>
+                  </Flex>
+                ))}
+              </Flex>
+            )}
           </Flex>
         </Flex>
       </Flex>
