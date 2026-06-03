@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Box,
@@ -36,6 +36,9 @@ const USERNAME_REGEX = /^[a-z0-9_]{3,20}$/;
 
 export default function EditProfile() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const returnTo =
+    (location.state as { from?: string } | null)?.from ?? '/my-account';
   const { data: me, isPending: isLoadingMe } = useCheckUser();
   const { mutateAsync: patchProfile, isPending: isSaving } = usePatchMyProfile();
   const myToast = useMyToast();
@@ -162,7 +165,7 @@ export default function EditProfile() {
 
     const hasUpdates = Object.keys(updates).length > 0 || !!croppedBlob;
     if (!hasUpdates) {
-      navigate('/my-account');
+      navigate(returnTo);
       return;
     }
 
@@ -180,8 +183,16 @@ export default function EditProfile() {
         fntSize: 'md',
         bxSize: 5,
       });
+      // If username changed and we came from the own profile, redirect to the new slug
+      let finalReturnTo = returnTo;
+      if (updates.username && returnTo.includes(`/profile/${originalUsername}`)) {
+        finalReturnTo = returnTo.replace(
+          `/profile/${originalUsername}`,
+          `/profile/${updates.username}`,
+        );
+      }
       // Recarga completa para que el avatar y datos se vean al instante en toda la app
-      window.location.href = '/my-account';
+      window.location.href = finalReturnTo;
     } catch (err: any) {
       myToast({
         title: 'No se pudo actualizar',
@@ -227,7 +238,6 @@ export default function EditProfile() {
     <>
       <MainHead title='Editar perfil | XBuReads' />
       <ContainerTitle title='Editar perfil' />
-
       <Flex
         as='section'
         direction='column'
@@ -240,16 +250,15 @@ export default function EditProfile() {
       >
         <Button
           as={NavLink}
-          to='/my-account'
+          to={returnTo}
           variant='ghost'
           size='sm'
           alignSelf='flex-start'
           leftIcon={<Icon as={FiArrowLeft} />}
           fontWeight='normal'
         >
-          Volver a Mi cuenta
+          Volver
         </Button>
-
         <Flex
           direction='column'
           border='1px'
@@ -296,16 +305,12 @@ export default function EditProfile() {
               </Button>
               <Text fontSize='xs' color={subColor} textAlign='center'>
                 PNG, JPG o WebP · máx 2 MB
-                <br />
-                se recorta cuadrada
               </Text>
             </Flex>
-
             <Box flex='1'>
               <Heading fontSize={{ base: 'md', md: 'lg' }} mb='5'>
                 Datos
               </Heading>
-
               <Flex direction='column' gap='5'>
                 <Flex direction={{ base: 'column', md: 'row' }} gap='5'>
                   <FormControl isInvalid={!nameOk && name.length > 0} flex='1'>
@@ -318,7 +323,6 @@ export default function EditProfile() {
                     />
                     <FormErrorMessage>Entre 1 y 60 caracteres.</FormErrorMessage>
                   </FormControl>
-
                   <FormControl isInvalid={usernameIsError} flex='1'>
                     <FormLabel fontSize='sm'>Username</FormLabel>
                     <Input
@@ -375,7 +379,6 @@ export default function EditProfile() {
                     )}
                   </FormControl>
                 </Flex>
-
                 <FormControl isInvalid={!bioOk}>
                   <FormLabel fontSize='sm'>Bio</FormLabel>
                   <Textarea
@@ -395,13 +398,12 @@ export default function EditProfile() {
               </Flex>
             </Box>
           </Flex>
-
           <Flex
             direction={{ base: 'column-reverse', md: 'row' }}
             justify={{ base: 'stretch', md: 'flex-end' }}
             gap='2'
           >
-            <Button as={NavLink} to='/my-account' fontWeight='normal'>
+            <Button as={NavLink} to={returnTo} fontWeight='normal'>
               Cancelar
             </Button>
             <Button
@@ -420,7 +422,6 @@ export default function EditProfile() {
           </Flex>
         </Flex>
       </Flex>
-
       <ModalCropper
         isOpen={isCropperOpen}
         onClose={closeCropper}

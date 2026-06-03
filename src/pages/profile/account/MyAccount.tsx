@@ -57,6 +57,7 @@ export function MyAccount() {
             <Button
               as={NavLink}
               to='/my-account/edit'
+              state={{ from: '/my-account' }}
               size='sm'
               leftIcon={<Icon as={FiEdit2} />}
               fontWeight='normal'

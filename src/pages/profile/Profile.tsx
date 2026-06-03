@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useLocation, useParams } from 'react-router-dom';
 import {
   Alert,
   AlertIcon,
@@ -36,15 +36,17 @@ import { NoData } from '@assets/assets';
 import { SkeletonProfile } from '@components/skeletons/SkeletonProfile';
 import { MyContainer } from '@components/ui/MyContainer';
 import { MobileResultBar } from '@components/ui/MobileResultBar';
-import { FiArrowLeft } from 'react-icons/fi';
+import { FiArrowLeft, FiEdit2 } from 'react-icons/fi';
 import { ModalFollowList } from '@components/modals/ModalFollowList';
 
 export function Profile() {
   const bgCover = useColorModeValue('gray.100', 'gray.700');
+  const subColor = useColorModeValue('gray.600', 'gray.300');
   const { ref, inView } = useInView();
   const { currentUser } = useAuth();
   const uid = currentUser?.uid;
   const { username } = useParams();
+  const { pathname } = useLocation();
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const [followModal, setFollowModal] = useState<{
     isOpen: boolean;
@@ -299,92 +301,144 @@ export function Profile() {
         as='section'
         justify='center'
         align='center'
-        direction='column'
-        h={{ base: '330px', md: '400px' }}
+        minH={{ base: '330px', md: '320px' }}
+        py={{ base: 8, md: 10 }}
+        px={{ base: 5, md: 10 }}
         bg={bgCover}
       >
-        <Image
-          src={profileUser?.picture}
-          alt={`Imagen de perfil de ${profileUser?.name}`}
-          referrerPolicy='no-referrer'
-          borderRadius='full'
-          w={{ base: '80px', md: '120px' }}
-          h={{ base: '80px', md: '120px' }}
-        />
-        <Box as='h1' fontSize={{ base: 'xl', md: '3xl' }} mt='3' textAlign='center'>
-          {profileUser?.name}
-        </Box>
         <Flex
-          direction='column'
-          fontSize={{ base: 'xs', md: 'sm' }}
-          mt='2'
-          textAlign='center'
+          w='full'
+          maxW='900px'
+          direction={{ base: 'column', md: 'row' }}
+          align={{ base: 'center', md: 'flex-start' }}
+          gap={{ base: 4, md: 8 }}
         >
-          <Box as='span' fontSize={{ base: 'sm', md: 'md' }} fontWeight='bold'>
-            Se unió el
-          </Box>{' '}
-          {createdAt}
-        </Flex>
-        <Flex direction='column' align='center' gap='2' mt='4'>
-          <Flex gap='3' align='center'>
+          <Image
+            src={profileUser?.picture}
+            alt={`Imagen de perfil de ${profileUser?.name}`}
+            referrerPolicy='no-referrer'
+            borderRadius='full'
+            w={{ base: '90px', md: '140px' }}
+            h={{ base: '90px', md: '140px' }}
+            flexShrink={0}
+            objectFit='cover'
+          />
+          <Flex
+            direction='column'
+            align={{ base: 'center', md: 'flex-start' }}
+            flex='1'
+            textAlign={{ base: 'center', md: 'left' }}
+            gap='2'
+          >
+            <Box>
+              <Box as='h1' fontSize={{ base: 'xl', md: '3xl' }} lineHeight='1.1'>
+                {profileUser?.name}
+              </Box>
+              {profileUser?.username && (
+                <Text fontSize={{ base: 'sm', md: 'md' }} color={subColor}>
+                  @{profileUser.username}
+                </Text>
+              )}
+            </Box>
+
+            {profileUser?.bio && (
+              <Text
+                fontSize={{ base: 'sm', md: 'md' }}
+                whiteSpace='pre-wrap'
+                maxW='560px'
+              >
+                {profileUser.bio}
+              </Text>
+            )}
+
             <Flex
-              as='button'
+              wrap='wrap'
+              justify={{ base: 'center', md: 'flex-start' }}
+              align='center'
               gap='2'
               fontSize={{ base: 'xs', md: 'sm' }}
-              cursor='pointer'
-              _hover={{ textDecoration: 'underline' }}
-              onClick={() =>
-                setFollowModal({ isOpen: true, initialTab: 'followers' })
-              }
+              color={subColor}
             >
-              <Box fontWeight='bold'>{followersCount}</Box>
-              <Box>seguidores</Box>
+              <Flex
+                as='button'
+                gap='1'
+                cursor='pointer'
+                _hover={{ textDecoration: 'underline' }}
+                onClick={() =>
+                  setFollowModal({ isOpen: true, initialTab: 'followers' })
+                }
+              >
+                <Box fontWeight='bold'>{followersCount}</Box>
+                <Box>seguidores</Box>
+              </Flex>
+              <Box>·</Box>
+              <Flex
+                as='button'
+                gap='1'
+                cursor='pointer'
+                _hover={{ textDecoration: 'underline' }}
+                onClick={() =>
+                  setFollowModal({ isOpen: true, initialTab: 'following' })
+                }
+              >
+                <Box fontWeight='bold'>{followingCount}</Box>
+                <Box>siguiendo</Box>
+              </Flex>
+              <Box>·</Box>
+              <Box>se unió el {createdAt}</Box>
             </Flex>
-            <Box>•</Box>
-            <Flex
-              as='button'
-              gap='2'
-              fontSize={{ base: 'xs', md: 'sm' }}
-              cursor='pointer'
-              _hover={{ textDecoration: 'underline' }}
-              onClick={() =>
-                setFollowModal({ isOpen: true, initialTab: 'following' })
-              }
-            >
-              <Box fontWeight='bold'>{followingCount}</Box>
-              <Box>siguiendo</Box>
-            </Flex>
+
+            <Box mt='2'>
+              {isOwnProfile ? (
+                <Button
+                  as={NavLink}
+                  to='/my-account/edit'
+                  state={{ from: pathname }}
+                  size='sm'
+                  w={{ base: '220px', md: '220px' }}
+                  leftIcon={<Icon as={FiEdit2} />}
+                  fontWeight='normal'
+                  bg='black'
+                  color='white'
+                  _hover={{ bg: 'gray.800' }}
+                  _active={{ bg: 'gray.800' }}
+                >
+                  Editar perfil
+                </Button>
+              ) : (
+                <Button
+                  size='sm'
+                  w={{ base: '220px', md: '220px' }}
+                  bg={
+                    !profileData?.pages[0]?.isFollowing
+                      ? 'green.500'
+                      : isButtonHovered
+                        ? 'red.500'
+                        : 'black'
+                  }
+                  color={!profileData?.pages[0]?.isFollowing ? 'black' : 'white'}
+                  _hover={{
+                    bg: profileData?.pages[0]?.isFollowing ? 'red.500' : 'green.600',
+                  }}
+                  onClick={
+                    profileData?.pages[0]?.isFollowing
+                      ? handleUnfollow
+                      : handleFollow
+                  }
+                  isLoading={isFollowing || isUnfollowing}
+                  onMouseEnter={() => setIsButtonHovered(true)}
+                  onMouseLeave={() => setIsButtonHovered(false)}
+                  fontWeight='normal'
+                >
+                  {profileData?.pages[0]?.isFollowing && isButtonHovered
+                    ? 'Dejar de seguir'
+                    : profileData?.pages[0]?.isFollowing
+                      ? 'Siguiendo'
+                      : 'Seguir'}
+                </Button>
+              )}
+            </Box>
           </Flex>
-          {!isOwnProfile && (
-            <Button
-              size='sm'
-              w={{ base: '85%', md: '250px' }}
-              bg={
-                !profileData?.pages[0]?.isFollowing
-                  ? 'green.500'
-                  : isButtonHovered
-                    ? 'red.500'
-                    : 'black'
-              }
-              color={!profileData?.pages[0]?.isFollowing ? 'black' : 'white'}
-              _hover={{
-                bg: profileData?.pages[0]?.isFollowing ? 'red.500' : 'green.600',
-              }}
-              onClick={
-                profileData?.pages[0]?.isFollowing ? handleUnfollow : handleFollow
-              }
-              isLoading={isFollowing || isUnfollowing}
-              onMouseEnter={() => setIsButtonHovered(true)}
-              onMouseLeave={() => setIsButtonHovered(false)}
-              fontWeight='normal'
-            >
-              {profileData?.pages[0]?.isFollowing && isButtonHovered
-                ? 'Dejar de seguir'
-                : profileData?.pages[0]?.isFollowing
-                  ? 'Siguiendo'
-                  : 'Seguir'}
-            </Button>
-          )}
         </Flex>
       </Flex>
       <Flex justify='center'>
