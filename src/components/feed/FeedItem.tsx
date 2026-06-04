@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Flex,
+  Icon,
   Image,
   Link,
   Tag,
@@ -16,6 +17,7 @@ import {
   FiBookOpen,
   FiCheck,
   FiHeart,
+  FiMessageSquare,
   FiStar,
   FiUserPlus,
 } from 'react-icons/fi';
@@ -57,13 +59,24 @@ export function FeedItem({ activity }: FeedItemProps) {
   const subTextColor = useColorModeValue('gray.600', 'gray.400');
   const commentBg = useColorModeValue('gray.50', 'gray.900');
 
-  const { actor, book, type, comment, status, target, createdAt, rating } = activity;
+  const {
+    actor,
+    book,
+    type,
+    comment,
+    status,
+    target,
+    createdAt,
+    rating,
+    activities,
+  } = activity;
 
   let actionText = '';
   if (type === 'book') actionText = 'publicó un libro';
   else if (type === 'comment') actionText = 'comentó en';
   else if (type === 'follow') actionText = 'siguió a';
   else if (type === 'rating') actionText = 'calificó';
+  else if (type === 'group') actionText = 'interactuó con';
 
   const statusMeta = type === 'status' && status ? STATUS_META[status] : null;
   const simpleBadge = SIMPLE_BADGE[type];
@@ -196,7 +209,7 @@ export function FeedItem({ activity }: FeedItemProps) {
         </Link>
       )}
 
-      {book && type !== 'follow' && (
+      {book && type !== 'follow' && type !== 'group' && (
         <Link
           as={NavLink}
           to={`/book/view/${book.pathUrl}`}
@@ -251,6 +264,225 @@ export function FeedItem({ activity }: FeedItemProps) {
           </Flex>
         </Link>
       )}
+
+      {type === 'group' && book && activities && (
+        <GroupCard
+          activities={activities}
+          book={book}
+          borderColor={borderColor}
+          subTextColor={subTextColor}
+          hoverBg={commentBg}
+        />
+      )}
     </Box>
+  );
+}
+
+function formatTime(date: Date | string) {
+  return new Date(date).toLocaleTimeString('es-AR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+}
+
+type GroupActionInfo = {
+  icon: typeof FiCheck;
+  color: string;
+  label: string;
+  comment?: string;
+};
+
+function getActionInfo(action: FeedActivity): GroupActionInfo | null {
+  if (action.type === 'status' && action.status) {
+    const m = STATUS_META[action.status];
+    return {
+      icon: m.icon,
+      color: `${m.colorScheme}.500`,
+      label: `Lo agregó a "${m.label}"`,
+    };
+  }
+  if (action.type === 'rating' && typeof action.rating === 'number') {
+    return {
+      icon: FiStar,
+      color: 'yellow.500',
+      label: `Lo calificó con ${action.rating}/5`,
+    };
+  }
+  if (action.type === 'comment' && action.comment) {
+    return {
+      icon: FiMessageSquare,
+      color: 'gray.500',
+      label: 'Comentó',
+      comment: action.comment.text,
+    };
+  }
+  if (action.type === 'favorite') {
+    return { icon: FiHeart, color: 'red.500', label: 'Lo marcó como favorito' };
+  }
+  if (action.type === 'collection') {
+    return {
+      icon: FiBookmark,
+      color: 'purple.500',
+      label: 'Lo guardó en una colección',
+    };
+  }
+  if (action.type === 'book') {
+    return {
+      icon: FiBookOpen,
+      color: 'green.500',
+      label: 'Publicó este libro',
+    };
+  }
+  return null;
+}
+
+function GroupCard({
+  activities,
+  book,
+  borderColor,
+  subTextColor,
+  hoverBg,
+}: {
+  activities: FeedActivity[];
+  book: NonNullable<FeedActivity['book']>;
+  borderColor: string;
+  subTextColor: string;
+  hoverBg: string;
+}) {
+  const sorted = [...activities].sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+  );
+  const COMMENT_LIMIT = 3;
+  const totalComments = sorted.filter((a) => a.type === 'comment').length;
+  const extraComments = Math.max(0, totalComments - COMMENT_LIMIT);
+
+  let commentCount = 0;
+  const visible = sorted.filter((a) => {
+    if (a.type !== 'comment') return true;
+    commentCount += 1;
+    return commentCount <= COMMENT_LIMIT;
+  });
+
+  return (
+    <Link
+      as={NavLink}
+      to={`/book/view/${book.pathUrl}`}
+      _hover={{ textDecoration: 'none' }}
+      display='block'
+    >
+      <Flex
+        direction='column'
+        gap='4'
+        p={{ base: 3, md: 4 }}
+        border='1px'
+        borderColor={borderColor}
+        rounded='md'
+        _hover={{ bg: hoverBg }}
+        transition='background 0.15s'
+      >
+        <Flex gap='4'>
+          <Image
+            src={book.image.url}
+            alt={book.title}
+            w={{ base: '90px', md: '110px' }}
+            h={{ base: '135px', md: '165px' }}
+            objectFit='cover'
+            rounded='md'
+            flexShrink={0}
+            decoding='async'
+            loading='lazy'
+          />
+          <Flex direction='column' justify='center' overflow='hidden' flex='1'>
+            <Text fontSize='xs' color='green.500' textTransform='uppercase' mb='1'>
+              {book.category[0]}
+            </Text>
+            <Text
+              fontWeight='semibold'
+              fontSize={{ base: 'md', md: 'lg' }}
+              noOfLines={2}
+            >
+              {book.title}
+            </Text>
+            <Text fontSize='sm' color={subTextColor} noOfLines={1} mt='1'>
+              {book.authors.join(', ')}
+            </Text>
+          </Flex>
+        </Flex>
+        <Box borderTop='1px solid' borderColor={borderColor} />
+        <Box position='relative'>
+          {visible.map((a, i) => {
+            const info = getActionInfo(a);
+            if (!info) return null;
+            const isLast = i === visible.length - 1 && extraComments === 0;
+            return (
+              <Flex
+                key={`${a.type}-${i}`}
+                position='relative'
+                pb={isLast ? '0' : '4'}
+              >
+                {!isLast && (
+                  <Box
+                    position='absolute'
+                    left='5.5px'
+                    top='16px'
+                    bottom='-4px'
+                    w='1px'
+                    bg={borderColor}
+                  />
+                )}
+                <Box
+                  w='12px'
+                  h='12px'
+                  rounded='full'
+                  bg={info.color}
+                  mt='4px'
+                  flexShrink={0}
+                  zIndex={1}
+                />
+                <Box ml='3' flex='1' overflow='hidden'>
+                  <Flex align='center' gap='2' flexWrap='wrap'>
+                    <Text fontSize='xs' color={subTextColor} fontFamily='mono'>
+                      {formatTime(a.createdAt)}
+                    </Text>
+                    <Icon as={info.icon} color={info.color} boxSize='3.5' />
+                    <Text fontSize='sm'>{info.label}</Text>
+                  </Flex>
+                  {info.comment && (
+                    <Text
+                      fontSize='sm'
+                      color={subTextColor}
+                      fontStyle='italic'
+                      mt='1'
+                      noOfLines={3}
+                    >
+                      &ldquo;{info.comment}&rdquo;
+                    </Text>
+                  )}
+                </Box>
+              </Flex>
+            );
+          })}
+          {extraComments > 0 && (
+            <Flex position='relative' pb='0'>
+              <Box
+                w='12px'
+                h='12px'
+                rounded='full'
+                bg='gray.400'
+                mt='4px'
+                flexShrink={0}
+                zIndex={1}
+              />
+              <Box ml='3' flex='1'>
+                <Text fontSize='sm' color={subTextColor} fontStyle='italic'>
+                  y {extraComments} comentario{extraComments > 1 ? 's' : ''} más…
+                </Text>
+              </Box>
+            </Flex>
+          )}
+        </Box>
+      </Flex>
+    </Link>
   );
 }

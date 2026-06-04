@@ -277,7 +277,8 @@ interface FeedActivity {
     | 'follow'
     | 'favorite'
     | 'collection'
-    | 'rating';
+    | 'rating'
+    | 'group';
   createdAt: string;
   actor: FeedActor;
   book?: FeedBook;
@@ -285,6 +286,7 @@ interface FeedActivity {
   comment?: { id: string; text: string };
   status?: BookStatusValue;
   rating?: number;
+  activities?: FeedActivity[];
 }
 
 interface FeedItemProps {
