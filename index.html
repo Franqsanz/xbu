@@ -37,9 +37,76 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("chakra-ui-color-mode");
+          var prefersDark =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var mode = stored || (prefersDark ? "dark" : "light");
+          document.documentElement.dataset.theme = mode;
+        } catch (e) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <style>
+      #splash {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        z-index: 9999;
+        transition: opacity 0.25s ease;
+      }
+      html[data-theme="dark"] #splash {
+        background: #1a202c;
+      }
+      #splash.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #splash-logo {
+        font-size: 4rem;
+        font-weight: bold;
+        background: linear-gradient(to left, #2de000, #e9f501);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        line-height: 1;
+        font-family: Poppins, sans-serif;
+      }
+      #splash-spinner {
+        box-sizing: border-box;
+        margin-top: 1rem;
+        width: 30px;
+        height: 30px;
+        border: 3px solid #cbd5e0;
+        border-top-color: #2d3748;
+        border-radius: 50%;
+        animation: splash-spin 0.7s linear infinite;
+      }
+      html[data-theme="dark"] #splash-spinner {
+        border-color: #000;
+        border-top-color: #24b300;
+      }
+      @keyframes splash-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
   </head>
 
   <body>
+    <div id="splash">
+      <div id="splash-logo">XB</div>
+      <div id="splash-spinner"></div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

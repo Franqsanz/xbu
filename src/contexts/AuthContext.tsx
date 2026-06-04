@@ -4,7 +4,6 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { AuthContextType, AuthProviderType } from '@components/types';
 import { getCheckUser } from '@services/api';
-import { SplashScreen } from '@components/ui/SplashScreen';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -54,6 +53,16 @@ function AuthProvider({ children }: AuthProviderType) {
     return () => unsubscribe();
   }, [auth, queryClient]);
 
+  useEffect(() => {
+    if (!authState.loading) {
+      const splash = document.getElementById('splash');
+      if (splash) {
+        splash.classList.add('hidden');
+        setTimeout(() => splash.remove(), 250);
+      }
+    }
+  }, [authState.loading]);
+
   const value: AuthContextType = {
     currentUser: authState.currentUser,
     userData: authState.userData,
@@ -62,7 +71,7 @@ function AuthProvider({ children }: AuthProviderType) {
 
   return (
     <AuthContext.Provider value={value}>
-      {authState.loading ? <SplashScreen /> : children}
+      {authState.loading ? null : children}
     </AuthContext.Provider>
   );
 }
