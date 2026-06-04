@@ -564,10 +564,8 @@ export function Profile() {
                     borderColor={statBorderColor}
                     fontSize='xs'
                   >
-                    <Box>{c.name}</Box>
-                    <Text color={subColor} fontWeight='bold'>
-                      {c.count}
-                    </Text>
+                    <Box fontWeight='bold'>{c.count}</Box>
+                    <Text color={subColor}>{c.name}</Text>
                   </Flex>
                 ))}
               </Flex>
@@ -619,11 +617,9 @@ export function Profile() {
                   Géneros favoritos
                 </Text>
                 {topCategories.map((c) => (
-                  <Flex key={c.name} align='center' justify='space-between' gap='4'>
-                    <Box>{c.name}</Box>
-                    <Text color={subColor} fontWeight='bold'>
-                      {c.count}
-                    </Text>
+                  <Flex key={c.name} align='center' gap='2'>
+                    <Box fontWeight='bold'>{c.count}</Box>
+                    <Text color={subColor}>{c.name}</Text>
                   </Flex>
                 ))}
               </Flex>
