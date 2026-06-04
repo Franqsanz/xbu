@@ -16,6 +16,7 @@ import { Profile } from '@pages/profile/Profile';
 import { RouteWatcher } from '@hooks/RouteWatcher';
 import { AllCollections } from '@pages/profile/collections/AllCollections';
 import { CollectionDetail } from '@pages/profile/collections/CollectionDetail';
+import { HomeFallback } from '@pages/HomeFallback';
 
 const Layout = lazy(() => import('@pages/layout/Layout'));
 const Home = lazy(() => import('@pages/Home'));
@@ -42,7 +43,11 @@ export const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: (
+          <CatchError skeletonLoad={<HomeFallback />}>
+            <Home />
+          </CatchError>
+        ),
       },
       {
         path: '/explore',
