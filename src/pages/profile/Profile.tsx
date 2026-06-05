@@ -34,7 +34,6 @@ import { NoData } from '@assets/assets';
 // import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { SkeletonProfile } from '@components/skeletons/SkeletonProfile';
 import { MyContainer } from '@components/ui/MyContainer';
-import { MobileResultBar } from '@components/ui/MobileResultBar';
 import {
   FiArrowLeft,
   FiBookOpen,
@@ -530,11 +529,6 @@ export function Profile() {
               color={subColor}
             >
               <Flex gap='1'>
-                <Box fontWeight='bold'>{totalBooks}</Box>
-                <Box>libros</Box>
-              </Flex>
-              <Box>·</Box>
-              <Flex gap='1'>
                 <Box fontWeight='bold'>{readCount}</Box>
                 <Box>leídos</Box>
               </Flex>
@@ -632,7 +626,61 @@ export function Profile() {
           PUBLICACIONES
         </Box>
       </Flex>
-      <MobileResultBar data={profileData} />
+      <Flex
+        display={{ base: 'flex', xl: 'none' }}
+        direction='column'
+        mt='4'
+        py='3'
+        px={{ base: 5, md: 10 }}
+        borderY='1px solid'
+        borderColor={statBorderColor}
+        gap='3'
+      >
+        <Flex justify='space-around' align='center' textAlign='center'>
+          <Box>
+            <Text fontSize='lg' fontWeight='bold'>
+              {totalBooks}
+            </Text>
+            <Text fontSize='xs' color={subColor}>
+              Libros
+            </Text>
+          </Box>
+          <Box>
+            <Text fontSize='lg' fontWeight='bold'>
+              {formatCount(booksStats.totalViews)}
+            </Text>
+            <Text fontSize='xs' color={subColor}>
+              Vistas
+            </Text>
+          </Box>
+          {booksStats.ratingsCount > 0 && (
+            <Box>
+              <Flex align='center' justify='center' gap='1'>
+                <Text fontSize='lg' fontWeight='bold'>
+                  {booksStats.averageRating}
+                </Text>
+                <Icon as={FiStar} color='yellow.400' />
+              </Flex>
+              <Text fontSize='xs' color={subColor}>
+                Rating ({booksStats.ratingsCount})
+              </Text>
+            </Box>
+          )}
+        </Flex>
+        {booksStats.mostViewed && (
+          <Flex justify='center' align='center' fontSize='xs' gap='1' wrap='wrap'>
+            <Text color={subColor}>Más visto:</Text>
+            <Link
+              as={NavLink}
+              to={`/book/view/${booksStats.mostViewed.pathUrl}`}
+              fontWeight='bold'
+              _hover={{ textDecoration: 'underline' }}
+            >
+              {booksStats.mostViewed.title}
+            </Link>
+          </Flex>
+        )}
+      </Flex>
       <MyContainer>{asideAndCardsUI}</MyContainer>
       <Box ref={ref}>{fetchingNextPageUI}</Box>
       <ModalFollowList
