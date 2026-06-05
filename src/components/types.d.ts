@@ -30,7 +30,7 @@ interface CardType {
   authors: string[];
   category?: string[];
   year?: number;
-  language?: number;
+  language?: string;
   sourceLink?: string;
   numberPages?: number;
   format?: string;

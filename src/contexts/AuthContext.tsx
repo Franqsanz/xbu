@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { AuthContextType, AuthProviderType } from '@components/types';
 import { getCheckUser } from '@services/api';
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 type AuthState = {
   currentUser: User | null;

@@ -28,10 +28,10 @@
       "@hooks/*": ["./hooks/*"],
       "@services/*": ["./services/*"],
       "@pages/*": ["./pages/*"],
-      "@utils/*": ["./utils/*"]
+      "@utils/*": ["./utils/*"],
+      "@tests/*": ["./tests/*"]
     }
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/tests"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
