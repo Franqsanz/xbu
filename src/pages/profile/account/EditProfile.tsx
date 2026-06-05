@@ -29,6 +29,7 @@ import { useMyToast } from '@hooks/useMyToast';
 import { MainHead } from '@components/layout/Head';
 import { ContainerTitle } from '@components/layout/ContainerTitle';
 import { ModalCropper } from '@components/modals/ModalCropper';
+import { EditProfileFallback } from '@pages/profile/account/EditProfileFallback';
 
 const Cropper = lazy(() => import('react-cropper'));
 
@@ -227,11 +228,7 @@ export default function EditProfile() {
     usernameStatus === 'taken';
 
   if (isLoadingMe) {
-    return (
-      <Flex justify='center' py='20'>
-        <Spinner size='xl' />
-      </Flex>
-    );
+    return <EditProfileFallback />;
   }
 
   return (

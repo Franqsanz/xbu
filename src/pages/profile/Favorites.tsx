@@ -15,7 +15,7 @@ import { Aside } from '@components/aside/Aside';
 import { ResultLength } from '@components/aside/ResultLength';
 import { MySliderCategories } from '@components/ui/MySliderCategories';
 import { MyContainer } from '@components/ui/MyContainer';
-import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
+import { FavoritesFallback } from '@pages/profile/FavoritesFallback';
 import { emptyFavorites } from '@assets/assets';
 import { MobileResultBar } from '@components/ui/MobileResultBar';
 
@@ -33,7 +33,7 @@ export default function Favorites() {
   }, [inView]);
 
   if (isPending) {
-    return <SkeletonAllBooks showTags={true} />;
+    return <FavoritesFallback />;
   }
 
   if (data?.pages[0].info.totalBooks > 0) {

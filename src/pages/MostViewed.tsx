@@ -8,13 +8,13 @@ import { Card } from '@components/cards/Card';
 import { CardType } from '@components/types';
 import { useMostViewedBooks } from '@hooks/queries';
 import { MySliderCategories } from '@components/ui/MySliderCategories';
-import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
+import { MostViewedFallback } from '@pages/MostViewedFallback';
 
 export default function MostViewed() {
   const { data, isPending } = useMostViewedBooks('full');
 
   if (isPending) {
-    return <SkeletonAllBooks showTags={true} />;
+    return <MostViewedFallback />;
   }
 
   return (

@@ -17,10 +17,15 @@ import { RouteWatcher } from '@hooks/RouteWatcher';
 import { AllCollections } from '@pages/profile/collections/AllCollections';
 import { CollectionDetail } from '@pages/profile/collections/CollectionDetail';
 import { HomeFallback } from '@pages/HomeFallback';
+import { MostViewedFallback } from '@pages/MostViewedFallback';
+import { FavoritesFallback } from '@pages/profile/FavoritesFallback';
+import { MyLibraryFallback } from '@pages/profile/MyLibraryFallback';
+import { EditProfileFallback } from '@pages/profile/account/EditProfileFallback';
 
 const Layout = lazy(() => import('@pages/layout/Layout'));
 const Home = lazy(() => import('@pages/Home'));
 const PrivacyPolicies = lazy(() => import('@pages/PrivacyPolicies'));
+const TermsConditions = lazy(() => import('@pages/TermsConditions'));
 const MostViewed = lazy(() => import('@pages/MostViewed'));
 const Book = lazy(() => import('@pages/Book'));
 const FilteredData = lazy(() => import('@pages/FilteredData'));
@@ -55,7 +60,11 @@ export const routes = createBrowserRouter([
       },
       {
         path: '/most-viewed',
-        element: <MostViewed />,
+        element: (
+          <CatchError skeletonLoad={<MostViewedFallback />}>
+            <MostViewed />
+          </CatchError>
+        ),
       },
       {
         path: '/new-post',
@@ -68,6 +77,10 @@ export const routes = createBrowserRouter([
       {
         path: '/privacy-policies',
         element: <PrivacyPolicies />,
+      },
+      {
+        path: '/terms',
+        element: <TermsConditions />,
       },
       {
         path: '/login',
@@ -133,7 +146,9 @@ export const routes = createBrowserRouter([
         path: '/my-account/edit',
         element: (
           <PrivateRoute>
-            <EditProfile />
+            <CatchError skeletonLoad={<EditProfileFallback />}>
+              <EditProfile />
+            </CatchError>
           </PrivateRoute>
         ),
       },
@@ -141,7 +156,9 @@ export const routes = createBrowserRouter([
         path: '/my-favorites',
         element: (
           <PrivateRoute>
-            <Favorites />
+            <CatchError skeletonLoad={<FavoritesFallback />}>
+              <Favorites />
+            </CatchError>
           </PrivateRoute>
         ),
       },
@@ -149,7 +166,9 @@ export const routes = createBrowserRouter([
         path: '/my-library',
         element: (
           <PrivateRoute>
-            <MyLibrary />
+            <CatchError skeletonLoad={<MyLibraryFallback />}>
+              <MyLibrary />
+            </CatchError>
           </PrivateRoute>
         ),
       },
