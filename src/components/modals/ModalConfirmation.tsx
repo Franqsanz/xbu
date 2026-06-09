@@ -67,7 +67,17 @@ export function ModalConfirmation({
               </Alert>
             )}
           </ModalBody>
-          <ModalFooter gap='3'>
+          <ModalFooter gap='3' flexDirection={{ base: 'column-reverse', md: 'row' }}>
+            <Button
+              w='full'
+              onClick={onClose}
+              fontSize='sm'
+              fontWeight='normal'
+              isDisabled={isPending}
+              _hover={{ color: 'none' }}
+            >
+              Cancelar
+            </Button>
             <Button
               w='full'
               onClick={onDeleteBook}
@@ -80,15 +90,6 @@ export function ModalConfirmation({
               _hover={{ color: 'none' }}
             >
               {buttonText}
-            </Button>
-            <Button
-              w='full'
-              onClick={onClose}
-              fontSize='sm'
-              fontWeight='normal'
-              _hover={{ color: 'none' }}
-            >
-              Cancelar
             </Button>
           </ModalFooter>
         </ModalContent>
