@@ -42,6 +42,7 @@ export function LoginModal() {
         navigate('/create-username', { state: { userId: currentUser.uid } });
       } else {
         close();
+        window.scrollTo({ top: 0, behavior: 'auto' });
       }
     }
   }, [isOpen, currentUser, userData, navigate, close]);
