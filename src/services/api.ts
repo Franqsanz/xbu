@@ -377,6 +377,27 @@ async function getFeed(page: number = 0, limit: number = 10) {
   return await fetchData(`${API_URL}/users/me/feed?limit=${limit}&offset=${offset}`);
 }
 
+async function getNotifications(page: number = 0, limit: number = 20) {
+  const offset = page * limit;
+  return await fetchData(`${API_URL}/notifications?limit=${limit}&offset=${offset}`);
+}
+
+async function getUnreadNotificationsCount() {
+  return await fetchData(`${API_URL}/notifications/unread-count`);
+}
+
+async function patchNotificationRead(notificationId: string) {
+  return await fetchData(`${API_URL}/notifications/${notificationId}/read`, {
+    method: 'PATCH',
+  });
+}
+
+async function patchMarkAllNotificationsRead() {
+  return await fetchData(`${API_URL}/notifications/mark-all-read`, {
+    method: 'PATCH',
+  });
+}
+
 async function getBookStatus(bookId: string) {
   return await fetchData(`${API_URL}/users/me/book-status/${bookId}`);
 }
@@ -503,4 +524,8 @@ export {
   deleteMyBookRating,
   getCheckUsername,
   patchMyProfile,
+  getNotifications,
+  getUnreadNotificationsCount,
+  patchNotificationRead,
+  patchMarkAllNotificationsRead,
 };

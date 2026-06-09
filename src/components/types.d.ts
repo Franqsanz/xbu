@@ -293,6 +293,31 @@ interface FeedItemProps {
   activity: FeedActivity;
 }
 
+interface NotificationActor {
+  uid: string;
+  username: string;
+  name: string;
+  picture?: string;
+}
+
+interface NotificationBook {
+  id: string;
+  title: string;
+  pathUrl: string;
+  image?: { url: string };
+}
+
+interface NotificationItem {
+  id: string;
+  type: 'follow' | 'comment' | 'rating';
+  read: boolean;
+  createdAt: string;
+  rating?: number;
+  commentId?: string;
+  actor: NotificationActor | null;
+  book?: NotificationBook | null;
+}
+
 interface FollowUser {
   uid: string;
   username: string;
@@ -357,4 +382,7 @@ export type {
   FollowUser,
   ModalFollowListProps,
   LazyOnViewProps,
+  NotificationActor,
+  NotificationBook,
+  NotificationItem,
 };

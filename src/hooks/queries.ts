@@ -57,6 +57,10 @@ import {
   deleteMyBookRating,
   getCheckUsername,
   patchMyProfile,
+  getNotifications,
+  getUnreadNotificationsCount,
+  patchNotificationRead,
+  patchMarkAllNotificationsRead,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { useAuth } from '@contexts/AuthContext';
@@ -860,6 +864,55 @@ function useDeleteBookStatus(bookId: string) {
   });
 }
 
+function useNotifications(enabled: boolean = true) {
+  return useInfiniteQuery({
+    queryKey: [keys.notifications],
+    queryFn: ({ pageParam }) => getNotifications(pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.info.nextPage === null) return undefined;
+      return lastPage.info.nextPage;
+    },
+    enabled,
+    refetchOnWindowFocus: false,
+  });
+}
+
+function useUnreadNotificationsCount(enabled: boolean = true) {
+  return useQuery({
+    queryKey: [keys.notificationsUnread],
+    queryFn: getUnreadNotificationsCount,
+    enabled,
+    refetchInterval: 30_000,
+    refetchOnWindowFocus: false,
+    staleTime: 10_000,
+  });
+}
+
+function useMarkNotificationRead() {
+  return useMutation({
+    mutationFn: (notificationId: string) => patchNotificationRead(notificationId),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: [keys.notifications] });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.notificationsUnread],
+      });
+    },
+  });
+}
+
+function useMarkAllNotificationsRead() {
+  return useMutation({
+    mutationFn: patchMarkAllNotificationsRead,
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: [keys.notifications] });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.notificationsUnread],
+      });
+    },
+  });
+}
+
 function useFeed(enabled: boolean = true) {
   return useInfiniteQuery({
     queryKey: [keys.feed],
@@ -1035,6 +1088,10 @@ export {
   useFollowers,
   useFollowing,
   useFeed,
+  useNotifications,
+  useUnreadNotificationsCount,
+  useMarkNotificationRead,
+  useMarkAllNotificationsRead,
   useBookStatus,
   useSetBookStatus,
   useDeleteBookStatus,
