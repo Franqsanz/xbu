@@ -24,10 +24,13 @@ import {
   DrawerFooter,
 } from '@chakra-ui/react';
 
-import { navLink, accountLinks } from '../../constant/constants';
+import { navLink } from '../../constant/constants';
+import { useLoginModalStore } from '@store/useLoginModalStore';
+import { RiLoginCircleLine } from 'react-icons/ri';
 import { InputSearch } from '@components/forms/filters/InputSearch';
 import { ModalFilter } from '@components/modals/ModalFilter';
 import { MenuProfile } from '@components/nav/menu/MenuProfile';
+import { NotificationsBell } from '@components/notifications/NotificationsBell';
 import { useAuth } from '@contexts/AuthContext';
 import { useCheckUser } from '@hooks/queries';
 import { currentYear } from '@utils/utils';
@@ -56,6 +59,7 @@ export function MobileNav() {
   const bgDrawer = useColorModeValue('#ffffffe0', '#121212e4');
   // const bgDrawerSearch = useColorModeValue('#ffffff', '#000000e3');
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
+  const openLoginModal = useLoginModalStore((s) => s.open);
   let profileMenu;
   let linkRegister;
 
@@ -87,28 +91,30 @@ export function MobileNav() {
   } else {
     linkRegister = (
       <List w='full'>
-        {accountLinks.map(({ icon, name, href }) => (
-          <ListItem key={name} my='2'>
-            <Link
-              display='flex'
-              alignItems='center'
-              onClick={onCloseMenu}
-              as={NavLink}
-              to={href as string}
-              p='3'
-              rounded='xl'
-              fontWeight='medium'
-              _hover={{
-                bg: 'gray.700',
-                border: 'none',
-                color: 'green.500',
-              }}
-            >
-              <Icon as={icon} boxSize='5' mr='5' />
-              {name}
-            </Link>
-          </ListItem>
-        ))}
+        <ListItem my='2'>
+          <Box
+            as='button'
+            display='flex'
+            alignItems='center'
+            w='full'
+            onClick={() => {
+              onCloseMenu();
+              openLoginModal();
+            }}
+            p='3'
+            rounded='xl'
+            fontWeight='medium'
+            textAlign='left'
+            _hover={{
+              bg: 'gray.700',
+              border: 'none',
+              color: 'green.500',
+            }}
+          >
+            <Icon as={RiLoginCircleLine} boxSize='5' mr='5' />
+            Ingresar
+          </Box>
+        </ListItem>
       </List>
     );
   }
@@ -154,23 +160,30 @@ export function MobileNav() {
               </Link>
             </Box>
           </Flex>
-          <Flex align='center'>
+          <Flex align='center' gap='1'>
             <Button
               onClick={onOpenSearch}
               bg='none'
+              size='sm'
+              minW='auto'
+              px='2'
               _active={{ bg: 'none' }}
-              _hover={{ color: 'green.500' }}
+              _hover={{ bg: 'none', color: 'green.500' }}
             >
               <FiSearch size='18' />
             </Button>
             <Button
               onClick={toggleColorMode}
               bg='none'
+              size='sm'
+              minW='auto'
+              px='2'
               _active={{ bg: 'none' }}
-              _hover={{ color: 'green.500' }}
+              _hover={{ bg: 'none', color: 'green.500' }}
             >
               {colorMode === 'dark' ? <BsSun size='18' /> : <RiMoonLine size='18' />}
             </Button>
+            {data && <NotificationsBell />}
             {profileMenu}
           </Flex>
         </Flex>

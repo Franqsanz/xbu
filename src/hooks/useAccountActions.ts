@@ -5,6 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { logIn } from '@services/auth/config';
 import { useAuth } from '@contexts/AuthContext';
 import { useUserLogout, useDeleteAccount } from '@hooks/queries';
+import { useLoginModalStore } from '@store/useLoginModalStore';
 
 export function useAccountActions() {
   const navigate = useNavigate();
@@ -12,20 +13,22 @@ export function useAccountActions() {
   const { currentUser } = useAuth();
   const logoutMutation = useUserLogout();
   const deleteAccountMutation = useDeleteAccount();
+  const setSuppressLoginModal = useLoginModalStore((s) => s.setSuppress);
 
   async function logOut() {
+    setSuppressLoginModal(true);
     try {
       await logoutMutation.mutateAsync();
       queryClient.clear();
       await signOut(logIn);
-      window.location.href = '/explore';
+      window.location.href = '/';
     } catch (err) {
       try {
         await signOut(logIn);
         queryClient.clear();
-        window.location.href = '/explore';
+        window.location.href = '/';
       } catch (err) {
-        window.location.href = '/explore';
+        window.location.href = '/';
       }
     }
   }
@@ -37,7 +40,7 @@ export function useAccountActions() {
         window.location.href = '/';
       }
     } catch (err) {
-      navigate('/login', { replace: true });
+      navigate('/', { replace: true });
     }
   }
 

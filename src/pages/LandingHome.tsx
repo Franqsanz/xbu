@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useAuth } from '@contexts/AuthContext';
+import { useLoginModalStore } from '@store/useLoginModalStore';
 import {
   PatternPadWhite,
   PatternPadBlack,
@@ -27,6 +28,7 @@ import {
 export function LandingHome() {
   const { colorMode } = useColorMode();
   const { userData } = useAuth();
+  const openLoginModal = useLoginModalStore((s) => s.open);
   const bgButton = useColorModeValue('green.500', 'green.700');
   const bContainer = useColorModeValue('gray.50', 'none');
   const height = useBreakpointValue({
@@ -80,23 +82,44 @@ export function LandingHome() {
               direction={{ base: 'column', lg: 'row' }}
               align='center'
             >
-              <Link
-                w={{ base: '250px', lg: '200px' }}
-                to={!userData ? '/login' : `/profile/${userData.username}`}
-                as={NavLink}
-                border='1px'
-                bg={bgButton}
-                color='black'
-                borderRadius='lg'
-                p='3'
-                fontSize='xl'
-                _hover={{
-                  outline: 'none',
-                  bg: 'green.600',
-                }}
-              >
-                {!userData ? 'Ingresar' : 'Perfil'}
-              </Link>
+              {!userData ? (
+                <Box
+                  as='button'
+                  w={{ base: '250px', lg: '200px' }}
+                  onClick={() => openLoginModal()}
+                  border='1px'
+                  bg={bgButton}
+                  color='black'
+                  borderRadius='lg'
+                  p='3'
+                  fontSize='xl'
+                  textAlign='center'
+                  _hover={{
+                    outline: 'none',
+                    bg: 'green.600',
+                  }}
+                >
+                  Ingresar
+                </Box>
+              ) : (
+                <Link
+                  w={{ base: '250px', lg: '200px' }}
+                  to={`/profile/${userData.username}`}
+                  as={NavLink}
+                  border='1px'
+                  bg={bgButton}
+                  color='black'
+                  borderRadius='lg'
+                  p='3'
+                  fontSize='xl'
+                  _hover={{
+                    outline: 'none',
+                    bg: 'green.600',
+                  }}
+                >
+                  Perfil
+                </Link>
+              )}
               <Link
                 w={{ base: '250px', lg: '200px' }}
                 to='/explore'

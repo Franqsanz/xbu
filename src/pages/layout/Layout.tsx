@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import { SkeletonMain } from '@components/skeletons/SkeletonMain';
 import { Nav } from '@components/nav/Nav';
 import { Footer } from '@components/layout/Footer';
+import { LoginModal } from '@components/auth/LoginModal';
 
 export default function Layout() {
   return (
@@ -13,6 +14,7 @@ export default function Layout() {
         <Outlet />
       </Suspense>
       <Footer />
+      <LoginModal />
     </>
   );
 }

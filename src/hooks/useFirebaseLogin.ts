@@ -7,166 +7,172 @@ import { postLogin } from '@services/api';
 import { useToast } from '@chakra-ui/react';
 
 interface FirebaseLoginError {
-  type: 'firebase' | 'backend' | 'network' | 'timeout' | 'unknown';
+  type: 'firebase' | 'backend' | 'network' | 'timeout' | 'cancelled' | 'unknown';
   message: string;
   originalError?: Error;
 }
 
+type LoginResult =
+  | { success: true; error?: undefined }
+  | { success: false; error: FirebaseLoginError };
+
+const POPUP_TIMEOUT_MS = 60_000;
+
 export function useFirebaseLogin() {
   const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState<FirebaseLoginError | null>(null);
   const toast = useToast();
   const queryClient = useQueryClient();
 
   const getErrorMessage = (err: FirebaseLoginError): string => {
-    const messages: Record<string, string> = {
-      firebase: 'Error de autenticación con Google. Intenta de nuevo.',
-      backend: 'No se pudo conectar con el servidor. Intenta de nuevo.',
-      network: 'Sin conexión a internet. Verifica tu conexión.',
-      timeout: 'La conexión tardó demasiado. Intenta de nuevo.',
-      unknown: 'Error al iniciar sesión. Intenta de nuevo.',
+    const messages: Record<FirebaseLoginError['type'], string> = {
+      firebase: 'Error de autenticación con Google. Intentá de nuevo.',
+      backend: 'No se pudo conectar con el servidor. Intentá de nuevo.',
+      network: 'Sin conexión a internet. Verificá tu conexión.',
+      timeout: 'La conexión tardó demasiado. Intentá de nuevo.',
+      cancelled: 'Cerraste el inicio de sesión antes de completarlo.',
+      unknown: 'Error al iniciar sesión. Intentá de nuevo.',
     };
     return messages[err.type] || err.message;
   };
 
-  const login = useCallback(async (): Promise<boolean> => {
+  const showError = useCallback(
+    (err: FirebaseLoginError) => {
+      const message = getErrorMessage(err);
+      const isCancelled = err.type === 'cancelled';
+      toast({
+        title: isCancelled ? 'Inicio cancelado' : 'Error de autenticación',
+        description: message,
+        status: isCancelled ? 'info' : 'error',
+        duration: 4000,
+        isClosable: true,
+      });
+    },
+    [toast],
+  );
+
+  const login = useCallback(async (): Promise<LoginResult> => {
     setIsPending(true);
-    setError(null);
 
     try {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: 'select_account' });
 
-      // Step 1: Obtener idToken de Firebase
+      // Step 1: signInWithPopup con timeout de seguridad
       let firebaseResult;
       try {
-        firebaseResult = await signInWithPopup(logIn, provider);
+        firebaseResult = await Promise.race([
+          signInWithPopup(logIn, provider),
+          new Promise<never>((_, reject) =>
+            setTimeout(() => reject(new Error('popup-timeout')), POPUP_TIMEOUT_MS),
+          ),
+        ]);
       } catch (err: any) {
-        setError({
-          type: 'firebase',
-          message: err.message || 'Error de autenticación con Google',
-          originalError: err,
-        });
-        setIsPending(false);
-        return false;
+        const code = err?.code as string | undefined;
+        const isCancelled =
+          code === 'auth/popup-closed-by-user' ||
+          code === 'auth/cancelled-popup-request' ||
+          code === 'auth/user-cancelled';
+        const isBlocked = code === 'auth/popup-blocked';
+        const isTimeout = err?.message === 'popup-timeout';
+
+        return {
+          success: false,
+          error: {
+            type: isCancelled ? 'cancelled' : isTimeout ? 'timeout' : 'firebase',
+            message: isBlocked
+              ? 'El popup de Google fue bloqueado. Habilitá popups y volvé a intentar.'
+              : err?.message || 'Error de autenticación con Google',
+            originalError: err,
+          },
+        };
       }
 
       if (!firebaseResult) {
-        setError({
-          type: 'unknown',
-          message: 'No se obtuvo token de Firebase',
-        });
-        setIsPending(false);
-        return false;
+        return {
+          success: false,
+          error: { type: 'unknown', message: 'No se obtuvo token de Firebase' },
+        };
       }
 
-      // Step 2: Obtener idToken
+      // Step 2: idToken
       let idToken: string;
       try {
         idToken = await firebaseResult.user.getIdToken(true);
       } catch (err: any) {
-        // Si no podemos obtener el token, desloguear de Firebase
-        await signOut(logIn);
-        setError({
-          type: 'firebase',
-          message: 'No se pudo obtener el token de autenticación',
-          originalError: err,
-        });
-        setIsPending(false);
-        return false;
+        await signOut(logIn).catch(() => {});
+        return {
+          success: false,
+          error: {
+            type: 'firebase',
+            message: 'No se pudo obtener el token de autenticación',
+            originalError: err,
+          },
+        };
       }
 
-      // Step 3: Validar idToken con el backend (Backend-first)
-      let loginResponse;
+      // Step 3: postLogin al backend
+      let loginResponse: any;
       try {
         loginResponse = await Promise.race([
           postLogin(idToken),
-          new Promise((_, reject) =>
+          new Promise<never>((_, reject) =>
             setTimeout(() => reject(new Error('timeout')), 5000),
           ),
         ]);
       } catch (err: any) {
-        // Si el backend falla, desloguear de Firebase
-        await signOut(logIn);
-
+        await signOut(logIn).catch(() => {});
         if (err.message === 'timeout') {
-          setError({
-            type: 'timeout',
-            message: 'La conexión tardó demasiado. Intenta de nuevo.',
-            originalError: err,
-          });
-        } else if (
-          err instanceof TypeError &&
-          err.message.includes('Failed to fetch')
-        ) {
-          setError({
-            type: 'network',
-            message: 'Sin conexión a internet. Verifica tu conexión.',
-            originalError: err,
-          });
-        } else {
-          setError({
-            type: 'backend',
-            message: err.message || 'No se pudo conectar con el servidor',
-            originalError: err,
-          });
+          return {
+            success: false,
+            error: { type: 'timeout', message: 'La conexión tardó demasiado.' },
+          };
         }
-
-        setIsPending(false);
-        return false;
+        if (err instanceof TypeError && err.message.includes('Failed to fetch')) {
+          return {
+            success: false,
+            error: { type: 'network', message: 'Sin conexión a internet.' },
+          };
+        }
+        return {
+          success: false,
+          error: {
+            type: 'backend',
+            message: err?.message || 'No se pudo conectar con el servidor',
+            originalError: err,
+          },
+        };
       }
 
-      // Step 4: Verificar respuesta del backend
+      // Step 4: verificar respuesta
       if (!loginResponse?.auth) {
-        // Si el backend rechaza el login, desloguear de Firebase
-        await signOut(logIn);
-        setError({
-          type: 'backend',
-          message: 'El servidor rechazó la autenticación',
-        });
-        setIsPending(false);
-        return false;
+        await signOut(logIn).catch(() => {});
+        return {
+          success: false,
+          error: {
+            type: 'backend',
+            message: 'El servidor rechazó la autenticación',
+          },
+        };
       }
 
-      // Step 5: TODO -> El componente auth.tsx va a hacer refetch()
-      // Aquí solo retornamos success
-
-      setIsPending(false);
-      return true;
+      return { success: true };
     } catch (err: any) {
-      setError({
-        type: 'unknown',
-        message: 'Error inesperado durante el login',
-        originalError: err,
-      });
+      return {
+        success: false,
+        error: {
+          type: 'unknown',
+          message: 'Error inesperado durante el login',
+          originalError: err,
+        },
+      };
+    } finally {
       setIsPending(false);
-      return false;
     }
   }, []);
-
-  const reset = useCallback(() => {
-    setError(null);
-    setIsPending(false);
-  }, []);
-
-  const showErrorToast = useCallback(() => {
-    if (error) {
-      const message = getErrorMessage(error);
-      toast({
-        title: 'Error de autenticación',
-        description: message,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  }, [error, toast]);
 
   return {
     isPending,
-    error,
     login,
-    reset,
-    showErrorToast,
+    showError,
   };
 }

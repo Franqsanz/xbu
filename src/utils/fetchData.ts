@@ -37,7 +37,7 @@ async function refreshToken(): Promise<boolean> {
 
     // Si no hay usuario logeado en Firebase, no hay nada que refrescar
     if (!currentUser) {
-      window.location.href = '/login';
+      window.location.href = '/';
       return false;
     }
 
@@ -60,13 +60,13 @@ async function refreshToken(): Promise<boolean> {
 
     // Si el refresh falla, redirige al login
     if (res.status === 401) {
-      window.location.href = '/login';
+      window.location.href = '/';
     }
 
     return false;
   } catch (error) {
     console.error('Error refrescando token:', error);
-    window.location.href = '/login';
+    window.location.href = '/';
     return false;
   }
 }
@@ -128,7 +128,7 @@ export async function fetchData(
 
       // Si no hay usuario logeado, redirige directamente sin intentar refrescar
       if (!currentUser) {
-        window.location.href = '/login';
+        window.location.href = '/';
         return null;
       }
 

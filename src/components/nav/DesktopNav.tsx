@@ -14,12 +14,14 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-import { navLink, accountLinks } from '../../constant/constants';
+import { navLink } from '../../constant/constants';
 import { MenuProfile } from '@components/nav/menu/MenuProfile';
+import { NotificationsBell } from '@components/notifications/NotificationsBell';
 import { InputSearch } from '@components/forms/filters/InputSearch';
 import { ModalFilter } from '@components/modals/ModalFilter';
 import { useAuth } from '@contexts/AuthContext';
 import { useCheckUser } from '@hooks/queries';
+import { useLoginModalStore } from '@store/useLoginModalStore';
 
 export function DesktopNav() {
   const { currentUser, userData } = useAuth();
@@ -27,6 +29,7 @@ export function DesktopNav() {
   const { refetch } = useCheckUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const openLoginModal = useLoginModalStore((s) => s.open);
   const bgNavColor = useColorModeValue('#ffffff8b', '#12121244');
   let profileMenu;
 
@@ -45,21 +48,21 @@ export function DesktopNav() {
       />
     );
   } else {
-    profileMenu = accountLinks.map(({ name, href }) => (
-      <Link
-        key={name}
-        as={NavLink}
-        to={href as string}
+    profileMenu = (
+      <Button
+        onClick={() => openLoginModal()}
         border='1px'
         borderColor='green.500'
+        bg='transparent'
         p='7px'
         rounded='md'
         ml='3'
+        fontWeight='normal'
         _hover={{ bg: 'green.600', outline: 'none' }}
       >
-        {name}
-      </Link>
-    ));
+        Ingresar
+      </Button>
+    );
   }
 
   return (
@@ -138,6 +141,7 @@ export function DesktopNav() {
                   <RiMoonLine size='20' />
                 )}
               </Button>
+              {userData && <NotificationsBell />}
               {profileMenu}
             </List>
           </Box>
