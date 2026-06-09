@@ -85,7 +85,7 @@ export function Feed() {
   return (
     <Box>
       <Heading fontSize={{ base: 'xl', md: '2xl' }} mb='6' textAlign='left'>
-        Tu feed
+        Feed
       </Heading>
       {activities.map((activity, index) => (
         <FeedItem
