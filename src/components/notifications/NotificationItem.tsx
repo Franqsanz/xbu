@@ -9,7 +9,13 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { FiBookOpen, FiMessageSquare, FiStar, FiUserPlus } from 'react-icons/fi';
+import {
+  FiMessageSquare,
+  FiStar,
+  FiThumbsDown,
+  FiThumbsUp,
+  FiUserPlus,
+} from 'react-icons/fi';
 
 import { NotificationItem as NotificationItemType } from '@components/types';
 import { parseDate } from '@utils/utils';
@@ -18,6 +24,7 @@ const TYPE_META = {
   follow: { icon: FiUserPlus, color: 'green.500' },
   comment: { icon: FiMessageSquare, color: 'gray.500' },
   rating: { icon: FiStar, color: 'yellow.500' },
+  reaction: { icon: FiThumbsUp, color: 'blue.500' },
 } as const;
 
 function buildLabelAndLink(notification: NotificationItemType) {
@@ -48,6 +55,15 @@ function buildLabelAndLink(notification: NotificationItemType) {
         : '/',
     };
   }
+  if (notification.type === 'reaction') {
+    const verb = notification.reactionType === 'like' ? 'le gustó' : 'no le gustó';
+    return {
+      text: `A ${actorName} ${verb} tu comentario en "${bookTitle}"`,
+      to: notification.book?.pathUrl
+        ? `/book/view/${notification.book.pathUrl}`
+        : '/',
+    };
+  }
   return { text: 'Nueva notificación', to: '/' };
 }
 
@@ -60,10 +76,13 @@ interface Props {
 export function NotificationItem({ notification, onClick, compact }: Props) {
   const subColor = useColorModeValue('gray.600', 'gray.400');
   const hoverBg = useColorModeValue('gray.50', 'gray.700');
-  const unreadBg = useColorModeValue('green.50', 'green.900');
   const borderColor = useColorModeValue('gray.200', 'gray.700');
   const { text, to } = buildLabelAndLink(notification);
-  const meta = TYPE_META[notification.type];
+  const baseMeta = TYPE_META[notification.type];
+  const meta =
+    notification.type === 'reaction' && notification.reactionType === 'dislike'
+      ? { icon: FiThumbsDown, color: 'red.500' }
+      : baseMeta;
   const time = parseDate(notification.createdAt, 'short');
 
   return (
@@ -77,7 +96,6 @@ export function NotificationItem({ notification, onClick, compact }: Props) {
       py='3'
       borderBottom={compact ? '1px solid' : undefined}
       borderColor={borderColor}
-      bg={!notification.read ? unreadBg : 'transparent'}
       _hover={{ bg: hoverBg, textDecoration: 'none' }}
       transition='background 0.15s'
     >

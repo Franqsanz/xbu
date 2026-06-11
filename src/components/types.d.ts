@@ -309,11 +309,12 @@ interface NotificationBook {
 
 interface NotificationItem {
   id: string;
-  type: 'follow' | 'comment' | 'rating';
+  type: 'follow' | 'comment' | 'rating' | 'reaction';
   read: boolean;
   createdAt: string;
   rating?: number;
   commentId?: string;
+  reactionType?: 'like' | 'dislike';
   actor: NotificationActor | null;
   book?: NotificationBook | null;
 }

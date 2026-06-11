@@ -65,8 +65,7 @@ export default function Notifications() {
           <Flex justify='flex-end' px={{ base: 4, md: 0 }} mb='4'>
             <Button
               size='sm'
-              variant='ghost'
-              colorScheme='green'
+              fontWeight='normal'
               onClick={() => markAll.mutate()}
               isLoading={markAll.isPending}
             >

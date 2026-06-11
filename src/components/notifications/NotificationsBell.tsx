@@ -99,7 +99,7 @@ export function NotificationsBell() {
               <Button
                 variant='link'
                 size='xs'
-                colorScheme='green'
+                colorScheme='gray'
                 onClick={() => markAll.mutate()}
                 isLoading={markAll.isPending}
               >
@@ -144,7 +144,6 @@ export function NotificationsBell() {
             onClick={onClose}
             fontSize='sm'
             fontWeight='semibold'
-            color='green.500'
             _hover={{ textDecoration: 'underline' }}
           >
             Ver todas
