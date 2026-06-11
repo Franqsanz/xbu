@@ -29,7 +29,7 @@ describe('FeedItem — individual activity types', () => {
   test('renders a "comment" activity with the comment text', () => {
     renderWithProviders(<FeedItem activity={mockCommentActivity} />);
     expect(screen.getByText('comentó en')).toBeInTheDocument();
-    expect(screen.getByText('Una joya de Tolkien.')).toBeInTheDocument();
+    expect(screen.getByText(/Una joya de Tolkien\./)).toBeInTheDocument();
   });
 
   test('renders a "status" activity with the correct label', () => {

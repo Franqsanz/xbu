@@ -58,6 +58,7 @@ export function FeedItem({ activity }: FeedItemProps) {
   const bg = useColorModeValue('white', 'gray.800');
   const subTextColor = useColorModeValue('gray.600', 'gray.400');
   const commentBg = useColorModeValue('gray.50', 'gray.900');
+  const categoryColor = useColorModeValue('green.800', 'green.500');
 
   const {
     actor,
@@ -165,9 +166,15 @@ export function FeedItem({ activity }: FeedItemProps) {
       </Flex>
 
       {type === 'comment' && comment && (
-        <Box bg={commentBg} p='3' mb='4' rounded='md'>
-          <Text fontSize='sm' whiteSpace='pre-wrap' noOfLines={4}>
-            {comment.text}
+        <Box mb='4' pl='2'>
+          <Text
+            fontSize='sm'
+            color={subTextColor}
+            fontStyle='italic'
+            whiteSpace='pre-wrap'
+            noOfLines={4}
+          >
+            &ldquo;{comment.text}&rdquo;
           </Text>
         </Box>
       )}
@@ -237,7 +244,12 @@ export function FeedItem({ activity }: FeedItemProps) {
               loading='lazy'
             />
             <Flex direction='column' justify='center' overflow='hidden' flex='1'>
-              <Text fontSize='xs' color='green.500' textTransform='uppercase' mb='1'>
+              <Text
+                fontSize={{ base: 'xs', md: 'sm' }}
+                color={categoryColor}
+                textTransform='uppercase'
+                mb='1'
+              >
                 {book.category[0]}
               </Text>
               <Text
@@ -350,6 +362,7 @@ function GroupCard({
   subTextColor: string;
   hoverBg: string;
 }) {
+  const categoryColor = useColorModeValue('green.800', 'green.500');
   const sorted = [...activities].sort(
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
   );
@@ -394,7 +407,12 @@ function GroupCard({
             loading='lazy'
           />
           <Flex direction='column' justify='center' overflow='hidden' flex='1'>
-            <Text fontSize='xs' color='green.500' textTransform='uppercase' mb='1'>
+            <Text
+              fontSize={{ base: 'xs', md: 'sm' }}
+              color={categoryColor}
+              textTransform='uppercase'
+              mb='1'
+            >
               {book.category[0]}
             </Text>
             <Text
@@ -435,7 +453,7 @@ function GroupCard({
                   w='12px'
                   h='12px'
                   rounded='full'
-                  bg={info.color}
+                  bg='gray.400'
                   mt='4px'
                   flexShrink={0}
                   zIndex={1}
