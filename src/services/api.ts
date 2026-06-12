@@ -398,6 +398,19 @@ async function patchMarkAllNotificationsRead() {
   });
 }
 
+async function patchNotificationStatus(notificationId: string, read: boolean) {
+  return await fetchData(`${API_URL}/notifications/${notificationId}/status`, {
+    method: 'PATCH',
+    body: JSON.stringify({ read }),
+  });
+}
+
+async function deleteNotification(notificationId: string) {
+  return await fetchData(`${API_URL}/notifications/${notificationId}`, {
+    method: 'DELETE',
+  });
+}
+
 async function getBookStatus(bookId: string) {
   return await fetchData(`${API_URL}/users/me/book-status/${bookId}`);
 }
@@ -528,4 +541,6 @@ export {
   getUnreadNotificationsCount,
   patchNotificationRead,
   patchMarkAllNotificationsRead,
+  patchNotificationStatus,
+  deleteNotification,
 };

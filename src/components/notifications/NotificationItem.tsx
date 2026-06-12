@@ -1,16 +1,22 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Box,
   Flex,
   Icon,
+  IconButton,
   Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 import {
   FiMessageSquare,
+  FiMoreHorizontal,
   FiStar,
   FiThumbsDown,
   FiThumbsUp,
@@ -18,7 +24,7 @@ import {
 } from 'react-icons/fi';
 
 import { NotificationItem as NotificationItemType } from '@components/types';
-import { parseDate } from '@utils/utils';
+import { formatRelativeTime } from '@utils/utils';
 
 const TYPE_META = {
   follow: { icon: FiUserPlus, color: 'green.500' },
@@ -70,10 +76,19 @@ function buildLabelAndLink(notification: NotificationItemType) {
 interface Props {
   notification: NotificationItemType;
   onClick?: (notification: NotificationItemType) => void;
+  onToggleRead?: (notification: NotificationItemType) => void;
+  onDelete?: (notification: NotificationItemType) => void;
   compact?: boolean;
 }
 
-export function NotificationItem({ notification, onClick, compact }: Props) {
+export function NotificationItem({
+  notification,
+  onClick,
+  onToggleRead,
+  onDelete,
+  compact,
+}: Props) {
+  const navigate = useNavigate();
   const subColor = useColorModeValue('gray.600', 'gray.400');
   const hoverBg = useColorModeValue('gray.50', 'gray.700');
   const borderColor = useColorModeValue('gray.200', 'gray.700');
@@ -83,27 +98,44 @@ export function NotificationItem({ notification, onClick, compact }: Props) {
     notification.type === 'reaction' && notification.reactionType === 'dislike'
       ? { icon: FiThumbsDown, color: 'red.500' }
       : baseMeta;
-  const time = parseDate(notification.createdAt, 'short');
+  const time = formatRelativeTime(notification.createdAt);
+  const hasActions = !compact && (onToggleRead || onDelete);
+
+  function handleRowClick() {
+    onClick?.(notification);
+    navigate(to);
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleRowClick();
+    }
+  }
 
   return (
     <Flex
-      as={NavLink}
-      to={to}
-      onClick={() => onClick?.(notification)}
+      role='button'
+      tabIndex={0}
+      onClick={handleRowClick}
+      onKeyDown={handleKeyDown}
       gap='3'
       align='flex-start'
       px={compact ? 3 : 4}
       py='3'
-      borderBottom={compact ? '1px solid' : undefined}
+      borderBottomWidth='1px'
       borderColor={borderColor}
-      _hover={{ bg: hoverBg, textDecoration: 'none' }}
+      sx={{ '&:last-of-type': { borderBottomWidth: 0 } }}
+      _hover={{ bg: hoverBg }}
+      cursor='pointer'
       transition='background 0.15s'
     >
       <Box position='relative' flexShrink={0}>
         <Avatar
           src={notification.actor?.picture}
           name={notification.actor?.name}
-          size={compact ? 'sm' : 'md'}
+          size='md'
+          boxSize={compact ? '32px' : { base: '40px', md: '48px' }}
         />
         <Flex
           position='absolute'
@@ -129,20 +161,59 @@ export function NotificationItem({ notification, onClick, compact }: Props) {
         </Text>
       </Flex>
       {notification.book?.image?.url && (
-        <Image
-          src={notification.book.image.url}
-          alt={notification.book.title}
-          w='36px'
-          h='54px'
-          objectFit='cover'
-          rounded='sm'
-          flexShrink={0}
-          decoding='async'
-          loading='lazy'
-        />
+        <NavLink to={to} onClick={(e) => e.stopPropagation()}>
+          <Image
+            src={notification.book.image.url}
+            alt={notification.book.title}
+            w='36px'
+            h='54px'
+            objectFit='cover'
+            rounded='sm'
+            flexShrink={0}
+            decoding='async'
+            loading='lazy'
+          />
+        </NavLink>
       )}
       {!notification.read && (
         <Box w='8px' h='8px' rounded='full' bg='green.500' mt='2' flexShrink={0} />
+      )}
+      {hasActions && (
+        <Menu placement='bottom-end' isLazy>
+          <MenuButton
+            as={IconButton}
+            icon={<Icon as={FiMoreHorizontal} />}
+            aria-label='Opciones'
+            size='sm'
+            variant='ghost'
+            onClick={(e) => e.stopPropagation()}
+          />
+          <MenuList minW='180px'>
+            {onToggleRead && (
+              <MenuItem
+                fontSize='sm'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleRead(notification);
+                }}
+              >
+                {notification.read ? 'Marcar como no leída' : 'Marcar como leída'}
+              </MenuItem>
+            )}
+            {onDelete && (
+              <MenuItem
+                fontSize='sm'
+                color='red.500'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete(notification);
+                }}
+              >
+                Eliminar
+              </MenuItem>
+            )}
+          </MenuList>
+        </Menu>
       )}
     </Flex>
   );

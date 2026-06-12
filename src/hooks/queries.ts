@@ -61,6 +61,8 @@ import {
   getUnreadNotificationsCount,
   patchNotificationRead,
   patchMarkAllNotificationsRead,
+  patchNotificationStatus,
+  deleteNotification as deleteNotificationApi,
 } from '@services/api';
 import { useAccountActions } from '@hooks/useAccountActions';
 import { useAuth } from '@contexts/AuthContext';
@@ -913,6 +915,31 @@ function useMarkAllNotificationsRead() {
   });
 }
 
+function useToggleNotificationRead() {
+  return useMutation({
+    mutationFn: ({ id, read }: { id: string; read: boolean }) =>
+      patchNotificationStatus(id, read),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: [keys.notifications] });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.notificationsUnread],
+      });
+    },
+  });
+}
+
+function useDeleteNotification() {
+  return useMutation({
+    mutationFn: (notificationId: string) => deleteNotificationApi(notificationId),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: [keys.notifications] });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.notificationsUnread],
+      });
+    },
+  });
+}
+
 function useFeed(enabled: boolean = true) {
   return useInfiniteQuery({
     queryKey: [keys.feed],
@@ -1092,6 +1119,8 @@ export {
   useUnreadNotificationsCount,
   useMarkNotificationRead,
   useMarkAllNotificationsRead,
+  useToggleNotificationRead,
+  useDeleteNotification,
   useBookStatus,
   useSetBookStatus,
   useDeleteBookStatus,

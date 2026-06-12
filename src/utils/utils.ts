@@ -120,6 +120,33 @@ function sortArrayByLabel<T extends { label: string }>(array: T[]): T[] {
   return array.slice().sort((a, b) => a.label.localeCompare(b.label));
 }
 
+function formatRelativeTime(dateInput: string | Date): string {
+  const date = new Date(dateInput);
+  if (isNaN(date.getTime())) return '';
+
+  const diffMs = Date.now() - date.getTime();
+  const diffSec = Math.floor(diffMs / 1000);
+  if (diffSec < 60) return 'ahora';
+
+  const diffMin = Math.floor(diffSec / 60);
+  if (diffMin < 60) return `hace ${diffMin} min`;
+
+  const diffHr = Math.floor(diffMin / 60);
+  if (diffHr < 24) return `hace ${diffHr} h`;
+
+  const diffDay = Math.floor(diffHr / 24);
+  if (diffDay < 7) return `hace ${diffDay} d`;
+
+  const diffWeek = Math.floor(diffDay / 7);
+  if (diffWeek < 4) return `hace ${diffWeek} sem`;
+
+  const diffMonth = Math.floor(diffDay / 30);
+  if (diffMonth < 12) return `hace ${diffMonth} mes${diffMonth > 1 ? 'es' : ''}`;
+
+  const diffYear = Math.floor(diffDay / 365);
+  return `hace ${diffYear} año${diffYear > 1 ? 's' : ''}`;
+}
+
 function capitalizeWords(str: string) {
   return str
     .split(' ') // Dividir la cadena por espacios
@@ -140,6 +167,7 @@ export {
   generatePathUrl,
   isSpanish,
   parseDate,
+  formatRelativeTime,
   sortArrayByLabel,
   capitalizeWords,
 };
