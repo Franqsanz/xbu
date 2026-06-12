@@ -5,6 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { logIn } from '@services/auth/config';
 import { postLogin } from '@services/api';
 import { useToast } from '@chakra-ui/react';
+import { keys } from '@utils/utils';
 
 interface FirebaseLoginError {
   type: 'firebase' | 'backend' | 'network' | 'timeout' | 'cancelled' | 'unknown';
@@ -153,6 +154,16 @@ export function useFirebaseLogin() {
             message: 'El servidor rechazó la autenticación',
           },
         };
+      }
+
+      // Step 5: invalidar la query de userData para forzar refetch con cookies ya seteadas.
+      // Esto evita la race condition en la que el AuthContext intentaba pegarle a
+      // /users/me antes de que postLogin terminara de crear la session cookie.
+      const firebaseUser = logIn.currentUser;
+      if (firebaseUser) {
+        await queryClient.invalidateQueries({
+          queryKey: [keys.userData, firebaseUser.uid],
+        });
       }
 
       return { success: true };

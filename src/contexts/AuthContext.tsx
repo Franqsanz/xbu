@@ -1,77 +1,70 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  Suspense,
+  createContext,
+  startTransition,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { AuthContextType, AuthProviderType } from '@components/types';
 import { getCheckUser } from '@services/api';
+import { keys } from '@utils/utils';
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-type AuthState = {
-  currentUser: User | null;
-  userData: any | null;
-  loading: boolean;
-};
-
 function AuthProvider({ children }: AuthProviderType) {
-  const [authState, setAuthState] = useState<AuthState>({
-    currentUser: null,
-    userData: null,
-    loading: true,
-  });
-
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [authResolved, setAuthResolved] = useState(false);
   const auth = getAuth();
-  const queryClient = useQueryClient();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      let userData = null;
-
-      if (user) {
-        try {
-          const uid = user.uid;
-
-          userData = await queryClient.fetchQuery({
-            queryKey: ['UserData', uid],
-            queryFn: getCheckUser,
-            staleTime: 1000 * 60 * 5,
-          });
-        } catch (error) {
-          // si falla (ej: 401), lo tratamos como no logueado
-          userData = null;
-        }
-      }
-
-      // 🔥 UN SOLO setState → evita múltiples renders
-      setAuthState({
-        currentUser: user,
-        userData,
-        loading: false,
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      startTransition(() => {
+        setCurrentUser(user);
+        setAuthResolved(true);
       });
     });
-
     return () => unsubscribe();
-  }, [auth, queryClient]);
+  }, [auth]);
+
+  const { data: userData, isLoading: userDataLoading } = useQuery({
+    queryKey: [keys.userData, currentUser?.uid],
+    queryFn: getCheckUser,
+    enabled: !!currentUser,
+    staleTime: 1000 * 60 * 5,
+    retry: 1,
+  });
+
+  const loading = !authResolved || (!!currentUser && userDataLoading);
 
   useEffect(() => {
-    if (!authState.loading) {
-      const splash = document.getElementById('splash');
-      if (splash) {
+    if (loading) return;
+    const splash = document.getElementById('splash');
+    if (!splash) return;
+    // Doble rAF para esperar al primer paint de los children y evitar
+    // un flash blanco si algún componente lazy todavía está suspendido.
+    const id1 = requestAnimationFrame(() => {
+      const id2 = requestAnimationFrame(() => {
         splash.classList.add('hidden');
         setTimeout(() => splash.remove(), 250);
-      }
-    }
-  }, [authState.loading]);
+      });
+      return () => cancelAnimationFrame(id2);
+    });
+    return () => cancelAnimationFrame(id1);
+  }, [loading]);
 
   const value: AuthContextType = {
-    currentUser: authState.currentUser,
-    userData: authState.userData,
-    loading: authState.loading,
+    currentUser,
+    userData: userData ?? null,
+    loading,
   };
 
   return (
     <AuthContext.Provider value={value}>
-      {authState.loading ? null : children}
+      {loading ? null : <Suspense fallback={null}>{children}</Suspense>}
     </AuthContext.Provider>
   );
 }
