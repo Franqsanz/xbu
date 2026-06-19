@@ -33,8 +33,8 @@ export default extendTheme({
           borderRadius: '30px',
           border: '4px solid #f2f2f2',
         },
-        '.medium-zoom-overlay, .medium-zoom--opened': {
-          zIndex: 2,
+        '.medium-zoom-overlay, .medium-zoom-image--opened': {
+          zIndex: 1000,
         },
       },
       '#root': {
