@@ -69,11 +69,12 @@ export default function Notifications() {
   const subColor = useColorModeValue('gray.600', 'gray.400');
   const borderColor = useColorModeValue('gray.200', 'gray.700');
   const bg = useColorModeValue('white', 'gray.800');
-  const filterActiveBg = useColorModeValue('green.500', 'green.600');
+  const filterActiveBg = 'green.50';
+  const filterActiveColor = 'green.900';
   const filterBg = useColorModeValue('gray.100', 'gray.700');
   const filterColor = useColorModeValue('gray.700', 'gray.200');
 
-  const [tabIndex, setTabIndex] = useState(0); // 0 = todas, 1 = no leídas
+  const [tabIndex, setTabIndex] = useState(0); // 0 = todas, 1 = no leídas, 2 = leídas
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all');
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -92,7 +93,11 @@ export default function Notifications() {
 
   const notifications = useMemo(() => {
     return allNotifications
-      .filter((n) => (tabIndex === 1 ? !n.read : true))
+      .filter((n) => {
+        if (tabIndex === 1) return !n.read;
+        if (tabIndex === 2) return n.read;
+        return true;
+      })
       .filter((n) => (typeFilter === 'all' ? true : n.type === typeFilter));
   }, [allNotifications, tabIndex, typeFilter]);
 
@@ -138,10 +143,21 @@ export default function Notifications() {
             <Tab fontSize='sm'>
               No leídas{unreadCount > 0 ? ` (${unreadCount})` : ''}
             </Tab>
+            <Tab fontSize='sm'>Leídas</Tab>
           </TabList>
         </Tabs>
 
-        <Flex gap='2' wrap='wrap'>
+        <Flex
+          gap='2'
+          overflowX='auto'
+          flexWrap={{ base: 'nowrap', md: 'wrap' }}
+          mx={{ base: -5, md: 0 }}
+          px={{ base: 5, md: 0 }}
+          sx={{
+            scrollbarWidth: 'none',
+            '&::-webkit-scrollbar': { display: 'none' },
+          }}
+        >
           {TYPE_FILTERS.map((f) => {
             const active = typeFilter === f.key;
             return (
@@ -151,8 +167,11 @@ export default function Notifications() {
                 size='md'
                 rounded='full'
                 cursor='pointer'
+                flexShrink={0}
                 bg={active ? filterActiveBg : filterBg}
-                color={active ? 'white' : filterColor}
+                color={active ? filterActiveColor : filterColor}
+                border='1px solid'
+                borderColor={active ? filterActiveBg : 'transparent'}
                 onClick={() => setTypeFilter(f.key)}
               >
                 <TagLabel>{f.label}</TagLabel>
@@ -197,7 +216,7 @@ export default function Notifications() {
                   mb='4'
                 />
                 <Text fontSize='lg' color={subColor} textAlign='center'>
-                  {tabIndex === 1 || typeFilter !== 'all'
+                  {tabIndex !== 0 || typeFilter !== 'all'
                     ? 'No hay notificaciones en este filtro'
                     : 'Todavía no tenés notificaciones'}
                 </Text>
