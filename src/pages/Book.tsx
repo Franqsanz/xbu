@@ -19,6 +19,7 @@ import {
   FiExternalLink,
   FiShare2,
   FiMoreHorizontal,
+  FiBookOpen,
 } from 'react-icons/fi';
 import { BsTag } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
@@ -100,6 +101,7 @@ export default function Book() {
   let btnMoreOptions;
   let btnFavorite;
   let btnCollection;
+  let readBtn;
 
   const {
     data: collections,
@@ -238,15 +240,35 @@ export default function Book() {
     return navigate(-1);
   }
 
-  if (data.sourceLink === '') {
-    uiLink = (
-      <Box mb='10' w={{ base: '100%', md: '380px' }}>
-        <Box as='p' ml='2' fontSize='md' fontStyle='italic'>
-          El autor de la publicación no ha proporcionado un link.
-        </Box>
-      </Box>
+  const readBtnBorderColor = useColorModeValue('black', 'green.600');
+
+  if (data.kind === 'original' && data.file?.url && currentUser) {
+    const renderReadBtn = (w: any) => (
+      <Button
+        w={w}
+        size='lg'
+        p='6'
+        fontWeight='normal'
+        bg='black'
+        color='white'
+        border='1px'
+        borderColor={readBtnBorderColor}
+        rounded='lg'
+        textAlign='center'
+        _hover={{ bg: 'gray.800' }}
+        _active={{ bg: 'gray.800' }}
+        onClick={() => navigate(`/book/read/${pathUrl}`)}
+      >
+        <Flex align='center' justify='center' gap='2'>
+          <Icon as={FiBookOpen} />
+          Leer libro
+        </Flex>
+      </Button>
     );
-  } else {
+    readBtn = renderReadBtn;
+  }
+
+  if (data.sourceLink) {
     uiLink = (
       <Link
         w={{ base: '100%', md: '165px' }}
@@ -266,6 +288,14 @@ export default function Book() {
           Ir a librería
         </Flex>
       </Link>
+    );
+  } else {
+    uiLink = (
+      <Box mb='10' w={{ base: '100%', md: '380px' }}>
+        <Box as='p' ml='2' fontSize='md' fontStyle='italic'>
+          El autor de la publicación no ha proporcionado un link.
+        </Box>
+      </Box>
     );
   }
 
@@ -349,6 +379,8 @@ export default function Book() {
           url: data.image.url,
           public_id: data.image.public_id,
         }}
+        kind={data.kind}
+        file={data.file}
         onClose={onCloseEdit}
       />
       <Flex
@@ -394,8 +426,10 @@ export default function Book() {
           />
         </Box>
         {currentUser && (
-          <Box
-            display={{ base: 'block', lg: 'none' }}
+          <Flex
+            display={{ base: 'flex', lg: 'none' }}
+            direction='column'
+            gap='3'
             position='relative'
             zIndex='1'
             px='5'
@@ -403,8 +437,9 @@ export default function Book() {
             mb='6'
             w='full'
           >
+            {readBtn && readBtn('100%')}
             <BookStatusSelector bookId={data.id} w='100%' />
-          </Box>
+          </Flex>
         )}
         <Flex
           w='full'
@@ -672,12 +707,13 @@ export default function Book() {
               bxSize='5'
             />
             {currentUser && (
-              <Box mt='20' mb='6'>
+              <Flex mt='20' mb='6' direction='column' gap='3'>
+                {readBtn && readBtn({ base: '290px', '2xl': '305px' })}
                 <BookStatusSelector
                   bookId={data.id}
                   w={{ base: '290px', '2xl': '305px' }}
                 />
-              </Box>
+              </Flex>
             )}
             <Box
               w={{ base: '290px', '2xl': '305px' }}

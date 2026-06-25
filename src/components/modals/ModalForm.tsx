@@ -12,6 +12,11 @@ import {
 import { FormEdit } from '@components/forms/FormEdit';
 import { ModalOptionsAndConfirType } from '@components/types';
 
+type ModalFormProps = ModalOptionsAndConfirType & {
+  kind?: 'reference' | 'original';
+  file?: any;
+};
+
 export function ModalForm({
   isOpen,
   onClose,
@@ -26,7 +31,9 @@ export function ModalForm({
   year,
   category,
   format,
-}: ModalOptionsAndConfirType) {
+  kind,
+  file,
+}: ModalFormProps) {
   const bgColorBox = useColorModeValue('white', 'gray.900');
 
   const img = {
@@ -59,6 +66,8 @@ export function ModalForm({
               year={year || ''}
               category={category || []}
               format={format || ''}
+              kind={kind}
+              file={file}
             />
           </ModalBody>
         </ModalContent>

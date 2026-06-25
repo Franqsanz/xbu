@@ -68,6 +68,17 @@ interface TagType {
   icon: IconType;
 }
 
+type BookKind = 'reference' | 'original';
+type BookFileType = 'pdf' | 'epub';
+
+interface BookFile {
+  url: string;
+  public_id: string;
+  type: BookFileType;
+  size: number;
+  pages?: number;
+}
+
 interface BookType {
   id?: string;
   title: string;
@@ -85,10 +96,18 @@ interface BookType {
     url: string | Blob | null;
     public_id: string;
   };
+  kind?: BookKind;
+  file?: BookFile;
   userId?: string | undefined;
   rating?: number;
   averageRating?: number;
   ratingsCount?: number;
+}
+
+interface BookReadUrl {
+  url: string;
+  type: BookFileType;
+  expiresAt: number;
 }
 
 interface ModalCropperType extends DisclosureType {
@@ -355,6 +374,10 @@ export type {
   HeadType,
   TagType,
   BookType,
+  BookKind,
+  BookFileType,
+  BookFile,
+  BookReadUrl,
   BooksSectionType,
   ModalCroppType,
   ModalCropperType,

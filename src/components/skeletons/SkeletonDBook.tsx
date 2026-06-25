@@ -35,14 +35,16 @@ export function SkeletonDetailsBook() {
             h={{ base: '340px', lg: '420px' }}
             rounded='lg'
           ></Skeleton>
-          <Skeleton
-            display={{ base: 'none', lg: 'block' }}
-            w='290px'
-            h='52px'
-            rounded='lg'
+          <Flex
+            display={{ base: 'none', lg: 'flex' }}
+            direction='column'
+            gap='3'
             mt='20'
             mb='6'
-          ></Skeleton>
+          >
+            <Skeleton w='290px' h='52px' rounded='lg'></Skeleton>
+            <Skeleton w='290px' h='52px' rounded='lg'></Skeleton>
+          </Flex>
           <Skeleton
             display={{ base: 'none', lg: 'block' }}
             w='290px'
@@ -51,9 +53,18 @@ export function SkeletonDetailsBook() {
             mt='2'
           ></Skeleton>
         </Box>
-        <Box display={{ base: 'block', lg: 'none' }} px='5' mt='2' mb='6' w='full'>
+        <Flex
+          display={{ base: 'flex', lg: 'none' }}
+          direction='column'
+          gap='3'
+          px='5'
+          mt='2'
+          mb='6'
+          w='full'
+        >
           <Skeleton h='52px' rounded='lg' />
-        </Box>
+          <Skeleton h='52px' rounded='lg' />
+        </Flex>
         <Flex
           w='full'
           maxW={{ base: '920px', '2xl': '1120px' }}

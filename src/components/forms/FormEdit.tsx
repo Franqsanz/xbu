@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import {
   FormControl,
   Button,
@@ -13,13 +13,14 @@ import {
   Icon,
   Skeleton,
   FormErrorMessage,
+  Text,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { Select } from 'chakra-react-select';
 import 'cropperjs/dist/cropper.css';
 import { AiOutlineSave } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
-import { FaCheckCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaRegFilePdf } from 'react-icons/fa';
 import { IoWarningSharp } from 'react-icons/io5';
 
 import { Rating } from '@smastrom/react-rating';
@@ -43,6 +44,14 @@ import { useMyToast } from '@hooks/useMyToast';
 import { useGenerateSlug } from '@hooks/useGenerateSlug';
 const Cropper = lazy(() => import('react-cropper'));
 
+const MAX_FILE_SIZE = 50 * 1024 * 1024;
+const ACCEPTED_FILE_TYPES = ['application/pdf', 'application/epub+zip'];
+
+type FormEditProps = BookType & {
+  kind?: 'reference' | 'original';
+  file?: { url?: string; type?: string; size?: number; pages?: number } | null;
+};
+
 export function FormEdit({
   id,
   title,
@@ -56,7 +65,9 @@ export function FormEdit({
   format,
   pathUrl,
   image,
-}: BookType) {
+  kind,
+  file,
+}: FormEditProps) {
   const {
     handleSubmit,
     register,
@@ -69,10 +80,15 @@ export function FormEdit({
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
   const { fileInputRef, handleButtonClick } = useFileInputRef();
+  const bookFileInputRef = useRef<HTMLInputElement>(null);
+  const fileBoxBg = useColorModeValue('gray.50', 'gray.700');
+  const subColor = useColorModeValue('gray.600', 'gray.400');
   const [cropData, setCropData] = useState<string | null>(null);
   const [previewImg, setPreviewImg] = useState<Blob | null>(null);
   const [crop, setCrop] = useState<any>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [bookFile, setBookFile] = useState<File | null>(null);
+  const [bookFileError, setBookFileError] = useState<string | null>(null);
   const [books, setBooks] = useState<BookType>({
     id,
     title,
@@ -137,10 +153,27 @@ export function FormEdit({
     getCrop(crop, setPreviewImg, books, setBooks, onClose);
   }
 
+  function handleBookFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    if (!ACCEPTED_FILE_TYPES.includes(f.type)) {
+      setBookFileError('Solo se aceptan archivos PDF o EPUB.');
+      setBookFile(null);
+      return;
+    }
+    if (f.size > MAX_FILE_SIZE) {
+      setBookFileError('El archivo no puede superar los 50 MB.');
+      setBookFile(null);
+      return;
+    }
+    setBookFileError(null);
+    setBookFile(f);
+  }
+
   async function onSubmit() {
     setIsSubmitting(true);
     try {
-      await mutateAsync(books.id);
+      await mutateAsync({ id: books.id, bookFile });
       // Sincronizar el rating del creador en bookRatings si cambió
       if (id && rating !== serverRating) {
         try {
@@ -404,6 +437,72 @@ export function FormEdit({
               </Box>
             </Box>
             <Box w='full' ml={{ base: 0, md: 5 }}>
+              {kind === 'original' && (
+                <FormControl isInvalid={!!bookFileError} mb='5'>
+                  <FormLabel htmlFor='bookFile' m='0' mb='7px'>
+                    Archivo del libro{' '}
+                    <Box display='inline' fontSize='xs'>
+                      (PDF o EPUB)
+                    </Box>
+                  </FormLabel>
+                  {file?.url && !bookFile && (
+                    <Text fontSize='sm' color={subColor} mb='2'>
+                      Archivo actual:{' '}
+                      <Box as='span' fontWeight='500'>
+                        {file.type?.toUpperCase()}
+                      </Box>
+                      {typeof file.size === 'number' && (
+                        <> · {(file.size / (1024 * 1024)).toFixed(2)} MB</>
+                      )}
+                    </Text>
+                  )}
+                  <Button
+                    w='100%'
+                    onClick={() => bookFileInputRef.current?.click()}
+                    fontWeight='500'
+                    border='1px'
+                    size='lg'
+                    bg={bgColorButton}
+                    color='black'
+                    _hover={{ bg: 'green.600' }}
+                    _active={{ bg: 'green.600' }}
+                  >
+                    <Flex align='center' justify='center'>
+                      <Icon as={FaRegFilePdf} fontSize='22' mr='2' />
+                      {bookFile ? 'Cambiar archivo' : 'Reemplazar archivo'}
+                    </Flex>
+                  </Button>
+                  <Input
+                    accept='application/pdf,application/epub+zip,.pdf,.epub'
+                    display='none'
+                    ref={bookFileInputRef}
+                    type='file'
+                    id='bookFile'
+                    onChange={handleBookFileChange}
+                  />
+                  {bookFile && (
+                    <Box
+                      mt='3'
+                      p='3'
+                      bg={fileBoxBg}
+                      rounded='md'
+                      fontSize='sm'
+                      border='1px'
+                      borderColor='gray.200'
+                    >
+                      <Text fontWeight='500' isTruncated>
+                        {bookFile.name}
+                      </Text>
+                      <Text color={subColor} mt='1'>
+                        {(bookFile.size / (1024 * 1024)).toFixed(2)} MB
+                      </Text>
+                    </Box>
+                  )}
+                  {bookFileError && (
+                    <FormErrorMessage mt='2'>{bookFileError}</FormErrorMessage>
+                  )}
+                </FormControl>
+              )}
               <FormControl isInvalid={!!errors.sourceLink}>
                 <Flex align='center' justify='space-between' mb='7px'>
                   <FormLabel htmlFor='link' m='0'>

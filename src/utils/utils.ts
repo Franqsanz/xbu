@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 const keys = {
   all: 'Books',
   postBook: 'PostBook',
+  postOriginalBook: 'PostOriginalBook',
+  bookReadUrl: 'BookReadUrl',
+  bookProgress: 'BookProgress',
   allSearch: 'BooksSearch',
   one: 'BookOne',
   filtersOptions: 'BookFiltersOptions',

@@ -65,6 +65,35 @@ export default function TermsConditions() {
           sobre ese contenido.
         </Text>
         <Box as='h2' fontSize='xl' py='5'>
+          Libros propios subidos por el usuario
+        </Box>
+        <Text>
+          XBuReads permite subir libros de autoría propia (PDF o EPUB) para que otros
+          usuarios los lean dentro de la plataforma. Al subir un archivo, confirmás
+          expresamente que:
+        </Text>
+        <UnorderedList mt='2' spacing='1' pl='4'>
+          <ListItem>
+            Sos el autor del libro o contás con todos los derechos necesarios para
+            publicarlo y distribuirlo.
+          </ListItem>
+          <ListItem>
+            Asumís la responsabilidad legal exclusiva sobre el contenido subido.
+          </ListItem>
+          <ListItem>
+            Otorgás a XBuReads una licencia no exclusiva para almacenar el archivo,
+            generar enlaces firmados de corta duración y mostrarlo a los lectores
+            dentro del visor de la plataforma.
+          </ListItem>
+        </UnorderedList>
+        <Text mt='3'>
+          XBuReads no permite la descarga directa del archivo y aplica medidas para
+          mitigar la copia, pero estas medidas no constituyen una protección
+          absoluta. Si recibimos un reclamo creíble de titulares de derechos sobre un
+          libro subido, podemos retirarlo de la plataforma sin previo aviso. El abuso
+          reiterado puede derivar en la suspensión o eliminación de la cuenta.
+        </Text>
+        <Box as='h2' fontSize='xl' py='5'>
           Contenido prohibido
         </Box>
         <Text>No está permitido publicar contenido que:</Text>

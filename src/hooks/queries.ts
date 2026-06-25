@@ -17,6 +17,10 @@ import {
   getRelatedBooks,
   getMoreBooksAuthors,
   postBook,
+  postOriginalBook,
+  getBookReadUrl,
+  getBookProgress,
+  patchBookProgress,
   postRegister,
   getCheckUser,
   getUserAndBooks,
@@ -108,6 +112,47 @@ function useMutatePost() {
         queryKey: [keys.postBook],
       });
     },
+  });
+}
+
+function useMutatePostOriginal() {
+  return useMutation({
+    mutationKey: [keys.postOriginalBook],
+    mutationFn: ({ book, file }: { book: BookType; file: File }) =>
+      postOriginalBook(book, file),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: [keys.all] });
+    },
+  });
+}
+
+function useBookReadUrl(bookId: string | undefined, enabled = true) {
+  return useQuery({
+    queryKey: [keys.bookReadUrl, bookId],
+    queryFn: () => getBookReadUrl(bookId as string),
+    enabled: !!bookId && enabled,
+    staleTime: 1000 * 60 * 8,
+    gcTime: 1000 * 60 * 8,
+  });
+}
+
+function useBookProgress(bookId: string | undefined, enabled = true) {
+  return useQuery({
+    queryKey: [keys.bookProgress, bookId],
+    queryFn: () => getBookProgress(bookId as string),
+    enabled: !!bookId && enabled,
+    staleTime: 0,
+    gcTime: 1000 * 60 * 5,
+  });
+}
+
+function useSaveBookProgress(bookId: string) {
+  return useMutation({
+    mutationFn: (payload: {
+      position: number | string;
+      type: 'pdf' | 'epub';
+      percentage?: number;
+    }) => patchBookProgress(bookId, payload),
   });
 }
 
@@ -473,7 +518,14 @@ function useUpdateBook(book: any) {
 
   return useMutation({
     mutationKey: [keys.updateBook],
-    mutationFn: (id: string | undefined) => updateBook(id, book),
+    mutationFn: (
+      arg: string | { id: string | undefined; bookFile?: File | null } | undefined,
+    ) => {
+      if (typeof arg === 'string' || arg == null) {
+        return updateBook(arg as string | undefined, book);
+      }
+      return updateBook(arg.id, { ...book, bookFile: arg.bookFile });
+    },
     onError: async (error) => {
       console.error('Error en el servidor');
       await logOut();
@@ -1072,6 +1124,10 @@ function useFollowing(userId: string | undefined, enabled: boolean = true) {
 
 export {
   useMutatePost,
+  useMutatePostOriginal,
+  useBookReadUrl,
+  useBookProgress,
+  useSaveBookProgress,
   useAllFilterOptions,
   useAllBooks,
   useAllSearchBooks,

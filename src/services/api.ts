@@ -183,11 +183,74 @@ async function postBook(books: any) {
   });
 }
 
+async function postOriginalBook(books: any, bookFile: File) {
+  const formData = new FormData();
+
+  if (books.image.blob instanceof Blob) {
+    formData.append('image', books.image.blob, 'image.webp');
+  }
+
+  formData.append('bookFile', bookFile, bookFile.name);
+
+  const bookData = {
+    title: books.title,
+    authors: books.authors,
+    synopsis: books.synopsis,
+    year: books.year,
+    category: books.category,
+    numberPages: books.numberPages,
+    sourceLink: books.sourceLink,
+    language: books.language,
+    format: books.format,
+    pathUrl: books.pathUrl,
+    userId: books.userId,
+    image: {
+      public_id: '',
+    },
+    acceptedAuthorship: true,
+  };
+
+  formData.append('bookData', JSON.stringify(bookData));
+
+  return await fetchData(`${API_URL}/books/original`, {
+    method: 'POST',
+    body: formData,
+  });
+}
+
+async function getBookReadUrl(bookId: string) {
+  return await fetchData(`${API_URL}/books/${bookId}/read`, {
+    credentials: 'include',
+  });
+}
+
+async function getBookProgress(bookId: string) {
+  return await fetchData(`${API_URL}/users/me/book-progress/${bookId}`);
+}
+
+async function patchBookProgress(
+  bookId: string,
+  payload: {
+    position: number | string;
+    type: 'pdf' | 'epub';
+    percentage?: number;
+  },
+) {
+  return await fetchData(`${API_URL}/users/me/book-progress/${bookId}`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  });
+}
+
 async function updateBook(id: string | undefined, books: any) {
   const formData = new FormData();
 
   if (books.image.blob instanceof Blob) {
     formData.append('image', books.image.blob, 'image.webp');
+  }
+
+  if (books.bookFile instanceof File) {
+    formData.append('bookFile', books.bookFile, books.bookFile.name);
   }
 
   const bookData = {
@@ -505,6 +568,10 @@ export {
   deleteCollections,
   getFindOneCollection,
   postBook,
+  postOriginalBook,
+  getBookReadUrl,
+  getBookProgress,
+  patchBookProgress,
   deleteBook,
   updateBook,
   getFindAllComments,
