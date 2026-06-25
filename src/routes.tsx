@@ -7,6 +7,7 @@ import { ErrorPage } from '@pages/404';
 import { ErrorBoundary } from '@pages/ErrorBoundary';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { SkeletonDetailsBook } from '@components/skeletons/SkeletonDBook';
+import { SkeletonReader } from '@components/skeletons/SkeletonReader';
 import { PrivateRoute } from '@components/nav/PrivateRoute';
 
 import { Explore } from '@pages/Explore';
@@ -29,12 +30,27 @@ const MostViewed = lazy(() => import('@pages/MostViewed'));
 const Book = lazy(() => import('@pages/Book'));
 const FilteredData = lazy(() => import('@pages/FilteredData'));
 const NewBook = lazy(() => import('@pages/NewBook'));
+const BookReader = lazy(() => import('@pages/BookReader'));
 const Favorites = lazy(() => import('@pages/profile/Favorites'));
 const MyLibrary = lazy(() => import('@pages/profile/MyLibrary'));
 const EditProfile = lazy(() => import('@pages/profile/account/EditProfile'));
 const Notifications = lazy(() => import('@pages/Notifications'));
 
 export const routes = createBrowserRouter([
+  {
+    path: '/book/read/:pathUrl',
+    element: (
+      <>
+        <ScrollRestoration />
+        <PrivateRoute>
+          <React.Suspense fallback={<SkeletonReader />}>
+            <BookReader />
+          </React.Suspense>
+        </PrivateRoute>
+      </>
+    ),
+    errorElement: <ErrorBoundary />,
+  },
   {
     path: '/',
     element: (
