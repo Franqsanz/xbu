@@ -235,10 +235,13 @@ async function patchBookProgress(
     type: 'pdf' | 'epub';
     percentage?: number;
   },
+  opts: { signal?: AbortSignal; keepalive?: boolean } = {},
 ) {
   return await fetchData(`${API_URL}/users/me/book-progress/${bookId}`, {
     method: 'PATCH',
     body: JSON.stringify(payload),
+    signal: opts.signal,
+    keepalive: opts.keepalive,
   });
 }
 

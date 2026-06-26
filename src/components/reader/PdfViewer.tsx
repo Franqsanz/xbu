@@ -8,11 +8,13 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiChevronLeft, FiChevronRight, FiMinus, FiPlus } from 'react-icons/fi';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+
+import { patchBookProgress } from '@services/api';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -21,25 +23,58 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 type Props = {
   url: string;
+  bookId: string;
   initialPage?: number;
-  onProgress?: (page: number, total: number) => void;
 };
 
-export default function PdfViewer({ url, initialPage = 1, onProgress }: Props) {
+const PROGRESS_DEBOUNCE_MS = 400;
+const SWIPE_THRESHOLD_PX = 60;
+const MIN_ZOOM = 0.6;
+const MAX_ZOOM = 2.5;
+const ZOOM_STEP = 0.2;
+
+export default function PdfViewer({ url, bookId, initialPage = 1 }: Props) {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [page, setPage] = useState(initialPage);
-  const [pageWidth, setPageWidth] = useState(800);
+  const [basePageWidth, setBasePageWidth] = useState(640);
+  const [zoom, setZoom] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedRef = useRef<number>(initialPage);
+  const pendingPageRef = useRef<number>(initialPage);
+  const totalPagesRef = useRef<number>(0);
+  const abortRef = useRef<AbortController | null>(null);
+  const touchStartRef = useRef<{ x: number; y: number; t: number } | null>(null);
+  const pinchStartRef = useRef<{ dist: number; zoom: number } | null>(null);
   const controlsBg = useColorModeValue('whiteAlpha.900', 'blackAlpha.700');
   const docBg = useColorModeValue('gray.100', 'gray.900');
+
+  async function sendProgress(pageNum: number, opts: { keepalive?: boolean } = {}) {
+    if (!totalPagesRef.current) return;
+    // Cancela el PATCH anterior si todavía estaba en vuelo: garantiza que
+    // el último que disparamos sea el que gane en el servidor.
+    abortRef.current?.abort();
+    const ctrl = new AbortController();
+    abortRef.current = ctrl;
+    const percentage = Math.round((pageNum / totalPagesRef.current) * 100);
+    lastSavedRef.current = pageNum;
+    try {
+      await patchBookProgress(
+        bookId,
+        { position: pageNum, type: 'pdf', percentage },
+        { signal: ctrl.signal, keepalive: opts.keepalive },
+      );
+    } catch {
+      // Aborts y errores de red los ignoramos: si el guardado falló, el
+      // próximo cambio de página intentará de nuevo.
+    }
+  }
 
   useEffect(() => {
     function measure() {
       if (!containerRef.current) return;
-      const w = Math.min(containerRef.current.clientWidth - 24, 900);
-      setPageWidth(Math.max(w, 280));
+      const w = Math.min(containerRef.current.clientWidth - 24, 640);
+      setBasePageWidth(Math.max(w, 280));
     }
     measure();
     window.addEventListener('resize', measure);
@@ -47,33 +82,111 @@ export default function PdfViewer({ url, initialPage = 1, onProgress }: Props) {
   }, []);
 
   useEffect(() => {
-    if (!numPages || !onProgress) return;
+    pendingPageRef.current = page;
+    if (!numPages) return;
     if (page === lastSavedRef.current) return;
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
-      lastSavedRef.current = page;
-      onProgress(page, numPages);
-    }, 1500);
-    return () => {
+      sendProgress(page);
+    }, PROGRESS_DEBOUNCE_MS);
+  }, [page, numPages]);
+
+  // Flush al desmontar o cerrar pestaña: usa keepalive así llega aunque la
+  // página esté navegando o el browser cierre.
+  useEffect(() => {
+    function flush() {
       if (debounceRef.current) clearTimeout(debounceRef.current);
+      const last = pendingPageRef.current;
+      if (last === lastSavedRef.current) return;
+      sendProgress(last, { keepalive: true });
+    }
+    window.addEventListener('pagehide', flush);
+    return () => {
+      window.removeEventListener('pagehide', flush);
+      flush();
     };
-  }, [page, numPages, onProgress]);
+  }, []);
 
   function onLoadSuccess({ numPages: n }: { numPages: number }) {
     setNumPages(n);
-    // Si la página guardada quedó fuera de rango (ej. recargaron un PDF más corto),
-    // la corregimos a 1.
+    totalPagesRef.current = n;
     if (page > n) setPage(1);
   }
+
+  function goPrev() {
+    setPage((p) => Math.max(1, p - 1));
+  }
+  function goNext() {
+    setPage((p) => (numPages ? Math.min(numPages, p + 1) : p + 1));
+  }
+  function zoomIn() {
+    setZoom((z) => Math.min(MAX_ZOOM, +(z + ZOOM_STEP).toFixed(2)));
+  }
+  function zoomOut() {
+    setZoom((z) => Math.max(MIN_ZOOM, +(z - ZOOM_STEP).toFixed(2)));
+  }
+
+  function pinchDistance(touches: React.TouchList) {
+    const a = touches[0];
+    const b = touches[1];
+    if (!a || !b) return 0;
+    return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+  }
+
+  function handleTouchStart(e: React.TouchEvent) {
+    if (e.touches.length === 2) {
+      // Pinch: bloqueamos el swipe y arrancamos a trackear el zoom interno.
+      touchStartRef.current = null;
+      pinchStartRef.current = { dist: pinchDistance(e.touches), zoom };
+      return;
+    }
+    const t = e.touches[0];
+    if (!t) return;
+    touchStartRef.current = { x: t.clientX, y: t.clientY, t: e.timeStamp };
+  }
+  function handleTouchMove(e: React.TouchEvent) {
+    if (e.touches.length === 2 && pinchStartRef.current) {
+      const dist = pinchDistance(e.touches);
+      const factor = dist / pinchStartRef.current.dist;
+      const next = pinchStartRef.current.zoom * factor;
+      const clamped = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, next));
+      setZoom(+clamped.toFixed(2));
+    }
+  }
+  function handleTouchEnd(e: React.TouchEvent) {
+    if (e.touches.length < 2) {
+      pinchStartRef.current = null;
+    }
+    const start = touchStartRef.current;
+    touchStartRef.current = null;
+    if (!start) return;
+    const t = e.changedTouches[0];
+    if (!t) return;
+    const dx = t.clientX - start.x;
+    const dy = t.clientY - start.y;
+    if (Math.abs(dx) < SWIPE_THRESHOLD_PX) return;
+    if (Math.abs(dx) < Math.abs(dy)) return;
+    if (dx < 0) goNext();
+    else goPrev();
+  }
+
+  const pageWidth = Math.round(basePageWidth * zoom);
 
   return (
     <Box
       ref={containerRef}
       bg={docBg}
-      minH='80vh'
+      h='100%'
+      overflowY='auto'
       py='6'
       onCopy={(e) => e.preventDefault()}
-      sx={{ userSelect: 'none' }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      // `pan-y` bloquea el pinch nativo del browser (que zoomearía toda la
+      // página, incluyendo el panel de controles) y deja el scroll vertical.
+      // El pinch lo manejamos por JS y solo cambia el ancho del PDF.
+      sx={{ userSelect: 'none', touchAction: 'pan-y' }}
     >
       <Flex justify='center'>
         <Document
@@ -114,24 +227,41 @@ export default function PdfViewer({ url, initialPage = 1, onProgress }: Props) {
           transform='translateX(-50%)'
           bg={controlsBg}
           rounded='full'
-          px='4'
+          px={{ base: 2, md: 4 }}
           py='2'
           align='center'
-          gap='3'
+          gap={{ base: 2, md: 3 }}
           backdropFilter='blur(8px)'
           boxShadow='lg'
           zIndex={100}
           pointerEvents='auto'
         >
           <IconButton
+            aria-label='Alejar'
+            icon={<Icon as={FiMinus} />}
+            size='sm'
+            variant='ghost'
+            isDisabled={zoom <= MIN_ZOOM}
+            onClick={zoomOut}
+          />
+          <IconButton
+            aria-label='Acercar'
+            icon={<Icon as={FiPlus} />}
+            size='sm'
+            variant='ghost'
+            isDisabled={zoom >= MAX_ZOOM}
+            onClick={zoomIn}
+          />
+          <Box w='1px' h='20px' bg='gray.400' opacity={0.4} />
+          <IconButton
             aria-label='Página anterior'
             icon={<Icon as={FiChevronLeft} />}
             size='sm'
             variant='ghost'
             isDisabled={page <= 1}
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            onClick={goPrev}
           />
-          <Text fontSize='sm' fontWeight='500'>
+          <Text fontSize='sm' fontWeight='500' minW='60px' textAlign='center'>
             {page} / {numPages}
           </Text>
           <IconButton
@@ -140,7 +270,7 @@ export default function PdfViewer({ url, initialPage = 1, onProgress }: Props) {
             size='sm'
             variant='ghost'
             isDisabled={page >= numPages}
-            onClick={() => setPage((p) => Math.min(numPages, p + 1))}
+            onClick={goNext}
           />
         </Flex>
       ) : null}

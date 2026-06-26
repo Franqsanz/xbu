@@ -141,18 +141,11 @@ function useBookProgress(bookId: string | undefined, enabled = true) {
     queryKey: [keys.bookProgress, bookId],
     queryFn: () => getBookProgress(bookId as string),
     enabled: !!bookId && enabled,
+    // Sin cache entre montajes: si abro el visor, salgo y vuelvo, queremos
+    // SIEMPRE leer la última posición del servidor, no la que quedó en memoria.
     staleTime: 0,
-    gcTime: 1000 * 60 * 5,
-  });
-}
-
-function useSaveBookProgress(bookId: string) {
-  return useMutation({
-    mutationFn: (payload: {
-      position: number | string;
-      type: 'pdf' | 'epub';
-      percentage?: number;
-    }) => patchBookProgress(bookId, payload),
+    gcTime: 0,
+    refetchOnMount: 'always',
   });
 }
 
@@ -1127,7 +1120,6 @@ export {
   useMutatePostOriginal,
   useBookReadUrl,
   useBookProgress,
-  useSaveBookProgress,
   useAllFilterOptions,
   useAllBooks,
   useAllSearchBooks,

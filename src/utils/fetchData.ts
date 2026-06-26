@@ -78,6 +78,8 @@ export async function fetchData(
     headers?: Record<string, string>;
     body?: any;
     credentials?: RequestCredentials;
+    signal?: AbortSignal;
+    keepalive?: boolean;
   } = {},
 ): Promise<any> {
   try {

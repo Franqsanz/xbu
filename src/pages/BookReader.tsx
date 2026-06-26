@@ -13,12 +13,7 @@ import { FiArrowLeft } from 'react-icons/fi';
 
 import { MainHead } from '@components/layout/Head';
 import { SkeletonReader } from '@components/skeletons/SkeletonReader';
-import {
-  useBook,
-  useBookReadUrl,
-  useBookProgress,
-  useSaveBookProgress,
-} from '@hooks/queries';
+import { useBook, useBookReadUrl, useBookProgress } from '@hooks/queries';
 
 const PdfViewer = lazy(() => import('@components/reader/PdfViewer'));
 const EpubViewer = lazy(() => import('@components/reader/EpubViewer'));
@@ -37,7 +32,6 @@ export default function BookReader() {
     book?.id,
     enabled,
   );
-  const saveProgress = useSaveBookProgress(book?.id ?? '');
 
   useEffect(() => {
     if (book && book.kind !== 'original') {
@@ -56,19 +50,10 @@ export default function BookReader() {
   const ready = readData && !progressLoading;
   const initialPosition = (progressData as any)?.progress?.position ?? null;
 
-  function handleProgress(payload: {
-    position: number | string;
-    type: 'pdf' | 'epub';
-    percentage?: number;
-  }) {
-    if (!book?.id) return;
-    saveProgress.mutate(payload);
-  }
-
   return (
     <>
       <MainHead title={book?.title ? `Leer ${book.title}` : 'Lector'} />
-      <Flex direction='column' bg={bg} minH='100vh'>
+      <Flex direction='column' bg={bg} h='100vh'>
         <Flex
           as='header'
           bg={headerBg}
@@ -93,7 +78,7 @@ export default function BookReader() {
             {book?.title}
           </Text>
         </Flex>
-        <Box flex='1' position='relative'>
+        <Box flex='1' position='relative' minH='0' overflow='hidden'>
           {(isLoading || progressLoading) && <SkeletonReader />}
           {isError && (
             <Flex
@@ -109,32 +94,22 @@ export default function BookReader() {
               </Button>
             </Flex>
           )}
-          {ready && (
+          {ready && book?.id && (
             <Suspense fallback={<SkeletonReader />}>
               {readData.type === 'pdf' ? (
                 <PdfViewer
                   url={readData.url}
+                  bookId={book.id}
                   initialPage={
                     typeof initialPosition === 'number' ? initialPosition : 1
-                  }
-                  onProgress={(page, total) =>
-                    handleProgress({
-                      position: page,
-                      type: 'pdf',
-                      percentage: total
-                        ? Math.round((page / total) * 100)
-                        : undefined,
-                    })
                   }
                 />
               ) : (
                 <EpubViewer
                   url={readData.url}
+                  bookId={book.id}
                   initialLocation={
                     typeof initialPosition === 'string' ? initialPosition : null
-                  }
-                  onProgress={(cfi) =>
-                    handleProgress({ position: cfi, type: 'epub' })
                   }
                 />
               )}
