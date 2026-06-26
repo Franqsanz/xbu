@@ -15,6 +15,7 @@ import { ModalOptionsAndConfirType } from '@components/types';
 type ModalFormProps = ModalOptionsAndConfirType & {
   kind?: 'reference' | 'original';
   file?: any;
+  pathUrl?: string;
 };
 
 export function ModalForm({
@@ -33,6 +34,7 @@ export function ModalForm({
   format,
   kind,
   file,
+  pathUrl,
 }: ModalFormProps) {
   const bgColorBox = useColorModeValue('white', 'gray.900');
 
@@ -66,8 +68,10 @@ export function ModalForm({
               year={year || ''}
               category={category || []}
               format={format || ''}
+              pathUrl={pathUrl}
               kind={kind}
               file={file}
+              onClose={onClose}
             />
           </ModalBody>
         </ModalContent>

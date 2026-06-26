@@ -50,6 +50,7 @@ const ACCEPTED_FILE_TYPES = ['application/pdf', 'application/epub+zip'];
 type FormEditProps = BookType & {
   kind?: 'reference' | 'original';
   file?: { url?: string; type?: string; size?: number; pages?: number } | null;
+  onClose?: () => void;
 };
 
 export function FormEdit({
@@ -67,6 +68,7 @@ export function FormEdit({
   image,
   kind,
   file,
+  onClose: onCloseModal,
 }: FormEditProps) {
   const {
     handleSubmit,
@@ -205,6 +207,9 @@ export function FormEdit({
       // Esto cierra el modal y garantiza vista fresca sin cache stale.
       if (books.pathUrl) {
         window.location.href = `/book/view/${books.pathUrl}`;
+      } else {
+        // Fallback: si no hay pathUrl no podemos navegar, cerramos el modal igual
+        onCloseModal?.();
       }
     } catch (error) {
       setIsSubmitting(false);
@@ -489,8 +494,10 @@ export function FormEdit({
                       fontSize='sm'
                       border='1px'
                       borderColor='gray.200'
+                      maxW='100%'
+                      overflow='hidden'
                     >
-                      <Text fontWeight='500' isTruncated>
+                      <Text fontWeight='500' noOfLines={1} wordBreak='break-all'>
                         {bookFile.name}
                       </Text>
                       <Text color={subColor} mt='1'>

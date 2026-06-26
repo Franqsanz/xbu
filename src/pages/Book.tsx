@@ -379,6 +379,7 @@ export default function Book() {
           url: data.image.url,
           public_id: data.image.public_id,
         }}
+        pathUrl={data.pathUrl}
         kind={data.kind}
         file={data.file}
         onClose={onCloseEdit}

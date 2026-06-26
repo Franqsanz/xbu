@@ -486,8 +486,10 @@ export function FormOriginalBook() {
                   fontSize='sm'
                   border='1px'
                   borderColor='gray.200'
+                  maxW='100%'
+                  overflow='hidden'
                 >
-                  <Text fontWeight='500' isTruncated>
+                  <Text fontWeight='500' noOfLines={1} wordBreak='break-all'>
                     {bookFile.name}
                   </Text>
                   <Text color={subColor} mt='1'>
