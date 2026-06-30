@@ -229,8 +229,8 @@ function useMoreBooks(id: string | undefined) {
     queryKey: [keys.random, id],
     queryFn: () => getMoreBooks(id),
     refetchOnWindowFocus: false,
-    gcTime: 3000,
-    staleTime: 50000,
+    gcTime: 1000 * 60 * 10,
+    staleTime: 1000 * 60 * 5,
     retry: false,
   });
 }
@@ -240,8 +240,8 @@ function useRelatedBooks(id: string | undefined) {
     queryKey: [keys.relatedBooks, id],
     queryFn: () => getRelatedBooks(id),
     refetchOnWindowFocus: false,
-    gcTime: 3000,
-    staleTime: 50000,
+    gcTime: 1000 * 60 * 10,
+    staleTime: 1000 * 60 * 5,
     retry: false,
   });
 }
@@ -251,8 +251,8 @@ function useMoreBooksAuthors(id: string | undefined) {
     queryKey: [keys.moreBooksAuthors, id],
     queryFn: () => getMoreBooksAuthors(id),
     refetchOnWindowFocus: false,
-    gcTime: 3000,
-    staleTime: 50000,
+    gcTime: 1000 * 60 * 10,
+    staleTime: 1000 * 60 * 5,
     retry: false,
   });
 }
