@@ -100,7 +100,7 @@ export function FeedItem({ activity }: FeedItemProps) {
       p={{ base: 4, md: 5 }}
       mb='4'
     >
-      <Flex align='center' gap='3' mb='4'>
+      <Flex align='flex-start' gap='3' mb='4'>
         <Link as={NavLink} to={`/profile/${actor.username}`}>
           <Avatar src={actor.picture} name={actor.name} size='sm' />
         </Link>
@@ -122,7 +122,7 @@ export function FeedItem({ activity }: FeedItemProps) {
             {isOriginalBook && (
               <Tag size='sm' bg='green.50' color='green.900' rounded='full'>
                 <TagLeftIcon as={FiEdit3} />
-                <TagLabel fontWeight='semibold'>Libro propio</TagLabel>
+                <TagLabel fontWeight='semibold'>Original</TagLabel>
               </Tag>
             )}
             {type === 'follow' && target && (
@@ -169,7 +169,7 @@ export function FeedItem({ activity }: FeedItemProps) {
               </Tag>
             )}
           </Flex>
-          <Text fontSize='xs' color={subTextColor}>
+          <Text fontSize='xs' color={subTextColor} mt={{ base: 2, md: 0 }}>
             {formattedDate}
           </Text>
         </Flex>
