@@ -1,10 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Flex, Text, useBreakpointValue } from '@chakra-ui/react';
+import {
+  Flex,
+  Spinner,
+  Text,
+  useBreakpointValue,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { ReactReader } from 'react-reader';
 import type { Rendition } from 'epubjs';
 
 import { patchBookProgress } from '@services/api';
-import { ReaderBodySkeleton } from '@components/skeletons/SkeletonReader';
 
 type Props = {
   url: string;
@@ -27,6 +32,7 @@ export default function EpubViewer({ url, bookId, initialLocation }: Props) {
   const abortRef = useRef<AbortController | null>(null);
   const renditionRef = useRef<Rendition | null>(null);
   const isMobile = useBreakpointValue({ base: true, md: false }) ?? false;
+  const loadingBg = useColorModeValue('white', '#1a202c');
 
   // El endpoint de Cloudinary devuelve la URL de download, no de delivery,
   // así que epub.js no la entiende como un .epub. La descargamos como
@@ -120,7 +126,11 @@ export default function EpubViewer({ url, bookId, initialLocation }: Props) {
   }
 
   if (!bookData) {
-    return <ReaderBodySkeleton />;
+    return (
+      <Flex h='100%' w='100%' bg={loadingBg} align='center' justify='center'>
+        <Spinner size='md' color='gray.400' thickness='2px' />
+      </Flex>
+    );
   }
 
   return (
@@ -133,16 +143,16 @@ export default function EpubViewer({ url, bookId, initialLocation }: Props) {
         epubOptions={{ flow: 'scrolled', manager: 'continuous' }}
       />
       {!renditionReady && (
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 5,
-            pointerEvents: 'none',
-          }}
+        <Flex
+          position='absolute'
+          inset='0'
+          bg={loadingBg}
+          align='center'
+          justify='center'
+          zIndex={5}
         >
-          <ReaderBodySkeleton />
-        </div>
+          <Spinner size='md' color='gray.400' thickness='2px' />
+        </Flex>
       )}
     </div>
   );

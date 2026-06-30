@@ -12,7 +12,7 @@ import {
 import { FiArrowLeft } from 'react-icons/fi';
 
 import { MainHead } from '@components/layout/Head';
-import { SkeletonReader } from '@components/skeletons/SkeletonReader';
+import { ReaderBodySkeleton } from '@components/skeletons/SkeletonReader';
 import { useBook, useBookReadUrl, useBookProgress } from '@hooks/queries';
 
 const PdfViewer = lazy(() => import('@components/reader/PdfViewer'));
@@ -84,14 +84,13 @@ export default function BookReader() {
             icon={<Icon as={FiArrowLeft} />}
             size='sm'
             onClick={handleBack}
-            variant='ghost'
           />
-          <Text fontWeight='600' isTruncated>
+          <Text fontWeight='600' textTransform='uppercase' isTruncated>
             {book?.title}
           </Text>
         </Flex>
         <Box flex='1' position='relative' minH='0' overflow='hidden'>
-          {(isLoading || progressLoading) && <SkeletonReader />}
+          {(isLoading || progressLoading) && <ReaderBodySkeleton />}
           {isError && (
             <Flex
               h='80vh'
@@ -105,7 +104,7 @@ export default function BookReader() {
             </Flex>
           )}
           {ready && book?.id && (
-            <Suspense fallback={<SkeletonReader />}>
+            <Suspense fallback={<ReaderBodySkeleton />}>
               {readData.type === 'pdf' ? (
                 <PdfViewer
                   url={readData.url}
