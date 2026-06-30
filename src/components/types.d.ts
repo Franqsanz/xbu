@@ -286,6 +286,7 @@ interface FeedBook {
   authors: string[];
   category: string[];
   synopsis: string;
+  kind?: 'reference' | 'original';
 }
 
 interface FeedActivity {

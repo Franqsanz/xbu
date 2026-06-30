@@ -16,6 +16,7 @@ import {
   FiBookmark,
   FiBookOpen,
   FiCheck,
+  FiEdit3,
   FiHeart,
   FiMessageSquare,
   FiStar,
@@ -72,8 +73,11 @@ export function FeedItem({ activity }: FeedItemProps) {
     activities,
   } = activity;
 
+  const isOriginalBook = book?.kind === 'original';
+
   let actionText = '';
-  if (type === 'book') actionText = 'publicó un libro';
+  if (type === 'book')
+    actionText = isOriginalBook ? 'publicó su libro' : 'recomendó un libro';
   else if (type === 'comment') actionText = 'comentó en';
   else if (type === 'follow') actionText = 'siguió a';
   else if (type === 'rating') actionText = 'calificó';
@@ -114,6 +118,12 @@ export function FeedItem({ activity }: FeedItemProps) {
               <Text fontSize='sm' color={subTextColor}>
                 {actionText}
               </Text>
+            )}
+            {isOriginalBook && (
+              <Tag size='sm' bg='green.50' color='green.900' rounded='full'>
+                <TagLeftIcon as={FiEdit3} />
+                <TagLabel fontWeight='semibold'>Libro propio</TagLabel>
+              </Tag>
             )}
             {type === 'follow' && target && (
               <Link
@@ -337,13 +347,6 @@ function getActionInfo(action: FeedActivity): GroupActionInfo | null {
       icon: FiBookmark,
       color: 'purple.500',
       label: 'Lo guardó en una colección',
-    };
-  }
-  if (action.type === 'book') {
-    return {
-      icon: FiBookOpen,
-      color: 'green.500',
-      label: 'Publicó este libro',
     };
   }
   return null;
