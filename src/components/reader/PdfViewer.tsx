@@ -6,6 +6,7 @@ import {
   Icon,
   Skeleton,
   Text,
+  keyframes,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { FiChevronLeft, FiChevronRight, FiMinus, FiPlus } from 'react-icons/fi';
@@ -33,15 +34,39 @@ const MIN_ZOOM = 0.6;
 const MAX_ZOOM = 2.5;
 const ZOOM_STEP = 0.2;
 
+// "Page flip" simple: la página entra desde un costado con un pequeño tilt
+// 3D — sin librerías, sin renderizar dos páginas en simultáneo.
+const flipInForward = keyframes`
+  from {
+    transform: perspective(1200px) rotateY(35deg) translateX(40px);
+    transform-origin: left center;
+    opacity: 0;
+  }
+  to {
+    transform: perspective(1200px) rotateY(0) translateX(0);
+    opacity: 1;
+  }
+`;
+const flipInBackward = keyframes`
+  from {
+    transform: perspective(1200px) rotateY(-35deg) translateX(-40px);
+    transform-origin: right center;
+    opacity: 0;
+  }
+  to {
+    transform: perspective(1200px) rotateY(0) translateX(0);
+    opacity: 1;
+  }
+`;
+
 export default function PdfViewer({ url, bookId, initialPage = 1 }: Props) {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [page, setPage] = useState(initialPage);
+  const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
   const [basePageWidth, setBasePageWidth] = useState(640);
   const [zoom, setZoom] = useState(1);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedRef = useRef<number>(initialPage);
   const pendingPageRef = useRef<number>(initialPage);
   const totalPagesRef = useRef<number>(0);
@@ -105,7 +130,6 @@ export default function PdfViewer({ url, bookId, initialPage = 1 }: Props) {
     window.addEventListener('pagehide', flush);
     return () => {
       window.removeEventListener('pagehide', flush);
-      if (transitionTimeoutRef.current) clearTimeout(transitionTimeoutRef.current);
       flush();
     };
   }, []);
@@ -117,20 +141,12 @@ export default function PdfViewer({ url, bookId, initialPage = 1 }: Props) {
   }
 
   function goPrev() {
+    setDirection('backward');
     setPage((p) => Math.max(1, p - 1));
-    triggerTransition();
   }
   function goNext() {
+    setDirection('forward');
     setPage((p) => (numPages ? Math.min(numPages, p + 1) : p + 1));
-    triggerTransition();
-  }
-
-  function triggerTransition() {
-    setIsTransitioning(true);
-    if (transitionTimeoutRef.current) clearTimeout(transitionTimeoutRef.current);
-    transitionTimeoutRef.current = setTimeout(() => {
-      setIsTransitioning(false);
-    }, 180);
   }
   function zoomIn() {
     setZoom((z) => Math.min(MAX_ZOOM, +(z + ZOOM_STEP).toFixed(2)));
@@ -173,6 +189,10 @@ export default function PdfViewer({ url, bookId, initialPage = 1 }: Props) {
     const start = touchStartRef.current;
     touchStartRef.current = null;
     if (!start) return;
+    // Con zoom, el usuario está paneando dentro de la página — el browser
+    // ya hace el pan nativo gracias a `overflow:auto + touch-action`. No
+    // queremos disparar swipe de página encima.
+    if (zoom > 1.05) return;
     const t = e.changedTouches[0];
     if (!t) return;
     const dx = t.clientX - start.x;
@@ -219,8 +239,11 @@ export default function PdfViewer({ url, bookId, initialPage = 1 }: Props) {
           }
         >
           <Box
-            opacity={isTransitioning ? 0 : 1}
-            transition='opacity 0.18s ease-in-out'
+            key={page}
+            animation={`${
+              direction === 'forward' ? flipInForward : flipInBackward
+            } 0.35s ease-out`}
+            sx={{ transformStyle: 'preserve-3d', backfaceVisibility: 'hidden' }}
           >
             <Page
               pageNumber={page}
