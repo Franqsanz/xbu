@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -21,7 +21,19 @@ const EpubViewer = lazy(() => import('@components/reader/EpubViewer'));
 export default function BookReader() {
   const { pathUrl } = useParams<{ pathUrl: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { data: book } = useBook(pathUrl);
+
+  // Volver: si el user llegó al visor navegando dentro del sitio, hacemos
+  // pop del history (deja el detalle como antes); si entró directo por URL,
+  // navegamos al detalle reemplazando.
+  function handleBack() {
+    if (location.key !== 'default') {
+      navigate(-1);
+    } else {
+      navigate(`/book/view/${pathUrl}`, { replace: true });
+    }
+  }
   const bg = useColorModeValue('gray.50', 'gray.900');
   const headerBg = useColorModeValue('white', 'gray.800');
   const borderColor = useColorModeValue('gray.200', 'gray.700');
@@ -71,7 +83,7 @@ export default function BookReader() {
             aria-label='Volver'
             icon={<Icon as={FiArrowLeft} />}
             size='sm'
-            onClick={() => navigate(`/book/view/${pathUrl}`)}
+            onClick={handleBack}
             variant='ghost'
           />
           <Text fontWeight='600' isTruncated>
@@ -89,9 +101,7 @@ export default function BookReader() {
               gap='3'
             >
               <Text>No se pudo cargar el libro.</Text>
-              <Button onClick={() => navigate(`/book/view/${pathUrl}`)}>
-                Volver al detalle
-              </Button>
+              <Button onClick={handleBack}>Volver al detalle</Button>
             </Flex>
           )}
           {ready && book?.id && (
