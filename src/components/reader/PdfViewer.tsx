@@ -38,8 +38,10 @@ export default function PdfViewer({ url, bookId, initialPage = 1 }: Props) {
   const [page, setPage] = useState(initialPage);
   const [basePageWidth, setBasePageWidth] = useState(640);
   const [zoom, setZoom] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedRef = useRef<number>(initialPage);
   const pendingPageRef = useRef<number>(initialPage);
   const totalPagesRef = useRef<number>(0);
@@ -103,6 +105,7 @@ export default function PdfViewer({ url, bookId, initialPage = 1 }: Props) {
     window.addEventListener('pagehide', flush);
     return () => {
       window.removeEventListener('pagehide', flush);
+      if (transitionTimeoutRef.current) clearTimeout(transitionTimeoutRef.current);
       flush();
     };
   }, []);
@@ -115,9 +118,19 @@ export default function PdfViewer({ url, bookId, initialPage = 1 }: Props) {
 
   function goPrev() {
     setPage((p) => Math.max(1, p - 1));
+    triggerTransition();
   }
   function goNext() {
     setPage((p) => (numPages ? Math.min(numPages, p + 1) : p + 1));
+    triggerTransition();
+  }
+
+  function triggerTransition() {
+    setIsTransitioning(true);
+    if (transitionTimeoutRef.current) clearTimeout(transitionTimeoutRef.current);
+    transitionTimeoutRef.current = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 180);
   }
   function zoomIn() {
     setZoom((z) => Math.min(MAX_ZOOM, +(z + ZOOM_STEP).toFixed(2)));
@@ -177,18 +190,18 @@ export default function PdfViewer({ url, bookId, initialPage = 1 }: Props) {
       ref={containerRef}
       bg={docBg}
       h='100%'
-      overflowY='auto'
+      overflow='auto'
       py='6'
       onCopy={(e) => e.preventDefault()}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      // `pan-y` bloquea el pinch nativo del browser (que zoomearía toda la
-      // página, incluyendo el panel de controles) y deja el scroll vertical.
-      // El pinch lo manejamos por JS y solo cambia el ancho del PDF.
-      sx={{ userSelect: 'none', touchAction: 'pan-y' }}
+      // `pan-x pan-y` deja al browser manejar el scroll en ambos ejes (útil
+      // cuando hicimos zoom y la página supera el ancho del viewport), pero
+      // bloquea el pinch nativo. El pinch sigue manejado por JS.
+      sx={{ userSelect: 'none', touchAction: 'pan-x pan-y' }}
     >
-      <Flex justify='center'>
+      <Flex justify='center' minW='min-content'>
         <Document
           file={url}
           onLoadSuccess={onLoadSuccess}
@@ -205,18 +218,19 @@ export default function PdfViewer({ url, bookId, initialPage = 1 }: Props) {
             </Text>
           }
         >
-          <Page
-            pageNumber={page}
-            width={pageWidth}
-            renderAnnotationLayer={false}
-            loading={
-              <Skeleton
-                w={`${pageWidth}px`}
-                h={`${Math.round(pageWidth * 1.4)}px`}
-                rounded='md'
-              />
-            }
-          />
+          <Box
+            opacity={isTransitioning ? 0 : 1}
+            transition='opacity 0.18s ease-in-out'
+          >
+            <Page
+              pageNumber={page}
+              width={pageWidth}
+              renderAnnotationLayer={false}
+              loading={
+                <Box w={`${pageWidth}px`} h={`${Math.round(pageWidth * 1.4)}px`} />
+              }
+            />
+          </Box>
         </Document>
       </Flex>
       {numPages ? (
@@ -244,6 +258,9 @@ export default function PdfViewer({ url, bookId, initialPage = 1 }: Props) {
             isDisabled={zoom <= MIN_ZOOM}
             onClick={zoomOut}
           />
+          <Text fontSize='sm' fontWeight='500' minW='40px' textAlign='center'>
+            {Math.round(zoom * 100)}%
+          </Text>
           <IconButton
             aria-label='Acercar'
             icon={<Icon as={FiPlus} />}

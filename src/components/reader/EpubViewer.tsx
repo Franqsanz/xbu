@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Flex, Spinner, Text } from '@chakra-ui/react';
+import { Flex, Text, useBreakpointValue } from '@chakra-ui/react';
 import { ReactReader } from 'react-reader';
+import type { Rendition } from 'epubjs';
 
 import { patchBookProgress } from '@services/api';
+import { ReaderBodySkeleton } from '@components/skeletons/SkeletonReader';
 
 type Props = {
   url: string;
@@ -15,6 +17,7 @@ const PROGRESS_DEBOUNCE_MS = 400;
 export default function EpubViewer({ url, bookId, initialLocation }: Props) {
   const [location, setLocation] = useState<string | number>(initialLocation || 0);
   const [bookData, setBookData] = useState<ArrayBuffer | null>(null);
+  const [renditionReady, setRenditionReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedRef = useRef<string | null>(
@@ -22,6 +25,8 @@ export default function EpubViewer({ url, bookId, initialLocation }: Props) {
   );
   const pendingRef = useRef<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const renditionRef = useRef<Rendition | null>(null);
+  const isMobile = useBreakpointValue({ base: true, md: false }) ?? false;
 
   // El endpoint de Cloudinary devuelve la URL de download, no de delivery,
   // así que epub.js no la entiende como un .epub. La descargamos como
@@ -72,6 +77,26 @@ export default function EpubViewer({ url, bookId, initialLocation }: Props) {
     }, PROGRESS_DEBOUNCE_MS);
   }
 
+  function handleGetRendition(rendition: Rendition) {
+    renditionRef.current = rendition;
+    // Tipografía más cómoda para lectura — más padding lateral y line-height
+    // mayor en mobile, donde el contenido por defecto queda muy apretado.
+    rendition.themes.register('xbu', {
+      body: {
+        padding: isMobile ? '0 12px' : '0 24px',
+        'font-size': isMobile ? '105%' : '100%',
+        'line-height': '1.65',
+      },
+      p: {
+        'margin-bottom': '0.8em',
+      },
+    });
+    rendition.themes.select('xbu');
+    // El rendition existe pero la primera página aún no se pintó. Cuando
+    // dispare `rendered` quitamos el skeleton overlay.
+    rendition.once('rendered', () => setRenditionReady(true));
+  }
+
   useEffect(() => {
     function flush() {
       if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -95,11 +120,7 @@ export default function EpubViewer({ url, bookId, initialLocation }: Props) {
   }
 
   if (!bookData) {
-    return (
-      <Flex h='100%' align='center' justify='center'>
-        <Spinner size='lg' />
-      </Flex>
-    );
+    return <ReaderBodySkeleton />;
   }
 
   return (
@@ -108,8 +129,21 @@ export default function EpubViewer({ url, bookId, initialLocation }: Props) {
         url={bookData as any}
         location={location}
         locationChanged={handleLocationChanged}
+        getRendition={handleGetRendition}
         epubOptions={{ flow: 'scrolled', manager: 'continuous' }}
       />
+      {!renditionReady && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 5,
+            pointerEvents: 'none',
+          }}
+        >
+          <ReaderBodySkeleton />
+        </div>
+      )}
     </div>
   );
 }
