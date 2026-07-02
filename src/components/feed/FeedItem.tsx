@@ -4,6 +4,7 @@ import {
   Flex,
   Icon,
   Image,
+  ImageProps,
   Link,
   Tag,
   TagLabel,
@@ -11,6 +12,7 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
+import { useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   FiBookmark,
@@ -24,8 +26,47 @@ import {
 } from 'react-icons/fi';
 import { Rating } from '@smastrom/react-rating';
 
-import { parseDate } from '@utils/utils';
+import { handleImageLoad, parseDate } from '@utils/utils';
 import { FeedActivity, FeedItemProps } from '@components/types';
+
+function BlurImage(props: ImageProps) {
+  // Si la imagen ya está en cache del browser, el evento `onLoad` puede no
+  // dispararse (depende del browser) y el filter blur queda pegado. Con este
+  // callback ref chequeamos `complete` al montar y quitamos el filter en el acto.
+  const setRef = useCallback((node: HTMLImageElement | null) => {
+    if (node?.complete && node.naturalWidth > 0) {
+      node.style.filter = 'blur(0)';
+    }
+  }, []);
+  return (
+    <Image
+      {...props}
+      ref={setRef}
+      filter='blur(10px)'
+      transition='filter 0.6s ease-in-out'
+      onLoad={handleImageLoad}
+    />
+  );
+}
+
+function getSingleActionText(a: FeedActivity): string {
+  switch (a.type) {
+    case 'rating':
+      return 'calificó';
+    case 'comment':
+      return 'comentó en';
+    case 'favorite':
+      return 'marcó como favorito';
+    case 'collection':
+      return 'guardó en una colección';
+    case 'status':
+      return 'agregó a su lista';
+    case 'book':
+      return 'publicó';
+    default:
+      return 'interactuó con';
+  }
+}
 
 const STATUS_META: Record<
   NonNullable<FeedActivity['status']>,
@@ -75,19 +116,41 @@ export function FeedItem({ activity }: FeedItemProps) {
 
   const isOriginalBook = book?.kind === 'original';
 
+  // Si el grupo contiene la publicación del libro (ej. publicó + calificó al
+  // mismo tiempo), lo tratamos como una publicación con acciones secundarias
+  // en vez de un "interactuó con". El rating asociado se muestra como badge.
+  const hasBookInGroup =
+    type === 'group' && activities?.some((a) => a.type === 'book');
+  const isPublication = type === 'book' || hasBookInGroup;
+  const inlineRating =
+    type === 'group'
+      ? activities?.find((a) => a.type === 'rating')?.rating
+      : undefined;
+
   let actionText = '';
-  if (type === 'book')
+  if (isPublication)
     actionText = isOriginalBook ? 'publicó su libro' : 'recomendó un libro';
   else if (type === 'comment') actionText = 'comentó en';
   else if (type === 'follow') actionText = 'siguió a';
   else if (type === 'rating') actionText = 'calificó';
-  else if (type === 'group') actionText = 'interactuó con';
+  else if (type === 'group') {
+    // Si el grupo tiene una sola sub-actividad usamos su verbo específico;
+    // "interactuó con" queda reservado para cuando hay varias acciones.
+    const single = activities && activities.length === 1 ? activities[0] : null;
+    actionText = single ? getSingleActionText(single) : 'interactuó con';
+  }
 
   const statusMeta = type === 'status' && status ? STATUS_META[status] : null;
   const simpleBadge = SIMPLE_BADGE[type];
-  const ratingBadge =
+  const ratingValue =
     type === 'rating' && typeof rating === 'number'
-      ? { label: `${rating}/5`, icon: FiStar, colorScheme: 'yellow' }
+      ? rating
+      : isPublication && typeof inlineRating === 'number'
+        ? inlineRating
+        : null;
+  const ratingBadge =
+    ratingValue !== null
+      ? { label: `${ratingValue}/5`, icon: FiStar, colorScheme: 'yellow' }
       : null;
   const formattedDate = parseDate(createdAt, 'short') || '';
 
@@ -226,7 +289,7 @@ export function FeedItem({ activity }: FeedItemProps) {
         </Link>
       )}
 
-      {book && type !== 'follow' && type !== 'group' && (
+      {book && type !== 'follow' && (type !== 'group' || hasBookInGroup) && (
         <Link
           as={NavLink}
           to={`/book/view/${book.pathUrl}`}
@@ -242,7 +305,7 @@ export function FeedItem({ activity }: FeedItemProps) {
             _hover={{ bg: commentBg }}
             transition='background 0.15s'
           >
-            <Image
+            <BlurImage
               src={book.image.url}
               alt={book.title}
               w={{ base: '70px', md: '90px' }}
@@ -272,7 +335,7 @@ export function FeedItem({ activity }: FeedItemProps) {
               <Text fontSize='sm' color={subTextColor} noOfLines={1} mt='1'>
                 {book.authors.join(', ')}
               </Text>
-              {type === 'book' && (
+              {isPublication && (
                 <Text fontSize='sm' color={subTextColor} noOfLines={2} mt='2'>
                   {book.synopsis}
                 </Text>
@@ -287,7 +350,7 @@ export function FeedItem({ activity }: FeedItemProps) {
         </Link>
       )}
 
-      {type === 'group' && book && activities && (
+      {type === 'group' && book && activities && !hasBookInGroup && (
         <GroupCard
           activities={activities}
           book={book}
@@ -398,7 +461,7 @@ function GroupCard({
         transition='background 0.15s'
       >
         <Flex gap='4'>
-          <Image
+          <BlurImage
             src={book.image.url}
             alt={book.title}
             w={{ base: '90px', md: '110px' }}
