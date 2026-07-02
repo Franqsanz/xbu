@@ -104,7 +104,10 @@ export default function BookReader() {
             </Flex>
           )}
           {ready && book?.id && (
-            <Suspense fallback={<ReaderBodySkeleton />}>
+            // El Suspense aquí es solo para el chunk lazy del viewer. Sin
+            // fallback: cada viewer tiene su propio loading interno, poner
+            // otro skeleton acá lo duplica visualmente.
+            <Suspense fallback={null}>
               {readData.type === 'pdf' ? (
                 <PdfViewer
                   url={readData.url}
