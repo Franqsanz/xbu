@@ -40,6 +40,7 @@ const keys = {
   updateComment: 'UpdateComment',
   deleteComment: 'DeleteComment',
   allComments: 'AllComments',
+  commentReplies: 'CommentReplies',
   deleteAccount: 'DeleteAccount',
   followUser: 'FollowUser',
   unfollowUser: 'UnfollowUser',

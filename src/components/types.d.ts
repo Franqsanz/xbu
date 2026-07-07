@@ -329,7 +329,7 @@ interface NotificationBook {
 
 interface NotificationItem {
   id: string;
-  type: 'follow' | 'comment' | 'rating' | 'reaction';
+  type: 'follow' | 'comment' | 'rating' | 'reaction' | 'reply';
   read: boolean;
   createdAt: string;
   rating?: number;

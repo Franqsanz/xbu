@@ -350,6 +350,8 @@ async function postComment(
     avatar?: string;
   },
   bookId: string,
+  parentId?: string | null,
+  replyToId?: string | null,
 ) {
   return await fetchData(`${API_URL}/users/comments/comment`, {
     method: 'POST',
@@ -357,8 +359,16 @@ async function postComment(
       text,
       author,
       bookId,
+      parentId: parentId ?? null,
+      replyToId: replyToId ?? null,
     }),
   });
+}
+
+async function getCommentReplies(commentId: string, offset = 0, limit = 10) {
+  return await fetchData(
+    `${API_URL}/users/comments/comment/${commentId}/replies?limit=${limit}&offset=${offset}`,
+  );
 }
 
 async function updateComment(
@@ -578,6 +588,7 @@ export {
   deleteBook,
   updateBook,
   getFindAllComments,
+  getCommentReplies,
   postComment,
   postReactions,
   updateComment,

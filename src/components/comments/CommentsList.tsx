@@ -5,6 +5,7 @@ import {
   Button,
   Center,
   Flex,
+  Icon,
   IconButton,
   Menu,
   MenuButton,
@@ -17,7 +18,7 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
-import { FiMoreHorizontal } from 'react-icons/fi';
+import { FiCornerDownRight, FiMoreHorizontal } from 'react-icons/fi';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IoWarningSharp } from 'react-icons/io5';
 
@@ -31,7 +32,9 @@ import { CommentType } from '@components/types';
 import { useMyToast } from '@hooks/useMyToast';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 import { CommentEditor } from '@components/comments/CommentEditor';
+import { CommentForm } from '@components/comments/CommentForm';
 import { CommentReactions } from '@components/comments/CommentReactions';
+import { CommentReplies } from '@components/comments/CommentReplies';
 import { parseDate } from '@utils/utils';
 
 export function CommentsList({
@@ -46,6 +49,8 @@ export function CommentsList({
 }: CommentType) {
   const [commentToDelete, setCommentToDelete] = useState<string | null>(null);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [expandTriggers, setExpandTriggers] = useState<Record<string, number>>({});
   const borderCard = useColorModeValue('gray.200', 'gray.600');
   const colorDate = useColorModeValue('gray.600', 'gray.300');
   const emptyStateColor = useColorModeValue('gray.600', 'gray.400');
@@ -217,6 +222,7 @@ export function CommentsList({
             dislikesCount,
             isEdited,
             createdAt,
+            repliesCount = 0,
           }) => (
             <Flex
               key={_id}
@@ -311,6 +317,50 @@ export function CommentsList({
                   dislikesCount={dislikesCount}
                   onLike={() => handleReaction(_id, 'like')}
                   onDislike={() => handleReaction(_id, 'dislike')}
+                  extras={
+                    <Button
+                      size={{ base: 'xs', md: 'md' }}
+                      gap='2'
+                      fontWeight='normal'
+                      alignItems='center'
+                      fontSize={{ base: 'xs', md: 'sm' }}
+                      onClick={() => setReplyingTo((v) => (v === _id ? null : _id))}
+                    >
+                      <Icon as={FiCornerDownRight} boxSize={{ base: 3.5, md: 4 }} />
+                      {replyingTo === _id ? 'Cancelar' : 'Responder'}
+                    </Button>
+                  }
+                />
+              )}
+              {replyingTo === _id && (
+                <Box
+                  mt='1'
+                  pl={{ base: 2, md: 4 }}
+                  borderLeft='2px'
+                  borderColor={borderCard}
+                >
+                  <CommentForm
+                    bookId={bookId}
+                    parentId={_id}
+                    compact
+                    autoFocus
+                    onSubmitted={() => {
+                      setReplyingTo(null);
+                      setExpandTriggers((prev) => ({
+                        ...prev,
+                        [_id]: (prev[_id] ?? 0) + 1,
+                      }));
+                    }}
+                    onCancel={() => setReplyingTo(null)}
+                  />
+                </Box>
+              )}
+              {editingCommentId !== _id && (
+                <CommentReplies
+                  bookId={bookId}
+                  commentId={_id}
+                  repliesCount={repliesCount}
+                  expandTrigger={expandTriggers[_id]}
                 />
               )}
             </Flex>

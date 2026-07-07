@@ -40,6 +40,7 @@ import {
   patchRemoveBookFromCollection,
   postComment,
   getFindAllComments,
+  getCommentReplies,
   postLogout,
   postReactions,
   deleteComment,
@@ -547,6 +548,8 @@ function usePostComment() {
       text,
       author,
       bookId,
+      parentId,
+      replyToId,
     }: {
       text: string;
       author: {
@@ -556,10 +559,16 @@ function usePostComment() {
         avatar?: string;
       };
       bookId: string;
-    }) => postComment(text, author, bookId),
+      parentId?: string | null;
+      replyToId?: string | null;
+    }) => postComment(text, author, bookId, parentId ?? null, replyToId ?? null),
 
     onMutate: async (newComment) => {
-      const { bookId } = newComment;
+      const { bookId, parentId } = newComment;
+
+      // Si es respuesta no aplicamos optimistic update al listado top-level
+      // (el reply va a otro cache key).
+      if (parentId) return { previousComments: null, bookId };
 
       await queryClient.cancelQueries({
         queryKey: [keys.allComments, bookId],
@@ -629,14 +638,39 @@ function usePostComment() {
     },
 
     onSettled: async (data, error, variables) => {
-      // Invalidar y refrescar los comentarios después de la mutación
+      // Invalidar caches: la lista top-level para saber el nuevo repliesCount,
+      // el listado de replies del padre si fue una respuesta, y el feed.
       await queryClient.invalidateQueries({
         queryKey: [keys.allComments, variables.bookId],
       });
+      if (variables.parentId) {
+        await queryClient.invalidateQueries({
+          queryKey: [keys.commentReplies, variables.parentId],
+        });
+      }
       await queryClient.invalidateQueries({
         queryKey: [keys.feed],
       });
     },
+  });
+}
+
+function useCommentReplies(commentId: string, enabled = false) {
+  return useInfiniteQuery({
+    queryKey: [keys.commentReplies, commentId],
+    queryFn: ({ pageParam = 0 }) => getCommentReplies(commentId, pageParam, 10),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      const loaded = allPages.reduce(
+        (acc, p: any) => acc + (p.results?.length ?? 0),
+        0,
+      );
+      if (loaded >= (lastPage as any).total) return undefined;
+      return loaded;
+    },
+    enabled: !!commentId && enabled,
+    retry: false,
+    staleTime: 1000 * 60,
   });
 }
 
@@ -746,6 +780,11 @@ function usePostReactions() {
       queryClient.invalidateQueries({
         queryKey: [keys.allComments, variables.bookId],
       });
+      // Refrescamos también los listados de replies — no sabemos a qué padre
+      // pertenece el comment que reaccionamos, invalidamos toda la clave.
+      queryClient.invalidateQueries({
+        queryKey: [keys.commentReplies],
+      });
     },
   });
 }
@@ -766,7 +805,11 @@ function useUpdateComment() {
       console.error('Error updating comment');
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: [keys.feed] });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: [keys.feed] }),
+        queryClient.invalidateQueries({ queryKey: [keys.allComments] }),
+        queryClient.invalidateQueries({ queryKey: [keys.commentReplies] }),
+      ]);
     },
   });
 }
@@ -785,7 +828,11 @@ function useDeleteComment() {
       console.error('Error en el servidor');
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: [keys.feed] });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: [keys.feed] }),
+        queryClient.invalidateQueries({ queryKey: [keys.allComments] }),
+        queryClient.invalidateQueries({ queryKey: [keys.commentReplies] }),
+      ]);
     },
   });
 }
@@ -1141,6 +1188,7 @@ export {
   useDeleteCollections,
   useDeleteCollectionBook,
   useFindAllComments,
+  useCommentReplies,
   usePostComment,
   usePostReactions,
   useUpdateComment,

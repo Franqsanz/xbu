@@ -9,11 +9,27 @@ import { useMyToast } from '@hooks/useMyToast';
 
 type CommentType = {
   bookId: string;
+  parentId?: string | null;
+  replyToId?: string | null;
+  compact?: boolean;
+  autoFocus?: boolean;
+  initialText?: string;
+  onSubmitted?: () => void;
+  onCancel?: () => void;
 };
 
-export function CommentForm({ bookId }: CommentType) {
+export function CommentForm({
+  bookId,
+  parentId,
+  replyToId,
+  compact,
+  autoFocus,
+  initialText,
+  onSubmitted,
+  onCancel,
+}: CommentType) {
   const bgColorInput = useColorModeValue('gray.100', 'gray.800');
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState(initialText ?? '');
   const maxChars = 1500;
 
   const { currentUser, userData } = useAuth();
@@ -38,9 +54,12 @@ export function CommentForm({ bookId }: CommentType) {
           avatar: userData?.picture,
         },
         bookId,
+        parentId: parentId ?? null,
+        replyToId: replyToId ?? null,
       });
 
       setComment('');
+      onSubmitted?.();
     } catch (error) {
       myToast({
         title: 'Error al enviar el comentario',
@@ -59,39 +78,57 @@ export function CommentForm({ bookId }: CommentType) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Flex flexDirection='column' alignItems='end' gap='2' p='2'>
+      <Flex flexDirection='column' alignItems='end' gap='2' p={compact ? '0' : '2'}>
         <Textarea
-          placeholder='Deja un comentario...'
+          placeholder={compact ? 'Escribí tu respuesta…' : 'Deja un comentario...'}
           name='comment'
           value={comment}
           bg={bgColorInput}
           rounded='lg'
-          h={{ base: '120px', md: '170px' }}
+          h={compact ? '90px' : { base: '120px', md: '170px' }}
           onChange={handleComment}
+          autoFocus={autoFocus}
           _focus={{ bg: 'transparent' }}
         />
         <Box as='span' fontSize='xs' alignSelf='end' mb='2'>
           {comment.length} / {maxChars}
         </Box>
-        <Button
-          type='submit'
-          w={{ base: '100%', md: '165px' }}
-          bg='green.500'
-          color='black'
-          p='3'
-          border='1px'
-          rounded='lg'
-          textAlign='center'
-          isDisabled={!comment || comment.length >= maxChars}
-          isLoading={isPending}
-          loadingText={isPending ? 'Comentando...' : 'Comentar'}
-          _hover={{ outline: 'none', bg: 'green.600' }}
-        >
-          <Flex align='center'>
-            <FaRegComment style={{ marginRight: '6px', transform: 'scaleX(-1)' }} />
-            Comentar
-          </Flex>
-        </Button>
+        <Flex gap='2' w={compact ? 'auto' : { base: '100%', md: 'auto' }}>
+          {compact && onCancel && (
+            <Button
+              variant='ghost'
+              size='sm'
+              onClick={onCancel}
+              isDisabled={isPending}
+            >
+              Cancelar
+            </Button>
+          )}
+          <Button
+            type='submit'
+            w={compact ? 'auto' : { base: '100%', md: '165px' }}
+            size={compact ? 'sm' : 'md'}
+            bg='green.500'
+            color='black'
+            p={compact ? '4' : '3'}
+            border='1px'
+            rounded='lg'
+            textAlign='center'
+            isDisabled={!comment || comment.length >= maxChars}
+            isLoading={isPending}
+            loadingText={
+              isPending ? (compact ? 'Enviando...' : 'Comentando...') : 'Comentar'
+            }
+            _hover={{ outline: 'none', bg: 'green.600' }}
+          >
+            <Flex align='center'>
+              <FaRegComment
+                style={{ marginRight: '6px', transform: 'scaleX(-1)' }}
+              />
+              {compact ? 'Responder' : 'Comentar'}
+            </Flex>
+          </Button>
+        </Flex>
       </Flex>
     </form>
   );

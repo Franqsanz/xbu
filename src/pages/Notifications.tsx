@@ -38,6 +38,7 @@ const TYPE_FILTERS: { key: TypeFilter; label: string }[] = [
   { key: 'all', label: 'Todos' },
   { key: 'follow', label: 'Seguidores' },
   { key: 'comment', label: 'Comentarios' },
+  { key: 'reply', label: 'Respuestas' },
   { key: 'rating', label: 'Calificaciones' },
   { key: 'reaction', label: 'Reacciones' },
 ];

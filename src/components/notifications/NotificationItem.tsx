@@ -31,6 +31,7 @@ const TYPE_META = {
   comment: { icon: FiMessageSquare, color: 'gray.500' },
   rating: { icon: FiStar, color: 'yellow.500' },
   reaction: { icon: FiThumbsUp, color: 'blue.500' },
+  reply: { icon: FiMessageSquare, color: 'purple.500' },
 } as const;
 
 function buildLabelAndLink(notification: NotificationItemType) {
@@ -65,6 +66,14 @@ function buildLabelAndLink(notification: NotificationItemType) {
     const verb = notification.reactionType === 'like' ? 'le gustó' : 'no le gustó';
     return {
       text: `A ${actorName} ${verb} tu comentario en "${bookTitle}"`,
+      to: notification.book?.pathUrl
+        ? `/book/view/${notification.book.pathUrl}`
+        : '/',
+    };
+  }
+  if (notification.type === 'reply') {
+    return {
+      text: `${actorName} respondió tu comentario en "${bookTitle}"`,
       to: notification.book?.pathUrl
         ? `/book/view/${notification.book.pathUrl}`
         : '/',
