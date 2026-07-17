@@ -12,12 +12,17 @@ import {
 
 import { ModalOptionsAndConfirType } from '@components/types';
 
+type Props = ModalOptionsAndConfirType & {
+  onReportBook?: () => void;
+};
+
 export function ModalOptions({
   isOpen,
   onClose,
   onDeleteBook,
   onEditBook,
-}: ModalOptionsAndConfirType) {
+  onReportBook,
+}: Props) {
   const bgColorButton = useColorModeValue('green.500', 'green.700');
 
   return (
@@ -32,24 +37,38 @@ export function ModalOptions({
         <ModalContent>
           <ModalBody py='5'>
             <Flex direction='column' gap='2'>
-              <Button
-                bg='red.500'
-                color='white'
-                fontWeight='normal'
-                fontSize='sm'
-                onClick={onDeleteBook}
-                _hover={{ color: 'none' }}
-              >
-                Eliminar
-              </Button>
-              <Button
-                fontWeight='normal'
-                fontSize='sm'
-                onClick={onEditBook}
-                _hover={{ color: 'none' }}
-              >
-                Editar
-              </Button>
+              {onEditBook && (
+                <Button
+                  fontWeight='normal'
+                  fontSize='sm'
+                  onClick={onEditBook}
+                  _hover={{ color: 'none' }}
+                >
+                  Editar
+                </Button>
+              )}
+              {onDeleteBook && (
+                <Button
+                  bg='red.500'
+                  color='white'
+                  fontWeight='normal'
+                  fontSize='sm'
+                  onClick={onDeleteBook}
+                  _hover={{ color: 'none' }}
+                >
+                  Eliminar
+                </Button>
+              )}
+              {onReportBook && (
+                <Button
+                  fontWeight='normal'
+                  fontSize='sm'
+                  onClick={onReportBook}
+                  _hover={{ color: 'none' }}
+                >
+                  Reportar
+                </Button>
+              )}
             </Flex>
           </ModalBody>
           <ModalFooter justifyContent='center'>

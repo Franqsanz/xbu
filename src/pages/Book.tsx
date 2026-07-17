@@ -44,6 +44,7 @@ import { Views } from '@components/ui/Views';
 import { BooksSection } from '@components/BooksSection';
 import { ImageZoom } from '@components/ui/ImageZoom';
 import { ModalOptions } from '@components/modals/ModalOptions';
+import { ModalReportBook } from '@components/modals/ModalReportBook';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 import { ModalCollectionSelector } from '@components/modals/ModalCollectionSelector';
 import { ModalForm } from '@components/modals/ModalForm';
@@ -97,6 +98,11 @@ export default function Book() {
     onOpen: onOpenCollectionSelector,
     onClose: onCloseCollectionSelector,
   } = useDisclosure();
+  const {
+    isOpen: isOpenReport,
+    onOpen: onOpenReport,
+    onClose: onCloseReport,
+  } = useDisclosure();
   let uiLink;
   let btnMoreOptions;
   let btnFavorite;
@@ -145,7 +151,7 @@ export default function Book() {
     setIsFavorite(data.isFavorite);
   }, [data.isFavorite, pathname]);
 
-  if (currentUser && isCurrentUserAuthor) {
+  if (currentUser) {
     btnMoreOptions = (
       <Tooltip label='Más Opciones' fontSize='sm' bg='black' color='white'>
         <Button
@@ -337,11 +343,23 @@ export default function Book() {
       <ModalOptions
         isOpen={isOpenOptions}
         onClose={onCloseOptions}
-        onDeleteBook={onOpenConfirmation}
-        onEditBook={() => {
-          onOpenEdit();
-          onCloseOptions();
-        }}
+        onDeleteBook={isCurrentUserAuthor ? onOpenConfirmation : undefined}
+        onEditBook={
+          isCurrentUserAuthor
+            ? () => {
+                onOpenEdit();
+                onCloseOptions();
+              }
+            : undefined
+        }
+        onReportBook={
+          !isCurrentUserAuthor
+            ? () => {
+                onCloseOptions();
+                onOpenReport();
+              }
+            : undefined
+        }
       />
       <ModalCollectionSelector
         userId={currentUser?.uid}
@@ -599,6 +617,11 @@ export default function Book() {
             onClose={onCloseShare}
             shareUrl={shareUrl}
             data={data.title}
+          />
+          <ModalReportBook
+            isOpen={isOpenReport}
+            onClose={onCloseReport}
+            bookId={data.id}
           />
           <BooksSection
             title='Más libros del autor'

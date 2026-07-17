@@ -19,6 +19,7 @@ import {
   postBook,
   postOriginalBook,
   getBookReadUrl,
+  postReportBook,
   getBookProgress,
   patchBookProgress,
   postRegister,
@@ -134,6 +135,16 @@ function useBookReadUrl(bookId: string | undefined, enabled = true) {
     enabled: !!bookId && enabled,
     staleTime: 1000 * 60 * 8,
     gcTime: 1000 * 60 * 8,
+  });
+}
+
+function useReportBook(bookId: string | undefined) {
+  return useMutation({
+    mutationFn: (payload: {
+      type: 'copyright' | 'inappropriate' | 'spam' | 'other';
+      description?: string;
+      contactEmail?: string;
+    }) => postReportBook(bookId as string, payload),
   });
 }
 
@@ -1166,6 +1177,7 @@ export {
   useMutatePost,
   useMutatePostOriginal,
   useBookReadUrl,
+  useReportBook,
   useBookProgress,
   useAllFilterOptions,
   useAllBooks,

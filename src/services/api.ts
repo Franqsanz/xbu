@@ -224,6 +224,20 @@ async function getBookReadUrl(bookId: string) {
   });
 }
 
+async function postReportBook(
+  bookId: string,
+  payload: {
+    type: 'copyright' | 'inappropriate' | 'spam' | 'other';
+    description?: string;
+    contactEmail?: string;
+  },
+) {
+  return await fetchData(`${API_URL}/books/${bookId}/report`, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+}
+
 async function getBookProgress(bookId: string) {
   return await fetchData(`${API_URL}/users/me/book-progress/${bookId}`);
 }
@@ -583,6 +597,7 @@ export {
   postBook,
   postOriginalBook,
   getBookReadUrl,
+  postReportBook,
   getBookProgress,
   patchBookProgress,
   deleteBook,
