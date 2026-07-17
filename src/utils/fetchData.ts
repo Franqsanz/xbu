@@ -167,7 +167,18 @@ export async function fetchData(
     }
 
     if (!res.ok) {
-      throw new HttpError(res.status, `Error en la solicitud: ${res.status}`);
+      let backendMessage: string | undefined;
+      const contentType = res.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          const body = await res.json();
+          backendMessage = body?.error?.message ?? body?.message;
+        } catch {}
+      }
+      throw new HttpError(
+        res.status,
+        backendMessage ?? `Error en la solicitud: ${res.status}`,
+      );
     }
 
     const contentType = res.headers.get('content-type');
