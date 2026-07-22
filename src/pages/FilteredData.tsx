@@ -232,7 +232,7 @@ export default function FilteredData() {
     return dataPaginated?.pages.flatMap((page) => page?.results) || [];
   }
 
-  const results = sortResults(getNormalizedResults());
+  const results = sortResults<CardType>(getNormalizedResults());
 
   function toggleLanguage(language: string) {
     setSelectedLanguages((prev) =>
