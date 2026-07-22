@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { FilterNumberPages } from '@components/filters/FilterNumberPages';
-import { FilterRadioGroup } from '@components/filters/FilterRadioGroup';
+import { FilterCheckboxGroup } from '@components/filters/FilterCheckboxGroup';
+import { FilterSearchableRadio } from '@components/filters/FilterSearchableRadio';
+import { FilterSort, SortValue } from '@components/filters/FilterSort';
 import { capitalizeWords } from '@utils/utils';
 
 interface FilterAccordionTypes {
@@ -9,15 +11,17 @@ interface FilterAccordionTypes {
   selectedMaxPages: string;
   handleMinChange: React.ChangeEventHandler<HTMLInputElement>;
   handleMaxChange: React.ChangeEventHandler<HTMLInputElement>;
-  selectedLanguage: string;
-  handleLanguageChange: (value: string) => void;
+  selectedLanguages: string[];
+  toggleLanguage: (value: string) => void;
   languages: string[];
-  selectedYear: string;
-  handleYearChange: (value: string) => void;
+  selectedYears: string[];
+  toggleYear: (value: string) => void;
   years: string[];
   selectedAuthor: string;
   handleAuthorChange: (value: string) => void;
   authors: string[];
+  sortBy?: SortValue;
+  onSortChange?: (value: SortValue) => void;
 }
 
 export function getAccordionItems({
@@ -25,17 +29,26 @@ export function getAccordionItems({
   selectedMaxPages,
   handleMinChange,
   handleMaxChange,
-  selectedLanguage,
-  handleLanguageChange,
+  selectedLanguages,
+  toggleLanguage,
   languages,
-  selectedYear,
-  handleYearChange,
+  selectedYears,
+  toggleYear,
   years,
   selectedAuthor,
   handleAuthorChange,
   authors,
+  sortBy,
+  onSortChange,
 }: FilterAccordionTypes) {
-  return [
+  const items: { title: string; content: React.ReactNode }[] = [];
+  if (onSortChange) {
+    items.push({
+      title: 'Ordenar por',
+      content: <FilterSort value={sortBy ?? ''} onChange={onSortChange} />,
+    });
+  }
+  items.push(
     {
       title: 'N° de páginas',
       content: (
@@ -50,37 +63,35 @@ export function getAccordionItems({
     {
       title: 'Idioma',
       content: (
-        <FilterRadioGroup
+        <FilterCheckboxGroup
           options={languages.map(({ language, count }: any) => ({
             value: language,
             label: language,
             count,
           }))}
-          selectedValue={selectedLanguage}
-          onChange={handleLanguageChange}
-          allLabel='Todos'
+          selectedValues={selectedLanguages}
+          onToggle={toggleLanguage}
         />
       ),
     },
     {
       title: 'Año',
       content: (
-        <FilterRadioGroup
+        <FilterCheckboxGroup
           options={years.map(({ year, count }: any) => ({
             value: String(year),
             label: String(year),
             count,
           }))}
-          selectedValue={selectedYear}
-          onChange={handleYearChange}
-          allLabel='Todos'
+          selectedValues={selectedYears}
+          onToggle={toggleYear}
         />
       ),
     },
     {
       title: 'Autor',
       content: (
-        <FilterRadioGroup
+        <FilterSearchableRadio
           options={authors.map(({ authors, count }: any) => ({
             value: authors,
             label: capitalizeWords(authors),
@@ -89,8 +100,10 @@ export function getAccordionItems({
           selectedValue={selectedAuthor}
           onChange={handleAuthorChange}
           allLabel='Todos'
+          placeholder='Buscar autor'
         />
       ),
     },
-  ];
+  );
+  return items;
 }

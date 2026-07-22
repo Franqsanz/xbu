@@ -1,5 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useLocation, ScrollRestoration } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  useParams,
+  useLocation,
+  useSearchParams,
+  ScrollRestoration,
+} from 'react-router-dom';
 import { CgOptions } from 'react-icons/cg';
 import { useInView } from 'react-intersection-observer';
 import {
@@ -13,6 +18,7 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  Text,
 } from '@chakra-ui/react';
 
 import { Card } from '@components/cards/Card';
@@ -32,21 +38,26 @@ import { aboutCategories } from '../constant/constants';
 import { SkeletonAllBooks } from '@components/skeletons/SkeletonABooks';
 import { MyContainer } from '@components/ui/MyContainer';
 import { FilterAccordion } from '@components/filters/FilterAccordion';
+import { FilterChips } from '@components/filters/FilterChips';
+import { FilterSort, SortValue } from '@components/filters/FilterSort';
 import { MobileResultBar } from '@components/ui/MobileResultBar';
 // import { AsideFilter } from '@components/filters/AsideFilter';
 
 export default function FilteredData() {
   const { ref, inView } = useInView();
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [languages, setLanguages] = useState<string[]>([]);
   const [authors, setAuthors] = useState<string[]>([]);
   const [years, setYears] = useState<string[]>([]);
-  const [selectedLanguage, setSelectedLanguage] = useState('');
-  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [selectedYears, setSelectedYears] = useState<string[]>([]);
   const [selectedAuthor, setSelectedAuthor] = useState('');
   const [selectedMinPages, setSelectedMinPages] = useState('');
   const [selectedMaxPages, setSelectedMaxPages] = useState('');
+  const [sortBy, setSortBy] = useState<SortValue>('');
+  const isInitializedFromUrlRef = useRef(false);
   const { query, param } = useParams();
   let asideFilter;
   let aboutCategoriesUI;
@@ -54,12 +65,13 @@ export default function FilteredData() {
   let fetchingNextPageUI;
   // Verificar si los radios estan activos o no.
   const isFiltering =
-    !!selectedLanguage ||
-    !!selectedYear ||
+    selectedLanguages.length > 0 ||
+    selectedYears.length > 0 ||
     !!selectedAuthor ||
     (selectedMinPages && selectedMaxPages) || // Solo cuando ambos están definidos
     !!selectedMinPages ||
-    !!selectedMaxPages;
+    !!selectedMaxPages ||
+    !!sortBy;
   const hasMultipleLanguages = languages.length > 1;
   const hasMultipleYears = years.length > 1;
   const hasMultipleAuthors = authors.length > 1;
@@ -100,14 +112,74 @@ export default function FilteredData() {
     }
   }, [dataFilter]);
 
-  // Restablecer los valores de los radios(filtros) cuando cambie la ruta
+  // Leer los filtros desde la URL cuando cambia la ruta. Esto permite que
+  // el link sea compartible y que el refresh no pierda el estado.
   useEffect(() => {
-    setSelectedLanguage('');
-    setSelectedYear('');
-    setSelectedAuthor('');
-    setSelectedMinPages('');
-    setSelectedMaxPages('');
+    const langs = searchParams.get('langs');
+    const yrs = searchParams.get('years');
+    const author = searchParams.get('author');
+    const minP = searchParams.get('minPages');
+    const maxP = searchParams.get('maxPages');
+    const sort = searchParams.get('sort');
+    setSelectedLanguages(langs ? langs.split(',') : []);
+    setSelectedYears(yrs ? yrs.split(',') : []);
+    setSelectedAuthor(author ?? '');
+    setSelectedMinPages(minP ?? '');
+    setSelectedMaxPages(maxP ?? '');
+    setSortBy((sort ?? '') as SortValue);
+    isInitializedFromUrlRef.current = true;
+    // La ruta cambia -> re-inicializamos desde los searchParams del nuevo path.
   }, [location.pathname]);
+
+  // Sincronizar el estado a la URL. Solo escribimos después del primer
+  // effect que inicializa desde la URL, para no pisar los params originales.
+  useEffect(() => {
+    if (!isInitializedFromUrlRef.current) return;
+    const next = new URLSearchParams();
+    if (selectedLanguages.length) next.set('langs', selectedLanguages.join(','));
+    if (selectedYears.length) next.set('years', selectedYears.join(','));
+    if (selectedAuthor) next.set('author', selectedAuthor);
+    if (selectedMinPages) next.set('minPages', selectedMinPages);
+    if (selectedMaxPages) next.set('maxPages', selectedMaxPages);
+    if (sortBy) next.set('sort', sortBy);
+    const current = searchParams.toString();
+    const target = next.toString();
+    if (current !== target) {
+      setSearchParams(next, { replace: true });
+    }
+  }, [
+    selectedLanguages,
+    selectedYears,
+    selectedAuthor,
+    selectedMinPages,
+    selectedMaxPages,
+    sortBy,
+    searchParams,
+    setSearchParams,
+  ]);
+
+  function sortResults<
+    T extends { title?: string; year?: number; numberPages?: number },
+  >(items: T[]): T[] {
+    if (!sortBy) return items;
+    const copy = [...items];
+    switch (sortBy) {
+      case 'title-asc':
+        return copy.sort((a, b) => (a.title ?? '').localeCompare(b.title ?? ''));
+      case 'title-desc':
+        return copy.sort((a, b) => (b.title ?? '').localeCompare(a.title ?? ''));
+      case 'year-desc':
+        return copy.sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+      case 'year-asc':
+        return copy.sort((a, b) => (a.year ?? 0) - (b.year ?? 0));
+      case 'pages-desc':
+        return copy.sort((a, b) => (b.numberPages ?? 0) - (a.numberPages ?? 0));
+      case 'pages-asc':
+        return copy.sort((a, b) => (a.numberPages ?? 0) - (b.numberPages ?? 0));
+      default:
+        return copy;
+    }
+  }
 
   // Filtrar por número de páginas
   function pagesMatch(numberPages) {
@@ -135,13 +207,13 @@ export default function FilteredData() {
     if (isFiltering) {
       return (
         dataFilter?.results?.filter(({ language, year, authors, numberPages }) => {
-          // Filtrar por idioma
-          const languageMatch = selectedLanguage
-            ? language === selectedLanguage
-            : true;
+          // Filtrar por idioma (multi-select: OR entre valores)
+          const languageMatch =
+            selectedLanguages.length === 0 || selectedLanguages.includes(language);
 
-          // Filtrar por año
-          const yearMatch = selectedYear ? String(year) === selectedYear : true;
+          // Filtrar por año (multi-select: OR entre valores)
+          const yearMatch =
+            selectedYears.length === 0 || selectedYears.includes(String(year));
 
           // Filtrar por autor
           const authorMatch = selectedAuthor
@@ -159,14 +231,20 @@ export default function FilteredData() {
     return dataPaginated?.pages.flatMap((page) => page?.results) || [];
   }
 
-  const results = getNormalizedResults();
+  const results = sortResults(getNormalizedResults());
 
-  function handleLanguageChange(languages: string) {
-    setSelectedLanguage(languages);
+  function toggleLanguage(language: string) {
+    setSelectedLanguages((prev) =>
+      prev.includes(language)
+        ? prev.filter((l) => l !== language)
+        : [...prev, language],
+    );
   }
 
-  function handleYearChange(year: string) {
-    setSelectedYear(year);
+  function toggleYear(year: string) {
+    setSelectedYears((prev) =>
+      prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year],
+    );
   }
 
   function handleAuthorChange(author: string) {
@@ -179,6 +257,20 @@ export default function FilteredData() {
 
   function handleMaxChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSelectedMaxPages(e.target.value);
+  }
+
+  function handleClearAll() {
+    setSelectedLanguages([]);
+    setSelectedYears([]);
+    setSelectedAuthor('');
+    setSelectedMinPages('');
+    setSelectedMaxPages('');
+    setSortBy('');
+  }
+
+  function handleRemovePages() {
+    setSelectedMinPages('');
+    setSelectedMaxPages('');
   }
 
   if (hasMultipleLanguages || hasMultipleYears || hasMultipleAuthors) {
@@ -226,15 +318,17 @@ export default function FilteredData() {
               selectedMaxPages={selectedMaxPages}
               handleMinChange={handleMinChange}
               handleMaxChange={handleMaxChange}
-              selectedLanguage={selectedLanguage}
-              handleLanguageChange={handleLanguageChange}
+              selectedLanguages={selectedLanguages}
+              toggleLanguage={toggleLanguage}
               languages={languages}
-              selectedYear={selectedYear}
-              handleYearChange={handleYearChange}
+              selectedYears={selectedYears}
+              toggleYear={toggleYear}
               years={years}
               selectedAuthor={selectedAuthor}
               handleAuthorChange={handleAuthorChange}
               authors={authors}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
             />
           )}
         </Flex>
@@ -303,15 +397,43 @@ export default function FilteredData() {
       <ContainerTitle title={`${param}`} />
       <MySliderCategories />
       <MobileResultBar data={dataPaginated}>{buttonFilter}</MobileResultBar>
+      <Box display={{ base: 'block', xl: 'none' }} px={{ base: 5, md: 10 }} pt='3'>
+        <FilterChips
+          selectedLanguages={selectedLanguages}
+          selectedYears={selectedYears}
+          selectedAuthor={selectedAuthor}
+          selectedMinPages={selectedMinPages}
+          selectedMaxPages={selectedMaxPages}
+          onRemoveLanguage={toggleLanguage}
+          onRemoveYear={toggleYear}
+          onRemoveAuthor={() => setSelectedAuthor('')}
+          onRemovePages={handleRemovePages}
+          onClearAll={handleClearAll}
+        />
+      </Box>
       <FilterDrawer
         isOpen={isOpen}
         onClose={onClose}
-        language={languages}
-        year={years}
+        languages={languages}
+        years={years}
         authors={authors}
-        handleLanguageChange={handleLanguageChange}
-        handleYearChange={handleYearChange}
+        selectedLanguages={selectedLanguages}
+        selectedYears={selectedYears}
+        selectedAuthor={selectedAuthor}
+        toggleLanguage={toggleLanguage}
+        toggleYear={toggleYear}
         handleAuthorChange={handleAuthorChange}
+        selectedMinPages={selectedMinPages}
+        selectedMaxPages={selectedMaxPages}
+        handleMinChange={handleMinChange}
+        handleMaxChange={handleMaxChange}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        resultsCount={
+          isFiltering
+            ? results.length
+            : (dataPaginated?.pages[0]?.info?.totalBooks ?? results.length)
+        }
       />
       {isPendingPaginated ? (
         <SkeletonAllBooks showTags={false} />
@@ -320,6 +442,18 @@ export default function FilteredData() {
           <MyContainer>
             <Aside>
               <ResultLength data={dataPaginated?.pages[0].info.totalBooks} />
+              <FilterChips
+                selectedLanguages={selectedLanguages}
+                selectedYears={selectedYears}
+                selectedAuthor={selectedAuthor}
+                selectedMinPages={selectedMinPages}
+                selectedMaxPages={selectedMaxPages}
+                onRemoveLanguage={toggleLanguage}
+                onRemoveYear={toggleYear}
+                onRemoveAuthor={() => setSelectedAuthor('')}
+                onRemovePages={handleRemovePages}
+                onClearAll={handleClearAll}
+              />
               {aboutCategoriesUI}
               {asideFilter}
             </Aside>
