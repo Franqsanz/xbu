@@ -4,6 +4,7 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  Avatar,
   Box,
   Flex,
   Image,
@@ -393,15 +394,13 @@ export function Profile() {
             w={{ xl: '220px', '2xl': '260px' }}
             flexShrink={0}
           />
-          <Image
+          <Avatar
             src={profileUser?.picture}
-            alt={`Imagen de perfil de ${profileUser?.name}`}
+            name={profileUser?.name}
             referrerPolicy='no-referrer'
-            borderRadius='full'
             w={{ base: '90px', md: '140px' }}
             h={{ base: '90px', md: '140px' }}
             flexShrink={0}
-            objectFit='cover'
           />
           <Flex
             direction='column'
