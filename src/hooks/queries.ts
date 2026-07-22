@@ -325,6 +325,15 @@ function useUserRegister(body: any) {
   return useMutation({
     mutationKey: [keys.userRegister],
     mutationFn: () => postRegister(body),
+    onSuccess: () => {
+      if (typeof BroadcastChannel !== 'undefined') {
+        try {
+          const channel = new BroadcastChannel('xbureads-auth');
+          channel.postMessage('auth-updated');
+          channel.close();
+        } catch {}
+      }
+    },
     onError: async (error) => {
       await logOut();
     },

@@ -1,5 +1,5 @@
 import { API_URL } from '../config';
-import { fetchData } from '@utils/fetchData';
+import { fetchData, HttpError } from '@utils/fetchData';
 
 async function getAllBooks() {
   return await fetchData(API_URL);
@@ -325,9 +325,17 @@ async function postLogout() {
 }
 
 async function getCheckUser() {
-  return await fetchData(`${API_URL}/users/me`, {
-    credentials: 'include',
-  });
+  try {
+    return await fetchData(`${API_URL}/users/me`, {
+      credentials: 'include',
+    });
+  } catch (err) {
+    // 404 => el user está autenticado en Firebase pero todavía no completó
+    // el registro en nuestro backend. Devolvemos null para que la UI decida
+    // (por ejemplo, redirigir a /create-username) sin tratarlo como error.
+    if (err instanceof HttpError && err.status === 404) return null;
+    throw err;
+  }
 }
 
 async function getUserAndBooks(

@@ -16,3 +16,4 @@ const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
 export const logIn = getAuth(app);
+logIn.languageCode = 'es';

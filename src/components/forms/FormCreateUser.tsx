@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -12,12 +12,21 @@ import {
 } from '@chakra-ui/react';
 
 import { useUserRegister } from '@hooks/queries';
+import { useAuth } from '@contexts/AuthContext';
 
 export function FormCreateUser() {
   const [username, setUsername] = useState<string>('');
   const bgColorButton = useColorModeValue('green.500', 'green.700');
   const navigate = useNavigate();
+  const { userData, loading } = useAuth();
   const { mutateAsync, data, isPending, isSuccess } = useUserRegister(username);
+
+  useEffect(() => {
+    if (loading) return;
+    if (userData?.username) {
+      navigate('/', { replace: true });
+    }
+  }, [userData, loading, navigate]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;

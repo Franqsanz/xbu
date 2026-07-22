@@ -30,6 +30,20 @@ function AuthProvider({ children }: AuthProviderType) {
     return () => unsubscribe();
   }, [auth]);
 
+  // Sincronización cross-tab: cuando otra pestaña completa el sign-in o el
+  // registro, esta pestaña se recarga para reflejar el nuevo estado sin que
+  // el usuario quede con dos flujos abiertos en paralelo.
+  useEffect(() => {
+    if (typeof BroadcastChannel === 'undefined') return;
+    const channel = new BroadcastChannel('xbureads-auth');
+    channel.onmessage = (event) => {
+      if (event.data === 'auth-updated') {
+        window.location.reload();
+      }
+    };
+    return () => channel.close();
+  }, []);
+
   const { data: userData, isLoading: userDataLoading } = useQuery({
     queryKey: [keys.userData, currentUser?.uid],
     queryFn: getCheckUser,
