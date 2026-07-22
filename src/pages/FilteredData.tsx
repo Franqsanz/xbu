@@ -158,24 +158,25 @@ export default function FilteredData() {
     setSearchParams,
   ]);
 
-  function sortResults<
-    T extends { title?: string; year?: number; numberPages?: number },
-  >(items: T[]): T[] {
+  function sortResults<T>(items: T[]): T[] {
     if (!sortBy) return items;
     const copy = [...items];
+    const title = (x: any) => (x?.title ?? '') as string;
+    const year = (x: any) => (x?.year ?? 0) as number;
+    const pages = (x: any) => (x?.numberPages ?? 0) as number;
     switch (sortBy) {
       case 'title-asc':
-        return copy.sort((a, b) => (a.title ?? '').localeCompare(b.title ?? ''));
+        return copy.sort((a, b) => title(a).localeCompare(title(b)));
       case 'title-desc':
-        return copy.sort((a, b) => (b.title ?? '').localeCompare(a.title ?? ''));
+        return copy.sort((a, b) => title(b).localeCompare(title(a)));
       case 'year-desc':
-        return copy.sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+        return copy.sort((a, b) => year(b) - year(a));
       case 'year-asc':
-        return copy.sort((a, b) => (a.year ?? 0) - (b.year ?? 0));
+        return copy.sort((a, b) => year(a) - year(b));
       case 'pages-desc':
-        return copy.sort((a, b) => (b.numberPages ?? 0) - (a.numberPages ?? 0));
+        return copy.sort((a, b) => pages(b) - pages(a));
       case 'pages-asc':
-        return copy.sort((a, b) => (a.numberPages ?? 0) - (b.numberPages ?? 0));
+        return copy.sort((a, b) => pages(a) - pages(b));
       default:
         return copy;
     }
