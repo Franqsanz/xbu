@@ -8,6 +8,7 @@ import {
 import {
   getAllBooks,
   getAllSearchBooks,
+  getAllSearchUsers,
   getAllFilterOptions,
   getBooksPaginate,
   getBook,
@@ -171,6 +172,17 @@ function useAllSearchBooks(book: string) {
     queryFn: () => getAllSearchBooks(book),
     refetchOnWindowFocus: false,
     enabled: false,
+    retry: 1,
+  });
+}
+
+function useAllSearchUsers(q: string) {
+  return useQuery({
+    queryKey: [keys.allSearchUsers, q],
+    queryFn: () => getAllSearchUsers(q),
+    refetchOnWindowFocus: false,
+    enabled: q.trim().length >= 3,
+    staleTime: 30_000,
     retry: 1,
   });
 }
@@ -884,6 +896,9 @@ function useFollowUser() {
       await queryClient.invalidateQueries({
         queryKey: [keys.feed],
       });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.allSearchUsers],
+      });
     },
   });
 }
@@ -907,6 +922,9 @@ function useUnfollowUser() {
       });
       await queryClient.invalidateQueries({
         queryKey: [keys.feed],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: [keys.allSearchUsers],
       });
     },
   });
@@ -1191,6 +1209,7 @@ export {
   useAllFilterOptions,
   useAllBooks,
   useAllSearchBooks,
+  useAllSearchUsers,
   useBooksPaginate,
   useBook,
   useFilterPaginated,

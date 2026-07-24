@@ -9,6 +9,10 @@ async function getAllSearchBooks(book: string) {
   return await fetchData(`${API_URL}/books/search?q=${book}`);
 }
 
+async function getAllSearchUsers(q: string) {
+  return await fetchData(`${API_URL}/users/search?q=${encodeURIComponent(q)}`);
+}
+
 async function getBooksPaginate(page: number | undefined) {
   return await fetchData(`${API_URL}/books?limit=10&page=${page}`, {
     credentials: 'include',
@@ -584,6 +588,7 @@ async function patchMyProfile(
 export {
   getAllBooks,
   getAllSearchBooks,
+  getAllSearchUsers,
   getBooksPaginate,
   getBook,
   getBooksFilterPaginated,

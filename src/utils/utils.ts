@@ -9,6 +9,7 @@ const keys = {
   bookReadUrl: 'BookReadUrl',
   bookProgress: 'BookProgress',
   allSearch: 'BooksSearch',
+  allSearchUsers: 'UsersSearch',
   one: 'BookOne',
   filtersOptions: 'BookFiltersOptions',
   paginate: 'BookPaginate',

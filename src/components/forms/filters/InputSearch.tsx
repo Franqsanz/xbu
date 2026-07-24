@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
+  Avatar,
   Box,
   useColorModeValue,
   InputGroup,
@@ -18,12 +19,24 @@ import {
   useOutsideClick,
   Flex,
   Spinner,
+  Text,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
 } from '@chakra-ui/react';
 
 import { CgOptions } from 'react-icons/cg';
 import { FiSearch } from 'react-icons/fi';
 
-import { useAllSearchBooks } from '@hooks/queries';
+import {
+  useAllSearchBooks,
+  useAllSearchUsers,
+  useFollowUser,
+  useUnfollowUser,
+} from '@hooks/queries';
+import { useAuth } from '@contexts/AuthContext';
 import { useDebounce } from '@hooks/useDebounce';
 import { BookSearchResultsType } from '@components/types';
 
@@ -34,6 +47,109 @@ function highlightText(text, query) {
     .map((part, index) =>
       regex.test(part) ? <mark key={index}>{part}</mark> : part,
     );
+}
+
+type SearchUser = {
+  uid: string;
+  name: string;
+  username: string;
+  picture?: string;
+  isFollowing: boolean;
+};
+
+function UserRow({
+  user,
+  query,
+  onSelect,
+}: {
+  user: SearchUser;
+  query: string;
+  onSelect: () => void;
+}) {
+  const { currentUser } = useAuth();
+  const rowBg = useColorModeValue('gray.200', 'gray.700');
+  const rowBgHover = useColorModeValue('gray.300', 'gray.600');
+  const [isFollowing, setIsFollowing] = useState(user.isFollowing);
+  const [isHovered, setIsHovered] = useState(false);
+  const { mutate: follow, isPending: isFollowingPending } = useFollowUser();
+  const { mutate: unfollow, isPending: isUnfollowingPending } = useUnfollowUser();
+
+  const isSelf = currentUser?.uid === user.uid;
+  const showButton = !!currentUser && !isSelf;
+  const isPending = isFollowingPending || isUnfollowingPending;
+
+  useEffect(() => {
+    setIsFollowing(user.isFollowing);
+  }, [user.isFollowing]);
+
+  function handleFollowClick(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isPending) return;
+    if (isFollowing) {
+      setIsFollowing(false);
+      unfollow(user.uid, { onError: () => setIsFollowing(true) });
+    } else {
+      setIsFollowing(true);
+      follow(user.uid, { onError: () => setIsFollowing(false) });
+    }
+  }
+
+  return (
+    <ListItem
+      textAlign='left'
+      mb='3'
+      rounded='lg'
+      bg={rowBg}
+      _hover={{ bg: rowBgHover }}
+    >
+      <Link
+        as={NavLink}
+        to={`/profile/${user.username}`}
+        display='flex'
+        alignItems='center'
+        gap='3'
+        p='3'
+        onClick={onSelect}
+        _hover={{ outline: 'none', textDecoration: 'none' }}
+      >
+        <Avatar
+          src={user.picture}
+          name={user.name}
+          size='sm'
+          referrerPolicy='no-referrer'
+        />
+        <Flex direction='column' flex='1' overflow='hidden'>
+          <Text fontSize={{ base: 'sm', sm: 'md' }} noOfLines={1} fontWeight='500'>
+            {highlightText(user.name, query)}
+          </Text>
+          <Text fontSize='xs' color='gray.500' noOfLines={1}>
+            @{highlightText(user.username, query)}
+          </Text>
+        </Flex>
+        {showButton && (
+          <Button
+            size='xs'
+            minW='90px'
+            fontWeight='normal'
+            bg={!isFollowing ? 'green.500' : isHovered ? 'red.500' : 'black'}
+            color={!isFollowing ? 'black' : 'white'}
+            _hover={{ bg: isFollowing ? 'red.500' : 'green.600' }}
+            onClick={handleFollowClick}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            isLoading={isPending}
+          >
+            {isFollowing && isHovered
+              ? 'Dejar de seguir'
+              : isFollowing
+                ? 'Siguiendo'
+                : 'Seguir'}
+          </Button>
+        )}
+      </Link>
+    </ListItem>
+  );
 }
 
 export function InputSearch({
@@ -52,19 +168,26 @@ export function InputSearch({
   const colorListBg = useColorModeValue('gray.200', 'gray.700');
   const colorListBgHover = useColorModeValue('gray.300', 'gray.600');
   const colorInputNotResult = useColorModeValue('gray.600', 'gray.400');
+  const sectionColor = useColorModeValue('gray.600', 'gray.400');
   const [search, setSearch] = useState({ query: '' });
   const { query } = search;
   const debouncedQuery = useDebounce(query, 500);
   const navigate = useNavigate();
-  let alertMessage;
   let loading;
 
-  const { data, error, isPending, refetch } = useAllSearchBooks(debouncedQuery);
+  const {
+    data: booksData,
+    error: booksError,
+    isPending: isPendingBooks,
+    refetch: refetchBooks,
+  } = useAllSearchBooks(debouncedQuery);
+
+  const { data: usersData, isFetching: isFetchingUsers } =
+    useAllSearchUsers(debouncedQuery);
 
   useOutsideClick({
     ref: containerRef,
     handler: (event) => {
-      // Verificar si el clic ocurrió fuera del inputRef
       if (
         inputRef.current &&
         !inputRef.current.contains(event.target as Node) &&
@@ -77,7 +200,7 @@ export function InputSearch({
 
   useEffect(() => {
     if (debouncedQuery.length >= 3) {
-      refetch();
+      refetchBooks();
     }
 
     function handleKeyPress(event: KeyboardEvent) {
@@ -91,9 +214,14 @@ export function InputSearch({
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
     };
-  }, [debouncedQuery, refetch]);
+  }, [debouncedQuery, refetchBooks]);
 
-  if (isPending) {
+  const isSearching = isPendingBooks || isFetchingUsers;
+  const hasBooks = Array.isArray(booksData) && booksData.length > 0;
+  const hasUsers = Array.isArray(usersData) && usersData.length > 0;
+  const noResults = !isSearching && !hasBooks && !hasUsers && !!booksError;
+
+  if (isSearching && !hasBooks && !hasUsers) {
     loading = (
       <Flex justify='center' direction='column' align='center' gap='2'>
         <Spinner size='md' thickness='2px' speed='0.40s' />
@@ -101,17 +229,6 @@ export function InputSearch({
           Buscando
         </Box>
       </Flex>
-    );
-  }
-
-  if (error) {
-    alertMessage = (
-      <Box fontSize='md'>
-        No se encontraron resultados para:{' '}
-        <Box as='span' fontStyle='italic' color={colorInputNotResult}>
-          "{query}"
-        </Box>
-      </Box>
     );
   }
 
@@ -123,6 +240,10 @@ export function InputSearch({
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearch({ ...search, query: e.target.value });
+  }
+
+  function closeDropdown() {
+    setSearch({ ...search, query: '' });
   }
 
   return (
@@ -146,7 +267,7 @@ export function InputSearch({
             border='1px solid black'
             rounded='md'
             color={colorInput}
-            placeholder='Titulo / Autor (Minimo 3 caracteres)'
+            placeholder='Buscar libros o personas'
             _placeholder={{ color: `${colorInput}`, fontSize: 'xs' }}
             _hover={{ outline: 'none' }}
             value={search.query}
@@ -181,7 +302,7 @@ export function InputSearch({
         ref={containerRef}
         display={search.query.length >= 3 ? 'block' : 'none'}
         w={width}
-        maxH='300px'
+        maxH='400px'
         m='10px auto'
         rounded='lg'
         overflow='auto'
@@ -194,51 +315,119 @@ export function InputSearch({
         top={top}
       >
         {loading}
-        <List fontSize='md'>
-          {data &&
-            data.map((book) => (
-              <ListItem
-                key={book.id}
-                tabIndex={0}
-                textAlign='left'
-                mb='3'
-                rounded='lg'
-                bg={colorListBg}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    navigate(`/book/view/${book.pathUrl}`);
-                  }
+        {!loading && (hasBooks || hasUsers) && (
+          <Tabs isFitted colorScheme='green' variant='line' size='sm'>
+            <TabList>
+              <Tab
+                fontSize='sm'
+                fontWeight='500'
+                sx={{
+                  '&[aria-selected=true] .tab-count': { color: 'green.500' },
                 }}
-                _hover={{ bg: `${colorListBgHover}` }}
               >
-                <Link
-                  as={NavLink}
-                  to={`/book/view/${book.pathUrl}`}
-                  display='block'
-                  p='3'
-                  onClick={() => {
-                    setSearch({ ...search, query: '' });
-                    handleResultClick(book);
-                  }}
-                  tabIndex={-1}
-                  _hover={{ outline: 'none' }}
-                >
-                  <Box fontSize={{ base: 'sm', sm: 'md' }} mb='1'>
-                    {highlightText(book.title, search.query)}
+                Libros{' '}
+                {hasBooks && (
+                  <Box as='span' className='tab-count' ml='1' color={sectionColor}>
+                    ({(booksData as any[]).length})
                   </Box>
-                  <Box fontSize='xs'>
-                    {book.authors.map((author, index) => (
-                      <span key={index}>
-                        {highlightText(author, search.query)}
-                        {index < book.authors.length - 1 && ', '}
-                      </span>
+                )}
+              </Tab>
+              <Tab
+                fontSize='sm'
+                fontWeight='500'
+                sx={{
+                  '&[aria-selected=true] .tab-count': { color: 'green.500' },
+                }}
+              >
+                Usuarios{' '}
+                {hasUsers && (
+                  <Box as='span' className='tab-count' ml='1' color={sectionColor}>
+                    ({(usersData as SearchUser[]).length})
+                  </Box>
+                )}
+              </Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel px='0' pt='3'>
+                {hasBooks ? (
+                  <List fontSize='md'>
+                    {(booksData as any[]).map((book) => (
+                      <ListItem
+                        key={book.id}
+                        tabIndex={0}
+                        textAlign='left'
+                        mb='3'
+                        rounded='lg'
+                        bg={colorListBg}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            navigate(`/book/view/${book.pathUrl}`);
+                          }
+                        }}
+                        _hover={{ bg: `${colorListBgHover}` }}
+                      >
+                        <Link
+                          as={NavLink}
+                          to={`/book/view/${book.pathUrl}`}
+                          display='block'
+                          p='3'
+                          onClick={() => {
+                            closeDropdown();
+                            handleResultClick(book);
+                          }}
+                          tabIndex={-1}
+                          _hover={{ outline: 'none' }}
+                        >
+                          <Box fontSize={{ base: 'sm', sm: 'md' }} mb='1'>
+                            {highlightText(book.title, search.query)}
+                          </Box>
+                          <Box fontSize='xs'>
+                            {book.authors.map((author, index) => (
+                              <span key={index}>
+                                {highlightText(author, search.query)}
+                                {index < book.authors.length - 1 && ', '}
+                              </span>
+                            ))}
+                          </Box>
+                        </Link>
+                      </ListItem>
                     ))}
-                  </Box>
-                </Link>
-              </ListItem>
-            ))}
-        </List>
-        {alertMessage}
+                  </List>
+                ) : (
+                  <Text fontSize='sm' color={colorInputNotResult} py='2'>
+                    Sin libros para "{query}"
+                  </Text>
+                )}
+              </TabPanel>
+              <TabPanel px='0' pt='3'>
+                {hasUsers ? (
+                  <List fontSize='md'>
+                    {(usersData as SearchUser[]).map((u) => (
+                      <UserRow
+                        key={u.uid}
+                        user={u}
+                        query={search.query}
+                        onSelect={closeDropdown}
+                      />
+                    ))}
+                  </List>
+                ) : (
+                  <Text fontSize='sm' color={colorInputNotResult} py='2'>
+                    Sin usuarios para "{query}"
+                  </Text>
+                )}
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        )}
+        {noResults && !hasBooks && !hasUsers && (
+          <Box fontSize='md'>
+            No se encontraron resultados para:{' '}
+            <Box as='span' fontStyle='italic' color={colorInputNotResult}>
+              "{query}"
+            </Box>
+          </Box>
+        )}
       </Container>
     </>
   );
