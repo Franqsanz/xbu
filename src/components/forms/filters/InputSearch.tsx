@@ -232,18 +232,13 @@ export function InputSearch({
     );
   }
 
-  function handleResultClick(book) {
-    if (onResultClick) {
-      onResultClick(book);
-    }
-  }
-
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearch({ ...search, query: e.target.value });
   }
 
   function closeDropdown() {
     setSearch({ ...search, query: '' });
+    onResultClick?.('');
   }
 
   return (
@@ -371,10 +366,7 @@ export function InputSearch({
                           to={`/book/view/${book.pathUrl}`}
                           display='block'
                           p='3'
-                          onClick={() => {
-                            closeDropdown();
-                            handleResultClick(book);
-                          }}
+                          onClick={closeDropdown}
                           tabIndex={-1}
                           _hover={{ outline: 'none' }}
                         >
