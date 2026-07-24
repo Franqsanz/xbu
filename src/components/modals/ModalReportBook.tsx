@@ -42,7 +42,7 @@ const OPTIONS: { value: ReportType; label: string; hint?: string }[] = [
   {
     value: 'inappropriate',
     label: 'Contenido inapropiado',
-    hint: 'Violencia, discurso de odio, contenido ilegal.',
+    hint: 'Violencia o contenido ilegal.',
   },
   { value: 'spam', label: 'Spam o engañoso' },
   { value: 'other', label: 'Otro' },
@@ -203,11 +203,11 @@ export function ModalReportBook({ isOpen, onClose, bookId }: Props) {
             <FormErrorMessage fontSize='xs'>{emailError}</FormErrorMessage>
           </FormControl>
         </ModalBody>
-        <ModalFooter gap='2'>
+        <ModalFooter gap='2' flexDirection={{ base: 'column-reverse', md: 'row' }}>
           <Button
-            variant='ghost'
             fontWeight='normal'
             fontSize='sm'
+            w={{ base: 'full', md: 'auto' }}
             onClick={handleClose}
             isDisabled={isPending}
           >
@@ -217,6 +217,7 @@ export function ModalReportBook({ isOpen, onClose, bookId }: Props) {
             bg={bgColorButton}
             color='black'
             fontSize='sm'
+            w={{ base: 'full', md: 'auto' }}
             _hover={{ bg: 'green.600' }}
             _active={{ bg: 'green.600' }}
             isLoading={isPending}
