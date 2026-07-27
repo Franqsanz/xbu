@@ -13,10 +13,10 @@ async function getAllSearchUsers(q: string) {
   return await fetchData(`${API_URL}/users/search?q=${encodeURIComponent(q)}`);
 }
 
-async function getBooksPaginate(page: number | undefined) {
-  return await fetchData(`${API_URL}/books?limit=10&page=${page}`, {
-    credentials: 'include',
-  });
+async function getBooksPaginate(cursor: string | null | undefined) {
+  const params = new URLSearchParams({ limit: '10' });
+  if (cursor) params.set('cursor', cursor);
+  return await fetchData(`${API_URL}/books?${params.toString()}`);
 }
 
 async function getBook(pathUrl: string | undefined) {
@@ -345,10 +345,12 @@ async function getCheckUser() {
 async function getUserAndBooks(
   username: string | undefined,
   userId: string | undefined,
-  page: number | undefined,
+  cursor: string | null | undefined,
 ) {
+  const params = new URLSearchParams({ limit: '10' });
+  if (cursor) params.set('cursor', cursor);
   return await fetchData(
-    `${API_URL}/users/profile/${username}/books?limit=10&page=${page}`,
+    `${API_URL}/users/profile/${username}/books?${params.toString()}`,
     {
       method: 'GET',
     },
@@ -361,9 +363,14 @@ async function getFindAllBookFavorite(userId: string | undefined, page: number) 
   );
 }
 
-async function getFindAllComments(bookId: string, page: number) {
+async function getFindAllComments(
+  bookId: string,
+  cursor: string | null | undefined,
+) {
+  const params = new URLSearchParams({ limit: '5' });
+  if (cursor) params.set('cursor', cursor);
   return await fetchData(
-    `${API_URL}/users/comments/book-comments/${bookId}?limit=5&page=${page}`,
+    `${API_URL}/users/comments/book-comments/${bookId}?${params.toString()}`,
   );
 }
 
@@ -474,14 +481,19 @@ async function getFollowStats(userId: string) {
   });
 }
 
-async function getFeed(page: number = 0, limit: number = 10) {
-  const offset = page * limit;
-  return await fetchData(`${API_URL}/users/me/feed?limit=${limit}&offset=${offset}`);
+async function getFeed(cursor: string | null | undefined, limit: number = 10) {
+  const params = new URLSearchParams({ limit: String(limit) });
+  if (cursor) params.set('cursor', cursor);
+  return await fetchData(`${API_URL}/users/me/feed?${params.toString()}`);
 }
 
-async function getNotifications(page: number = 0, limit: number = 20) {
-  const offset = page * limit;
-  return await fetchData(`${API_URL}/notifications?limit=${limit}&offset=${offset}`);
+async function getNotifications(
+  cursor: string | null | undefined,
+  limit: number = 20,
+) {
+  const params = new URLSearchParams({ limit: String(limit) });
+  if (cursor) params.set('cursor', cursor);
+  return await fetchData(`${API_URL}/notifications?${params.toString()}`);
 }
 
 async function getUnreadNotificationsCount() {

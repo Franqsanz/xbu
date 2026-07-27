@@ -201,12 +201,8 @@ function useBooksPaginate() {
   return useInfiniteQuery({
     queryKey: [keys.paginate],
     queryFn: ({ pageParam }) => getBooksPaginate(pageParam),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => {
-      if (lastPage.info.nextPage === null) return;
-
-      return lastPage.info.nextPage;
-    },
+    initialPageParam: null as string | null,
+    getNextPageParam: (lastPage) => lastPage.info?.nextCursor ?? undefined,
     retry: 1,
   });
 }
@@ -383,12 +379,8 @@ function useProfile(username: string | undefined, userId: string | undefined) {
   return useInfiniteQuery({
     queryKey: [keys.profile, username],
     queryFn: ({ pageParam }) => getUserAndBooks(username, userId, pageParam),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => {
-      if (lastPage.info.nextPage === null) return;
-
-      return lastPage.info.nextPage;
-    },
+    initialPageParam: null as string | null,
+    getNextPageParam: (lastPage) => lastPage.info?.nextCursor ?? undefined,
     enabled: !!username,
     gcTime: 0,
     staleTime: 0,
@@ -563,12 +555,8 @@ function useFindAllComments(bookId: string) {
   return useInfiniteQuery({
     queryKey: [keys.allComments, bookId],
     queryFn: ({ pageParam }) => getFindAllComments(bookId, pageParam),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => {
-      if (lastPage.info.nextPage === null) return;
-
-      return lastPage.info.nextPage;
-    },
+    initialPageParam: null as string | null,
+    getNextPageParam: (lastPage) => lastPage.info?.nextCursor ?? undefined,
     retry: false,
   });
 }
@@ -1000,11 +988,8 @@ function useNotifications(enabled: boolean = true) {
   return useInfiniteQuery({
     queryKey: [keys.notifications],
     queryFn: ({ pageParam }) => getNotifications(pageParam),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => {
-      if (lastPage.info.nextPage === null) return undefined;
-      return lastPage.info.nextPage;
-    },
+    initialPageParam: null as string | null,
+    getNextPageParam: (lastPage) => lastPage.info?.nextCursor ?? undefined,
     enabled,
     refetchOnWindowFocus: false,
   });
@@ -1074,11 +1059,8 @@ function useFeed(enabled: boolean = true) {
   return useInfiniteQuery({
     queryKey: [keys.feed],
     queryFn: ({ pageParam }) => getFeed(pageParam),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => {
-      if (lastPage.info.nextPage === null) return undefined;
-      return lastPage.info.nextPage;
-    },
+    initialPageParam: null as string | null,
+    getNextPageParam: (lastPage) => lastPage.info?.nextCursor ?? undefined,
     enabled,
     refetchOnWindowFocus: false,
   });

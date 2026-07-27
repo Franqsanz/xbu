@@ -68,10 +68,7 @@ export function CommentsList({
 
   const allComments = commentsData?.pages.flatMap((page) => page.results) || [];
   const totalComments =
-    commentsData?.pages[0]?.info?.totalBooks || allComments.length;
-  const currentPage =
-    commentsData?.pages[commentsData.pages.length - 1]?.info?.currentPage || 1;
-  const totalPages = commentsData?.pages[0]?.info?.totalPages || 1;
+    commentsData?.pages[0]?.info?.totalComments ?? allComments.length;
 
   if (isError) {
     return (
@@ -374,7 +371,7 @@ export function CommentsList({
               isLoading={isFetchingNextPage}
               loadingText='Cargando...'
             >
-              Ver más comentarios ({currentPage} de {totalPages})
+              Ver más comentarios
             </Button>
           </Center>
         )}

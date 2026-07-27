@@ -78,7 +78,7 @@ export function AllBooks() {
       <MobileResultBar data={data} />
       <MyContainer>
         <Aside>
-          <ResultLength data={data?.pages[0].info.totalBooks} />
+          <ResultLength data={data?.pages[0]?.info?.totalBooks ?? 0} />
           <Box mt='5'>
             <Flex textAlign={{ base: 'center', lg: 'left' }} direction='column'>
               <Text>
