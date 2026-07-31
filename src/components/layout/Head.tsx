@@ -26,16 +26,9 @@ export function MainHead({ title, description, urlImage }: HeadType) {
       <meta property='og:image:height' content='583' />
       <link rel='canonical' href='https://www.xbureads.com/' />
       <link rel='icon' type='image/svg+xml' href='/logo.png' />
-      <link rel='preconnect' href='https://fonts.googleapis.com' />
-      <link
-        rel='preconnect'
-        href='https://fonts.gstatic.com'
-        crossOrigin='anonymous'
-      />
-      <link
-        href='https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap'
-        rel='stylesheet'
-      />
+      {/* Poppins ya viene self-hosted desde el build (vite-plugin-webfont-dl),
+          así que el stylesheet de Google Fonts y sus preconnect sólo agregaban
+          dos conexiones nuevas y un CSS que bloquea el render. */}
     </Helmet>
   );
 }
