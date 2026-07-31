@@ -1,0 +1,31 @@
+# XBuReads
+
+> Comunidad hispanohablante para compartir libros: los usuarios publican libros que recomiendan o escriben, los califican, comentan, los agrupan en colecciones y siguen a otros lectores. Sitio en español (es-AR). Las páginas de libros, exploración y filtros son públicas; el feed, las colecciones y la biblioteca personal requieren cuenta.
+
+Es una SPA (React) renderizada en el cliente: el contenido de cada libro se pide a la API después de cargar el JS. Si necesitás los datos sin ejecutar JavaScript, usá el sitemap y la API pública en lugar de scrapear el HTML.
+
+## Páginas principales
+
+- [Inicio](https://www.xbureads.com/): feed de actividad para usuarios con sesión; landing con la propuesta del sitio para visitantes.
+- [Explorar](https://www.xbureads.com/explore): catálogo de libros publicados por la comunidad, con búsqueda y filtros.
+- [Más vistos](https://www.xbureads.com/most-viewed): libros ordenados por cantidad de visitas.
+
+## Estructura de URLs
+
+- `https://www.xbureads.com/book/view/{pathUrl}`: detalle de un libro (sinopsis, autores, categoría, calificaciones y comentarios). `pathUrl` es el slug del libro.
+- `https://www.xbureads.com/books/filter/{campo}/{valor}`: listado filtrado. `campo` es `year`, `language` o `category`.
+- `https://www.xbureads.com/profile/{username}`: perfil público de un lector.
+
+## Datos
+
+- [Sitemap](https://api.xbureads.com/sitemap.xml): índice de las páginas de libros indexables.
+- [robots.txt](https://www.xbureads.com/robots.txt): rutas privadas excluidas del rastreo.
+
+## Legal
+
+- [Política de privacidad](https://www.xbureads.com/privacy-policies)
+- [Términos y condiciones](https://www.xbureads.com/terms)
+
+## Optional
+
+- [Publicar un libro](https://www.xbureads.com/new-post): requiere cuenta; no es accesible sin sesión.
