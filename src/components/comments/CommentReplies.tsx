@@ -40,6 +40,7 @@ import { CommentEditor } from '@components/comments/CommentEditor';
 import { CommentReactions } from '@components/comments/CommentReactions';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 import { parseDate } from '@utils/utils';
+import { cldAvatar } from '@utils/images';
 
 type Props = {
   bookId: string;
@@ -201,7 +202,7 @@ export function CommentReplies({
             <Flex gap='2' align='center'>
               <Avatar
                 name={r.author?.username}
-                src={r.author?.avatar}
+                src={cldAvatar(r.author?.avatar, 32)}
                 size='xs'
                 referrerPolicy='no-referrer'
               />

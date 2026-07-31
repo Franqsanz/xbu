@@ -18,6 +18,7 @@ import { useAccountActions } from '@hooks/useAccountActions';
 import { useCheckUser } from '@hooks/queries';
 import { ContainerTitle } from '@components/layout/ContainerTitle';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
+import { cldAvatar } from '@utils/images';
 
 export function MyAccount() {
   const { deleteAccount, isPending } = useAccountActions();
@@ -69,7 +70,7 @@ export function MyAccount() {
           <Flex gap='4' align='center'>
             <Avatar
               size={{ base: 'lg', md: 'xl' }}
-              src={me?.picture}
+              src={cldAvatar(me?.picture, 96)}
               name={me?.name}
               referrerPolicy='no-referrer'
             />

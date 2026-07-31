@@ -29,6 +29,7 @@ import {
   useUnfollowUser,
 } from '@hooks/queries';
 import { parseDate } from '@utils/utils';
+import { cldAvatar } from '@utils/images';
 import { CardType } from '@components/types';
 import { useAuth } from '@contexts/AuthContext';
 import { NoData } from '@assets/assets';
@@ -395,7 +396,7 @@ export function Profile() {
             flexShrink={0}
           />
           <Avatar
-            src={profileUser?.picture}
+            src={cldAvatar(profileUser?.picture, 128)}
             name={profileUser?.name}
             referrerPolicy='no-referrer'
             w={{ base: '90px', md: '140px' }}

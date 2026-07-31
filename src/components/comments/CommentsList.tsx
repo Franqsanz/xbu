@@ -36,6 +36,7 @@ import { CommentForm } from '@components/comments/CommentForm';
 import { CommentReactions } from '@components/comments/CommentReactions';
 import { CommentReplies } from '@components/comments/CommentReplies';
 import { parseDate } from '@utils/utils';
+import { cldAvatar } from '@utils/images';
 
 export function CommentsList({
   bookId,
@@ -234,7 +235,7 @@ export function CommentsList({
                 <Flex gap='2' align={{ base: 'start', sm: 'center' }}>
                   <Avatar
                     name={author.username}
-                    src={author.avatar as string}
+                    src={cldAvatar(author.avatar as string, 40)}
                     size={{ base: 'xs', md: 'sm' }}
                     referrerPolicy='no-referrer'
                   />

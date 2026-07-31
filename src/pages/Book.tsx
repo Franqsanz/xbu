@@ -36,6 +36,7 @@ import {
   useCollectionsForUser,
 } from '@hooks/queries';
 import { handleImageLoad } from '@utils/utils';
+import { cldImg } from '@utils/images';
 import { MainHead } from '@components/layout/Head';
 import { MyTag } from '@components/ui/MyTag';
 import { ModalShare } from '@components/modals/ModalShare';
@@ -422,7 +423,8 @@ export default function Book() {
             <ImageZoom
               w='230px'
               h='340px'
-              src={data.image.url}
+              src={cldImg(data.image.url, { w: 230, h: 340 })}
+              data-zoom-src={data.image.url}
               alt={`Imagen de "${data.title}"`}
               rounded='md'
               border='1px solid #A0AEC0'
@@ -682,7 +684,8 @@ export default function Book() {
                     <ImageZoom
                       w='290px'
                       h='420px'
-                      src={data.image.url}
+                      src={cldImg(data.image.url, { w: 290, h: 420 })}
+                      data-zoom-src={data.image.url}
                       alt={`Imagen de "${data.title}"`}
                       rounded='lg'
                       border='1px solid #A0AEC0'
@@ -711,7 +714,7 @@ export default function Book() {
             <Image
               w='290px'
               h='420px'
-              src={data.image.url}
+              src={cldImg(data.image.url, { w: 290, h: 420 })}
               position='absolute'
               top='30px'
               left='6px'

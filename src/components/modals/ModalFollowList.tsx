@@ -31,6 +31,7 @@ import {
 } from '@hooks/queries';
 import { useAuth } from '@contexts/AuthContext';
 import { FollowUser, ModalFollowListProps } from '@components/types';
+import { cldAvatar } from '@utils/images';
 
 function FollowItem({
   user,
@@ -76,7 +77,11 @@ function FollowItem({
       rounded='md'
       _hover={{ bg: hoverBg }}
     >
-      <Avatar src={user.picture} name={user.name} size={{ base: 'sm', md: 'md' }} />
+      <Avatar
+        src={cldAvatar(user.picture, 48)}
+        name={user.name}
+        size={{ base: 'sm', md: 'md' }}
+      />
       <Flex direction='column' overflow='hidden' flex='1'>
         <Text
           fontWeight='semibold'

@@ -27,6 +27,7 @@ import {
 import { Rating } from '@smastrom/react-rating';
 
 import { handleImageLoad, parseDate } from '@utils/utils';
+import { cldAvatar, cldImg } from '@utils/images';
 import { FeedActivity, FeedItemProps } from '@components/types';
 
 function BlurImage(props: ImageProps) {
@@ -165,7 +166,7 @@ export function FeedItem({ activity }: FeedItemProps) {
     >
       <Flex align='flex-start' gap='3' mb='4'>
         <Link as={NavLink} to={`/profile/${actor.username}`}>
-          <Avatar src={actor.picture} name={actor.name} size='sm' />
+          <Avatar src={cldAvatar(actor.picture, 32)} name={actor.name} size='sm' />
         </Link>
         <Flex direction='column' overflow='hidden' flex='1'>
           <Flex align='center' gap='2' flexWrap='wrap'>
@@ -269,7 +270,11 @@ export function FeedItem({ activity }: FeedItemProps) {
             _hover={{ bg: commentBg }}
             transition='background 0.15s'
           >
-            <Avatar src={target.picture} name={target.name} size='md' />
+            <Avatar
+              src={cldAvatar(target.picture, 48)}
+              name={target.name}
+              size='md'
+            />
             <Flex direction='column' overflow='hidden' flex='1'>
               <Text
                 fontWeight='semibold'
@@ -306,7 +311,7 @@ export function FeedItem({ activity }: FeedItemProps) {
             transition='background 0.15s'
           >
             <BlurImage
-              src={book.image.url}
+              src={cldImg(book.image.url, { w: 90, h: 135 })}
               alt={book.title}
               w={{ base: '70px', md: '90px' }}
               h={{ base: '105px', md: '135px' }}
@@ -462,7 +467,7 @@ function GroupCard({
       >
         <Flex gap='4'>
           <BlurImage
-            src={book.image.url}
+            src={cldImg(book.image.url, { w: 110, h: 165 })}
             alt={book.title}
             w={{ base: '90px', md: '110px' }}
             h={{ base: '135px', md: '165px' }}

@@ -19,6 +19,7 @@ import { MyTag } from '@components/ui/MyTag';
 import { Views } from '@components/ui/Views';
 import { useAuth } from '@contexts/AuthContext';
 import { handleImageLoad, useHandleEnterKey, isSpanish } from '@utils/utils';
+import { cldImg } from '@utils/images';
 
 export function Card({
   title,
@@ -96,7 +97,7 @@ export function Card({
               <LazyLoad height={height} offset={0} threshold={0.99}>
                 <Image
                   h={{ base: 'auto', md: '300px' }}
-                  src={image?.url}
+                  src={cldImg(image?.url, { h: 300 })}
                   alt={`Imagen de "${title}"`}
                   rounded='lg'
                   border='1px solid #A0AEC0'

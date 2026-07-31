@@ -25,6 +25,7 @@ import {
 
 import { NotificationItem as NotificationItemType } from '@components/types';
 import { formatRelativeTime } from '@utils/utils';
+import { cldAvatar, cldImg } from '@utils/images';
 
 const TYPE_META = {
   follow: { icon: FiUserPlus, color: 'green.500' },
@@ -141,7 +142,7 @@ export function NotificationItem({
     >
       <Box position='relative' flexShrink={0}>
         <Avatar
-          src={notification.actor?.picture}
+          src={cldAvatar(notification.actor?.picture, 40)}
           name={notification.actor?.name}
           size='md'
           boxSize={compact ? '32px' : { base: '40px', md: '48px' }}
@@ -172,7 +173,7 @@ export function NotificationItem({
       {notification.book?.image?.url && (
         <NavLink to={to} onClick={(e) => e.stopPropagation()}>
           <Image
-            src={notification.book.image.url}
+            src={cldImg(notification.book.image.url, { w: 36, h: 54 })}
             alt={notification.book.title}
             w='36px'
             h='54px'

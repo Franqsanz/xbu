@@ -39,6 +39,7 @@ import {
 import { useAuth } from '@contexts/AuthContext';
 import { useDebounce } from '@hooks/useDebounce';
 import { BookSearchResultsType } from '@components/types';
+import { cldAvatar } from '@utils/images';
 
 function highlightText(text, query) {
   const regex = new RegExp(`(${query.trim()})`, 'gi');
@@ -114,7 +115,7 @@ function UserRow({
         _hover={{ outline: 'none', textDecoration: 'none' }}
       >
         <Avatar
-          src={user.picture}
+          src={cldAvatar(user.picture, 32)}
           name={user.name}
           size='sm'
           referrerPolicy='no-referrer'
