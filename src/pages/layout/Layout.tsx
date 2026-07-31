@@ -7,9 +7,11 @@ import { Nav } from '@components/nav/Nav';
 import { Footer } from '@components/layout/Footer';
 import { LoginModal } from '@components/auth/LoginModal';
 import { useUnreadTitleBadge } from '@hooks/useUnreadTitleBadge';
+import { useAgentTools } from '@hooks/useAgentTools';
 
 export default function Layout() {
   useUnreadTitleBadge();
+  useAgentTools();
   return (
     <Flex direction='column' minH='100vh'>
       <Nav />
