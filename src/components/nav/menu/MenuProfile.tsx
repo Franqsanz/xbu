@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Avatar,
-  Box,
   Button,
   useColorModeValue,
   Menu,
@@ -18,6 +17,7 @@ import {
 import { useAccountActions } from '@hooks/useAccountActions';
 import { ModalConfirmation } from '@components/modals/ModalConfirmation';
 import { MenuType } from '@components/types';
+import { cldAvatar } from '@utils/images';
 
 export function MenuProfile({ displayName, photoURL, username }: MenuType) {
   const { logOut, isLoggingOut } = useAccountActions();
@@ -30,26 +30,26 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
 
   return (
     <Menu isLazy>
-      <Button
+      {/* El MenuButton era un `Box` (div) dentro de un `Button`: dejaba los
+          aria-haspopup/expanded sobre un div sin rol y anidaba dos elementos
+          interactivos. Ahora el trigger es un único botón real con nombre. */}
+      <MenuButton
+        aria-label='Menú de perfil'
+        display='block'
         background='none'
         p='0'
-        _hover={{ background: 'none' }}
+        borderRadius='full'
         ml={{ base: '2px', md: 4 }}
         mr={{ base: 2, md: 0 }}
+        _hover={{ border: `2px solid  ${colorBorder}` }}
       >
-        <MenuButton
-          as={Box}
-          borderRadius='full'
-          _hover={{ border: `2px solid  ${colorBorder}` }}
-        >
-          <Avatar
-            name={displayName as string}
-            src={photoURL as string}
-            size={{ base: 'xs', md: 'sm' }}
-            referrerPolicy='no-referrer'
-          />
-        </MenuButton>
-      </Button>
+        <Avatar
+          name={displayName as string}
+          src={cldAvatar(photoURL as string, 32)}
+          size={{ base: 'xs', md: 'sm' }}
+          referrerPolicy='no-referrer'
+        />
+      </MenuButton>
       <MenuList>
         <MenuGroup title={displayName as string} fontSize='md' textAlign='center'>
           <MenuDivider />

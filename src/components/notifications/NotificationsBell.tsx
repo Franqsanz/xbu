@@ -57,8 +57,10 @@ export function NotificationsBell() {
       placement='bottom-end'
       isLazy
     >
-      <PopoverTrigger>
-        <Box position='relative'>
+      {/* El trigger tiene que ser el botón, no el Box: si envuelve al div,
+          chakra le cuelga aria-haspopup/expanded a un elemento sin rol. */}
+      <Box position='relative'>
+        <PopoverTrigger>
           <IconButton
             aria-label='Notificaciones'
             icon={<Icon as={IoNotificationsOutline} boxSize='5' />}
@@ -68,28 +70,28 @@ export function NotificationsBell() {
             _hover={{ color: 'green.500', bg: 'none' }}
             _active={{ bg: 'none' }}
           />
-          {unreadCount > 0 && (
-            <Flex
-              position='absolute'
-              top='-1px'
-              right='-1px'
-              bg='red.500'
-              color='white'
-              fontSize='2xs'
-              fontWeight='bold'
-              minW='18px'
-              h='18px'
-              px='1'
-              rounded='full'
-              align='center'
-              justify='center'
-              pointerEvents='none'
-            >
-              {unreadCount > 99 ? '99+' : unreadCount}
-            </Flex>
-          )}
-        </Box>
-      </PopoverTrigger>
+        </PopoverTrigger>
+        {unreadCount > 0 && (
+          <Flex
+            position='absolute'
+            top='-1px'
+            right='-1px'
+            bg='red.500'
+            color='white'
+            fontSize='2xs'
+            fontWeight='bold'
+            minW='18px'
+            h='18px'
+            px='1'
+            rounded='full'
+            align='center'
+            justify='center'
+            pointerEvents='none'
+          >
+            {unreadCount > 99 ? '99+' : unreadCount}
+          </Flex>
+        )}
+      </Box>
       <PopoverContent w={{ base: '320px', md: '380px' }} maxH='70vh'>
         <PopoverArrow />
         <PopoverHeader>
