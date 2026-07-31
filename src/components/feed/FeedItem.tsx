@@ -30,7 +30,12 @@ import { handleImageLoad, parseDate } from '@utils/utils';
 import { cldAvatar, cldImg } from '@utils/images';
 import { FeedActivity, FeedItemProps } from '@components/types';
 
-function BlurImage(props: ImageProps) {
+type BlurImageProps = ImageProps & {
+  /** La primera portada del feed es el LCP: se pide sin lazy y con prioridad. */
+  priority?: boolean;
+};
+
+function BlurImage({ priority, ...props }: BlurImageProps) {
   // Si la imagen ya está en cache del browser, el evento `onLoad` puede no
   // dispararse (depende del browser) y el filter blur queda pegado. Con este
   // callback ref chequeamos `complete` al montar y quitamos el filter en el acto.
@@ -43,6 +48,8 @@ function BlurImage(props: ImageProps) {
     <Image
       {...props}
       ref={setRef}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchPriority={priority ? 'high' : 'auto'}
       filter='blur(10px)'
       transition='filter 0.6s ease-in-out'
       onLoad={handleImageLoad}
@@ -96,7 +103,7 @@ const SIMPLE_BADGE: Partial<
   },
 };
 
-export function FeedItem({ activity }: FeedItemProps) {
+export function FeedItem({ activity, priority }: FeedItemProps) {
   const borderColor = useColorModeValue('gray.200', 'gray.700');
   const bg = useColorModeValue('white', 'gray.800');
   const subTextColor = useColorModeValue('gray.600', 'gray.400');
@@ -319,7 +326,7 @@ export function FeedItem({ activity }: FeedItemProps) {
               rounded='md'
               flexShrink={0}
               decoding='async'
-              loading='lazy'
+              priority={priority}
             />
             <Flex direction='column' justify='center' overflow='hidden' flex='1'>
               <Text
@@ -362,6 +369,7 @@ export function FeedItem({ activity }: FeedItemProps) {
           borderColor={borderColor}
           subTextColor={subTextColor}
           hoverBg={commentBg}
+          priority={priority}
         />
       )}
     </Box>
@@ -426,12 +434,14 @@ function GroupCard({
   borderColor,
   subTextColor,
   hoverBg,
+  priority,
 }: {
   activities: FeedActivity[];
   book: NonNullable<FeedActivity['book']>;
   borderColor: string;
   subTextColor: string;
   hoverBg: string;
+  priority?: boolean;
 }) {
   const categoryColor = useColorModeValue('green.800', 'green.500');
   const sorted = [...activities].sort(
@@ -475,7 +485,7 @@ function GroupCard({
             rounded='md'
             flexShrink={0}
             decoding='async'
-            loading='lazy'
+            priority={priority}
           />
           <Flex direction='column' justify='center' overflow='hidden' flex='1'>
             <Text

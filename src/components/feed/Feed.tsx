@@ -91,6 +91,7 @@ export function Feed() {
         <FeedItem
           key={`${activity.type}-${activity.comment?.id || activity.book?.id || activity.target?.uid}-${index}`}
           activity={activity}
+          priority={index === 0}
         />
       ))}
       <Box ref={ref} py='4' textAlign='center'>

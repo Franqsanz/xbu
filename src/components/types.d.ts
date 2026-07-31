@@ -311,6 +311,7 @@ interface FeedActivity {
 
 interface FeedItemProps {
   activity: FeedActivity;
+  priority?: boolean;
 }
 
 interface NotificationActor {
