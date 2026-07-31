@@ -130,6 +130,9 @@ export function DesktopNav() {
               <ModalFilter isOpen={isOpen} onClose={onClose} />
               <Button
                 onClick={toggleColorMode}
+                aria-label={
+                  colorMode === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'
+                }
                 bg='none'
                 ml='3'
                 _active={{ bg: 'none', outline: '2px solid #4299E1' }}

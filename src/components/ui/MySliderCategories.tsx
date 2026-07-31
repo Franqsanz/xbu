@@ -64,6 +64,7 @@ export function MySliderCategories() {
           mt='3'
           cursor='pointer'
           onClick={slideLeft}
+          aria-label='Ver categorías anteriores'
         >
           <MdChevronLeft size='30' />
         </Button>
@@ -105,6 +106,7 @@ export function MySliderCategories() {
           mt='3'
           cursor='pointer'
           onClick={slideRight}
+          aria-label='Ver más categorías'
         >
           <MdChevronRight size='30' />
         </Button>

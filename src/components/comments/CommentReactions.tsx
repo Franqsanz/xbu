@@ -27,6 +27,8 @@ export function CommentReactions({
         alignItems='center'
         fontSize={{ base: 'xs', md: 'sm' }}
         onClick={onLike}
+        // Sin esto el nombre accesible es sólo el número: "12, botón".
+        aria-label={`Me gusta (${likesCount})`}
       >
         <Icon as={BiLike} boxSize={{ base: 3.5, md: 4 }} />
         {likesCount}
@@ -38,6 +40,7 @@ export function CommentReactions({
         alignItems='center'
         fontSize={{ base: 'xs', md: 'sm' }}
         onClick={onDislike}
+        aria-label={`No me gusta (${dislikesCount})`}
       >
         <Icon as={BiDislike} boxSize={{ base: 3.5, md: 4 }} />
         {dislikesCount}

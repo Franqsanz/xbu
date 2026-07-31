@@ -160,6 +160,7 @@ export default function Book() {
           fontWeight='500'
           size='sm'
           onClick={onOpenOptions}
+          aria-label='Más opciones'
         >
           <Flex align='center' justify='center'>
             <Icon as={FiMoreHorizontal} />
@@ -187,7 +188,12 @@ export default function Book() {
         bg='black'
         color='white'
       >
-        <Button mt={{ base: 1, md: 5 }} size='sm' onClick={handleToggleFavorite}>
+        <Button
+          mt={{ base: 1, md: 5 }}
+          size='sm'
+          onClick={handleToggleFavorite}
+          aria-label={isFavorite ? 'Eliminar de Favoritos' : 'Agregar a Favoritos'}
+        >
           <Flex align='center' justify='center'>
             <Icon
               as={isFavorite ? MdOutlineFavorite : MdOutlineFavoriteBorder}
@@ -212,6 +218,7 @@ export default function Book() {
             refetch();
             onOpenCollectionSelector();
           }}
+          aria-label='Agregar a una colección'
         >
           <Flex align='center' justify='center'>
             <Icon as={FaRegBookmark} boxSize={4} />

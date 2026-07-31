@@ -140,7 +140,7 @@ export function MobileNav() {
           <Flex align='center'>
             <Button
               onClick={onOpenMenu}
-              aria-label='Open Menu'
+              aria-label={isOpenMenu ? 'Cerrar menú' : 'Abrir menú'}
               bg='none'
               _hover={{ bg: 'none', color: 'green.500' }}
               _active={{ bg: 'none' }}
@@ -163,6 +163,7 @@ export function MobileNav() {
           <Flex align='center' gap='1'>
             <Button
               onClick={onOpenSearch}
+              aria-label='Buscar'
               bg='none'
               size='sm'
               minW='auto'
@@ -174,6 +175,9 @@ export function MobileNav() {
             </Button>
             <Button
               onClick={toggleColorMode}
+              aria-label={
+                colorMode === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'
+              }
               bg='none'
               size='sm'
               minW='auto'

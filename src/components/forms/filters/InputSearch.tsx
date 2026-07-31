@@ -263,6 +263,7 @@ export function InputSearch({
             border='1px solid black'
             rounded='md'
             color={colorInput}
+            aria-label='Buscar libros o personas'
             placeholder='Buscar libros o personas'
             _placeholder={{ color: `${colorInput}`, fontSize: 'xs' }}
             _hover={{ outline: 'none' }}
@@ -279,6 +280,7 @@ export function InputSearch({
               <Button
                 px='0'
                 onClick={onOpen}
+                aria-label='Más opciones de búsqueda'
                 bg='none'
                 _hover={{ bg: 'none' }}
                 _active={{ bg: 'none' }}
