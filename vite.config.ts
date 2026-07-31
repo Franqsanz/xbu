@@ -93,19 +93,18 @@ export default defineConfig({
       },
     },
   },
-  // esbuild: {
-  //   drop: ['console', 'debugger'],
-  // },
+  esbuild: {
+    drop: ['console', 'debugger'],
+  },
   build: {
     outDir: './dist',
+    // El default de vite ('baseline-widely-available') seguía transpilando
+    // clases y spread a ES5 para browsers que ya no soportamos.
+    target: 'es2022',
     chunkSizeWarningLimit: 1500,
-    rollupOptions: {
-      output: {
-        manualChunks: (id: any) => {
-          // if (id.includes('commonjsHelpers')) return 'commonjsHelpers';
-          if (id.includes('node_modules')) return 'vendor';
-        },
-      },
-    },
+    // Sin `manualChunks`: antes TODO node_modules iba a un único chunk `vendor`
+    // de 1.2 MB que se descargaba y parseaba en la carga inicial, aunque el
+    // lector de epub/pdf, el cropper y react-share sólo se usen en rutas lazy.
+    // El splitting automático los deja en el chunk de la ruta que los importa.
   },
 });
