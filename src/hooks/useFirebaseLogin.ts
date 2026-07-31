@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import {
+  browserPopupRedirectResolver,
   GoogleAuthProvider,
   isSignInWithEmailLink,
   sendSignInLinkToEmail,
@@ -159,7 +160,9 @@ export function useFirebaseLogin() {
       let firebaseResult;
       try {
         firebaseResult = await Promise.race([
-          signInWithPopup(logIn, provider),
+          // El resolver va explícito porque `logIn` se inicializa sin él para
+          // mantener el iframe de firebase fuera del camino crítico.
+          signInWithPopup(logIn, provider, browserPopupRedirectResolver),
           new Promise<never>((_, reject) =>
             setTimeout(() => reject(new Error('popup-timeout')), POPUP_TIMEOUT_MS),
           ),

@@ -1,6 +1,10 @@
 import { initializeApp } from 'firebase/app';
 // import { getAnalytics } from 'firebase/analytics';
-import { getAuth } from 'firebase/auth';
+import {
+  browserLocalPersistence,
+  indexedDBLocalPersistence,
+  initializeAuth,
+} from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -15,5 +19,13 @@ const app = initializeApp(firebaseConfig);
 
 // const analytics = getAnalytics(app);
 
-export const logIn = getAuth(app);
+// Usamos `initializeAuth` en vez de `getAuth` para NO registrar el
+// popupRedirectResolver por defecto. Ese resolver monta el iframe de
+// __/auth/iframe.js (+ gapi + getProjectConfig) en cada carga de la app para
+// escuchar resultados de signInWithRedirect, que no usamos: son ~90 KB y dos
+// round trips en el camino crítico antes de poder pintar nada.
+// El resolver se pasa a mano en signInWithPopup, que es el único que lo necesita.
+export const logIn = initializeAuth(app, {
+  persistence: [indexedDBLocalPersistence, browserLocalPersistence],
+});
 logIn.languageCode = 'es';

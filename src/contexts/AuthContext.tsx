@@ -6,11 +6,12 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { useQuery } from '@tanstack/react-query';
 
 import { AuthContextType, AuthProviderType } from '@components/types';
 import { getCheckUser } from '@services/api';
+import { logIn } from '@services/auth/config';
 import { keys } from '@utils/utils';
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -18,7 +19,10 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 function AuthProvider({ children }: AuthProviderType) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [authResolved, setAuthResolved] = useState(false);
-  const auth = getAuth();
+  // Reusamos la instancia de @services/auth/config: `getAuth()` re-registraría
+  // el popupRedirectResolver por defecto (el iframe que sacamos del camino
+  // crítico) y además tira `auth/already-initialized`.
+  const auth = logIn;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
