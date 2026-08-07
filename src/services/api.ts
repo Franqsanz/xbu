@@ -25,16 +25,36 @@ async function getBook(pathUrl: string | undefined) {
   });
 }
 
-async function getBooksFilterPaginated(
-  query: string | undefined,
-  param: string | undefined,
-  page: number | undefined,
-) {
-  return await fetchData(`${API_URL}/books?${query}=${param}&limit=10&page=${page}`);
+export interface FilterQuery {
+  // Filtro principal del URL path (single)
+  query?: string;
+  param?: string;
+  // Sub-filtros del sidebar (multi)
+  languages?: string[];
+  years?: string[];
+  authors?: string;
+  minPages?: string;
+  maxPages?: string;
 }
 
-async function getBooksFilter(query: string | undefined, param: string | undefined) {
-  return await fetchData(`${API_URL}/books?${query}=${param}`);
+/**
+ * Lista libros filtrados por cursor + facet counts dinámicos.
+ * La 1ra request (cursor null) trae `info.{totalBooks, *Counts}` para el
+ * sidebar; requests siguientes con `cursor` solo traen results + nextCursor.
+ * Los `*Counts` se recalculan server-side excluyendo la propia dimensión
+ * (patrón Amazon/MercadoLibre — al marcar "Español" los idiomas no colapsan).
+ */
+async function getBooksFilterByCursor(filters: FilterQuery, cursor: string | null) {
+  const params = new URLSearchParams({ limit: '10' });
+  if (filters.query && filters.param) params.set(filters.query, filters.param);
+  if (filters.languages?.length)
+    params.set('languages', filters.languages.join(','));
+  if (filters.years?.length) params.set('years', filters.years.join(','));
+  if (filters.authors) params.set('authors', filters.authors);
+  if (filters.minPages) params.set('minPages', filters.minPages);
+  if (filters.maxPages) params.set('maxPages', filters.maxPages);
+  if (cursor) params.set('cursor', cursor);
+  return await fetchData(`${API_URL}/books/filter?${params.toString()}`);
 }
 
 async function getMostViewedBooks(query: string) {
@@ -603,8 +623,7 @@ export {
   getAllSearchUsers,
   getBooksPaginate,
   getBook,
-  getBooksFilterPaginated,
-  getBooksFilter,
+  getBooksFilterByCursor,
   getAllFilterOptions,
   getMoreBooks,
   getMostViewedBooks,

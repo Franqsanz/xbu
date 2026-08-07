@@ -23,7 +23,7 @@ import {
 
 import { Card } from '@components/cards/Card';
 import { CardType } from '@components/types';
-import { useFilter, useFilterPaginated } from '@hooks/queries';
+import { useFilteredBooks } from '@hooks/queries';
 import { useScrollYRestoration } from '@hooks/useScrollYRestoration';
 import { ContainerTitle } from '@components/layout/ContainerTitle';
 import { MySimpleGrid } from '@components/ui/MySimpleGrid';
@@ -82,9 +82,28 @@ export default function FilteredData() {
     error: errorPaginated,
     fetchNextPage,
     isFetchingNextPage,
-  } = useFilterPaginated(query, param);
+  } = useFilteredBooks({
+    query,
+    param,
+    languages: selectedLanguages,
+    years: selectedYears,
+    authors: selectedAuthor || undefined,
+    minPages: selectedMinPages || undefined,
+    maxPages: selectedMaxPages || undefined,
+  });
 
-  const { data: dataFilter, isPending: isPendingFilter } = useFilter(query, param);
+  // Los *Counts vienen de la 1ra página y se recalculan server-side cada vez
+  // que cambia algún sub-filtro (facet dinámico).
+  const firstPageInfo = dataPaginated?.pages?.[0]?.info;
+  const dataFilter = firstPageInfo
+    ? {
+        totalBooks: firstPageInfo.totalBooks,
+        languageCounts: firstPageInfo.languageCounts ?? [],
+        yearCounts: firstPageInfo.yearCounts ?? [],
+        authorsCounts: firstPageInfo.authorsCounts ?? [],
+        pagesCounts: firstPageInfo.pagesCounts ?? [],
+      }
+    : undefined;
 
   useScrollYRestoration(isPendingPaginated); // Restablece la posición del scroll al volver de la vista del libro
 
@@ -182,54 +201,15 @@ export default function FilteredData() {
     }
   }
 
-  // Filtrar por número de páginas
-  function pagesMatch(numberPages) {
-    const minPages = selectedMinPages ? Number(selectedMinPages) : null;
-    const maxPages = selectedMaxPages ? Number(selectedMaxPages) : null;
-
-    if (minPages !== null && maxPages !== null) {
-      return numberPages >= minPages && numberPages <= maxPages;
-    }
-
-    if (minPages !== null) {
-      return numberPages >= minPages;
-    }
-
-    if (maxPages !== null) {
-      return numberPages <= maxPages;
-    }
-
-    return true;
-  }
-
-  // Esta función ejecuta la petición de paginación por defecto
-  // y si se aplican los filtros ejecuta la petición "dataFilter".
+  // El filtrado se hace server-side (los sub-filtros van al backend en el
+  // queryKey). Aquí solo aplano las páginas cargadas por el infinite query;
+  // el sort sigue en cliente sobre el buffer acumulado.
   function getNormalizedResults() {
-    if (isFiltering) {
-      return (
-        dataFilter?.results?.filter(({ language, year, authors, numberPages }) => {
-          // Filtrar por idioma (multi-select: OR entre valores)
-          const languageMatch =
-            selectedLanguages.length === 0 || selectedLanguages.includes(language);
-
-          // Filtrar por año (multi-select: OR entre valores)
-          const yearMatch =
-            selectedYears.length === 0 || selectedYears.includes(String(year));
-
-          // Filtrar por autor
-          const authorMatch = selectedAuthor
-            ? authors[0].toLowerCase() === selectedAuthor
-            : true;
-
-          // Devuelve el resultado solo si cumple con todos los filtros
-          return (
-            languageMatch && yearMatch && authorMatch && pagesMatch(numberPages)
-          );
-        }) || []
-      );
-    }
-    // Combina todos los resultados de las páginas
-    return dataPaginated?.pages.flatMap((page) => page?.results) || [];
+    return (
+      dataPaginated?.pages.flatMap(
+        (page: { results: CardType[] }) => page?.results ?? [],
+      ) ?? []
+    );
   }
 
   const results = sortResults<CardType>(getNormalizedResults());
@@ -309,29 +289,27 @@ export default function FilteredData() {
             },
           }}
         >
-          {isPendingFilter ? (
-            <Box m='auto'>
-              <Spinner thickness='2px' speed='0.40s' />
-            </Box>
-          ) : (
-            <FilterAccordion
-              selectedMinPages={selectedMinPages}
-              selectedMaxPages={selectedMaxPages}
-              handleMinChange={handleMinChange}
-              handleMaxChange={handleMaxChange}
-              selectedLanguages={selectedLanguages}
-              toggleLanguage={toggleLanguage}
-              languages={languages}
-              selectedYears={selectedYears}
-              toggleYear={toggleYear}
-              years={years}
-              selectedAuthor={selectedAuthor}
-              handleAuthorChange={handleAuthorChange}
-              authors={authors}
-              sortBy={sortBy}
-              onSortChange={setSortBy}
-            />
-          )}
+          {/* No reemplazamos el FilterAccordion por un Spinner durante el
+              re-fetch — al desmontarse pierde su state interno (índices de
+              acordeones abiertos). Con `keepPreviousData` los counts previos
+              siguen renderizados hasta que llegan los nuevos. */}
+          <FilterAccordion
+            selectedMinPages={selectedMinPages}
+            selectedMaxPages={selectedMaxPages}
+            handleMinChange={handleMinChange}
+            handleMaxChange={handleMaxChange}
+            selectedLanguages={selectedLanguages}
+            toggleLanguage={toggleLanguage}
+            languages={languages}
+            selectedYears={selectedYears}
+            toggleYear={toggleYear}
+            years={years}
+            selectedAuthor={selectedAuthor}
+            handleAuthorChange={handleAuthorChange}
+            authors={authors}
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+          />
         </Flex>
       </Flex>
     );

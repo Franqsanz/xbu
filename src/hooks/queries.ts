@@ -3,6 +3,7 @@ import {
   useSuspenseQuery,
   useMutation,
   useInfiniteQuery,
+  keepPreviousData,
 } from '@tanstack/react-query';
 
 import {
@@ -12,7 +13,7 @@ import {
   getAllFilterOptions,
   getBooksPaginate,
   getBook,
-  getBooksFilter,
+  getBooksFilterByCursor,
   getMoreBooks,
   getMostViewedBooks,
   getRelatedBooks,
@@ -30,7 +31,6 @@ import {
   updateBook,
   deleteBook,
   deleteAccount,
-  getBooksFilterPaginated,
   getFindAllBookFavorite,
   getFindAllCollections,
   getFindOneCollection,
@@ -207,33 +207,60 @@ function useBooksPaginate() {
   });
 }
 
-function useFilterPaginated(query: string | undefined, param: string | undefined) {
+interface UseFilteredBooksInput {
+  query: string | undefined;
+  param: string | undefined;
+  languages?: string[];
+  years?: string[];
+  authors?: string;
+  minPages?: string;
+  maxPages?: string;
+}
+
+/**
+ * Filtro de libros con cursor + facet counts dinámicos.
+ * La 1ra página trae `info.{totalBooks, *Counts}` (que alimentan el sidebar)
+ * + `results`; páginas siguientes solo cursor + results. Cuando cambian los
+ * sub-filtros (languages/years/etc.) React Query re-fetchea desde la 1ra
+ * página con los counts ya recalculados server-side sobre la nueva selección.
+ */
+function useFilteredBooks(input: UseFilteredBooksInput) {
+  const filters = {
+    query: input.query,
+    param: input.param,
+    languages: input.languages,
+    years: input.years,
+    authors: input.authors,
+    minPages: input.minPages,
+    maxPages: input.maxPages,
+  };
   return useInfiniteQuery({
-    queryKey: [keys.filterPaginated, query, param],
-    queryFn: ({ pageParam }) => getBooksFilterPaginated(query, param, pageParam),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => {
-      if (lastPage.info.nextPage === null) return;
-
-      return lastPage.info.nextPage;
-    },
+    queryKey: [
+      keys.filterPaginated,
+      input.query,
+      input.param,
+      input.languages ?? [],
+      input.years ?? [],
+      input.authors ?? '',
+      input.minPages ?? '',
+      input.maxPages ?? '',
+    ],
+    queryFn: ({ pageParam }) =>
+      getBooksFilterByCursor(filters, pageParam as string | null),
+    initialPageParam: null as string | null,
+    getNextPageParam: (lastPage) => lastPage?.info?.nextCursor ?? undefined,
+    // Al cambiar sub-filtros el queryKey cambia y sin esto React Query devuelve
+    // `data=undefined` mientras carga la nueva query — eso desmonta el sidebar
+    // y resetea el estado local del acordeón. Con `keepPreviousData` seguimos
+    // renderizando la data anterior hasta que llega la nueva.
+    placeholderData: keepPreviousData,
     gcTime: 3000,
     retry: false,
     refetchOnWindowFocus: false,
   });
 }
 
-function useFilter(query: string | undefined, param: string | undefined) {
-  return useQuery({
-    queryKey: [keys.filter, query, param],
-    queryFn: () => getBooksFilter(query, param),
-    gcTime: 3000,
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
-}
-
-function useMostViewedBooks(query) {
+function useMostViewedBooks(query: string) {
   return useQuery({
     queryKey: [keys.mostViewed, query],
     queryFn: () => getMostViewedBooks(query),
@@ -1194,8 +1221,7 @@ export {
   useAllSearchUsers,
   useBooksPaginate,
   useBook,
-  useFilterPaginated,
-  useFilter,
+  useFilteredBooks,
   useMoreBooks,
   useMostViewedBooks,
   useRelatedBooks,
