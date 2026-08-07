@@ -4,7 +4,7 @@ import { MyChangeEvent } from '@components/types';
 
 function handleInputChange(
   e: MyChangeEvent,
-  books,
+  books: any,
   setBooks: React.Dispatch<React.SetStateAction<any>>,
 ) {
   const { name, value } = e.target;
@@ -32,22 +32,22 @@ function handleInputChange(
 }
 
 function handleCategory(
-  selectedOptions,
+  selectedOptions: any,
   setBooks: React.Dispatch<React.SetStateAction<any>>,
 ) {
   // Verificar si se seleccionaron opciones
   if (selectedOptions && selectedOptions.length > 0) {
     // Obtener los valores de las opciones seleccionadas
-    const selectedValues = selectedOptions.map((option) => option.value);
+    const selectedValues = selectedOptions.map((option: any) => option.value);
 
     // Actualizar el estado de 'books' con los valores seleccionados
-    setBooks((prevBooks) => ({
+    setBooks((prevBooks: any) => ({
       ...prevBooks,
       category: selectedValues,
     }));
   } else {
     // Si no se seleccionaron opciones, establecer el estado de 'category' como un array vacío
-    setBooks((prevBooks) => ({
+    setBooks((prevBooks: any) => ({
       ...prevBooks,
       category: [],
     }));
@@ -55,11 +55,11 @@ function handleCategory(
 }
 
 function handleField(
-  fieldName,
-  newValue,
+  fieldName: string,
+  newValue: unknown,
   setBooks: React.Dispatch<React.SetStateAction<any>>,
 ) {
-  setBooks((books) => ({
+  setBooks((books: any) => ({
     ...books,
     [fieldName]: newValue,
   }));
@@ -77,7 +77,11 @@ function useFileInputRef() {
   return { fileInputRef, handleButtonClick };
 }
 
-async function handleImage(e, setCropData, onOpen) {
+async function handleImage(
+  e: React.ChangeEvent<HTMLInputElement>,
+  setCropData: (url: string) => void,
+  onOpen: () => void,
+) {
   const file = e.target.files?.[0];
   if (!file) return;
 
@@ -128,16 +132,22 @@ async function handleImage(e, setCropData, onOpen) {
 //   }
 // }
 
-async function getCrop(crop, setPreviewImg, books, setBooks, onClose) {
+async function getCrop(
+  crop: any,
+  setPreviewImg: (blob: Blob | null) => void,
+  books: any,
+  setBooks: React.Dispatch<React.SetStateAction<any>>,
+  onClose: () => void,
+) {
   if (typeof crop !== 'undefined') {
     const croppedCanvas = crop.getCroppedCanvas();
-    croppedCanvas.toBlob((blob) => {
+    croppedCanvas.toBlob((blob: Blob | null) => {
       setPreviewImg(blob);
       if (blob) {
         const publicId = books.image.public_id;
         const pId = publicId.replace('xbu/', '');
 
-        setBooks((prevBooks) => ({
+        setBooks((prevBooks: any) => ({
           ...prevBooks,
           image: {
             blob: blob,

@@ -5,7 +5,7 @@ import { ContainerRCard } from '@components/cards/ContainerRCard';
 import { CardType } from '@components/types';
 import { useMoreBooks } from '@hooks/queries';
 
-export default function MoreBooks({ id }) {
+export default function MoreBooks({ id }: { id: string }) {
   const { data, refetch } = useMoreBooks(id);
 
   return (

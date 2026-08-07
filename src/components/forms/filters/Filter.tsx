@@ -27,24 +27,28 @@ export default function Filter({ onClose }: Props) {
 
   const categories =
     data &&
-    data[0].categories[0].map(({ category, count }) => ({
-      value: category,
-      total: count,
-    }));
+    data[0].categories[0].map(
+      ({ category, count }: { category: string; count: number }) => ({
+        value: category,
+        total: count,
+      }),
+    );
 
   const years =
     data &&
-    data[0].years[0].map(({ year, count }) => ({
+    data[0].years[0].map(({ year, count }: { year: string; count: number }) => ({
       value: year,
       total: count,
     }));
 
   const languages =
     data &&
-    data[0].languages[0].map(({ language, count }) => ({
-      value: language,
-      total: count,
-    }));
+    data[0].languages[0].map(
+      ({ language, count }: { language: string; count: number }) => ({
+        value: language,
+        total: count,
+      }),
+    );
 
   useEffect(() => {
     if (query === 'year') setValues(years);

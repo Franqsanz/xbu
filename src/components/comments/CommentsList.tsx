@@ -67,7 +67,8 @@ export function CommentsList({
   const { mutateAsync: updateComment, isPending: isUpdating } = useUpdateComment();
   const { mutateAsync: deleteComment, isPending: isDeleting } = useDeleteComment();
 
-  const allComments = commentsData?.pages.flatMap((page) => page.results) || [];
+  const allComments =
+    commentsData?.pages.flatMap((page: { results: any[] }) => page.results) || [];
   const totalComments =
     commentsData?.pages[0]?.info?.totalComments ?? allComments.length;
 
@@ -221,7 +222,7 @@ export function CommentsList({
             isEdited,
             createdAt,
             repliesCount = 0,
-          }) => (
+          }: any) => (
             <Flex
               key={_id}
               flexDirection='column'

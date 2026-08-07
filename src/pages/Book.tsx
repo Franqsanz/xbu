@@ -505,7 +505,7 @@ export default function Book() {
             textTransform='uppercase'
             flexWrap='wrap'
           >
-            {data.authors.map((author, index) => (
+            {data.authors.map((author: string, index: number) => (
               <MyLink
                 external={false}
                 key={index}
@@ -586,7 +586,7 @@ export default function Book() {
                   </Box>
                   <Box>
                     <Flex flexWrap='wrap' as='span'>
-                      {data.category.map((category, index) => (
+                      {data.category.map((category: string, index: number) => (
                         <MyLink
                           external={false}
                           key={index}

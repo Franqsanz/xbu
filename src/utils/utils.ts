@@ -92,7 +92,8 @@ function generatePathUrl(name: string) {
 }
 
 // Funcion para verificar si se encuentra en otro idioma que no sea español
-function isSpanish(language) {
+function isSpanish(language: string | undefined) {
+  if (!language) return false;
   const spanishLanguage = ['Español', 'español'];
   const lowerCaseLanguage = language.toLowerCase();
   return spanishLanguage.includes(lowerCaseLanguage);

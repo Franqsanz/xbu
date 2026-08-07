@@ -103,11 +103,11 @@ export function FormNewBook() {
     handleInputChange(e, books, setBooks);
   }
 
-  function handleCategoryChange(selectedOptions) {
+  function handleCategoryChange(selectedOptions: any) {
     handleCategory(selectedOptions, setBooks);
   }
 
-  function handleFieldChange(fieldName, newValue) {
+  function handleFieldChange(fieldName: string, newValue: any) {
     handleField(fieldName, newValue, setBooks);
   }
 

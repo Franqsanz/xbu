@@ -6,7 +6,7 @@ import { FilterSearchableRadio } from '@components/filters/FilterSearchableRadio
 import { FilterSort, SortValue } from '@components/filters/FilterSort';
 import { capitalizeWords } from '@utils/utils';
 
-interface FilterAccordionTypes {
+export interface FilterAccordionTypes {
   selectedMinPages: string;
   selectedMaxPages: string;
   handleMinChange: React.ChangeEventHandler<HTMLInputElement>;

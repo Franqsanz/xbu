@@ -127,7 +127,7 @@ export function CollectionDetail() {
     }
   }, [isSuccessDeleteBook]);
 
-  function handleOpenDelete(book) {
+  function handleOpenDelete(book: any) {
     setSelectedBook(book);
     onOpenDeleteBook();
   }
@@ -162,7 +162,7 @@ export function CollectionDetail() {
             sourceLink,
             pathUrl,
             image,
-          }) => (
+          }: any) => (
             <React.Fragment key={id}>
               <Card
                 id={id}

@@ -6,7 +6,7 @@ import { ContainerRCard } from '@components/cards/ContainerRCard';
 import { CardType } from '@components/types';
 import { useMoreBooksAuthors } from '@hooks/queries';
 
-export default function MoreBooksAuthors({ id }) {
+export default function MoreBooksAuthors({ id }: { id: string }) {
   const { data, refetch } = useMoreBooksAuthors(id);
   let uiCard;
 

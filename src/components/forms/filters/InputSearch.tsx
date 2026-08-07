@@ -41,11 +41,11 @@ import { useDebounce } from '@hooks/useDebounce';
 import { BookSearchResultsType } from '@components/types';
 import { cldAvatar } from '@utils/images';
 
-function highlightText(text, query) {
+function highlightText(text: string, query: string) {
   const regex = new RegExp(`(${query.trim()})`, 'gi');
   return text
     .split(regex)
-    .map((part, index) =>
+    .map((part: string, index: number) =>
       regex.test(part) ? <mark key={index}>{part}</mark> : part,
     );
 }
@@ -377,7 +377,7 @@ export function InputSearch({
                             {highlightText(book.title, search.query)}
                           </Box>
                           <Box fontSize='xs'>
-                            {book.authors.map((author, index) => (
+                            {book.authors.map((author: string, index: number) => (
                               <span key={index}>
                                 {highlightText(author, search.query)}
                                 {index < book.authors.length - 1 && ', '}
