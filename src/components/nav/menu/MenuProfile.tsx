@@ -41,7 +41,8 @@ export function MenuProfile({ displayName, photoURL, username }: MenuType) {
         borderRadius='full'
         ml={{ base: '2px', md: 4 }}
         mr={{ base: 2, md: 0 }}
-        _hover={{ border: `2px solid  ${colorBorder}` }}
+        _hover={{ outline: `2px solid ${colorBorder}` }}
+        _focusVisible={{ outline: `2px solid ${colorBorder}` }}
       >
         <Avatar
           name={displayName as string}

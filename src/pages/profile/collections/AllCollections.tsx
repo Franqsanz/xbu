@@ -67,59 +67,69 @@ export function AllCollections() {
   } else {
     collectionsUI = (
       <MySimpleGrid overflow='hidden' gap={{ base: 3, sm: 5 }}>
-        {data?.collections.map(({ id, name, createdAt }) => (
-          <>
-            <Flex
-              key={id}
-              w={{ base: 'full', xl: '250px' }}
-              h={{ base: '200px', sm: '210px' }}
-              boxShadow='xl'
-              border='1px solid #A0AEC0'
-              rounded='lg'
-              direction='column'
-              justifyContent={{ base: 'space-between', md: 'flex-start' }}
-              justify='center'
-              position='relative'
-            >
-              <Flex w='full' justify='flex-end'>
-                <MenuCollections id={id} name={name} refetch={refetch} />
-              </Flex>
-              <Flex w='full' direction='column' textAlign='center' gap='3'>
-                <Box mb='4'>
-                  <Box mb='1' fontSize={{ base: 'xs', sm: 'lg' }}>
-                    {name}
+        {data?.collections.map(
+          ({
+            id,
+            name,
+            createdAt,
+          }: {
+            id: string;
+            name: string;
+            createdAt: string;
+          }) => (
+            <>
+              <Flex
+                key={id}
+                w={{ base: 'full', xl: '250px' }}
+                h={{ base: '200px', sm: '210px' }}
+                boxShadow='xl'
+                border='1px solid #A0AEC0'
+                rounded='lg'
+                direction='column'
+                justifyContent={{ base: 'space-between', md: 'flex-start' }}
+                justify='center'
+                position='relative'
+              >
+                <Flex w='full' justify='flex-end'>
+                  <MenuCollections id={id} name={name} refetch={refetch} />
+                </Flex>
+                <Flex w='full' direction='column' textAlign='center' gap='3'>
+                  <Box mb='4'>
+                    <Box mb='1' fontSize={{ base: 'xs', sm: 'lg' }}>
+                      {name}
+                    </Box>
+                    <Box fontSize={{ base: '9px', sm: '10px' }}>
+                      {parseDate(createdAt)}
+                    </Box>
                   </Box>
-                  <Box fontSize={{ base: '9px', sm: '10px' }}>
-                    {parseDate(createdAt)}
-                  </Box>
-                </Box>
-                <Link
-                  as={NavLink}
-                  to={`/my-collections/collection/${id}`}
-                  w='full'
-                  bg={bgRandomBookCardLink}
-                  py='4'
-                  px='7'
-                  color={colorLink}
-                  position={{ base: 'initial', md: 'absolute' }}
-                  bottom='0'
-                  roundedBottom='lg'
-                  tabIndex={-1}
-                  _hover={{ outline: 'none' }}
-                >
-                  <Flex
-                    align='center'
-                    justify={{ base: 'center', md: 'flex-start' }}
-                    fontSize={{ base: 'sm', md: 'md' }}
+                  <Link
+                    as={NavLink}
+                    to={`/my-collections/collection/${id}`}
+                    w='full'
+                    bg={bgRandomBookCardLink}
+                    py='4'
+                    px='7'
+                    color={colorLink}
+                    position={{ base: 'initial', md: 'absolute' }}
+                    bottom='0'
+                    roundedBottom='lg'
+                    tabIndex={-1}
+                    _hover={{ outline: 'none' }}
                   >
-                    Abrir
-                    <Icon as={FiArrowRight} ml='2' />
-                  </Flex>
-                </Link>
+                    <Flex
+                      align='center'
+                      justify={{ base: 'center', md: 'flex-start' }}
+                      fontSize={{ base: 'sm', md: 'md' }}
+                    >
+                      Abrir
+                      <Icon as={FiArrowRight} ml='2' />
+                    </Flex>
+                  </Link>
+                </Flex>
               </Flex>
-            </Flex>
-          </>
-        ))}
+            </>
+          ),
+        )}
       </MySimpleGrid>
     );
   }
@@ -136,28 +146,28 @@ export function AllCollections() {
         onClose={onClose}
         refetch={refetch}
       />
-      <Flex m='0 auto'>
-        <Flex
-          w={{ base: 'full', md: '1315px', '2xl': '1580px' }}
-          mt='4'
-          pb='3'
-          px={{ base: '6', md: '20', sm: '10' }}
-          borderBottom={`1px solid ${grayColor}`}
-          justify='space-between'
-          align='center'
-          fontSize='lg'
-        >
-          {data?.totalCollections ?? 0}{' '}
-          {data?.totalCollections === 1 ? 'Colección' : 'Colecciones'}
-          <Button fontWeight='500' onClick={onOpen} size='sm'>
-            <Flex align='center' justify='center'>
-              <Icon as={TbPlaylistAdd} fontSize='25' mr='1' />
-              <Box as='span' display={{ base: 'none', md: 'block' }}>
-                Nueva colección
-              </Box>
-            </Flex>
-          </Button>
-        </Flex>
+      <Flex
+        w='full'
+        maxW={{ base: '1260px', '2xl': '1560px' }}
+        m='0 auto'
+        mt='4'
+        pb='3'
+        px={{ base: 5, md: 10, '2xl': 16 }}
+        borderBottom={`1px solid ${grayColor}`}
+        justify='space-between'
+        align='center'
+        fontSize='lg'
+      >
+        {data?.totalCollections ?? 0}{' '}
+        {data?.totalCollections === 1 ? 'Colección' : 'Colecciones'}
+        <Button fontWeight='500' onClick={onOpen} size='sm'>
+          <Flex align='center' justify='center'>
+            <Icon as={TbPlaylistAdd} fontSize='25' mr='1' />
+            <Box as='span' display={{ base: 'none', md: 'block' }}>
+              Nueva colección
+            </Box>
+          </Flex>
+        </Button>
       </Flex>
       <MyContainer>{collectionsUI}</MyContainer>
     </>
