@@ -7,7 +7,6 @@ import compression from 'vite-plugin-compression';
 import webfontDownload from 'vite-plugin-webfont-dl';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { createHtmlPlugin } from 'vite-plugin-html';
-import removeConsole from 'vite-plugin-remove-console';
 import path from 'path';
 
 export default defineConfig({
@@ -26,7 +25,6 @@ export default defineConfig({
         proxy: false,
       },
     ),
-    removeConsole(),
     createHtmlPlugin({ minify: true }),
     compression({
       algorithm: 'brotliCompress',
@@ -93,15 +91,28 @@ export default defineConfig({
       },
     },
   },
-  esbuild: {
-    drop: ['console', 'debugger'],
-  },
   build: {
     outDir: './dist',
     // El default de vite ('baseline-widely-available') seguía transpilando
     // clases y spread a ES5 para browsers que ya no soportamos.
     target: 'es2022',
     chunkSizeWarningLimit: 1500,
+    rolldownOptions: {
+      output: {
+        // Vite 8 minifica con Oxc, no con esbuild: la opción `esbuild.drop`
+        // que había acá se ignoraba en silencio y los console.* estaban
+        // llegando a producción. `mangle` y `codegen` van explícitos porque
+        // al pasar un objeto se pierde el preset de `minify: 'oxc'`.
+        minify: {
+          compress: {
+            dropConsole: true,
+            dropDebugger: true,
+          },
+          mangle: true,
+          codegen: true,
+        },
+      },
+    },
     // Sin `manualChunks`: antes TODO node_modules iba a un único chunk `vendor`
     // de 1.2 MB que se descargaba y parseaba en la carga inicial, aunque el
     // lector de epub/pdf, el cropper y react-share sólo se usen en rutas lazy.
