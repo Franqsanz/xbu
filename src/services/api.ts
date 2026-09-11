@@ -495,6 +495,12 @@ async function getFollowing(userId: string, page: number = 0, limit: number = 10
   );
 }
 
+async function getFollowSuggestions(limit: number) {
+  return await fetchData(`${API_URL}/users/me/suggestions?limit=${limit}`, {
+    credentials: 'include',
+  });
+}
+
 async function getFollowStats(userId: string) {
   return await fetchData(`${API_URL}/users/${userId}/follow-stats`, {
     // credentials: 'include',
@@ -666,6 +672,7 @@ export {
   getFollowers,
   getFollowing,
   getFollowStats,
+  getFollowSuggestions,
   getFeed,
   getBookStatus,
   patchBookStatus,

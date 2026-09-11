@@ -51,6 +51,7 @@ import {
   followUser,
   unfollowUser,
   getFollowStats,
+  getFollowSuggestions,
   getFollowers,
   getFollowing,
   getFeed,
@@ -945,6 +946,15 @@ function useUnfollowUser() {
   });
 }
 
+function useFollowSuggestions(limit: number = 3) {
+  return useQuery({
+    queryKey: [keys.followSuggestions, limit],
+    queryFn: () => getFollowSuggestions(limit),
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
+}
+
 function useFollowStats(userId: string | undefined) {
   return useQuery({
     queryKey: [keys.followStats, userId],
@@ -1256,6 +1266,7 @@ export {
   useFollowUser,
   useUnfollowUser,
   useFollowStats,
+  useFollowSuggestions,
   useFollowers,
   useFollowing,
   useFeed,
