@@ -1,9 +1,14 @@
-import { Box } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 import { MainHead } from '@components/layout/Head';
 import { useAuth } from '@contexts/AuthContext';
 import { LandingHome } from '@pages/LandingHome';
 import { Feed } from '@components/feed/Feed';
+import { HomeLayout } from '@components/layout/HomeLayout';
+import { ContinueReading } from '@components/aside/ContinueReading';
+import { WhoToFollow } from '@components/aside/WhoToFollow';
+import { MyCollections } from '@components/aside/MyCollections';
+import { MostViewed } from '@components/aside/MostViewed';
 
 export default function Home() {
   const { userData } = useAuth();
@@ -16,15 +21,18 @@ export default function Home() {
         urlImage='https://www.xbureads.com/ogImage.png'
       />
       {userData ? (
-        <Box
-          w='full'
-          maxW='4xl'
-          m='auto'
-          px={{ base: 6, md: 6 }}
-          py={{ base: 6, md: 10 }}
+        <HomeLayout
+          leftRail={<MostViewed compact />}
+          rightRail={
+            <Flex direction='column' gap='8'>
+              <ContinueReading />
+              <WhoToFollow />
+              <MyCollections />
+            </Flex>
+          }
         >
           <Feed />
-        </Box>
+        </HomeLayout>
       ) : (
         <LandingHome />
       )}
