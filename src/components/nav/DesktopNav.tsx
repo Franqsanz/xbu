@@ -19,6 +19,7 @@ import { MenuProfile } from '@components/nav/menu/MenuProfile';
 import { NotificationsBell } from '@components/notifications/NotificationsBell';
 import { InputSearch } from '@components/forms/filters/InputSearch';
 import { ModalFilter } from '@components/modals/ModalFilter';
+import { CONTENT_MAX_W } from '@components/ui/layout';
 import { useAuth } from '@contexts/AuthContext';
 import { useCheckUser } from '@hooks/queries';
 import { useLoginModalStore } from '@store/useLoginModalStore';
@@ -85,7 +86,7 @@ export function DesktopNav() {
         <Flex
           as='nav'
           w='100%'
-          maxW={{ base: '1160px', '2xl': '1430px' }}
+          maxW={CONTENT_MAX_W}
           m='auto'
           justify='space-between'
           align='center'
