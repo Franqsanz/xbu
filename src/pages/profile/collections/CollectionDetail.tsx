@@ -34,6 +34,7 @@ import { Card } from '@components/cards/Card';
 import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { NoData } from '@assets/assets';
 import { MyContainer } from '@components/ui/MyContainer';
+import { ContainerRow } from '@components/ui/ContainerRow';
 import { useAuth } from '@contexts/AuthContext';
 import { SkeletonDCollection } from '@components/skeletons/SkeletonDCollection';
 import { useMyToast } from '@hooks/useMyToast';
@@ -304,25 +305,16 @@ export function CollectionDetail() {
         isPending={isPendingDeleteBook}
         onClose={onCloseDeleteBook}
       />
-      <Flex m='0 auto'>
-        <Flex
-          w={{ base: '1315px', '2xl': '1580px' }}
-          mt='4'
-          px={{ base: '6', md: '20', sm: '10' }}
-          // borderBottom={`1px solid ${grayColor}`}
-          justify='space-between'
-          align='center'
-        >
-          <Button fontWeight='normal' w='90px' size='sm' onClick={handleGoBack}>
-            <Flex align='center' justify='center'>
-              <Icon as={FiArrowLeft} boxSize='4' mr='1' />
-              Volver
-            </Flex>
-          </Button>
-          {btnOptionsDesktop}
-          {btnOptionsMobile}
-        </Flex>
-      </Flex>
+      <ContainerRow>
+        <Button fontWeight='normal' w='90px' size='sm' onClick={handleGoBack}>
+          <Flex align='center' justify='center'>
+            <Icon as={FiArrowLeft} boxSize='4' mr='1' />
+            Volver
+          </Flex>
+        </Button>
+        {btnOptionsDesktop}
+        {btnOptionsMobile}
+      </ContainerRow>
       <MyContainer>{asideAndCardsUI}</MyContainer>
     </>
   );

@@ -17,6 +17,7 @@ import { ContainerTitle } from '@components/layout/ContainerTitle';
 import { MainHead } from '@components/layout/Head';
 import { collections } from '@assets/assets';
 import { MyContainer } from '@components/ui/MyContainer';
+import { ContainerRow } from '@components/ui/ContainerRow';
 import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 import { ModalCollection } from '@components/modals/ModalCollection';
 import { SkeletonACollections } from '@components/skeletons/SkeletonACollections';
@@ -146,18 +147,7 @@ export function AllCollections() {
         onClose={onClose}
         refetch={refetch}
       />
-      <Flex
-        w='full'
-        maxW={{ base: '1260px', '2xl': '1560px' }}
-        m='0 auto'
-        mt='4'
-        pb='3'
-        px={{ base: 5, md: 10, '2xl': 16 }}
-        borderBottom={`1px solid ${grayColor}`}
-        justify='space-between'
-        align='center'
-        fontSize='lg'
-      >
+      <ContainerRow pb='3' borderBottom={`1px solid ${grayColor}`} fontSize='lg'>
         {data?.totalCollections ?? 0}{' '}
         {data?.totalCollections === 1 ? 'Colección' : 'Colecciones'}
         <Button fontWeight='500' onClick={onOpen} size='sm'>
@@ -168,7 +158,7 @@ export function AllCollections() {
             </Box>
           </Flex>
         </Button>
-      </Flex>
+      </ContainerRow>
       <MyContainer>{collectionsUI}</MyContainer>
     </>
   );
