@@ -1,25 +1,29 @@
-import React from 'react';
 import { Box, Skeleton, SkeletonText, Stack } from '@chakra-ui/react';
 
 import { Aside } from '@components/aside/Aside';
 import { MyContainer } from '@components/ui/MyContainer';
 import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 
-export function SkeletonContainer() {
+/**
+ * `aside={false}` para las pantallas cuyo contenido real es sólo el grid, como
+ * el detalle de colección.
+ */
+export function SkeletonContainer({ aside = true }: { aside?: boolean }) {
+  // Mismas medidas que `Card`: w 120/180/200, h auto/300.
   const Cards = Array.from({ length: 12 }, (_, index) => (
     <Stack key={index} spacing='2' mb='10'>
       <Skeleton
-        w={{ base: '120px', sm: '150px', md: '200px' }}
+        w={{ base: '120px', sm: '180px', md: '200px' }}
         h={{ base: '160px', sm: '200px', md: '300px' }}
         rounded='lg'
-      ></Skeleton>
+      />
       <SkeletonText mt='1' noOfLines={2} spacing='2' skeletonHeight='4' />
     </Stack>
   ));
 
   return (
-    <>
-      <MyContainer>
+    <MyContainer>
+      {aside && (
         <Aside>
           <Box mt={{ base: '7', md: '52px' }}>
             <SkeletonText
@@ -39,8 +43,8 @@ export function SkeletonContainer() {
             <SkeletonText mt='1' noOfLines={4} spacing='2' skeletonHeight='3' />
           </Box>
         </Aside>
-        <MySimpleGrid>{Cards}</MySimpleGrid>
-      </MyContainer>
-    </>
+      )}
+      <MySimpleGrid>{Cards}</MySimpleGrid>
+    </MyContainer>
   );
 }

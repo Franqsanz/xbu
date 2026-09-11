@@ -1,38 +1,35 @@
-import React from 'react';
-import { Flex, Skeleton, Stack } from '@chakra-ui/react';
+import { Skeleton, useColorModeValue } from '@chakra-ui/react';
 
+import { ContainerTitle } from '@components/layout/ContainerTitle';
+import { ContainerRow } from '@components/ui/ContainerRow';
 import { MyContainer } from '@components/ui/MyContainer';
 import { MySimpleGrid } from '@components/ui/MySimpleGrid';
 
+/** Cuántas tarjetas dibujamos mientras carga. */
+const CARDS = 6;
+
 export function SkeletonACollections() {
-  const Cards = Array.from({ length: 6 }, (_, index) => (
-    <Stack key={index} spacing='2' mb='10'>
-      <Skeleton
-        w={{ base: '150px', sm: '250px' }}
-        h={{ base: '200px', sm: '210px' }}
-        rounded='lg'
-      ></Skeleton>
-    </Stack>
-  ));
+  const grayColor = useColorModeValue('#E2E8F0', '#2D3748');
 
   return (
     <>
-      <Skeleton py={{ base: 16, md: '80px' }} />
-      <Flex m='0 auto'>
-        <Flex
-          w={{ base: '1315px', '2xl': '1580px' }}
-          mt='4'
-          pb='4'
-          px={{ base: '6', md: '20', sm: '10' }}
-          justify='space-between'
-          align='center'
-        >
-          <Skeleton w='120px' h='20px' />
-          <Skeleton w={{ base: '40px', md: '150px' }} h='30px' rounded='lg' />
-        </Flex>
-      </Flex>
+      {/* El título es fijo: lo mostramos de verdad en vez de simularlo. */}
+      <ContainerTitle title='Mis colecciones' />
+      <ContainerRow pb='3' borderBottom={`1px solid ${grayColor}`}>
+        <Skeleton h='24px' w='130px' />
+        <Skeleton h='32px' w={{ base: '45px', md: '160px' }} rounded='md' />
+      </ContainerRow>
       <MyContainer>
-        <MySimpleGrid>{Cards}</MySimpleGrid>
+        <MySimpleGrid overflow='hidden' gap={{ base: 3, sm: 5 }}>
+          {Array.from({ length: CARDS }, (_, index) => (
+            <Skeleton
+              key={index}
+              w={{ base: 'full', xl: '250px' }}
+              h={{ base: '200px', sm: '210px' }}
+              rounded='lg'
+            />
+          ))}
+        </MySimpleGrid>
       </MyContainer>
     </>
   );

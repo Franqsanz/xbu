@@ -1,35 +1,31 @@
-import React from 'react';
 import { Flex, Skeleton } from '@chakra-ui/react';
 
+import { ContainerTitle } from '@components/layout/ContainerTitle';
+import { ContainerRow } from '@components/ui/ContainerRow';
 import { SkeletonContainer } from './SkeletonContainer';
 
 export function SkeletonDCollection() {
   return (
     <>
-      <Skeleton py={{ base: 16, md: '80px' }} />
-      <Flex m='0 auto'>
-        <Flex
-          w={{ base: '1300px', '2xl': '1580px' }}
-          mt='4'
-          pb='4'
-          px={{ base: '6', md: '16', sm: '10' }}
-          justify='space-between'
-          align='center'
-        >
-          <Skeleton w='100px' h='30px' rounded='lg' />
-          <Flex display={{ base: 'none', sm: 'flex' }} gap='3' mr='3'>
-            <Skeleton w='140px' h='30px' rounded='lg' />
-            <Skeleton w='150px' h='30px' rounded='lg' />
-          </Flex>
-          <Skeleton
-            display={{ base: 'block', sm: 'none' }}
-            w='32px'
-            h='32px'
-            rounded='lg'
-          />
+      {/* Acá el título es el nombre de la colección, que todavía no llegó: va la
+          banda vacía. Usamos el componente real con un espacio duro para que
+          reserve exactamente el mismo alto, sin simular texto. */}
+      <ContainerTitle title={'\u00A0'} />
+      <ContainerRow pb='4'>
+        <Skeleton w='90px' h='32px' rounded='md' />
+        <Flex display={{ base: 'none', sm: 'flex' }} gap='3'>
+          <Skeleton w='140px' h='32px' rounded='md' />
+          <Skeleton w='150px' h='32px' rounded='md' />
         </Flex>
-      </Flex>
-      <SkeletonContainer />
+        <Skeleton
+          display={{ base: 'block', sm: 'none' }}
+          w='32px'
+          h='32px'
+          rounded='md'
+        />
+      </ContainerRow>
+      {/* El detalle de colección no tiene aside: su contenido es sólo el grid. */}
+      <SkeletonContainer aside={false} />
     </>
   );
 }
