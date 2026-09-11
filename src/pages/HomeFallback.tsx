@@ -2,6 +2,8 @@ import { Box, Flex, Skeleton, SkeletonText } from '@chakra-ui/react';
 
 import { useAuth } from '@contexts/AuthContext';
 import { SkeletonFeed } from '@components/skeletons/SkeletonFeed';
+import { SkeletonAsideBlock } from '@components/skeletons/SkeletonAside';
+import { HomeLayout } from '@components/layout/HomeLayout';
 
 export function HomeFallback() {
   const { userData } = useAuth();
@@ -29,15 +31,19 @@ export function HomeFallback() {
     );
   }
 
+  // Mismo `HomeLayout` que el render real: el feed no se corre al llegar los datos.
   return (
-    <Box
-      w='full'
-      maxW='4xl'
-      m='auto'
-      px={{ base: 6, md: 6 }}
-      py={{ base: 6, md: 10 }}
+    <HomeLayout
+      leftRail={<SkeletonAsideBlock rows={10} />}
+      rightRail={
+        <Flex direction='column' gap='8'>
+          <SkeletonAsideBlock rows={3} media='cover' />
+          <SkeletonAsideBlock rows={3} media='avatar' />
+          <SkeletonAsideBlock rows={4} />
+        </Flex>
+      }
     >
       <SkeletonFeed />
-    </Box>
+    </HomeLayout>
   );
 }
