@@ -21,6 +21,7 @@ import {
   FiEdit3,
   FiHeart,
   FiMessageSquare,
+  FiShare2,
   FiStar,
   FiUserPlus,
 } from 'react-icons/fi';
@@ -130,6 +131,10 @@ export function FeedItem({ activity, priority }: FeedItemProps) {
   const hasBookInGroup =
     type === 'group' && activities?.some((a) => a.type === 'book');
   const isPublication = type === 'book' || hasBookInGroup;
+  // Sólo en la publicación: en un comentario o un favorito el pill no aporta
+  // nada. Los libros sin `kind` son anteriores al campo y el feed ya los trata
+  // como recomendaciones ("recomendó un libro"), así que entran igual.
+  const isRecommendation = isPublication && !!book && !isOriginalBook;
   const inlineRating =
     type === 'group'
       ? activities?.find((a) => a.type === 'rating')?.rating
@@ -194,6 +199,12 @@ export function FeedItem({ activity, priority }: FeedItemProps) {
               <Tag size='sm' bg='green.50' color='green.900' rounded='full'>
                 <TagLeftIcon as={FiEdit3} />
                 <TagLabel fontWeight='semibold'>Original</TagLabel>
+              </Tag>
+            )}
+            {isRecommendation && (
+              <Tag size='sm' bg='blue.50' color='blue.900' rounded='full'>
+                <TagLeftIcon as={FiShare2} />
+                <TagLabel fontWeight='semibold'>Recomendado</TagLabel>
               </Tag>
             )}
             {type === 'follow' && target && (
