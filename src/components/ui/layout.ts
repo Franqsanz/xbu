@@ -14,3 +14,21 @@ export const CONTAINER_PX = { base: 5, md: 10, '2xl': 16 };
  * que su contenido arranque en la misma columna que el de las páginas.
  */
 export const CONTENT_MAX_W = { base: '1180px', '2xl': '1432px' };
+
+/**
+ * Alto máximo de una lista de un riel que scrollea por dentro: entran unas 4
+ * filas con portada (72px + 16 de gap). La comparten el bloque real y su
+ * skeleton, así no pueden quedar de distinto alto.
+ */
+export const ASIDE_LIST_MAX_H = '340px';
+
+/** Barra de scroll fina, para los contenedores que scrollean por dentro. */
+export const THIN_SCROLLBAR = {
+  '&::-webkit-scrollbar': {
+    width: '5px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: '#a2aab3',
+    borderRadius: '30px',
+  },
+};

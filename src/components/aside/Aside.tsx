@@ -1,6 +1,8 @@
 import React from 'react';
 import { Flex, FlexProps } from '@chakra-ui/react';
 
+import { THIN_SCROLLBAR } from '@components/ui/layout';
+
 /** Alto del header sticky (DesktopNav) + un respiro, para no quedar tapados. */
 const STICKY_TOP = '72px';
 
@@ -40,15 +42,7 @@ export function Aside({
         // Aire contra la barra de scroll propia: sin esto el contenido queda
         // pegado a ella. El ancho del riel ya lo compensa.
         pr: '3',
-        sx: {
-          '&::-webkit-scrollbar': {
-            width: '5px',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            background: '#a2aab3',
-            borderRadius: '30px',
-          },
-        },
+        sx: THIN_SCROLLBAR,
       }
     : {};
 
