@@ -33,7 +33,7 @@ export function MostViewed({ compact = false }: { compact?: boolean }) {
       >
         Más Vistos
       </Box>
-      <Flex as='ul' direction='column' mt='6'>
+      <Flex as='ul' direction='column'>
         {data?.map(
           (
             { id, title, pathUrl }: { id: string; title: string; pathUrl: string },
