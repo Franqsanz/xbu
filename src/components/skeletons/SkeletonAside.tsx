@@ -10,14 +10,23 @@ type RowMedia = 'none' | 'cover' | 'avatar';
 export function SkeletonAsideBlock({
   rows = 4,
   media = 'none',
+  maxH,
 }: {
   rows?: number;
   media?: RowMedia;
+  /** Para los bloques cuya lista real scrollea por dentro. */
+  maxH?: string;
 }) {
   return (
     <Box>
       <Skeleton h='5' w='55%' />
-      <Flex direction='column' mt='6' gap={media === 'none' ? '3' : '4'}>
+      <Flex
+        direction='column'
+        mt='6'
+        gap={media === 'none' ? '3' : '4'}
+        maxH={maxH}
+        overflow='hidden'
+      >
         {Array.from({ length: rows }, (_, index) => (
           <Flex key={index} align='center' gap='3'>
             {media === 'cover' && (

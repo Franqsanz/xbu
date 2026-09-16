@@ -4,6 +4,7 @@ import { useAuth } from '@contexts/AuthContext';
 import { SkeletonFeed } from '@components/skeletons/SkeletonFeed';
 import { SkeletonAsideBlock } from '@components/skeletons/SkeletonAside';
 import { HomeLayout } from '@components/layout/HomeLayout';
+import { ASIDE_LIST_MAX_H } from '@components/ui/layout';
 
 export function HomeFallback() {
   const { userData } = useAuth();
@@ -34,7 +35,12 @@ export function HomeFallback() {
   // Mismo `HomeLayout` que el render real: el feed no se corre al llegar los datos.
   return (
     <HomeLayout
-      leftRail={<SkeletonAsideBlock rows={10} />}
+      leftRail={
+        <Flex direction='column' gap='8'>
+          <SkeletonAsideBlock rows={10} media='cover' maxH={ASIDE_LIST_MAX_H} />
+          <SkeletonAsideBlock rows={10} />
+        </Flex>
+      }
       rightRail={
         <Flex direction='column' gap='8'>
           <SkeletonAsideBlock rows={3} media='cover' />

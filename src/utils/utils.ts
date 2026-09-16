@@ -47,6 +47,7 @@ const keys = {
   unfollowUser: 'UnfollowUser',
   followStats: 'FollowStats',
   followSuggestions: 'FollowSuggestions',
+  recommendations: 'Recommendations',
   followers: 'Followers',
   following: 'Following',
   feed: 'Feed',

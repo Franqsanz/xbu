@@ -6,6 +6,7 @@ import { LandingHome } from '@pages/LandingHome';
 import { Feed } from '@components/feed/Feed';
 import { HomeLayout } from '@components/layout/HomeLayout';
 import { ContinueReading } from '@components/aside/ContinueReading';
+import { ForYou } from '@components/aside/ForYou';
 import { WhoToFollow } from '@components/aside/WhoToFollow';
 import { MyCollections } from '@components/aside/MyCollections';
 import { MostViewed } from '@components/aside/MostViewed';
@@ -22,7 +23,12 @@ export default function Home() {
       />
       {userData ? (
         <HomeLayout
-          leftRail={<MostViewed compact />}
+          leftRail={
+            <Flex direction='column' gap='8'>
+              <ForYou />
+              <MostViewed compact />
+            </Flex>
+          }
           rightRail={
             <Flex direction='column' gap='8'>
               <ContinueReading />

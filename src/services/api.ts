@@ -501,6 +501,12 @@ async function getFollowSuggestions(limit: number) {
   });
 }
 
+async function getRecommendations(limit: number) {
+  return await fetchData(`${API_URL}/users/me/recommendations?limit=${limit}`, {
+    credentials: 'include',
+  });
+}
+
 async function getFollowStats(userId: string) {
   return await fetchData(`${API_URL}/users/${userId}/follow-stats`, {
     // credentials: 'include',
@@ -673,6 +679,7 @@ export {
   getFollowing,
   getFollowStats,
   getFollowSuggestions,
+  getRecommendations,
   getFeed,
   getBookStatus,
   patchBookStatus,
