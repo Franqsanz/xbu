@@ -99,7 +99,11 @@ export function DesktopNav() {
               fontSize='2xl'
               fontWeight='bold'
             >
-              <Link as={NavLink} to='/'>
+              <Link
+                as={NavLink}
+                to='/'
+                _hover={{ textDecoration: 'none', outline: 'none' }}
+              >
                 XB
               </Link>
             </Box>

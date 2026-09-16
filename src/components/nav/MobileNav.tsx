@@ -155,7 +155,11 @@ export function MobileNav() {
               ml='1'
               fontWeight='bold'
             >
-              <Link as={NavLink} to='/'>
+              <Link
+                as={NavLink}
+                to='/'
+                _hover={{ textDecoration: 'none', outline: 'none' }}
+              >
                 XBuReads
               </Link>
             </Box>
